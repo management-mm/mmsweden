@@ -12,6 +12,7 @@ export default defineConfig({
       '@router': '/src/router',
       '@store': '/src/store',
       '@utils': '/src/utils',
+      '@interfaces': '/src/interfaces',
       '@enums': '/src/enums',
       '@hooks': '/src/hooks',
       '@constants': '/src/constants',

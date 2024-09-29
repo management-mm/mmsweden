@@ -2,10 +2,13 @@ import {
   AboutUs,
   Button,
   ContactUs,
+  Description,
   Employee,
   Industry,
   Instructions,
   NavBar,
+  SellToUs,
+  Title,
   WhyChooseUs,
 } from '@enums/i18nConstants';
 
@@ -25,18 +28,67 @@ export const de = {
   [Button.AddedToQuote]: 'Zum Angebot hinzugefügt',
   [Button.RequestPricing]: 'Preisanfrage',
 
+  [Title.Industries]: 'Industrie',
+  [Title.LatestArrivals]: 'Neueste Ankünfte',
+  [Title.WriteToUs]: 'Schreiben Sie uns',
+  [Title.Instructions]: 'Anweisungen',
+  [Title.Step]: 'Schritt {{number}}',
+  [Title.FormForSale]: 'Verkaufsformular',
+  [Title.VideoOverview]: 'Videoübersicht',
+  [Title.YouMayAlsoLike]: 'Das könnte Ihnen auch gefallen',
+  [Title.ItemsForQuote]: 'Artikel zur Preisabfrage',
+  [Title.RequestAQuote]: 'Preisanfrage stellen',
+
+  [Description.Industries]:
+    'Unsere Produkte werden in folgenden Branchen eingesetzt:',
+  [Description.Hero]: 'Gebrauchte Maschinen - Neue Produkte',
+  [Description.YearsMarket]: 'Jahre auf dem Markt',
+  [Description.ProductsCatalogue]: 'Produkte im Katalog',
+  [Description.SuccessfulDeals]: 'erfolgreiche Abschlüsse',
+  [Description.AboutUsPage]:
+    'Willkommen bei Meat Machines, Ihrem vertrauenswürdigen Partner für hochwertige gebrauchte Lebensmittelverarbeitungs- und Verpackungsmaschinen. Gegründet im Jahr 2003, sind wir bestrebt, unseren Kunden weltweit außergewöhnlichen Service und erstklassige Geräte anzubieten.',
+  [Description.AboutUsShort]: 'Unsere Geschichte',
+  [Description.AboutUsLong]:
+    '<1>Seit 2003 ist Meat Machines Ihre vertrauenswürdige Quelle für hochwertige gebrauchte Lebensmittelverarbeitungs- und Verpackungsmaschinen.</1> <1>Mit fast 2.000 Maschinen in unseren vier Lagern im Süden Schwedens bieten wir erstklassige Ausrüstung der besten Hersteller.</1> <1>Unser Team von über 10 qualifizierten Fachleuten, darunter erfahrene Elektriker und Mechaniker, wartet jedes Gerät sorgfältig.</1> <1>Tausende zufriedener Kunden weltweit vertrauen auf unsere Zuverlässigkeit, Qualität und wettbewerbsfähigen Preise.</1> <1>Lassen Sie uns Ihrem Unternehmen mit zuverlässigen Maschinen zum Erfolg verhelfen!</1>',
+  [Description.SellToUs]:
+    'Hören Sie auf, Tausende von Dollar in Ihren Lagern zu lagern, während der Preis Ihrer ungenutzten Ausrüstung jedes Jahr sinkt.<1/> Worauf warten Sie noch?',
+  [Description.WriteToUs]:
+    'Haben Sie Fragen? Unser Team wird sich umgehend mit Ihnen in Verbindung setzen!',
+  [Description.ContactUs]:
+    'Hallo, wir beantworten gerne alle Fragen, die Sie während unserer Arbeitszeiten haben.',
+  [Description.Instructions]: '3 einfache Schritte, wie man verkauft',
+  [Description.EmptyPriceQuoteList]:
+    'Ihre Preisanfrageliste ist derzeit leer. Fügen Sie Produkte hinzu, um einen Preis anzufordern!',
+
+  [SellToUs.FairTitle]: 'Faire und wettbewerbsfähige Angebote',
+  [SellToUs.FairDesc]:
+    'Wir bieten faire und wettbewerbsfähige Angebote für Ihre ungenutzte Ausrüstung und stellen sicher, dass Sie den besten Wert für Maschinen erhalten, die nicht mehr in Gebrauch sind.',
+  [SellToUs.QuickTitle]: 'Schnelle und unkomplizierte Transaktionen',
+  [SellToUs.QuickDesc]:
+    'Profitieren Sie von der einfachsten und schnellsten Methode zum Verkauf von Ausrüstung, mit Vorauszahlung und Lieferung inklusive. Transaktionen sind schnell und unkompliziert, was wertvolle Zeit und Mühe spart.',
+  [SellToUs.SustainableTitle]:
+    'Nachhaltiges und verantwortungsbewusstes Recycling',
+  [SellToUs.SustainableDesc]:
+    'Tragen Sie zu einem nachhaltigeren und verantwortungsbewussteren Recyclingprozess bei, indem Sie Maschinen ein zweites Leben geben und Abfall reduzieren.',
+
   [Industry.MeatTitle]: 'Fleisch',
-  [Industry.MeatDesc]: '',
+  [Industry.MeatDesc]:
+    'Fleischwölfe, Mischer, Vakuumfüller, Verpackungsmaschinen, Separatoren usw.',
   [Industry.FishTitle]: 'Fisch',
-  [Industry.FishDesc]: '',
-  [Industry.BakeryTitle]: 'Backwaren',
-  [Industry.BakeryDesc]: '',
+  [Industry.FishDesc]:
+    'Filetiermaschinen, Separatoren, Slicer, Grätenentferner, Thermoformer usw.',
+  [Industry.BakeryTitle]: 'Bäckerei',
+  [Industry.BakeryDesc]:
+    'Mischer, Förderer, Metalldetektoren, Ablagerer, Knetmaschinen usw.',
   [Industry.DairyTitle]: 'Milchprodukte',
-  [Industry.DairyDesc]: '',
+  [Industry.DairyDesc]:
+    'Homogenisatoren, Abfüllmaschinen, Rotationsfüller, Tanks, Kühleinrichtungen, Mischer, Slicer usw.',
   [Industry.VegetablesTitle]: 'Obst / Gemüse',
-  [Industry.VegetablesDesc]: '',
+  [Industry.VegetablesDesc]:
+    'Schneider, Waschmaschinen, Waagen, Verpackungsmaschinen, Metalldetektoren usw.',
   [Industry.MedicinesTitle]: 'Medikamente',
-  [Industry.MedicinesDesc]: '',
+  [Industry.MedicinesDesc]:
+    'Tablettenpressen, Verpackungsmaschinen, Flowpack, Thermoformer, Roboterlinien, Pumpen, Mischer usw.',
 
   [Instructions.Step1Title]: 'Geben Sie uns Informationen',
   [Instructions.Step1Desc]:

@@ -7,6 +7,7 @@ import {
   Industry,
   Instructions,
   NavBar,
+  SellToUs,
   Title,
   WhyChooseUs,
 } from '@enums/i18nConstants';
@@ -31,38 +32,61 @@ export const en = {
   [Title.LatestArrivals]: 'Latest Arrivals',
   [Title.WriteToUs]: 'Write to us',
   [Title.Instructions]: 'Instructions',
+  [Title.Step]: 'Step {{number}}',
   [Title.FormForSale]: 'Form For Sale',
   [Title.VideoOverview]: 'Video overview',
   [Title.YouMayAlsoLike]: 'You May Also Like',
+  [Title.ItemsForQuote]: 'Items For Quote',
+  [Title.RequestAQuote]: 'Request a quote',
 
   [Description.Industries]: 'Our products are used in such industries:',
   [Description.Hero]: 'Used machines - New products',
-  [Description.YearsMarket]: '{number} Years on market',
-  [Description.ProductsCatalogue]: '{number} Products in catalogue',
-  [Description.SuccessfulDeals]: '{number} Successful deals',
+  [Description.YearsMarket]: 'Years on market',
+  [Description.ProductsCatalogue]: 'Products in catalogue',
+  [Description.SuccessfulDeals]: 'Successful deals',
+  [Description.AboutUsPage]:
+    'Welcome to Meat Machines, your trusted partner in high-quality used food processing and packing machinery. Established in 2003, we have been dedicated to provide exceptional service and top-tier equipment to our clients worldwide.',
   [Description.AboutUsShort]: 'Our history',
   [Description.AboutUsLong]:
-    'Since 2003, Meat Machines has been your trusted source for high-quality used food processing and packing machinery. With nearly 2,000 pieces in our four southern Sweden warehouses, we ensure top-tier equipment of the best manufacturers. Our team of over 10 skilled professionals, including experienced electricians and mechanics, meticulously maintains each unit. Thousands of happy customers worldwide trust us for our reliability, quality, and competitive prices. Let us help your business thrive with machinery you can rely on!',
+    '<1>Since 2003, Meat Machines has been your trusted source for high-quality used food processing and packing machinery. With nearly 2,000 pieces in our four southern Sweden warehouses, we ensure top-tier equipment of the best manufacturers.</1> <1>Our team of over 10 skilled professionals, including experienced electricians and mechanics, meticulously maintains each unit. Thousands of happy customers worldwide trust us for our reliability, quality, and competitive prices.</1> <1>Let us help your business thrive with machinery you can rely on!</1>',
   [Description.SellToUs]:
-    'Stop storing thousands of dollars in your warehouses when the price of your idle equipment decreases every year. So what are you waiting for?',
+    'Stop storing thousands of dollars in your warehouses when the price of your idle equipment decreases every year.<1/> So what are you waiting for?',
   [Description.WriteToUs]:
     'Have any questions? Our team will reach out to you promptly!',
   [Description.ContactUs]:
     'Hello, we are happy to answer any questions you may have during our working hours',
   [Description.Instructions]: '3 easy steps how to sell',
+  [Description.EmptyPriceQuoteList]:
+    'Your price quote list is currently empty. Add products to request a price!',
+
+  [SellToUs.FairTitle]: 'Fair and Competitive Offers',
+  [SellToUs.FairDesc]:
+    'We provide fair and competitive offers for your idle equipment, ensuring you get the best value for machinery that is no longer in use.',
+  [SellToUs.QuickTitle]: 'Quick and Hassle-Free Transactions',
+  [SellToUs.QuickDesc]:
+    'Benefit from the easiest and fastest method for selling equipment, with an advance payment and delivery included. Transactions are quick and hassle-free, saving valuable time and effort.',
+  [SellToUs.SustainableTitle]: 'Sustainable and Responsible Recycling',
+  [SellToUs.SustainableDesc]:
+    'Contribute to a more sustainable and responsible recycling process by giving machinery a second life and reducing waste',
 
   [Industry.MeatTitle]: 'Meat',
-  [Industry.MeatDesc]: '',
+  [Industry.MeatDesc]:
+    'Meat Grinders, Mixers, Vacuumfillers, Packing machinery, Separators Etc.',
   [Industry.FishTitle]: 'Fish',
-  [Industry.FishDesc]: '',
+  [Industry.FishDesc]:
+    'Filleting machines, Seperators, Slicers, Pin-bone removers, Thermoformers Etc.',
   [Industry.BakeryTitle]: 'Bakery',
-  [Industry.BakeryDesc]: '',
+  [Industry.BakeryDesc]:
+    'Mixers, Conveyors, Metaldetectors, depositors, Kneeding machines Etc. ',
   [Industry.DairyTitle]: 'Dairy',
-  [Industry.DairyDesc]: '',
+  [Industry.DairyDesc]:
+    ' Homogenisators, Filling machines, Rotary fillers, Tanks, Cooling equipment Mixers, Slicers Etc.',
   [Industry.VegetablesTitle]: 'Fruits / Vegetables',
-  [Industry.VegetablesDesc]: '',
+  [Industry.VegetablesDesc]:
+    'Slicers, Washing machines, Scales, Packing machines, Metal detectors Etc',
   [Industry.MedicinesTitle]: 'Medicines',
-  [Industry.MedicinesDesc]: '',
+  [Industry.MedicinesDesc]:
+    'Tablet presses, Packing machines, Flowpack, Thermoformers, Robot lines, Pumps, Mixers Etc.',
 
   [Instructions.Step1Title]: 'Give us an information',
   [Instructions.Step1Desc]:

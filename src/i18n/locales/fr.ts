@@ -2,10 +2,13 @@ import {
   AboutUs,
   Button,
   ContactUs,
+  Description,
   Employee,
   Industry,
   Instructions,
   NavBar,
+  SellToUs,
+  Title,
   WhyChooseUs,
 } from '@enums/i18nConstants';
 
@@ -25,18 +28,66 @@ export const fr = {
   [Button.AddedToQuote]: 'Ajouté au devis',
   [Button.RequestPricing]: 'Demander le prix',
 
+  [Title.Industries]: 'Industries',
+  [Title.LatestArrivals]: 'Dernières arrivées',
+  [Title.WriteToUs]: 'Écrivez-nous',
+  [Title.Instructions]: 'Instructions',
+  [Title.Step]: 'Étape {{number}}',
+  [Title.FormForSale]: 'Formulaire de vente',
+  [Title.VideoOverview]: 'Aperçu vidéo',
+  [Title.YouMayAlsoLike]: 'Vous aimerez peut-être aussi',
+  [Title.ItemsForQuote]: 'Articles pour demande de prix',
+  [Title.RequestAQuote]: 'Demander un devis',
+
+  [Description.Industries]:
+    'Nos produits sont utilisés dans les industries suivantes :',
+  [Description.Hero]: "Machines d'occasion - Produits neufs",
+  [Description.YearsMarket]: 'années sur le marché',
+  [Description.ProductsCatalogue]: 'produits dans le catalogue',
+  [Description.SuccessfulDeals]: 'transactions réussies',
+  [Description.AboutUsPage]:
+    "Bienvenue chez Meat Machines, votre partenaire de confiance en matière de machines de traitement et d'emballage des aliments de haute qualité. Fondée en 2003, nous nous consacrons à fournir un service exceptionnel et un équipement de premier choix à nos clients du monde entier.",
+  [Description.AboutUsShort]: 'Notre histoire',
+  [Description.AboutUsLong]:
+    "<1>Depuis 2003, Meat Machines est votre source de confiance pour des machines de traitement et d'emballage des aliments de haute qualité.</1> <1>Avec près de 2 000 pièces dans nos quatre entrepôts du sud de la Suède, nous assurons du matériel de premier choix provenant des meilleurs fabricants.</1> <1>Notre équipe de plus de 10 professionnels qualifiés, comprenant des électriciens et des mécaniciens expérimentés, maintient chaque unité avec soin.</1> <1>Des milliers de clients satisfaits à travers le monde nous font confiance pour notre fiabilité, notre qualité et nos prix compétitifs.</1> <1>Laissez-nous aider votre entreprise à prospérer avec des machines fiables !</1>",
+  [Description.SellToUs]:
+    "Arrêtez de stocker des milliers de dollars dans vos entrepôts alors que la valeur de votre équipement inutilisé diminue chaque année.<1/> Alors, qu'attendez-vous ?",
+  [Description.WriteToUs]:
+    'Vous avez des questions ? Notre équipe vous répondra rapidement !',
+  [Description.ContactUs]:
+    'Bonjour, nous sommes heureux de répondre à toutes vos questions pendant nos heures de travail.',
+  [Description.Instructions]: '3 étapes faciles pour vendre',
+  [Description.EmptyPriceQuoteList]:
+    'Votre liste de demande de prix est actuellement vide. Ajoutez des produits pour demander un prix !',
+
+  [SellToUs.FairTitle]: 'Offres Équitables et Compétitives',
+  [SellToUs.FairDesc]:
+    'Nous vous proposons des offres équitables et compétitives pour votre équipement inactif, garantissant que vous obtenez la meilleure valeur pour les machines qui ne sont plus utilisées.',
+  [SellToUs.QuickTitle]: 'Transactions Rapides et Sans Tracas',
+  [SellToUs.QuickDesc]:
+    'Bénéficiez de la méthode la plus simple et la plus rapide pour vendre votre équipement, avec un paiement anticipé et une livraison inclus. Les transactions sont rapides et sans tracas, ce qui vous fait gagner un temps et des efforts précieux.',
+  [SellToUs.SustainableTitle]: 'Recyclage Durable et Responsable',
+  [SellToUs.SustainableDesc]:
+    'Contribuez à un processus de recyclage plus durable et responsable en donnant une seconde vie aux machines et en réduisant les déchets.',
+
   [Industry.MeatTitle]: 'Viande',
-  [Industry.MeatDesc]: '',
+  [Industry.MeatDesc]:
+    "Hachoirs à viande, Mélangeurs, Remplisseuses sous vide, Machines d'emballage, Séparateurs, etc.",
   [Industry.FishTitle]: 'Poisson',
-  [Industry.FishDesc]: '',
-  [Industry.BakeryTitle]: 'Produits de boulangerie',
-  [Industry.BakeryDesc]: '',
+  [Industry.FishDesc]:
+    "Machines à fileter, Séparateurs, Trancheurs, Dénudeurs d'arêtes, Thermoformeuses, etc.",
+  [Industry.BakeryTitle]: 'Boulangerie',
+  [Industry.BakeryDesc]:
+    'Mélangeurs, Convoyeurs, Détecteurs de métaux, Déposeurs, Pétrins, etc.',
   [Industry.DairyTitle]: 'Produits laitiers',
-  [Industry.DairyDesc]: '',
+  [Industry.DairyDesc]:
+    'Homogénéisateurs, Machines de remplissage, Remplisseuses rotatives, Cuves, Équipements de refroidissement, Mélangeurs, Trancheuses, etc.',
   [Industry.VegetablesTitle]: 'Fruits / Légumes',
-  [Industry.VegetablesDesc]: '',
+  [Industry.VegetablesDesc]:
+    "Trancheuses, Machines à laver, Balances, Machines d'emballage, Détecteurs de métaux, etc.",
   [Industry.MedicinesTitle]: 'Médicaments',
-  [Industry.MedicinesDesc]: '',
+  [Industry.MedicinesDesc]:
+    "Presses à comprimés, Machines d'emballage, Flowpack, Thermoformeuses, Lignes robotisées, Pompes, Mélangeurs, etc.",
 
   [Instructions.Step1Title]: 'Donnez-nous des informations',
   [Instructions.Step1Desc]:

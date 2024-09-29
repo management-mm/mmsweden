@@ -2,10 +2,13 @@ import {
   AboutUs,
   Button,
   ContactUs,
+  Description,
   Employee,
   Industry,
   Instructions,
   NavBar,
+  SellToUs,
+  Title,
   WhyChooseUs,
 } from '@enums/i18nConstants';
 
@@ -25,18 +28,65 @@ export const sv = {
   [Button.AddedToQuote]: 'Tillagd till offert',
   [Button.RequestPricing]: 'Begär pris',
 
+  [Title.Industries]: 'Industri',
+  [Title.LatestArrivals]: 'Senaste ankomster',
+  [Title.WriteToUs]: 'Skriv till oss',
+  [Title.Instructions]: 'Instruktioner',
+  [Title.Step]: 'Steg {{number}}',
+  [Title.FormForSale]: 'Formulär för försäljning',
+  [Title.VideoOverview]: 'Videoöversikt',
+  [Title.YouMayAlsoLike]: 'Du kanske också gillar',
+  [Title.ItemsForQuote]: 'Artiklar för prisförfrågan',
+  [Title.RequestAQuote]: 'Begär en prisoffert',
+
+  [Description.Industries]: 'Våra produkter används inom följande branscher:',
+  [Description.Hero]: 'Begagnade maskiner - Nya produkter',
+  [Description.YearsMarket]: 'år på marknaden',
+  [Description.ProductsCatalogue]: 'produkter i katalogen',
+  [Description.SuccessfulDeals]: 'framgångsrika affärer',
+  [Description.AboutUsPage]:
+    'Välkommen till Meat Machines, din pålitliga partner inom högkvalitativ begagnad livsmedelsbearbetnings- och förpackningsutrustning. Grundat 2003 har vi varit dedikerade till att erbjuda exceptionell service och utrustning av högsta klass till våra kunder världen över.',
+  [Description.AboutUsShort]: 'Vår historia',
+  [Description.AboutUsLong]:
+    '<1>Sedan 2003 har Meat Machines varit din pålitliga källa för högkvalitativ begagnad livsmedelsbearbetnings- och förpackningsutrustning.</1> <1>Med nästan 2 000 maskiner i våra fyra lager i södra Sverige erbjuder vi utrustning från de bästa tillverkarna.</1> <1>Vårt team på över 10 kvalificerade yrkesmän, inklusive erfarna elektriker och mekaniker, underhåller varje enhet noggrant.</1> <1>Tusentals nöjda kunder över hela världen litar på oss för vår pålitlighet, kvalitet och konkurrenskraftiga priser.</1> <1>Låt oss hjälpa ditt företag att blomstra med pålitlig utrustning!</1>',
+  [Description.SellToUs]:
+    'Sluta lagra tusentals dollar i dina lager när värdet på din inaktiva utrustning minskar varje år.<1/> Vad väntar du på?',
+  [Description.WriteToUs]:
+    'Har du några frågor? Vårt team kommer att kontakta dig omedelbart!',
+  [Description.ContactUs]:
+    'Hej, vi svarar gärna på alla frågor du kan ha under våra öppettider.',
+  [Description.Instructions]: '3 enkla steg för hur man säljer',
+  [Description.EmptyPriceQuoteList]:
+    'Din prisoffertlista är för närvarande tom. Lägg till produkter för att begära ett pris!',
+
+  [SellToUs.FairTitle]: 'Rättvisa och Konkurrenskraftiga Erbjudanden',
+  [SellToUs.FairDesc]:
+    'Vi erbjuder rättvisa och konkurrenskraftiga erbjudanden för din stillastående utrustning, vilket säkerställer att du får bästa värde för maskiner som inte längre är i bruk.',
+  [SellToUs.QuickTitle]: 'Snabba och Enkla Transaktioner',
+  [SellToUs.QuickDesc]:
+    'Dra nytta av den enklaste och snabbaste metoden för att sälja utrustning, med förskottsbetalning och leverans inkluderad. Transaktioner är snabba och enkla, vilket sparar värdefull tid och ansträngning.',
+  [SellToUs.SustainableTitle]: 'Hållbar och Ansvarsfull Återvinning',
+  [SellToUs.SustainableDesc]:
+    'Bidra till en mer hållbar och ansvarsfull återvinningsprocess genom att ge maskiner ett andra liv och minska avfall.',
+
   [Industry.MeatTitle]: 'Kött',
-  [Industry.MeatDesc]: '',
+  [Industry.MeatDesc]:
+    'Köttkvarnar, Blandare, Vakuumfyllare, Förpackningsmaskiner, Separatorer, etc.',
   [Industry.FishTitle]: 'Fisk',
-  [Industry.FishDesc]: '',
+  [Industry.FishDesc]:
+    'Fileteringsmaskiner, Separatorer, Skivmaskiner, Benborttagare, Termoformare, etc.',
   [Industry.BakeryTitle]: 'Bakverk',
-  [Industry.BakeryDesc]: '',
+  [Industry.BakeryDesc]:
+    'Blandare, Transportband, Metalldetektorer, Deponatorer, Knådningsmaskiner, etc.',
   [Industry.DairyTitle]: 'Mejeri',
-  [Industry.DairyDesc]: '',
+  [Industry.DairyDesc]:
+    'Homogenisatorer, Fyllmaskiner, Roterande fyllare, Tankar, Kylanläggningar, Blandare, Skärmaskiner, etc.',
   [Industry.VegetablesTitle]: 'Frukt / Grönsaker',
-  [Industry.VegetablesDesc]: '',
-  [Industry.MedicinesTitle]: 'Medicin',
-  [Industry.MedicinesDesc]: '',
+  [Industry.VegetablesDesc]:
+    'Skivmaskiner, Tvättmaskiner, Vågar, Förpackningsmaskiner, Metalldetektorer, etc.',
+  [Industry.MedicinesTitle]: 'Mediciner',
+  [Industry.MedicinesDesc]:
+    'Tablettpressar, Förpackningsmaskiner, Flowpack, Termoformare, Robotlinjer, Pumpar, Blandare, etc.',
 
   [Instructions.Step1Title]: 'Ge oss information',
   [Instructions.Step1Desc]:

@@ -1,3 +1,5 @@
+import { Description } from '@enums/i18nConstants';
+
 export interface IFactsAndFiguresItem {
   title: string;
   desc: string;
@@ -6,15 +8,15 @@ export interface IFactsAndFiguresItem {
 const factsAndFiguresList: IFactsAndFiguresItem[] = [
   {
     title: '20+',
-    desc: 'Years on market',
+    desc: Description.YearsMarket,
   },
   {
     title: '2450+',
-    desc: 'Products in catalogue',
+    desc: Description.ProductsCatalogue,
   },
   {
     title: '2200+',
-    desc: 'Successful deals',
+    desc: Description.SuccessfulDeals,
   },
 ];
 

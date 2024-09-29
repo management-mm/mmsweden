@@ -36,9 +36,12 @@ export enum Title {
   LatestArrivals = 'Title.LatestArrivals',
   WriteToUs = 'Title.WriteToUs',
   Instructions = 'Title.Instructions',
+  Step = 'Title.Step',
   FormForSale = 'Title.FormForSale',
   VideoOverview = 'Title.VideoOverview',
   YouMayAlsoLike = 'Title.YouMayAlsoLike',
+  ItemsForQuote = 'Title.ItemsForQuote',
+  RequestAQuote = 'Title.RequestAQuote',
 }
 
 export enum Description {
@@ -47,12 +50,23 @@ export enum Description {
   YearsMarket = 'Description.YearsMarket',
   ProductsCatalogue = 'Description.ProductsCatalogue',
   SuccessfulDeals = 'Description.SuccessfulDeals',
+  AboutUsPage = 'Description.AboutUsPage',
   AboutUsShort = 'Description.AboutUsShort',
   AboutUsLong = 'Description.AboutUsLong',
   SellToUs = 'Description.SellToUs',
   WriteToUs = 'Description.WriteToUs',
   ContactUs = 'Description.ContactUs',
   Instructions = 'Description.Instructions',
+  EmptyPriceQuoteList = 'Description.EmptyPriceQuoteList',
+}
+
+export enum SellToUs {
+  FairTitle = 'SellToUs.FairTitle',
+  FairDesc = 'SellToUs.FairDesc',
+  QuickTitle = 'SellToUs.QuickTitle',
+  QuickDesc = 'SellToUs.QuickDesc',
+  SustainableTitle = 'SellToUs.SustainableTitle',
+  SustainableDesc = 'SellToUs.SustainableDesc',
 }
 
 export enum Instructions {

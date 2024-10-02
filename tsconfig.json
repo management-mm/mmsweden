@@ -13,7 +13,8 @@
       "@i18n/*": ["i18n/*"],
       "@utils/*": ["utils/*"],
       "@constants/*": ["constants/*"],
-      "@interfaces/*": ["Interfaces/*"]
+      "@schemas/*": ["schemas/*"],
+      "@interfaces/*": ["interfaces/*"]
     },
     "resolveJsonModule": true,
     "allowJs": true,

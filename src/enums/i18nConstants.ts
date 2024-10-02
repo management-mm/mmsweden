@@ -29,6 +29,10 @@ export enum Button {
   ViewDetails = 'Button.ViewDetails',
   RequestPricing = 'Button.RequestPricing',
   AddedToQuote = 'Button.AddedToQuote',
+  RequestQuote = 'Button.RequestQuote',
+  SubmitRequest = 'Button.SubmitRequest',
+  AddMoreItems = 'Button.AddMoreItems',
+  AddProducts = 'Button.AddProducts',
 }
 
 export enum Title {
@@ -120,4 +124,31 @@ export enum ContactUs {
   ViewOnMap = 'ContactUs.ViewOnMap',
   WorkingHours = 'ContactUs.WorkingHours',
   MonFri = 'ContactUs.MonFri',
+}
+
+export enum Label {
+  Name = 'Label.Name',
+  Email = 'Label.Email',
+  Phone = 'Label.Phone',
+  ProductName = 'Label.ProductName',
+  Price = 'Label.Price',
+  Description = 'Label.Description',
+  AttachPhotos = 'Label.AttachPhotos',
+  Message = 'Label.Message',
+  Country = 'Label.',
+  Company = 'Label.Company',
+  Subject = 'Label.Subject',
+}
+
+export enum Placeholder {
+  SearchProduct = 'Placeholder.SearchProduct',
+  Search = 'Placeholder.Search',
+  Name = 'Placeholder.Name',
+  Email = 'Placeholder.Email',
+  ProductName = 'Placeholder.ProductName',
+  Price = 'Placeholder.Price',
+  Description = 'Placeholder.Description',
+  Message = 'Placeholder.Message',
+  Subject = 'Placeholder.Subject',
+  Company = 'Placeholder.Company',
 }

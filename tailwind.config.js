@@ -50,7 +50,6 @@ export default {
       backgroundColor: {
         primary: 'rgba(0, 32, 59, 1)',
         accent: 'rgb(253, 198, 47)',
-        // secondaryAccent: '#00203B',
         secondaryAccent: 'rgba(0, 75, 135, 1)',
         secondary: 'rgb(234, 241, 248)',
         main: 'rgba(252,252,252,1)',
@@ -64,18 +63,30 @@ export default {
         desc: 'rgba(102, 102, 102, 1)',
         secondaryDesc: 'rgba(252,252,252,0.6)',
         longDesc: '#222222',
+        disabled: 'rgba(102,102,102,.3)',
       },
       boxShadow: {
         openMobileMenuShadow: '0px 0px 0px 100vw rgba(0, 36, 66, 0.48)',
         closeMobileMenuShadow: '0px 0px 0px 100vw rgba(0, 36, 66, 0)',
         accent: '4px 4px 14px 0px rgba(253, 198, 47, 0.64)',
         card: '4px 4px 16px 0px rgba(52, 109, 155, 0.12)',
+        pagination: '0px 4px 22px 0px rgba(57,57,57,0.08)',
+        disabled: 'none',
       },
       transitionProperty: {
         right: 'right',
+        left: 'left',
         boxShadow: 'box-shadow',
         height: 'height',
+        border: 'border-color',
+        text: 'color',
+        fill: 'fill',
+        bg: 'backgroundColor',
       },
+      transitionDuration: {
+        primary: '250ms',
+      },
+      transitionTimingFunction: {},
       content: {},
       borderColor: {
         accent: 'rgb(253, 198, 47)',

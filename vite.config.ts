@@ -13,6 +13,7 @@ export default defineConfig({
       '@store': '/src/store',
       '@utils': '/src/utils',
       '@interfaces': '/src/interfaces',
+      '@schemas': '/src/schemas',
       '@enums': '/src/enums',
       '@hooks': '/src/hooks',
       '@constants': '/src/constants',

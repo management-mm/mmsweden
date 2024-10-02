@@ -42,4 +42,5 @@ export enum IconId {
   Filter = '#filter',
   Reset = '#reset',
   Search = '#search',
+  CallingCode = '#calling-code',
 }

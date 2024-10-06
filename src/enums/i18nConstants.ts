@@ -93,6 +93,8 @@ export enum AboutUs {
   OurCustomersDesc = 'AboutUs.OurCustomersDesc',
   ContinuousTitle = 'AboutUs.ContinuousTitle',
   ContinuousDesc = 'AboutUs.ContinuousDesc',
+  ThankYou = 'AboutUs.ThankYou',
+  FeelFree = 'AboutUs.FeelFree',
 }
 
 export enum WhyChooseUs {

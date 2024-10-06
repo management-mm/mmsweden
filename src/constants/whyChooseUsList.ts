@@ -14,7 +14,7 @@ const whyChooseUsList: IWhyChooseUsItem[] = [
   {
     iconId: 'Calendar',
     iconSize: { width: 34, height: 38 },
-    iconClassName: '',
+    iconClassName: 'mr-[22px]',
     title: '20+',
     desc: WhyChooseUs.YearsDesc,
     className: 'mb-[30px]',
@@ -22,7 +22,7 @@ const whyChooseUsList: IWhyChooseUsItem[] = [
   {
     iconId: 'Medal',
     iconSize: { width: 28, height: 38 },
-    iconClassName: 'fill-[#EAF1F8]',
+    iconClassName: 'fill-[#EAF1F8] mr-[22px]',
     title: WhyChooseUs.TheBestTitle,
     desc: WhyChooseUs.TheBestDesc,
     className: 'mb-[30px]',
@@ -30,7 +30,7 @@ const whyChooseUsList: IWhyChooseUsItem[] = [
   {
     iconId: 'Reviews',
     iconSize: { width: 38, height: 38 },
-    iconClassName: 'fill-[#EAF1F8]',
+    iconClassName: 'fill-[#EAF1F8] mr-[14px]',
     title: WhyChooseUs.ThousandsTitle,
     desc: WhyChooseUs.ThousandsDesc,
   },

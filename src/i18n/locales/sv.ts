@@ -118,6 +118,10 @@ export const sv = {
   [AboutUs.ContinuousTitle]: 'Kontinuerlig förbättring',
   [AboutUs.ContinuousDesc]:
     'På Meat Machines tror vi att det alltid finns utrymme för förbättringar. Trots vår omfattande erfarenhet fortsätter vi att lära oss och utvecklas för att betjäna dig bättre. Vi förfinar kontinuerligt våra sökmetoder, förbättrar våra underhållsprotokoll och strömlinjeformar våra fraktprocesser för att säkerställa snabbare svar och mer konkurrenskraftiga priser. Vårt mål är att ge dig den bästa utrustningen och den bästa servicen varje gång.',
+  [AboutUs.ThankYou]:
+    'Tack för att du överväger Meat Machines för dina behov av livsmedelsbearbetnings- och förpackningsmaskiner. Vi ser fram emot att arbeta med dig och hjälpa ditt företag att blomstra.',
+  [AboutUs.FeelFree]:
+    'Tveka inte att kontakta oss för frågor eller för att lära dig mer om vårt omfattande lager.',
 
   [WhyChooseUs.YearsDesc]: 'års erfarenhet',
   [WhyChooseUs.TheBestTitle]: 'Det bästa',

@@ -57,3 +57,23 @@
     font-display: swap;
   }
 }
+.swiper-slide {
+  width: fit-content !important;
+}
+.swiper-wrapper {
+  margin-bottom: 25px;
+}
+.swiper-scrollbar {
+  width: 330px !important;
+  height: 1px !important;
+  position: relative !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+.swiper-scrollbar-drag {
+  height: 3px !important;
+  top: -1.2px !important;
+  /* transform: translate(0, -50%) !important; */
+  position: absolute;
+  width: calc(296 / 6) !important;
+}

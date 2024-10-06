@@ -119,6 +119,10 @@ export const es = {
   [AboutUs.ContinuousTitle]: 'Mejora continua',
   [AboutUs.ContinuousDesc]:
     'En Meat Machines, creemos que siempre hay margen de mejora. A pesar de nuestra amplia experiencia, estamos constantemente aprendiendo y evolucionando para servirle mejor. Continuamente refinamos nuestros métodos de búsqueda, mejoramos nuestros protocolos de mantenimiento y agilizamos nuestros procesos de envío para garantizar respuestas más rápidas y precios más competitivos. Nuestro objetivo es brindarle el mejor equipo y el mejor servicio, cada vez.',
+  [AboutUs.ThankYou]:
+    'Gracias por considerar Meat Machines para sus necesidades de maquinaria de procesamiento y embalaje de alimentos. Esperamos trabajar con usted y ayudar a que su negocio prospere.',
+  [AboutUs.FeelFree]:
+    'No dude en ponerse en contacto con nosotros para cualquier consulta o para obtener más información sobre nuestro extenso inventario.',
 
   [WhyChooseUs.YearsDesc]: 'años de experiencia',
   [WhyChooseUs.TheBestTitle]: 'Lo mejor',

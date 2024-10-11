@@ -1,4 +1,4 @@
-import type { MultiLanguageString } from '@interfaces/IProduct';
+import type { MultiLanguageString } from 'interfaces/IProduct';
 
 export interface ICountry {
   translations: MultiLanguageString;
@@ -20,7 +20,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/af.png',
     callingCode: '+93',
-    phoneFormat: '99-999-9999',
+    phoneFormat: '##-###-####',
   },
   {
     translations: {
@@ -34,7 +34,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/al.png',
     callingCode: '+355',
-    phoneFormat: '(999)999-999',
+    phoneFormat: '(###)###-###',
   },
   {
     translations: {
@@ -48,7 +48,21 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/dz.png',
     callingCode: '+213',
-    phoneFormat: '00 0000 0000',
+    phoneFormat: '##-###-####',
+  },
+  {
+    translations: {
+      en: 'Andorra',
+      sv: 'Andorra',
+      de: 'Andorra',
+      fr: 'Andorre',
+      es: 'Andorra',
+      ru: 'Андорра',
+      uk: 'Андорра',
+    },
+    flag: 'https://flagcdn.com/w320/ad.png',
+    callingCode: '+376',
+    phoneFormat: '###-###',
   },
   {
     translations: {
@@ -62,7 +76,21 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/ao.png',
     callingCode: '+244',
-    phoneFormat: '+244(999)999-999',
+    phoneFormat: '(###)###-###',
+  },
+  {
+    translations: {
+      en: 'Antigua and Barbuda',
+      sv: 'Antigua och Barbuda',
+      de: 'Antigua und Barbuda',
+      fr: 'Antigua-et-Barbuda',
+      es: 'Antigua y Barbuda',
+      ru: 'Антигуа и Барбуда',
+      uk: 'Антигуа і Барбуда',
+    },
+    flag: 'https://flagcdn.com/w320/ag.png',
+    callingCode: '+1268',
+    phoneFormat: '###-####',
   },
   {
     translations: {
@@ -76,7 +104,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/ar.png',
     callingCode: '+54',
-    phoneFormat: '00 0000-0000',
+    phoneFormat: '(###)###-####',
   },
   {
     translations: {
@@ -90,7 +118,21 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/am.png',
     callingCode: '+374',
-    phoneFormat: '00 00 00 00',
+    phoneFormat: '##-###-###',
+  },
+  {
+    translations: {
+      en: 'Aruba',
+      sv: 'Aruba',
+      de: 'Aruba',
+      fr: 'Aruba',
+      es: 'Aruba',
+      ru: 'Аруба',
+      uk: 'Аруба',
+    },
+    flag: 'https://flagcdn.com/w320/aw.png',
+    callingCode: '+297',
+    phoneFormat: '###-####',
   },
   {
     translations: {
@@ -104,7 +146,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/au.png',
     callingCode: '+61',
-    phoneFormat: '9-9999-9999',
+    phoneFormat: '#-####-####',
   },
   {
     translations: {
@@ -118,7 +160,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/at.png',
     callingCode: '+43',
-    phoneFormat: '(999)999-9999',
+    phoneFormat: '(###)###-####',
   },
   {
     translations: {
@@ -132,7 +174,35 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/az.png',
     callingCode: '+994',
-    phoneFormat: '99-999-99-99',
+    phoneFormat: '##-###-##-##',
+  },
+  {
+    translations: {
+      en: 'Bahamas',
+      sv: 'Bahamas',
+      de: 'Bahamas',
+      fr: 'Bahamas',
+      es: 'Bahamas',
+      ru: 'Багамы',
+      uk: 'Багами',
+    },
+    flag: 'https://flagcdn.com/w320/bs.png',
+    callingCode: '+1242',
+    phoneFormat: '###-####',
+  },
+  {
+    translations: {
+      en: 'Bahrain',
+      sv: 'Bahrain',
+      de: 'Bahrain',
+      fr: 'Bahreïn',
+      es: 'Baréin',
+      ru: 'Бахрейн',
+      uk: 'Бахрейн',
+    },
+    flag: 'https://flagcdn.com/w320/bh.png',
+    callingCode: '+973',
+    phoneFormat: '####-####',
   },
   {
     translations: {
@@ -146,7 +216,35 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/bd.png',
     callingCode: '+880',
-    phoneFormat: '99-999-999',
+    phoneFormat: '##-###-###',
+  },
+  {
+    translations: {
+      en: 'Barbados',
+      sv: 'Barbados',
+      de: 'Barbados',
+      fr: 'Barbade',
+      es: 'Barbados',
+      ru: 'Барбадос',
+      uk: 'Барбадос',
+    },
+    flag: 'https://flagcdn.com/w320/bb.png',
+    callingCode: '+1246',
+    phoneFormat: '###-####',
+  },
+  {
+    translations: {
+      en: 'Belarus',
+      sv: 'Belarus',
+      de: 'Belarus',
+      fr: 'Biélorussie',
+      es: 'Bielorrusia',
+      ru: 'Беларусь',
+      uk: 'Білорусь',
+    },
+    flag: 'https://flagcdn.com/w320/by.png',
+    callingCode: '+375',
+    phoneFormat: '(##)###-##-##',
   },
   {
     translations: {
@@ -160,7 +258,49 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/be.png',
     callingCode: '+32',
-    phoneFormat: '(999)999-999',
+    phoneFormat: '(###)###-###',
+  },
+  {
+    translations: {
+      en: 'Belize',
+      sv: 'Belize',
+      de: 'Belize',
+      fr: 'Belize',
+      es: 'Belice',
+      ru: 'Белиз',
+      uk: 'Беліз',
+    },
+    flag: 'https://flagcdn.com/w320/bz.png',
+    callingCode: '+501',
+    phoneFormat: '###-####',
+  },
+  {
+    translations: {
+      en: 'Benin',
+      sv: 'Benin',
+      de: 'Benin',
+      fr: 'Bénin',
+      es: 'Benín',
+      ru: 'Бенин',
+      uk: 'Бенін',
+    },
+    flag: 'https://flagcdn.com/w320/bj.png',
+    callingCode: '+22#',
+    phoneFormat: '##-##-####',
+  },
+  {
+    translations: {
+      en: 'Bhutan',
+      sv: 'Bhutan',
+      de: 'Bhutan',
+      fr: 'Bhoutan',
+      es: 'Bután',
+      ru: 'Бутан',
+      uk: 'Бутан',
+    },
+    flag: 'https://flagcdn.com/w320/bt.png',
+    callingCode: '+975',
+    phoneFormat: ['17-###-###', '#-###-###'],
   },
   {
     translations: {
@@ -174,7 +314,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/bo.png',
     callingCode: '+591',
-    phoneFormat: '9-999-9999',
+    phoneFormat: '#-###-####',
   },
   {
     translations: {
@@ -188,7 +328,21 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/ba.png',
     callingCode: '+387',
-    phoneFormat: '00 000 000',
+    phoneFormat: ['##-#####', '##-####'],
+  },
+  {
+    translations: {
+      en: 'Botswana',
+      sv: 'Botswana',
+      de: 'Botswana',
+      fr: 'Botswana',
+      es: 'Botsuana',
+      ru: 'Ботсвана',
+      uk: 'Ботсвана',
+    },
+    flag: 'https://flagcdn.com/w320/bw.png',
+    callingCode: '+267',
+    phoneFormat: '##-###-####',
   },
   {
     translations: {
@@ -202,7 +356,35 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/br.png',
     callingCode: '+55',
-    phoneFormat: '00 0000-0000',
+    phoneFormat: ['(##)####-####', '(##)7###-####', '(##)9####-####'],
+  },
+  {
+    translations: {
+      en: 'British Indian Ocean Territory',
+      sv: 'Brittiska Indiska oceanen territorium',
+      de: 'Britisches Territorium im Indischen Ozean',
+      fr: "Territoire britannique de l'océan Indien",
+      es: 'Territorio Británico del Océano Índico',
+      ru: 'Британская территория в Индийском океане',
+      uk: 'Британська територія в Індійському океані',
+    },
+    flag: 'https://flagcdn.com/w320/io.png',
+    callingCode: '+246',
+    phoneFormat: '###-####',
+  },
+  {
+    translations: {
+      en: 'Brunei',
+      sv: 'Brunei',
+      de: 'Brunei',
+      fr: 'Brunei',
+      es: 'Brunéi',
+      ru: 'Бруней',
+      uk: 'Бруней',
+    },
+    flag: 'https://flagcdn.com/w320/bn.png',
+    callingCode: '+673',
+    phoneFormat: '###-####',
   },
   {
     translations: {
@@ -216,7 +398,35 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/bg.png',
     callingCode: '+359',
-    phoneFormat: '(999)999-999',
+    phoneFormat: '(###)###-###',
+  },
+  {
+    translations: {
+      en: 'Burkina Faso',
+      sv: 'Burkina Faso',
+      de: 'Burkina Faso',
+      fr: 'Burkina Faso',
+      es: 'Burkina Faso',
+      ru: 'Буркина-Фасо',
+      uk: 'Буркіна-Фасо',
+    },
+    flag: 'https://flagcdn.com/w320/bf.png',
+    callingCode: '+226',
+    phoneFormat: '##-##-####',
+  },
+  {
+    translations: {
+      en: 'Burundi',
+      sv: 'Burundi',
+      de: 'Burundi',
+      fr: 'Burundi',
+      es: 'Burundi',
+      ru: 'Бурунди',
+      uk: 'Бурунді',
+    },
+    flag: 'https://flagcdn.com/w320/bi.png',
+    callingCode: '+257',
+    phoneFormat: '##-##-####',
   },
   {
     translations: {
@@ -230,7 +440,21 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/kh.png',
     callingCode: '+855',
-    phoneFormat: '00 000 000',
+    phoneFormat: '##-###-###',
+  },
+  {
+    translations: {
+      en: 'Cameroon',
+      sv: 'Kamerun',
+      de: 'Kamerun',
+      fr: 'Cameroun',
+      es: 'Camerún',
+      ru: 'Камерун',
+      uk: 'Камерун',
+    },
+    flag: 'https://flagcdn.com/w320/cm.png',
+    callingCode: '+237',
+    phoneFormat: '####-####',
   },
   {
     translations: {
@@ -244,8 +468,79 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/ca.png',
     callingCode: '+1',
-    phoneFormat: '(999)999-9999',
+    phoneFormat: '(###)###-####',
   },
+  {
+    translations: {
+      en: 'Cape Verde',
+      sv: 'Kap Verde',
+      de: 'Kap Verde',
+      fr: 'Cap-Vert',
+      es: 'Cabo Verde',
+      ru: 'Кабо-Верде',
+      uk: 'Кабо-Верде',
+    },
+    flag: 'https://flagcdn.com/w320/cv.png',
+    callingCode: '+238',
+    phoneFormat: '(###)##-##',
+  },
+  {
+    translations: {
+      en: 'Caribbean Netherlands',
+      sv: 'Karibiska Nederländerna',
+      de: 'Karibische Niederlande',
+      fr: 'Pays-Bas caribéens',
+      es: 'Países Bajos caribeños',
+      ru: 'Карибские Нидерланды',
+      uk: 'Карибські Нідерланди',
+    },
+    flag: 'https://flagcdn.com/w320/bq.png',
+    callingCode: '+599',
+    phoneFormat: '###-###',
+  },
+  {
+    translations: {
+      en: 'Cayman Islands',
+      sv: 'Caymanöarna',
+      de: 'Kaimaninseln',
+      fr: 'Îles Caïmans',
+      es: 'Islas Caimán',
+      ru: 'Каймановы Острова',
+      uk: 'Кайманові Острови',
+    },
+    flag: 'https://flagcdn.com/w320/ky.png',
+    callingCode: '+1345',
+    phoneFormat: '###-####',
+  },
+  {
+    translations: {
+      en: 'Central African Republic',
+      sv: 'Centralafrikanska republiken',
+      de: 'Zentralafrikanische Republik',
+      fr: 'République centrafricaine',
+      es: 'República Centroafricana',
+      ru: 'Центральноафриканская Республика',
+      uk: 'Центральноафриканська Республіка',
+    },
+    flag: 'https://flagcdn.com/w320/cf.png',
+    callingCode: '+236',
+    phoneFormat: '##-##-####',
+  },
+  {
+    translations: {
+      en: 'Chad',
+      sv: 'Tchad',
+      de: 'Tschad',
+      fr: 'Tchad',
+      es: 'Chad',
+      ru: 'Чад',
+      uk: 'Чад',
+    },
+    flag: 'https://flagcdn.com/w320/td.png',
+    callingCode: '+235',
+    phoneFormat: '##-##-##-##',
+  },
+
   {
     translations: {
       en: 'Chile',
@@ -258,7 +553,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/cl.png',
     callingCode: '+56',
-    phoneFormat: '9-9999-9999',
+    phoneFormat: '#-####-####',
   },
   {
     translations: {
@@ -286,7 +581,133 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/co.png',
     callingCode: '+57',
-    phoneFormat: '(999)999-9999',
+    phoneFormat: '(###)###-####',
+  },
+  {
+    translations: {
+      en: 'Comoros',
+      sv: 'Komorerna',
+      de: 'Komoren',
+      fr: 'Comores',
+      es: 'Comoras',
+      ru: 'Коморы',
+      uk: 'Комори',
+    },
+    flag: 'https://flagcdn.com/w320/km.png',
+    callingCode: '+269',
+    phoneFormat: '##-##-####',
+  },
+  {
+    translations: {
+      en: 'Congo',
+      sv: 'Kongo',
+      de: 'Kongo',
+      fr: 'Congo',
+      es: 'Congo',
+      ru: 'Конго',
+      uk: 'Конго',
+    },
+    flag: 'https://flagcdn.com/w320/cg.png',
+    callingCode: '+242',
+    phoneFormat: '##-##-##',
+  },
+  {
+    translations: {
+      en: 'Democratic Republic of the Congo',
+      sv: 'Demokratiska republiken Kongo',
+      de: 'Demokratische Republik Kongo',
+      fr: 'République démocratique du Congo',
+      es: 'República Democrática del Congo',
+      ru: 'Демократическая Республика Конго',
+      uk: 'Демократична Республіка Конго',
+    },
+    flag: 'https://flagcdn.com/w320/cd.png',
+    callingCode: '+243',
+    phoneFormat: '##-##-####',
+  },
+  {
+    translations: {
+      en: 'Costa Rica',
+      sv: 'Costa Rica',
+      de: 'Costa Rica',
+      fr: 'Costa Rica',
+      es: 'Costa Rica',
+      ru: 'Коста-Рика',
+      uk: 'Коста-Ріка',
+    },
+    flag: 'https://flagcdn.com/w320/cr.png',
+    callingCode: '+506',
+    phoneFormat: '###-####',
+  },
+  {
+    translations: {
+      en: "Côte d'Ivoire",
+      sv: 'Elfenbenskusten',
+      de: 'Elfenbeinküste',
+      fr: "Côte d'Ivoire",
+      es: 'Costa de Marfil',
+      ru: "Кот-д'Ивуар",
+      uk: 'Кот-д’Івуар',
+    },
+    flag: 'https://flagcdn.com/w320/ci.png',
+    callingCode: '+225',
+    phoneFormat: '##-##-####',
+  },
+  {
+    translations: {
+      en: 'Croatia',
+      sv: 'Kroatien',
+      de: 'Kroatien',
+      fr: 'Croatie',
+      es: 'Croacia',
+      ru: 'Хорватия',
+      uk: 'Хорватія',
+    },
+    flag: 'https://flagcdn.com/w320/hr.png',
+    callingCode: '+385',
+    phoneFormat: '###-###-###',
+  },
+  {
+    translations: {
+      en: 'Cuba',
+      sv: 'Kuba',
+      de: 'Kuba',
+      fr: 'Cuba',
+      es: 'Cuba',
+      ru: 'Куба',
+      uk: 'Куба',
+    },
+    flag: 'https://flagcdn.com/w320/cu.png',
+    callingCode: '+53',
+    phoneFormat: '###-###-###',
+  },
+  {
+    translations: {
+      en: 'Curaçao',
+      sv: 'Curaçao',
+      de: 'Curaçao',
+      fr: 'Curaçao',
+      es: 'Curaçao',
+      ru: 'Кюрасао',
+      uk: 'Кюрасао',
+    },
+    flag: 'https://flagcdn.com/w320/cw.png',
+    callingCode: '+599',
+    phoneFormat: '###-###',
+  },
+  {
+    translations: {
+      en: 'Cyprus',
+      sv: 'Cypern',
+      de: 'Zypern',
+      fr: 'Chypre',
+      es: 'Chipre',
+      ru: 'Кипр',
+      uk: 'Кіпр',
+    },
+    flag: 'https://flagcdn.com/w320/cy.png',
+    callingCode: '+357',
+    phoneFormat: '###-###-###',
   },
   {
     translations: {
@@ -300,7 +721,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/cz.png',
     callingCode: '+420',
-    phoneFormat: '(999)999-999',
+    phoneFormat: '(###)###-###',
   },
   {
     translations: {
@@ -314,7 +735,63 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/dk.png',
     callingCode: '+45',
-    phoneFormat: '99-99-99-99',
+    phoneFormat: '##-##-##-##',
+  },
+  {
+    translations: {
+      en: 'Djibouti',
+      sv: 'Djibouti',
+      de: 'Dschibuti',
+      fr: 'Djibouti',
+      es: 'Yibuti',
+      ru: 'Джибути',
+      uk: 'Джибуті',
+    },
+    flag: 'https://flagcdn.com/w320/dj.png',
+    callingCode: '+253',
+    phoneFormat: '##-##-##',
+  },
+  {
+    translations: {
+      en: 'Dominica',
+      sv: 'Dominika',
+      de: 'Dominica',
+      fr: 'Dominique',
+      es: 'Dominica',
+      ru: 'Доминика',
+      uk: 'Домініка',
+    },
+    flag: 'https://flagcdn.com/w320/dm.png',
+    callingCode: '+1767',
+    phoneFormat: '###-####',
+  },
+  {
+    translations: {
+      en: 'Dominican Republic',
+      sv: 'Dominikanska republiken',
+      de: 'Dominikanische Republik',
+      fr: 'République dominicaine',
+      es: 'República Dominicana',
+      ru: 'Доминиканская Республика',
+      uk: 'Домініканська Республіка',
+    },
+    flag: 'https://flagcdn.com/w320/do.png',
+    callingCode: '+1809',
+    phoneFormat: '###-####',
+  },
+  {
+    translations: {
+      en: 'Ecuador',
+      sv: 'Ecuador',
+      de: 'Ecuador',
+      fr: 'Équateur',
+      es: 'Ecuador',
+      ru: 'Эквадор',
+      uk: 'Еквадор',
+    },
+    flag: 'https://flagcdn.com/w320/ec.png',
+    callingCode: '+593',
+    phoneFormat: '###-###-###',
   },
   {
     translations: {
@@ -328,7 +805,49 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/eg.png',
     callingCode: '+20',
-    phoneFormat: '(999)999-9999',
+    phoneFormat: '(###)###-####',
+  },
+  {
+    translations: {
+      en: 'El Salvador',
+      sv: 'El Salvador',
+      de: 'El Salvador',
+      fr: 'El Salvador',
+      es: 'El Salvador',
+      ru: 'Сальвадор',
+      uk: 'Сальвадор',
+    },
+    flag: 'https://flagcdn.com/w320/sv.png',
+    callingCode: '+503',
+    phoneFormat: '###-####',
+  },
+  {
+    translations: {
+      en: 'Equatorial Guinea',
+      sv: 'Ekvatorialguinea',
+      de: 'Äquatorialguinea',
+      fr: 'Guinée équatoriale',
+      es: 'Guinea Ecuatorial',
+      ru: 'Экваториальная Гвинея',
+      uk: 'Екваторіальна Гвінея',
+    },
+    flag: 'https://flagcdn.com/w320/gq.png',
+    callingCode: '+240',
+    phoneFormat: '##-##-##',
+  },
+  {
+    translations: {
+      en: 'Eritrea',
+      sv: 'Eritrea',
+      de: 'Eritrea',
+      fr: 'Érythrée',
+      es: 'Eritrea',
+      ru: 'Эритрея',
+      uk: 'Еритрея',
+    },
+    flag: 'https://flagcdn.com/w320/er.png',
+    callingCode: '+291',
+    phoneFormat: '##-###-###',
   },
   {
     translations: {
@@ -346,6 +865,34 @@ const countriesList: ICountry[] = [
   },
   {
     translations: {
+      en: 'Ethiopia',
+      sv: 'Etiopien',
+      de: 'Äthiopien',
+      fr: 'Éthiopie',
+      es: 'Etiopía',
+      ru: 'Эфиопия',
+      uk: 'Ефіопія',
+    },
+    flag: 'https://flagcdn.com/w320/et.png',
+    callingCode: '+251',
+    phoneFormat: '##-###-####',
+  },
+  {
+    translations: {
+      en: 'Fiji',
+      sv: 'Fiji',
+      de: 'Fidschi',
+      fr: 'Fidji',
+      es: 'Fiyi',
+      ru: 'Фиджи',
+      uk: 'Фіджі',
+    },
+    flag: 'https://flagcdn.com/w320/fj.png',
+    callingCode: '+679',
+    phoneFormat: '###-####',
+  },
+  {
+    translations: {
       en: 'Finland',
       sv: 'Finland',
       de: 'Finnland',
@@ -356,7 +903,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/fi.png',
     callingCode: '+358',
-    phoneFormat: '(999)999-99-99',
+    phoneFormat: '(###)###-##-##',
   },
   {
     translations: {
@@ -370,7 +917,63 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/fr.png',
     callingCode: '+33',
-    phoneFormat: '00 00 00 00 00',
+    phoneFormat: '(###)###-###',
+  },
+  {
+    translations: {
+      en: 'French Guiana',
+      sv: 'Franska Guyana',
+      de: 'Französisch-Guayana',
+      fr: 'Guyane française',
+      es: 'Guayana Francesa',
+      ru: 'Французская Гвиана',
+      uk: 'Французька Гвіана',
+    },
+    flag: 'https://flagcdn.com/w320/gf.png',
+    callingCode: '+594',
+    phoneFormat: '###-##-##',
+  },
+  {
+    translations: {
+      en: 'French Polynesia',
+      sv: 'Franska Polynesien',
+      de: 'Französisch-Polynesien',
+      fr: 'Polynésie française',
+      es: 'Polinesia Francesa',
+      ru: 'Французская Полинезия',
+      uk: 'Французька Полінезія',
+    },
+    flag: 'https://flagcdn.com/w320/pf.png',
+    callingCode: '+689',
+    phoneFormat: '##-##-##',
+  },
+  {
+    translations: {
+      en: 'Gabon',
+      sv: 'Gabon',
+      de: 'Gabun',
+      fr: 'Gabon',
+      es: 'Gabón',
+      ru: 'Габон',
+      uk: 'Габон',
+    },
+    flag: 'https://flagcdn.com/w320/ga.png',
+    callingCode: '+241',
+    phoneFormat: '#-##-##-##',
+  },
+  {
+    translations: {
+      en: 'Gambia',
+      sv: 'Gambia',
+      de: 'Gambia',
+      fr: 'Gambie',
+      es: 'Gambia',
+      ru: 'Гамбия',
+      uk: 'Гамбія',
+    },
+    flag: 'https://flagcdn.com/w320/gm.png',
+    callingCode: '+220',
+    phoneFormat: '(###)##-##',
   },
   {
     translations: {
@@ -384,7 +987,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/ge.png',
     callingCode: '+995',
-    phoneFormat: '(999)999-999',
+    phoneFormat: '(###)###-###',
   },
   {
     translations: {
@@ -398,7 +1001,14 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/de.png',
     callingCode: '+49',
-    phoneFormat: '000 000000',
+    phoneFormat: [
+      '(####)###-####',
+      '(###)###-####',
+      '(###)##-####',
+      '(###)##-###',
+      '(###)##-##',
+      '###-###',
+    ],
   },
   {
     translations: {
@@ -412,7 +1022,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/gh.png',
     callingCode: '+233',
-    phoneFormat: '(999)999-999',
+    phoneFormat: '(###)###-###',
   },
   {
     translations: {
@@ -426,7 +1036,161 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/gr.png',
     callingCode: '+30',
-    phoneFormat: '(999)999-9999',
+    phoneFormat: '(###)###-####',
+  },
+  {
+    translations: {
+      en: 'Greenland',
+      sv: 'Grönland',
+      de: 'Grönland',
+      fr: 'Groenland',
+      es: 'Groenlandia',
+      ru: 'Гренландия',
+      uk: 'Гренландія',
+    },
+    flag: 'https://flagcdn.com/w320/gl.png',
+    callingCode: '+299',
+    phoneFormat: '##-##-##',
+  },
+  {
+    translations: {
+      en: 'Grenada',
+      sv: 'Grenada',
+      de: 'Grenada',
+      fr: 'Grenade',
+      es: 'Granada',
+      ru: 'Гренада',
+      uk: 'Гренада',
+    },
+    flag: 'https://flagcdn.com/w320/gd.png',
+    callingCode: '+1473',
+    phoneFormat: '###-####',
+  },
+  {
+    translations: {
+      en: 'Guadeloupe',
+      sv: 'Guadeloupe',
+      de: 'Guadeloupe',
+      fr: 'Guadeloupe',
+      es: 'Guadalupe',
+      ru: 'Гваделупа',
+      uk: 'Гваделупа',
+    },
+    flag: 'https://flagcdn.com/w320/gp.png',
+    callingCode: '+590',
+    phoneFormat: '###-##-##',
+  }, //не страна?
+  {
+    translations: {
+      en: 'Guam',
+      sv: 'Guam',
+      de: 'Guam',
+      fr: 'Guam',
+      es: 'Guam',
+      ru: 'Гуам',
+      uk: 'Гуам',
+    },
+    flag: 'https://flagcdn.com/w320/gu.png',
+    callingCode: '+1671',
+    phoneFormat: '###-####',
+  },
+  {
+    translations: {
+      en: 'Guatemala',
+      sv: 'Guatemala',
+      de: 'Guatemala',
+      fr: 'Guatemala',
+      es: 'Guatemala',
+      ru: 'Гватемала',
+      uk: 'Гватемала',
+    },
+    flag: 'https://flagcdn.com/w320/gt.png',
+    callingCode: '+502',
+    phoneFormat: '#-###-####',
+  },
+  {
+    translations: {
+      en: 'Guinea',
+      sv: 'Guinea',
+      de: 'Guinea',
+      fr: 'Guinée',
+      es: 'Guinea',
+      ru: 'Гвинея',
+      uk: 'Гвінея',
+    },
+    flag: 'https://flagcdn.com/w320/gn.png',
+    callingCode: '+224',
+    phoneFormat: '##-###-###',
+  },
+  {
+    translations: {
+      en: 'Guinea-Bissau',
+      sv: 'Guinea-Bissau',
+      de: 'Guinea-Bissau',
+      fr: 'Guinée-Bissau',
+      es: 'Guinea-Bisáu',
+      ru: 'Гвинея-Бисау',
+      uk: 'Гвінея-Бісау',
+    },
+    flag: 'https://flagcdn.com/w320/gw.png',
+    callingCode: '+245',
+    phoneFormat: '#-######',
+  },
+  {
+    translations: {
+      en: 'Guyana',
+      sv: 'Guyana',
+      de: 'Guyana',
+      fr: 'Guyana',
+      es: 'Guyana',
+      ru: 'Гайана',
+      uk: 'Гаяна',
+    },
+    flag: 'https://flagcdn.com/w320/gy.png',
+    callingCode: '+592',
+    phoneFormat: '###-####',
+  },
+  {
+    translations: {
+      en: 'Haiti',
+      sv: 'Haiti',
+      de: 'Haiti',
+      fr: 'Haïti',
+      es: 'Haití',
+      ru: 'Гаити',
+      uk: 'Гаїті',
+    },
+    flag: 'https://flagcdn.com/w320/ht.png',
+    callingCode: '+509',
+    phoneFormat: '##-##-####',
+  },
+  {
+    translations: {
+      en: 'Honduras',
+      sv: 'Honduras',
+      de: 'Honduras',
+      fr: 'Honduras',
+      es: 'Honduras',
+      ru: 'Гондурас',
+      uk: 'Гондурас',
+    },
+    flag: 'https://flagcdn.com/w320/hn.png',
+    callingCode: '+504',
+    phoneFormat: '####-####',
+  },
+  {
+    translations: {
+      en: 'Hong Kong',
+      sv: 'Hongkong',
+      de: 'Hongkong',
+      fr: 'Hong Kong',
+      es: 'Hong Kong',
+      ru: 'Гонконг',
+      uk: 'Гонконг',
+    },
+    flag: 'https://flagcdn.com/w320/hk.png',
+    callingCode: '+852',
+    phoneFormat: '####-####',
   },
   {
     translations: {
@@ -440,7 +1204,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/hu.png',
     callingCode: '+36',
-    phoneFormat: '(999)999-999',
+    phoneFormat: '(###)###-###',
   },
   {
     translations: {
@@ -454,7 +1218,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/is.png',
     callingCode: '+354',
-    phoneFormat: '999-9999',
+    phoneFormat: '###-####',
   },
   {
     translations: {
@@ -468,7 +1232,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/in.png',
     callingCode: '+91',
-    phoneFormat: '(9999)999-999',
+    phoneFormat: '(####)###-###',
   },
   {
     translations: {
@@ -482,7 +1246,14 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/id.png',
     callingCode: '+62',
-    phoneFormat: '00 0000 0000',
+    phoneFormat: [
+      '(8##)###-####',
+      '##-###-##',
+      '##-###-###',
+      '##-###-####',
+      '(8##)###-###',
+      '(8##)###-##-###',
+    ],
   },
   {
     translations: {
@@ -496,7 +1267,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/ir.png',
     callingCode: '+98',
-    phoneFormat: '(999)999-9999',
+    phoneFormat: '(###)###-####',
   },
   {
     translations: {
@@ -510,7 +1281,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/iq.png',
     callingCode: '+964',
-    phoneFormat: '(999)999-9999',
+    phoneFormat: '(###)###-####',
   },
   {
     translations: {
@@ -524,7 +1295,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/ie.png',
     callingCode: '+353',
-    phoneFormat: '(999)999-999',
+    phoneFormat: '(###)###-###',
   },
   {
     translations: {
@@ -538,7 +1309,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/il.png',
     callingCode: '+972',
-    phoneFormat: '00 000 0000',
+    phoneFormat: ['5#-###-####', '#-###-####'],
   },
   {
     translations: {
@@ -552,7 +1323,21 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/it.png',
     callingCode: '+39',
-    phoneFormat: '(999)9999-999',
+    phoneFormat: '(###)####-###',
+  },
+  {
+    translations: {
+      en: 'Jamaica',
+      sv: 'Jamaika',
+      de: 'Jamaika',
+      fr: 'Jamaïque',
+      es: 'Jamaica',
+      ru: 'Ямайка',
+      uk: 'Ямайка',
+    },
+    flag: 'https://flagcdn.com/w320/jm.png',
+    callingCode: '+1876',
+    phoneFormat: '###-####',
   },
   {
     translations: {
@@ -566,7 +1351,21 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/jp.png',
     callingCode: '+81',
-    phoneFormat: '00-0000-0000',
+    phoneFormat: ['##-####-####', '(###)###-###'],
+  },
+  {
+    translations: {
+      en: 'Jordan',
+      sv: 'Jordanien',
+      de: 'Jordanien',
+      fr: 'Jordanie',
+      es: 'Jordania',
+      ru: 'Иордания',
+      uk: 'Йорданія',
+    },
+    flag: 'https://flagcdn.com/w320/jo.png',
+    callingCode: '+962',
+    phoneFormat: '#-####-####',
   },
   {
     translations: {
@@ -580,7 +1379,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/kz.png',
     callingCode: '+7',
-    phoneFormat: '00 000 00 00',
+    phoneFormat: ['(6##)###-##-##', '(7##)###-##-##'],
   },
   {
     translations: {
@@ -594,7 +1393,35 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/ke.png',
     callingCode: '+254',
-    phoneFormat: '999-999999',
+    phoneFormat: '###-######',
+  },
+  {
+    translations: {
+      en: 'Kiribati',
+      sv: 'Kiribati',
+      de: 'Kiribati',
+      fr: 'Kiribati',
+      es: 'Kiribati',
+      ru: 'Кирибати',
+      uk: 'Кірібаті',
+    },
+    flag: 'https://flagcdn.com/w320/ki.png',
+    callingCode: '+686',
+    phoneFormat: '##-###',
+  },
+  {
+    translations: {
+      en: 'Kosovo',
+      sv: 'Kosovo',
+      de: 'Kosovo',
+      fr: 'Kosovo',
+      es: 'Kosovo',
+      ru: 'Косово',
+      uk: 'Косово',
+    },
+    flag: 'https://flagcdn.com/w320/xk.png',
+    callingCode: '+383',
+    phoneFormat: '##-###-###',
   },
   {
     translations: {
@@ -608,7 +1435,35 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/kw.png',
     callingCode: '+965',
-    phoneFormat: '9999-9999',
+    phoneFormat: '####-####',
+  },
+  {
+    translations: {
+      en: 'Kyrgyzstan',
+      sv: 'Kyrgyzstan',
+      de: 'Kirgisistan',
+      fr: 'Kirghizistan',
+      es: 'Kirguistán',
+      ru: 'Киргизия',
+      uk: 'Киргизстан',
+    },
+    flag: 'https://flagcdn.com/w320/kg.png',
+    callingCode: '+996',
+    phoneFormat: '(###)###-###',
+  },
+  {
+    translations: {
+      en: 'Laos',
+      sv: 'Laos',
+      de: 'Laos',
+      fr: 'Laos',
+      es: 'Laos',
+      ru: 'Лаос',
+      uk: 'Лаос',
+    },
+    flag: 'https://flagcdn.com/w320/la.png',
+    callingCode: '+856',
+    phoneFormat: ['##-###-###', '(20##)###-###'],
   },
   {
     translations: {
@@ -622,7 +1477,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/lv.png',
     callingCode: '+371',
-    phoneFormat: '99-999-999',
+    phoneFormat: '##-###-###',
   },
   {
     translations: {
@@ -636,7 +1491,63 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/lb.png',
     callingCode: '+961',
-    phoneFormat: '00 000 0000',
+    phoneFormat: ['#-###-###', '##-###-###'],
+  },
+  {
+    translations: {
+      en: 'Lesotho',
+      sv: 'Lesotho',
+      de: 'Lesotho',
+      fr: 'Lesotho',
+      es: 'Lesoto',
+      ru: 'Лесото',
+      uk: 'Лесото',
+    },
+    flag: 'https://flagcdn.com/w320/ls.png',
+    callingCode: '+266',
+    phoneFormat: '#-###-####',
+  },
+  {
+    translations: {
+      en: 'Liberia',
+      sv: 'Liberia',
+      de: 'Liberia',
+      fr: 'Libéria',
+      es: 'Liberia',
+      ru: 'Либерия',
+      uk: 'Ліберія',
+    },
+    flag: 'https://flagcdn.com/w320/lr.png',
+    callingCode: '+231',
+    phoneFormat: '##-###-###',
+  },
+  {
+    translations: {
+      en: 'Libya',
+      sv: 'Libyen',
+      de: 'Libyen',
+      fr: 'Libye',
+      es: 'Libia',
+      ru: 'Ливия',
+      uk: 'Лівія',
+    },
+    flag: 'https://flagcdn.com/w320/ly.png',
+    callingCode: '+218',
+    phoneFormat: ['##-###-###', '21-###-####'],
+  },
+  {
+    translations: {
+      en: 'Liechtenstein',
+      sv: 'Liechtenstein',
+      de: 'Liechtenstein',
+      fr: 'Liechtenstein',
+      es: 'Liechtenstein',
+      ru: 'Лихтенштейн',
+      uk: 'Ліхтенштейн',
+    },
+    flag: 'https://flagcdn.com/w320/li.png',
+    callingCode: '+423',
+    phoneFormat: '(###)###-####',
   },
   {
     translations: {
@@ -650,7 +1561,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/lt.png',
     callingCode: '+370',
-    phoneFormat: '(999)99-999',
+    phoneFormat: '(###)##-###',
   },
   {
     translations: {
@@ -664,7 +1575,63 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/lu.png',
     callingCode: '+352',
-    phoneFormat: '(999)999-999',
+    phoneFormat: '(###)###-###',
+  },
+  {
+    translations: {
+      en: 'Macau',
+      sv: 'Macau',
+      de: 'Macao',
+      fr: 'Macao',
+      es: 'Macao',
+      ru: 'Макао',
+      uk: 'Макао',
+    },
+    flag: 'https://flagcdn.com/w320/mo.png',
+    callingCode: '+853',
+    phoneFormat: '####-####',
+  },
+  {
+    translations: {
+      en: 'North Macedonia',
+      sv: 'Nordmakedonien',
+      de: 'Nordmazedonien',
+      fr: 'Macédoine du Nord',
+      es: 'Macedonia del Norte',
+      ru: 'Северная Македония',
+      uk: 'Північна Македонія',
+    },
+    flag: 'https://flagcdn.com/w320/mk.png',
+    callingCode: '+389',
+    phoneFormat: '##-###-###',
+  },
+  {
+    translations: {
+      en: 'Madagascar',
+      sv: 'Madagaskar',
+      de: 'Madagaskar',
+      fr: 'Madagascar',
+      es: 'Madagascar',
+      ru: 'Мадагаскар',
+      uk: 'Мадагаскар',
+    },
+    flag: 'https://flagcdn.com/w320/mg.png',
+    callingCode: '+261',
+    phoneFormat: '##-##-#####',
+  },
+  {
+    translations: {
+      en: 'Malawi',
+      sv: 'Malawi',
+      de: 'Malawi',
+      fr: 'Malawi',
+      es: 'Malawi',
+      ru: 'Малави',
+      uk: 'Малаві',
+    },
+    flag: 'https://flagcdn.com/w320/mw.png',
+    callingCode: '+265',
+    phoneFormat: ['1-###-###', '#-####-####'],
   },
   {
     translations: {
@@ -678,7 +1645,105 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/my.png',
     callingCode: '+60',
-    phoneFormat: '000 000 0000',
+    phoneFormat: ['##-###-####', '(###)###-###', '##-###-###', '#-###-###'],
+  },
+  {
+    translations: {
+      en: 'Maldives',
+      sv: 'Maldiverna',
+      de: 'Maldiven',
+      fr: 'Maldives',
+      es: 'Maldivas',
+      ru: 'Мальдивы',
+      uk: 'Мальдіви',
+    },
+    flag: 'https://flagcdn.com/w320/mv.png',
+    callingCode: '+960',
+    phoneFormat: '###-####',
+  },
+  {
+    translations: {
+      en: 'Mali',
+      sv: 'Mali',
+      de: 'Mali',
+      fr: 'Mali',
+      es: 'Mali',
+      ru: 'Мали',
+      uk: 'Малі',
+    },
+    flag: 'https://flagcdn.com/w320/ml.png',
+    callingCode: '+223',
+    phoneFormat: '##-##-####',
+  },
+  {
+    translations: {
+      en: 'Malta',
+      sv: 'Malta',
+      de: 'Malta',
+      fr: 'Malte',
+      es: 'Malta',
+      ru: 'Мальта',
+      uk: 'Мальта',
+    },
+    flag: 'https://flagcdn.com/w320/mt.png',
+    callingCode: '+356',
+    phoneFormat: '####-####',
+  },
+  {
+    translations: {
+      en: 'Marshall Islands',
+      sv: 'Marshallöarna',
+      de: 'Marshallinseln',
+      fr: 'Îles Marshall',
+      es: 'Islas Marshall',
+      ru: 'Маршалловы Острова',
+      uk: 'Маршаллові Острови',
+    },
+    flag: 'https://flagcdn.com/w320/mh.png',
+    callingCode: '+692',
+    phoneFormat: '###-####',
+  },
+  {
+    translations: {
+      en: 'Martinique',
+      sv: 'Martinique',
+      de: 'Martinique',
+      fr: 'Martinique',
+      es: 'Martinica',
+      ru: 'Мартиника',
+      uk: 'Мартініка',
+    },
+    flag: 'https://flagcdn.com/w320/mq.png',
+    callingCode: '+596',
+    phoneFormat: '(###)##-##-##',
+  },
+  {
+    translations: {
+      en: 'Mauritania',
+      sv: 'Mauretanien',
+      de: 'Mauretanien',
+      fr: 'Mauritanie',
+      es: 'Mauritania',
+      ru: 'Мавритания',
+      uk: 'Мавританія',
+    },
+    flag: 'https://flagcdn.com/w320/mr.png',
+    callingCode: '+222',
+    phoneFormat: '##-##-####',
+  },
+  {
+    translations: {
+      en: 'Mauritius',
+      sv: 'Mauritius',
+      de: 'Mauritius',
+      fr: 'Maurice',
+      es: 'Mauricio',
+      ru: 'Маврикий',
+      uk: 'Маврикій',
+    },
+    flag: 'https://flagcdn.com/w320/mu.png',
+    callingCode: '+230',
+    phoneFormat: '###-####',
   },
   {
     translations: {
@@ -692,7 +1757,77 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/mx.png',
     callingCode: '+52',
-    phoneFormat: '00 0000-0000',
+    phoneFormat: ['(###)###-####', '##-##-####'],
+  },
+  {
+    translations: {
+      en: 'Micronesia',
+      sv: 'Mikronesiska federationen',
+      de: 'Mikronesien',
+      fr: 'Micronésie',
+      es: 'Micronesia',
+      ru: 'Микронезия',
+      uk: 'Мікронезія',
+    },
+    flag: 'https://flagcdn.com/w320/fm.png',
+    callingCode: '+691',
+    phoneFormat: '###-####',
+  },
+  {
+    translations: {
+      en: 'Moldova',
+      sv: 'Moldavien',
+      de: 'Moldau',
+      fr: 'Moldavie',
+      es: 'Moldavia',
+      ru: 'Молдова',
+      uk: 'Молдова',
+    },
+    flag: 'https://flagcdn.com/w320/md.png',
+    callingCode: '+373',
+    phoneFormat: '####-####',
+  },
+  {
+    translations: {
+      en: 'Monaco',
+      sv: 'Monaco',
+      de: 'Monaco',
+      fr: 'Monaco',
+      es: 'Mónaco',
+      ru: 'Монако',
+      uk: 'Монако',
+    },
+    flag: 'https://flagcdn.com/w320/mc.png',
+    callingCode: '+377',
+    phoneFormat: ['(###)###-###', '##-###-###'],
+  },
+  {
+    translations: {
+      en: 'Mongolia',
+      sv: 'Mongoliet',
+      de: 'Mongolei',
+      fr: 'Mongolie',
+      es: 'Mongolia',
+      ru: 'Монголия',
+      uk: 'Монголія',
+    },
+    flag: 'https://flagcdn.com/w320/mn.png',
+    callingCode: '+976',
+    phoneFormat: '##-##-####',
+  },
+  {
+    translations: {
+      en: 'Montenegro',
+      sv: 'Montenegro',
+      de: 'Montenegro',
+      fr: 'Monténégro',
+      es: 'Montenegro',
+      ru: 'Черногория',
+      uk: 'Чорногорія',
+    },
+    flag: 'https://flagcdn.com/w320/me.png',
+    callingCode: '+382',
+    phoneFormat: '##-###-###',
   },
   {
     translations: {
@@ -706,7 +1841,35 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/ma.png',
     callingCode: '+212',
-    phoneFormat: '99-9999-999',
+    phoneFormat: '##-####-###',
+  },
+  {
+    translations: {
+      en: 'Mozambique',
+      sv: 'Moçambique',
+      de: 'Mosambik',
+      fr: 'Mozambique',
+      es: 'Mozambique',
+      ru: 'Мозамбик',
+      uk: 'Мозамбік',
+    },
+    flag: 'https://flagcdn.com/w320/mz.png',
+    callingCode: '+258',
+    phoneFormat: '##-###-###',
+  },
+  {
+    translations: {
+      en: 'Myanmar',
+      sv: 'Myanmar',
+      de: 'Myanmar',
+      fr: 'Myanmar',
+      es: 'Myanmar',
+      ru: 'Мьянма',
+      uk: "М'янма",
+    },
+    flag: 'https://flagcdn.com/w320/mm.png',
+    callingCode: '+95',
+    phoneFormat: ['##-###-###', '#-###-###', '###-###'],
   },
   {
     translations: {
@@ -719,8 +1882,8 @@ const countriesList: ICountry[] = [
       uk: 'Непал',
     },
     flag: 'https://flagcdn.com/w320/np.png',
-    callingCode: '+977',
-    phoneFormat: '99-999-999',
+    callingCode: '+#77',
+    phoneFormat: '##-###-###',
   },
   {
     translations: {
@@ -734,7 +1897,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/nl.png',
     callingCode: '+31',
-    phoneFormat: '99-999-9999',
+    phoneFormat: '##-###-####',
   },
   {
     translations: {
@@ -776,7 +1939,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/no.png',
     callingCode: '+47',
-    phoneFormat: '(999)99-999',
+    phoneFormat: '(###)##-###',
   },
   {
     translations: {
@@ -789,8 +1952,8 @@ const countriesList: ICountry[] = [
       uk: 'Пакистан',
     },
     flag: 'https://flagcdn.com/w320/pk.png',
-    callingCode: '+92',
-    phoneFormat: '(999)999-9999',
+    callingCode: '+#2',
+    phoneFormat: '(###)###-####',
   },
   {
     translations: {
@@ -804,7 +1967,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/pe.png',
     callingCode: '+51',
-    phoneFormat: '(999)999-999',
+    phoneFormat: '(###)###-###',
   },
   {
     translations: {
@@ -818,7 +1981,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/ph.png',
     callingCode: '+63',
-    phoneFormat: '(999)999-9999',
+    phoneFormat: '(###)###-####',
   },
   {
     translations: {
@@ -832,7 +1995,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/pl.png',
     callingCode: '+48',
-    phoneFormat: '(999)999-999',
+    phoneFormat: '(###)###-###',
   },
   {
     translations: {
@@ -846,7 +2009,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/pt.png',
     callingCode: '+351',
-    phoneFormat: '99-999-9999',
+    phoneFormat: '##-###-####',
   },
   {
     translations: {
@@ -860,7 +2023,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/ro.png',
     callingCode: '+40',
-    phoneFormat: '99-999-9999',
+    phoneFormat: '##-###-####',
   },
   {
     translations: {
@@ -874,7 +2037,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/ru.png',
     callingCode: '+7',
-    phoneFormat: '(999)999-99-99',
+    phoneFormat: '(###)###-##-##',
   },
   {
     translations: {
@@ -887,7 +2050,7 @@ const countriesList: ICountry[] = [
       uk: 'Саудівська Аравія',
     },
     flag: 'https://flagcdn.com/w320/sa.png',
-    callingCode: '+966',
+    callingCode: '+#66',
     phoneFormat: '00 000 0000',
   },
   {
@@ -930,7 +2093,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/es.png',
     callingCode: '+34',
-    phoneFormat: '(999)999-999',
+    phoneFormat: '(###)###-###',
   },
   {
     translations: {
@@ -944,7 +2107,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/se.png',
     callingCode: '+46',
-    phoneFormat: '99-999-9999',
+    phoneFormat: '##-###-####',
   },
   {
     translations: {
@@ -958,7 +2121,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/ch.png',
     callingCode: '+41',
-    phoneFormat: '99-999-9999',
+    phoneFormat: '##-###-####',
   },
   {
     translations: {
@@ -971,8 +2134,8 @@ const countriesList: ICountry[] = [
       uk: 'Туреччина',
     },
     flag: 'https://flagcdn.com/w320/tr.png',
-    callingCode: '+90',
-    phoneFormat: '(999)999-9999',
+    callingCode: '+#0',
+    phoneFormat: '(###)###-####',
   },
   {
     translations: {
@@ -986,7 +2149,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/ua.png',
     callingCode: '+380',
-    phoneFormat: '(99)999-99-99',
+    phoneFormat: '(##)###-##-##',
   },
   {
     translations: {
@@ -999,7 +2162,7 @@ const countriesList: ICountry[] = [
       uk: "Об'єднані Арабські Емірати",
     },
     flag: 'https://flagcdn.com/w320/ae.png',
-    callingCode: '+971',
+    callingCode: '+#71',
     phoneFormat: '000 000 0000',
   },
   {
@@ -1014,7 +2177,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/gb.png',
     callingCode: '+44',
-    phoneFormat: '99-9999-9999',
+    phoneFormat: '##-####-####',
   },
   {
     translations: {
@@ -1028,7 +2191,7 @@ const countriesList: ICountry[] = [
     },
     flag: 'https://flagcdn.com/w320/us.png',
     callingCode: '+1',
-    phoneFormat: '(999)999-9999',
+    phoneFormat: '(###)###-####',
   },
   {
     translations: {

@@ -8,7 +8,7 @@ import { cn } from '@utils/cn';
 import { Label, Placeholder } from '@enums/i18nConstants';
 
 interface INameProps {
-  className: string;
+  className?: string;
 }
 
 const Name: FC<INameProps> = ({ className }) => {

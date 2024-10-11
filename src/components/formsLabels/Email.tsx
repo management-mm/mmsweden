@@ -8,7 +8,7 @@ import { cn } from '@utils/cn';
 import { Label, Placeholder } from '@enums/i18nConstants';
 
 interface IEmailProps {
-  className: string;
+  className?: string;
 }
 
 const Email: FC<IEmailProps> = ({ className }) => {

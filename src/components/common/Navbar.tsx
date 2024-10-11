@@ -19,18 +19,21 @@ const navVariants = cva('flex', {
   },
 });
 
-const ulVariants = cva('flex font-inter font-medium uppercase text-[12px]', {
-  variants: {
-    intent: {
-      header: 'gap-[50px] items-center',
-      mobileMenu: 'flex-col gap-[50px]',
-      footer: 'flex-col text-secondary gap-[44px] md:gap-[22px]',
+const ulVariants = cva(
+  'flex font-inter font-medium uppercase text-[12px] text-primary',
+  {
+    variants: {
+      intent: {
+        header: 'gap-[50px] items-center',
+        mobileMenu: 'flex-col gap-[50px]',
+        footer: 'flex-col text-secondary gap-[44px] md:gap-[22px]',
+      },
     },
-  },
-  defaultVariants: {
-    intent: 'header',
-  },
-});
+    defaultVariants: {
+      intent: 'header',
+    },
+  }
+);
 
 type NavbarProps = VariantProps<typeof navVariants> &
   VariantProps<typeof ulVariants>;
@@ -41,16 +44,60 @@ const Navbar = ({ intent }: NavbarProps) => {
     <nav className={cn(navVariants({ intent }))}>
       <ul className={cn(ulVariants({ intent }))}>
         <li>
-          <NavLink to="all-products">{t('NavBar.AllProducts')}</NavLink>
+          <NavLink
+            to="all-products"
+            className={({ isActive }) =>
+              cn(
+                isActive
+                  ? 'rounded-[6px] bg-primary p-2 text-secondary'
+                  : 'bg-transparent text-primary'
+              )
+            }
+          >
+            {t('NavBar.AllProducts')}
+          </NavLink>
         </li>
         <li>
-          <NavLink to="sell-to-us">{t('NavBar.SellToUs')}</NavLink>
+          <NavLink
+            to="sell-to-us"
+            className={({ isActive }) =>
+              cn(
+                isActive
+                  ? 'rounded-[6px] bg-primary p-2 text-secondary'
+                  : 'bg-transparent text-primary'
+              )
+            }
+          >
+            {t('NavBar.SellToUs')}
+          </NavLink>
         </li>
         <li>
-          <NavLink to="about-us">{t('NavBar.AboutUs')}</NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              cn(
+                isActive
+                  ? 'rounded-[6px] bg-primary p-2 text-secondary'
+                  : 'bg-transparent text-primary'
+              )
+            }
+            to="about-us"
+          >
+            {t('NavBar.AboutUs')}
+          </NavLink>
         </li>
         <li>
-          <NavLink to="contact-us">{t('NavBar.ContactUs')}</NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              cn(
+                isActive
+                  ? 'rounded-[6px] bg-primary p-2 text-secondary'
+                  : 'bg-transparent text-primary'
+              )
+            }
+            to="contact-us"
+          >
+            {t('NavBar.ContactUs')}
+          </NavLink>
         </li>
       </ul>
     </nav>

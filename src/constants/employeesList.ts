@@ -1,3 +1,5 @@
+import { Employee } from '@enums/i18nConstants';
+
 export interface IEmployeeItem {
   title: string;
   desc: string;
@@ -9,43 +11,43 @@ export interface IEmployeeItem {
 
 const employeesList: IEmployeeItem[] = [
   {
-    title: 'Hampus Wahlgren',
-    desc: 'SALES Sweden & Abroad',
+    title: Employee.Hampus,
+    desc: Employee.HampusDesc,
     phone: '+46 733 38 78 37',
     phoneHref: '+46733387837',
     email: 'hampus@mmsweden.se',
   },
   {
-    title: 'Håkan Wahlgren',
-    desc: 'CEO & PURCHASER',
+    title: Employee.Hakan,
+    desc: Employee.HakanDesc,
     phone: '+46 708 47 86 47',
     phoneHref: '+46708478647',
     email: 'hakan@mmsweden.se',
   },
   {
-    title: 'Erika Walgreen',
-    desc: 'ADMIN. MANAGER & REAL ESTATE',
+    title: Employee.Erika,
+    desc: Employee.ErikaDesc,
     phone: '+46 707 97 68 38',
     phoneHref: '+46707976838',
     email: 'erika@mmsweden.se',
   },
   {
-    title: 'Eva Andersson',
-    desc: 'ECONOMY',
+    title: Employee.Eva,
+    desc: Employee.EvaDesc,
     phone: '+46 411 199 00',
     phoneHref: '+4641119900',
     email: 'eva@mmsweden.se',
   },
   {
-    title: 'Catharine Wahlgren',
-    desc: 'ECONOMY',
+    title: Employee.Catharine,
+    desc: Employee.CatharineDesc,
     phone: '+46 411 199 00',
     phoneHref: '+4641119900',
     email: 'catharine@mmsweden.se',
   },
   {
-    title: 'Artem Bortnik',
-    desc: 'SALES ASSISTANT',
+    title: Employee.Artem,
+    desc: Employee.ArtemDesc,
     phone: '+46 73-508 63 72',
     phoneHref: '+46735086372',
     additionalInfo: '(Call/WhatsApp)',

@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import DecorativeLine from '@components/common/DecorativeLine';
 import SvgIcon from '@components/common/SvgIcon';
 
+import { Title } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
 import type { IInstructionsItem } from '@constants/instructionsList';
@@ -24,7 +25,7 @@ const InstructionsItem: FC<IInstructionsItemProps> = ({
   return (
     <li className="flex flex-col items-center rounded-[4px] px-[14px] pb-[8px] pt-[16px] shadow-card lg:w-[calc((100%-2*30px)/3)]">
       <span className="mb-[22px] rounded-[32px] bg-secondary px-[12px] py-[2px] text-[12px] font-medium uppercase">
-        Step {step}
+        {t(Title.Step, { number: step })}
       </span>
       <SvgIcon
         className="mb-[16px] fill-primary"

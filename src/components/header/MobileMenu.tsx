@@ -19,7 +19,7 @@ const MobileMenu: FC<IMobileMenuProps> = ({
   return (
     <div
       className={clsx(
-        'fixed top-0 h-[100vh] w-[250px] bg-white py-[100px] transition-all duration-1000 ease-in-out',
+        'fixed top-0 z-10 h-[100vh] w-[250px] bg-white py-[100px] transition-all duration-1000 ease-in-out',
         isOpen
           ? 'right-0 shadow-openMobileMenuShadow'
           : 'right-[-250px] shadow-closeMobileMenuShadow'

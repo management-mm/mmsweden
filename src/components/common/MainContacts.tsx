@@ -1,13 +1,27 @@
+import type { FC } from 'react';
+
 import SvgIcon from './SvgIcon';
+
+import { cn } from '@utils/cn';
 
 import { IconId } from '@enums/iconsSpriteId';
 
-const MainContacts = ({}) => {
+interface IMainContactsProps {
+  containerClassName?: string;
+  iconClassName?: string;
+}
+
+const MainContacts: FC<IMainContactsProps> = ({
+  containerClassName,
+  iconClassName,
+}) => {
   return (
-    <address className="mb-[22px] flex flex-col gap-[22px]">
+    <address
+      className={cn('mb-[22px] flex flex-col gap-[22px]', containerClassName)}
+    >
       <a className="flex items-center not-italic" href="tel:+4641119900">
         <SvgIcon
-          className="mr-[5px] fill-secondary"
+          className={cn('mr-[5px] fill-secondary', iconClassName)}
           iconId={IconId.Phone}
           size={{ width: 16, height: 16 }}
         />
@@ -18,7 +32,7 @@ const MainContacts = ({}) => {
         href="mailto:info@mmsweden.se"
       >
         <SvgIcon
-          className="mr-[5px] fill-secondary"
+          className={cn('mr-[5px] fill-secondary', iconClassName)}
           iconId={IconId.Email}
           size={{ width: 15, height: 15 }}
         />

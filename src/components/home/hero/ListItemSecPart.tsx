@@ -1,4 +1,5 @@
 import type { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import clsx from 'clsx';
 
@@ -12,11 +13,12 @@ interface IListItemSecPartProps {
 }
 
 const ListItemSecPart: FC<IListItemSecPartProps> = ({ item, index }) => {
+  const { t } = useTranslation();
   return (
     <li
       className={clsx(
-        'relative mb-[46px] flex items-center justify-center md:mb-0',
-        index === 3 && 'mb-0'
+        'relative flex items-center justify-center md:mb-0',
+        index === 3 ? 'mb-0' : 'mb-[46px]'
       )}
     >
       <div className="w-[166px]">
@@ -24,7 +26,7 @@ const ListItemSecPart: FC<IListItemSecPartProps> = ({ item, index }) => {
           {item.title}
         </span>
         <p className="text-[12px] font-medium uppercase leading-tight text-desc">
-          {item.desc}
+          {t(item.desc)}
         </p>
       </div>
       {index !== 3 && <DecorativeLine intent="factsAndFigures" />}

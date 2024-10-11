@@ -1,79 +1,71 @@
-import Select, { components } from 'react-select';
-import type { DropdownIndicatorProps } from 'react-select';
+import { useContext, useState } from 'react';
+import Select from 'react-select';
 
 import clsx from 'clsx';
 import i18next from 'i18next';
 
-import type { IOption } from './LanguageOption';
+import DropdownIndicator from './DropdownIndicator';
 import LanguageOption from './LanguageOption';
 
-import SvgIcon from '@components/common/SvgIcon';
+import { LanguageContext } from '@components/SharedLayout';
 
-import { IconId } from '@enums/iconsSpriteId';
+import type { LanguageKeys } from '@enums/languageKeys';
 
-const DropdownIndicator = (props: DropdownIndicatorProps<IOption, false>) => {
-  return (
-    <components.DropdownIndicator {...props}>
-      <SvgIcon iconId={IconId.ArrowDown} size={{ width: 8, height: 8 }} />
-    </components.DropdownIndicator>
-  );
-};
+import languageOptions from '@constants/languageOptions';
 
 const optionStyles = {
   base: 'hover:cursor-pointer w-[95px] py-[7px]',
   focus: 'lg:bg-gray-100 lg:active:bg-gray-200',
-  selected: 'text-gray-500',
+  selected: '',
 };
 const menuStyles = 'bg-main rounded-[4px] pb-[7px]';
+const singleValueStyles = 'mr-[6px]';
+
 const LanguageSelect = () => {
-  const options = [
-    {
-      value: 'en',
-      label: <LanguageOption iconId={IconId.English} language="en" />,
-    },
-    {
-      value: 'sv',
-      label: <LanguageOption iconId={IconId.Sweden} language="sv" />,
-    },
-    {
-      value: 'de',
-      label: <LanguageOption iconId={IconId.Germany} language="de" />,
-    },
-    {
-      value: 'es',
-      label: <LanguageOption iconId={IconId.Spain} language="es" />,
-    },
-    {
-      value: 'fr',
-      label: <LanguageOption iconId={IconId.France} language="fr" />,
-    },
-    {
-      value: 'ru',
-      label: <LanguageOption iconId={IconId.Russia} language="ru" />,
-    },
-    {
-      value: 'uk',
-      label: <LanguageOption iconId={IconId.Ukraine} language="uk" />,
-    },
-  ];
+  const [isMenuOpen, SetIsMenuOpen] = useState(false);
+  const context = useContext(LanguageContext);
+
+  if (!context) {
+    throw new Error('LanguageContext must be used within a LanguageProvider');
+  }
+
+  const { setLanguage } = context;
+
+  const options = languageOptions.map(option => {
+    return {
+      value: option.language,
+      label: (
+        <LanguageOption iconId={option.iconId} language={option.language} />
+      ),
+    };
+  });
 
   return (
     <Select
       defaultValue={options.find(
         option => option.value === i18next.language.split('-')[0]
       )}
+      onMenuOpen={() => SetIsMenuOpen(true)}
+      onMenuClose={() => SetIsMenuOpen(false)}
       options={options}
       // defaultMenuIsOpen={true}
       isSearchable={false}
-      components={{ DropdownIndicator }}
+      components={{
+        DropdownIndicator: props => (
+          <DropdownIndicator {...props} isMenuOpen={isMenuOpen} />
+        ),
+      }}
       closeMenuOnSelect={true}
-      onChange={selectedOption => i18next.changeLanguage(selectedOption?.value)}
+      onChange={selectedOption => {
+        setLanguage(selectedOption?.value as LanguageKeys);
+        return i18next.changeLanguage(selectedOption?.value);
+      }}
       unstyled
       styles={{
         menu: base => ({
           ...base,
           width: '95px',
-          right: '50%',
+          right: 'calc(50% + 4px)',
           transform: 'translate(50%, 0)',
         }),
         menuList: base => ({
@@ -88,7 +80,9 @@ const LanguageSelect = () => {
           },
         }),
       }}
+      className="cursor-pointer"
       classNames={{
+        container: () => 'cursor-pointer',
         menu: () => menuStyles,
         option: ({ isFocused, isSelected }) =>
           clsx(
@@ -96,7 +90,8 @@ const LanguageSelect = () => {
             isSelected && optionStyles.selected,
             optionStyles.base
           ),
-        dropdownIndicator: () => 'absolute',
+        dropdownIndicator: () => 'absolute cursor-pointer',
+        singleValue: () => singleValueStyles,
       }}
     />
   );

@@ -1,3 +1,4 @@
+import type { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import SvgIcon from './SvgIcon';
@@ -6,7 +7,12 @@ import { cn } from '@utils/cn';
 
 import { IconId } from '@enums/iconsSpriteId';
 
-export const Logo = ({ className, iconClassName }) => {
+interface ILogogProps {
+  className?: string;
+  iconClassName?: string;
+}
+
+export const Logo: FC<ILogogProps> = ({ className, iconClassName }) => {
   return (
     <NavLink to="./" className={className}>
       <SvgIcon

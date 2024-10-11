@@ -34,7 +34,7 @@ const IndustryItem: FC<IIndustryItem> = ({
       <h3 className="mb-[12px] text-[24px] font-semibold text-title">
         {t(title)}
       </h3>
-      <p className="text-des">{desc}</p>
+      <p className="text-des">{t(desc)}</p>
       <DecorativeLine intent="primary" />
     </li>
   );

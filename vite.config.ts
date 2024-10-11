@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      // '@api': '/src/api',
+      '@api': '/src/api',
       '@assets': '/src/assets',
       '@components': '/src/components',
       '@pages': '/src/pages',
@@ -16,7 +16,8 @@ export default defineConfig({
 
       '@store': '/src/store',
       '@utils': '/src/utils',
-      // '@interfaces': '/src/interfaces',
+      '@interfaces': '/src/interfaces',
+      '@schemas': '/src/schemas',
       '@enums': '/src/enums',
       '@hooks': '/src/hooks',
 

@@ -1,14 +1,17 @@
-import { NavLink } from 'react-router-dom';
+import { Trans, useTranslation } from 'react-i18next';
 
 import SellToUsItem from './SellToUsItem';
 
-import Button from '@components/common/Button';
+import NavLinkBtn from '@components/common/NavLinkBtn';
 
 import { cn } from '@utils/cn';
+
+import { Description, NavBar } from '@enums/i18nConstants';
 
 import sellToUsList from '@constants/sellToUsList';
 
 const SellToUs = () => {
+  const { t } = useTranslation();
   return (
     <section className="bg-primary py-[80px] text-center lg:text-start">
       <div
@@ -19,16 +22,22 @@ const SellToUs = () => {
       >
         <div className="lg:w-[457px]">
           <h2 className="mb-[22px] text-[48px] font-bold leading-tight">
-            Sell to Us
+            {t(NavBar.SellToUs)}
           </h2>
           <p className="mb-[32px] text-[16px] font-medium leading-normal">
-            Stop storing thousands of dollars in your warehouses when the price
-            of your idle equipment decreases every year. <br />
-            So what are you waiting for?
+            <Trans i18nKey={Description.SellToUs}>
+              Stop storing thousands of dollars in your warehouses when the
+              price of your idle equipment decreases every year. <br />
+              So what are you waiting for?
+            </Trans>
           </p>
-          <Button intent="accent" className="hidden shadow-none lg:block">
-            <NavLink to="sell-to-us">Sell to Us</NavLink>
-          </Button>
+          <NavLinkBtn
+            intent="sellToUs"
+            className="hidden lg:inline-block"
+            path="sell-to-us"
+          >
+            {t(NavBar.SellToUs)}
+          </NavLinkBtn>
         </div>
         <ul className="mb-[22px] md:mx-auto md:w-[calc(100%-200px)] lg:mx-0 lg:mb-0 lg:w-[656px]">
           {sellToUsList.map(sellToUsItem => {
@@ -47,9 +56,9 @@ const SellToUs = () => {
             );
           })}
         </ul>
-        <Button intent="accent" className="shadow-none md:mx-auto lg:hidden">
-          <NavLink to="sell-to-us">Sell to Us</NavLink>
-        </Button>
+        <NavLinkBtn intent="sellToUs" className="lg:hidden" path="sell-to-us">
+          {t(NavBar.SellToUs)}
+        </NavLinkBtn>
       </div>
     </section>
   );

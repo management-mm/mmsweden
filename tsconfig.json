@@ -12,7 +12,9 @@
       "@enums/*": ["enums/*"],
       "@i18n/*": ["i18n/*"],
       "@utils/*": ["utils/*"],
-      "@constants/*": ["constants/*"]
+      "@constants/*": ["constants/*"],
+      "@schemas/*": ["schemas/*"],
+      "@interfaces/*": ["interfaces/*"]
     },
     "resolveJsonModule": true,
     "allowJs": true,

@@ -1,41 +1,41 @@
+import { Trans, useTranslation } from 'react-i18next';
+
 import ContactsPart from './ContactsPart';
 import EmployeeItem from './EmployeeItem';
+import Info from './Info';
 
-import SvgIcon from '@components/common/SvgIcon';
-
-import { IconId } from '@enums/iconsSpriteId';
+import { ContactUs } from '@enums/i18nConstants';
 
 import employeesList from '@constants/employeesList';
 
 const Contacts = () => {
+  useTranslation();
+
   return (
-    <section>
+    <section className="pb-[102px] md:pb-[120px]">
       <div className="container">
         <h2 className="sr-only">Contacts</h2>
-        <div className="flex gap-[14px] bg-secondary">
-          <SvgIcon
-            className="flex-shrink-0 fill-secondaryAccent"
-            iconId={IconId.Info}
-            size={{ width: 18, height: 18 }}
-          />
-          <em className="">
-            If you have questions regarding our products or shipping, please,
-            contact Hampus Wahlgren (or his assistant Artem Bortnik)
-          </em>
+        <div className="mb-[64px] lg:mb-[94px] lg:flex lg:gap-[30px]">
+          <Info>
+            {/* prettier-ignore */}
+            <Trans i18nKey={ContactUs.Info1}>
+              If you have questions regarding our<span className="font-semibold">products or shipping</span>,please, contact
+              <span className="font-semibold">Hampus Wahlgren</span> (or his
+              assistant <span className="font-semibold">Artem Bortnik</span>)
+            </Trans>
+          </Info>
+          <Info>
+            {/* prettier-ignore */}
+            <Trans i18nKey={ContactUs.Info2}>
+              If you have questions regarding
+              <span className="font-semibold">payment</span>, please, contact
+              <span className="font-semibold">Eva Andersson</span>
+            </Trans>
+          </Info>
         </div>
-        <div>
-          <SvgIcon
-            className="fill-secondaryAccent"
-            iconId={IconId.Info}
-            size={{ width: 18, height: 18 }}
-          />
-          <em>
-            If you have questions regarding payment, please, contact Eva
-            Andersson
-          </em>
-        </div>
+
         <ContactsPart />
-        <ul className="flex flex-col gap-[32px] md:flex-row">
+        <ul className="flex flex-col flex-wrap gap-[32px] md:flex-row md:gap-[30px]">
           {employeesList.map(employee => (
             <EmployeeItem key={employee.title} employee={employee} />
           ))}

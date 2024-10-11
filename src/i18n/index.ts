@@ -32,10 +32,19 @@ export const resources = {
   },
 };
 
-i18n.use(initReactI18next).use(LanguageDetector).init({
-  resources,
-  load: 'languageOnly',
-  fallbackLng: 'en',
-});
+i18n
+  .use(initReactI18next)
+  .use(LanguageDetector)
+  .init({
+    resources,
+    load: 'languageOnly',
+    fallbackLng: 'en',
+    interpolation: {
+      escapeValue: false,
+    },
+    react: {
+      transKeepBasicHtmlNodesFor: ['span'],
+    },
+  });
 
 export default i18n;

@@ -1,4 +1,5 @@
 import type { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import DecorativeLine from '@components/common/DecorativeLine';
 import SvgIcon from '@components/common/SvgIcon';
@@ -17,10 +18,12 @@ const SellToUsItem: FC<ISellToUsItem> = ({
   desc,
   className,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <li
       className={cn(
-        'relative flex min-h-[316px] flex-col items-center justify-center rounded-[4px] bg-[rgba(252,252,252,0.06)] px-[14px] md:min-h-[268px] lg:min-h-[190px] lg:items-start',
+        'relative flex min-h-[352px] flex-col items-center justify-center rounded-[4px] bg-[rgba(252,252,252,0.06)] px-[14px] md:min-h-[268px] lg:min-h-[220px] lg:items-start lg:justify-start lg:pt-[25px]',
         className
       )}
     >
@@ -31,11 +34,11 @@ const SellToUsItem: FC<ISellToUsItem> = ({
           size={iconSize}
         />
         <h3 className="text-[18px] font-semibold leading-tight md:text-[24px]">
-          {title}
+          {t(title)}
         </h3>
       </div>
       <p className="font-openSans text-[16px] font-normal leading-normal text-secondaryDesc lg:text-[18px]">
-        {desc}
+        {t(desc)}
       </p>
       <DecorativeLine intent="sellToUsSecondary" />
     </li>

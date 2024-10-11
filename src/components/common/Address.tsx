@@ -1,12 +1,21 @@
+import type { FC } from 'react';
+
 import SvgIcon from './SvgIcon';
+
+import { cn } from '@utils/cn';
 
 import { IconId } from '@enums/iconsSpriteId';
 
-const Address = () => {
+interface IAddressProps {
+  containerClassName?: string;
+  iconClassName?: string;
+}
+
+const Address: FC<IAddressProps> = ({ containerClassName, iconClassName }) => {
   return (
-    <div className="mb-[12px] flex">
+    <div className={cn('mb-[12px] flex items-baseline', containerClassName)}>
       <SvgIcon
-        className="mr-[9px] fill-secondary"
+        className={cn('mr-[9px] fill-secondary', iconClassName)}
         iconId={IconId.Location}
         size={{ width: 12, height: 16 }}
       />

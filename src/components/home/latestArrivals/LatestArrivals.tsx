@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide, type SwiperClass } from 'swiper/react';
 
 import { type IProduct } from '@interfaces/IProduct';
 import 'swiper/css';
@@ -21,17 +21,16 @@ import { IconId } from '@enums/iconsSpriteId';
 const LatestArrivals = () => {
   const { t } = useTranslation();
 
-  const sliderRef = useRef(null);
+  const sliderRef = useRef<SwiperClass | null>(null);
 
   const handlePrev = useCallback(() => {
     if (!sliderRef.current) return;
-    sliderRef.current.swiper.slidePrev();
+    sliderRef.current.slidePrev();
   }, []);
 
   const handleNext = useCallback(() => {
     if (!sliderRef.current) return;
-
-    sliderRef.current.swiper.slideNext();
+    sliderRef.current.slideNext();
   }, []);
   const dispatch = useAppDispatch();
 
@@ -74,7 +73,9 @@ const LatestArrivals = () => {
         </div>
 
         <Swiper
-          ref={sliderRef}
+          ref={node => {
+            if (node) sliderRef.current = node.swiper;
+          }}
           style={{ width: 'calc(49% + 50vw)' }}
           slidesPerView={'auto'}
           spaceBetween={'10px'}
@@ -90,7 +91,6 @@ const LatestArrivals = () => {
               <SwiperSlide key={product.idNumber}>
                 <ProductCard
                   product={product}
-                  productId={product._id}
                   className="w-[296px] md:w-[264px]"
                 />
               </SwiperSlide>

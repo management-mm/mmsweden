@@ -2,7 +2,6 @@ import {
   type ChangeEvent,
   type FC,
   useContext,
-  useEffect,
   useState,
 } from 'react';
 import InputMask from 'react-input-mask';
@@ -26,6 +25,7 @@ import { cn } from '@utils/cn';
 import { Label } from '@enums/i18nConstants';
 
 import countriesList from '@constants/countriesList';
+import type { ICountryOption } from '@interfaces/ICountryOption';
 
 interface IPhoneProps {
   className?: string;
@@ -53,7 +53,7 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const { setFieldValue } = useFormikContext();
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState<ICountryOption | null>(null);
 
   const [callingCode, setCallingCode] = useState<string>('');
   const [phoneFormat, setPhoneFormat] = useState<string>('');
@@ -77,7 +77,7 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
       })
     );
   });
-  const handleOptionClick = option => {
+  const handleOptionClick = (option: ICountryOption) => {
     setSelectedOption(option);
     setFieldValue('callingCode', option.label.props.callingCode, false);
     setFieldValue('countryPhone', option.value, false);
@@ -110,7 +110,7 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
           />
           <Field type="hidden" name="callingCode" value={callingCode} />
           <Field name="phone">
-            {({ field }) => (
+            {({ field }: { field: { name: string; value: string; onChange: () => void; onBlur: () => void } }) => (
               <InputMask
                 {...field}
                 mask={phoneFormat}

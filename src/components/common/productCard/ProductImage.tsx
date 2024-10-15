@@ -1,5 +1,6 @@
 import type { LanguageKeys } from '@enums/languageKeys';
 import type { MultiLanguageString } from '@interfaces/IProduct';
+import getProductName from '@utils/getProductName';
 import type { FC } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
@@ -18,7 +19,7 @@ const ProductImage:FC<IProductImageProps> = ({ isLoading, photos, name, language
           <img
             className="h-[218px] w-full rounded-t-[4px] object-cover"
             src={photos ? photos[0] : ''}
-            alt={name ? name[language] : ''}
+            alt={name ? getProductName(name, language) : ''}
           />
         ) : (
           <div className="h-[200px] w-full rounded-t-[4px] bg-slate-500" />

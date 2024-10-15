@@ -24,6 +24,7 @@ import { filters } from '@enums/filters';
 import { Filter } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 import { LanguageKeys } from '@enums/languageKeys';
+import getProductName from '@utils/getProductName';
 
 interface IFilterWrapperProps {
   filterName: string;
@@ -105,17 +106,16 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
                       type="checkbox"
                       checked={isItemSelected(
                         filterName === filters.Manufacturer
-                          ? item.name
-                          : item.name[LanguageKeys.EN]
+    ? String(item.name)
+    : String(getProductName(item.name, LanguageKeys.EN))
                       )}
                       id={item._id}
                       name={filterName}
                       className="h-[16px] w-[16px] cursor-pointer appearance-none rounded-[4px] after:block after:h-[16px] after:w-[16px] after:rounded-[4px] after:border after:border-[rgba(0,32,52,.12)] checked:after:bg-primary checked:after:bg-check-icon checked:after:bg-center checked:after:bg-no-repeat"
-                      value={
-                        filterName === filters.Manufacturer
-                          ? item.name
-                          : item.name[LanguageKeys.EN]
-                      }
+                      value={filterName === filters.Manufacturer
+    ? String(item.name)
+    : String(getProductName(item.name, LanguageKeys.EN))
+  }
                     />
                   ) : (
                     <Skeleton width={16} />
@@ -127,8 +127,9 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
                       htmlFor={item._id}
                     >
                       {filterName === filters.Manufacturer
-                        ? item.name
-                        : item.name[language]}
+    ? String(item.name)
+    : String(getProductName(item.name, language))
+  }
                     </label>
                   ) : (
                     <Skeleton width={150} />

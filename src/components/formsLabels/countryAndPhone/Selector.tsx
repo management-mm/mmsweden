@@ -10,17 +10,17 @@ import useWindowWidth from '@hooks/useWindowWidth';
 import { IconId } from '@enums/iconsSpriteId';
 import { useTranslation } from 'react-i18next';
 import { Placeholder } from '@enums/i18nConstants';
-import type { FC } from 'react';
+import type { ChangeEvent, FC } from 'react';
 import type { ICountryOption } from '@interfaces/ICountryOption';
 
 interface ISelectorProps {
   hasClickedOutside: boolean;
   setHasClickedOutside: (value: boolean) => void;
   isOpen: boolean;
-  handleInputText: () => void
+  handleInputText: (e: ChangeEvent<HTMLInputElement>) => void
   setIsOpen: (value: boolean) => void;
   handleOptionSelected: (option: ICountryOption) => void;
-  selectedOption: ICountryOption
+  selectedOption: ICountryOption | null
   labelName: 'country' | 'phone';
   filteredOptions: ICountryOption[]
   toggleMobileMenu: () => void

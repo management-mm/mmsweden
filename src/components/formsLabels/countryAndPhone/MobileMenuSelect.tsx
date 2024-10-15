@@ -1,8 +1,8 @@
 import type { ICountryOption } from "@interfaces/ICountryOption";
-import type { FC } from "react";
+import type { ChangeEvent, FC } from "react";
 
 interface IMobileMenuSelectProps {
-  handleInputText: () => void;
+  handleInputText: (e: ChangeEvent<HTMLInputElement>) => void;
   options: ICountryOption[]
   handleOptionClick: (option: ICountryOption) => void
 }

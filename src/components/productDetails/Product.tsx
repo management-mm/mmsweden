@@ -1,10 +1,7 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Skeleton from 'react-loading-skeleton';
 import { useParams } from 'react-router-dom';
-
-// import { fetchProductById } from '@api/productsService';
-import type { IProduct } from 'interfaces/IProduct';
 
 import Details from './Details';
 import Slider from './Slider';

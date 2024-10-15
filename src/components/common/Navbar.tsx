@@ -35,7 +35,33 @@ const ulVariants = cva(
   }
 );
 
-type NavbarProps = VariantProps<typeof navVariants> &
+const linkActiveVariants = cva(
+  '',
+  {
+    variants: {
+      intent: {
+        header: 'rounded-[6px] bg-primary p-2 text-secondary',
+        mobileMenu: 'rounded-[6px] bg-primary p-2 text-secondary',
+        footer: ''
+      }
+    }
+  }
+)
+
+const linkVariants = cva(
+  '',
+  {
+    variants: {
+      intent: {
+        header: 'bg-transparent text-primary',
+        mobileMenu: 'bg-transparent text-primary',
+        footer: ''
+      }
+    }
+  }
+)
+
+type NavbarProps = VariantProps<typeof navVariants> & 
   VariantProps<typeof ulVariants>;
 
 const Navbar = ({ intent }: NavbarProps) => {
@@ -49,10 +75,9 @@ const Navbar = ({ intent }: NavbarProps) => {
             className={({ isActive }) =>
               cn(
                 isActive
-                  ? 'rounded-[6px] bg-primary p-2 text-secondary'
-                  : 'bg-transparent text-primary'
-              )
-            }
+                  ? linkActiveVariants({ intent })
+                  : linkVariants({ intent })
+              )}
           >
             {t('NavBar.AllProducts')}
           </NavLink>
@@ -63,8 +88,8 @@ const Navbar = ({ intent }: NavbarProps) => {
             className={({ isActive }) =>
               cn(
                 isActive
-                  ? 'rounded-[6px] bg-primary p-2 text-secondary'
-                  : 'bg-transparent text-primary'
+                  ? linkActiveVariants({ intent })
+                  : linkVariants({ intent })
               )
             }
           >
@@ -76,8 +101,8 @@ const Navbar = ({ intent }: NavbarProps) => {
             className={({ isActive }) =>
               cn(
                 isActive
-                  ? 'rounded-[6px] bg-primary p-2 text-secondary'
-                  : 'bg-transparent text-primary'
+                  ? linkActiveVariants({ intent })
+                  : linkVariants({ intent })
               )
             }
             to="about-us"
@@ -90,8 +115,8 @@ const Navbar = ({ intent }: NavbarProps) => {
             className={({ isActive }) =>
               cn(
                 isActive
-                  ? 'rounded-[6px] bg-primary p-2 text-secondary'
-                  : 'bg-transparent text-primary'
+                  ? linkActiveVariants({ intent })
+                  : linkVariants({ intent })
               )
             }
             to="contact-us"

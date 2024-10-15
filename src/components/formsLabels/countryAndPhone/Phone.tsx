@@ -22,13 +22,13 @@ import MobileMenu from '@components/common/MobileMenu';
 import useWindowWidth from '@hooks/useWindowWidth';
 
 import { cn } from '@utils/cn';
-
+ 
 import { Label } from '@enums/i18nConstants';
 
 import countriesList from '@constants/countriesList';
 
 interface IPhoneProps {
-  className: string;
+  className?: string;
 }
 
 const Phone: FC<IPhoneProps> = ({ className }) => {
@@ -48,6 +48,7 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
   });
   const [filteredOptions, setFilteredOptions] = useState(options);
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
+  const [hasClickedOutside, setHasClickedOutside] = useState<boolean>(false);
   const windowWidth = useWindowWidth();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -94,8 +95,10 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
     <>
       <label className={cn('flex flex-col gap-[2px]', className)}>
         <LabelTitle title={Label.Phone} />
-        <div className="relative z-10 w-full">
+        <div className="relative z-2 w-full">
           <Selector
+            hasClickedOutside={hasClickedOutside}
+            setHasClickedOutside={setHasClickedOutside}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             handleOptionSelected={handleOptionClick}

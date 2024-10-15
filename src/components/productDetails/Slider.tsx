@@ -10,7 +10,6 @@ import { FreeMode, Thumbs } from 'swiper/modules';
 
 import VideoPlayer from './VideoPlayer';
 
-import DecorativeLine from '@components/common/DecorativeLine';
 import NaviArrowSlider from '@components/common/NaviArrowSlider';
 
 import useSwiperNavigation from '@hooks/useSwiperNavigation';
@@ -26,10 +25,8 @@ const Slider: FC<ISliderProps> = ({ photos, video, alt }) => {
   const { handlePrev, handleNext, onSwiperInit } = useSwiperNavigation();
 
   const [toggler, setToggler] = useState(false);
-  const [currentImage, setCurrentImage] = useState(0);
 
-  const openLightbox = (index: number) => {
-    setCurrentImage(index);
+  const openLightbox = () => {
     setToggler(!toggler);
   };
 
@@ -44,7 +41,7 @@ const Slider: FC<ISliderProps> = ({ photos, video, alt }) => {
           modules={[FreeMode, Thumbs]}
           className="mySwiper2"
         >
-          {photos.map((photo, index) => {
+          {photos.map((photo) => {
             return (
               <SwiperSlide key={photo} className="rounded-[4px]">
                 <img
@@ -52,7 +49,7 @@ const Slider: FC<ISliderProps> = ({ photos, video, alt }) => {
                   src={photo}
                   alt={alt}
                   width={'100%'}
-                  onClick={() => openLightbox(index)}
+                  onClick={() => openLightbox()}
                 />
               </SwiperSlide>
             );
@@ -119,7 +116,7 @@ const Slider: FC<ISliderProps> = ({ photos, video, alt }) => {
         </Swiper>
       </div>
 
-      <FSLightbox toggler={toggler} sources={photos} current={currentImage} />
+      <FSLightbox toggler={toggler} sources={photos} />
     </div>
   );
 };

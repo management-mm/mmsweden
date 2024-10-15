@@ -64,6 +64,7 @@ const LanguageSelect = () => {
       styles={{
         menu: base => ({
           ...base,
+          zIndex: '9',
           width: '95px',
           right: 'calc(50% + 4px)',
           transform: 'translate(50%, 0)',

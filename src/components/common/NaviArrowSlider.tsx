@@ -23,6 +23,7 @@ const ArrowVariants = cva(
 );
 
 type NaviArrowSliderProps = VariantProps<typeof ArrowVariants> & {
+  className?: string;
   iconClassName?: string;
   onClick: () => void;
   iconId: keyof typeof IconId;

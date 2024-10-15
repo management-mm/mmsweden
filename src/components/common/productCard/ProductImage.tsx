@@ -1,6 +1,16 @@
+import type { LanguageKeys } from '@enums/languageKeys';
+import type { MultiLanguageString } from '@interfaces/IProduct';
+import type { FC } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
-const ProductImage = ({ isLoading, photos, name, language }) => {
+interface IProductImageProps {
+  isLoading: boolean;
+  photos: string[]
+  name: MultiLanguageString | string;
+  language: LanguageKeys;
+}
+
+const ProductImage:FC<IProductImageProps> = ({ isLoading, photos, name, language }) => {
   return (
     <>
       {!isLoading ? (

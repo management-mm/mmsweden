@@ -3,8 +3,13 @@ import SvgIcon from './SvgIcon';
 import { cn } from '@utils/cn';
 
 import { IconId } from '@enums/iconsSpriteId';
+import type { FC } from 'react';
 
-const ViewOnMap = ({ className }) => {
+interface IViewOnMapProps {
+  className?: string;
+}
+
+const ViewOnMap:FC<IViewOnMapProps> = ({ className }) => {
   return (
     <a
       className={cn('flex items-center', className)}

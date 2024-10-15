@@ -179,6 +179,7 @@ export const es = {
   [Placeholder.SearchProduct]: 'Introduce el nombre o ID del producto',
   [Placeholder.Search]: 'Buscar...',
   [Placeholder.Subject]: 'Asunto de tu mensaje',
+  [Placeholder.SelectCountry]: 'Seleccione su país',
 
   [Filter.Category]: 'Categoría',
   [Filter.Manufacturer]: 'Fabricante',

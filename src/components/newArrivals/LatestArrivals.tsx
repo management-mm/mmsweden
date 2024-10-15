@@ -32,7 +32,7 @@ const LatestArrivals = () => {
   useEffect(() => {
     const grouped = products.reduce(
       (acc, product) => {
-        const dateKey = product.createdAt.split('T')[0];
+        const dateKey = product.createdAt.toString().split('T')[0];
         if (!acc[dateKey]) {
           acc[dateKey] = [];
         }
@@ -51,13 +51,14 @@ const LatestArrivals = () => {
         {Object.entries(groupedProducts).map(([date, products]) => (
           <div key={date} className="mb-8">
             <p className="mb-4 text-center text-[18px] font-semibold text-title md:text-[24px]">
-              {t(Title.DateAdded)} -{' '}
+              <span>{t(Title.DateAdded)}</span><br className='md:hidden'/>
+              <span className='hidden md:inline'>&nbsp;-&nbsp;</span>
               {new Date(date).toLocaleString(language, { dateStyle: 'long' })}
             </p>
             <div className="flex flex-wrap justify-center gap-4 md:justify-start">
               {products.map(product => (
                 <ProductCard
-                  key={product.id}
+                  key={product._id}
                   product={product}
                   className="w-[296px] md:w-[264px]"
                 />

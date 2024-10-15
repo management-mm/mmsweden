@@ -178,6 +178,7 @@ export const ru = {
   [Placeholder.SearchProduct]: 'Введите название или ID продукта',
   [Placeholder.Search]: 'Поиск...',
   [Placeholder.Subject]: 'Тема вашего сообщения',
+  [Placeholder.SelectCountry]: 'Выберите страну',
 
   [Filter.Category]: 'Категория',
   [Filter.Manufacturer]: 'Производитель',

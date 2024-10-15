@@ -5,8 +5,14 @@ import { cn } from '@utils/cn';
 import { IconId } from '@enums/iconsSpriteId';
 
 import socialMediaList from '@constants/socialMediaList';
+import type { FC } from 'react';
 
-const SocialMediaList = ({ className, showTitle }) => {
+interface ISocialMediaListProps {
+  className?: string;
+  showTitle?: boolean;
+}
+
+const SocialMediaList:FC<ISocialMediaListProps> = ({ className, showTitle }) => {
   return (
     <ul
       className={cn(

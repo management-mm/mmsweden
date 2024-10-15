@@ -26,12 +26,12 @@ const MobileMenu: FC<IMobileMenuProps> = ({
   const outsideAlerterRef = useOutsideAlerter(() => {
     if (!isOpen || windowWidth > 1178) return;
     handleToggleMenu();
-  });
+  }, isOpen);
   useEffect(() => {
     if (isOpen) {
-      document.querySelector('body').classList.add('overflow-y-hidden');
+      document.querySelector('body')?.classList.add('overflow-y-hidden');
     } else {
-      document.querySelector('body').classList.remove('overflow-y-hidden');
+      document.querySelector('body')?.classList.remove('overflow-y-hidden');
     }
   }, [isOpen]);
   return (

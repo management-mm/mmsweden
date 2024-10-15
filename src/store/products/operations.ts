@@ -6,16 +6,16 @@ import type { LanguageKeys } from '@enums/languageKeys';
 
 // 'https://mmsweden-server.onrender.com/'
 
-axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.baseURL = 'https://mmsweden-server.onrender.com/';
 
 export interface IFetchProductsParams {
-  lang: LanguageKeys;
+  lang?: LanguageKeys;
   sort?: string;
   perPage?: number;
-  page: number;
+  page?: number;
   keyword?: string;
   category?: string[];
-  industry?: string;
+  industry?: string[];
   manufacturer?: string;
 }
 

@@ -5,8 +5,17 @@ import Flag from './Flag';
 import SvgIcon from '@components/common/SvgIcon';
 
 import { IconId } from '@enums/iconsSpriteId';
+import type { FC } from 'react';
 
-const SelectedOption = ({ isOpen, name, flag, value, labelName }) => {
+interface ISelectedOptionProps {
+  isOpen: boolean;
+  name: string;
+  flag: string;
+  value: string
+  labelName: 'country' | 'phone'
+}
+
+const SelectedOption:FC<ISelectedOptionProps> = ({ isOpen, name, flag, value, labelName }) => {
   return (
     <div
       className={clsx(

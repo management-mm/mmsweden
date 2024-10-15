@@ -177,6 +177,7 @@ export const uk = {
   [Placeholder.SearchProduct]: 'Введіть назву або ID продукту',
   [Placeholder.Search]: 'Пошук...',
   [Placeholder.Subject]: 'Тема вашого повідомлення',
+  [Placeholder.SelectCountry]: 'Виберіть країну',
 
   [Filter.Category]: 'Категорія',
   [Filter.Manufacturer]: 'Виробник',

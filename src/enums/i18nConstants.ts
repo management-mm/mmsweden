@@ -156,6 +156,7 @@ export enum Placeholder {
   Message = 'Placeholder.Message',
   Subject = 'Placeholder.Subject',
   Company = 'Placeholder.Company',
+  SelectCountry = 'Placeholder.SelectCountry'
 }
 
 export enum Filter {

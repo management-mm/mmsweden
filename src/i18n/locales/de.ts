@@ -180,6 +180,7 @@ export const de = {
   [Placeholder.SearchProduct]: 'Produktname oder ID-NR eingeben',
   [Placeholder.Search]: 'Suchen...',
   [Placeholder.Subject]: 'Betreff Ihrer Nachricht',
+  [Placeholder.SelectCountry]: 'Wählen Sie Ihr Land',
 
   [Filter.Category]: 'Kategorie',
   [Filter.Manufacturer]: 'Hersteller',

@@ -1,4 +1,14 @@
-const MobileMenuSelect = ({ handleInputText, options, handleOptionClick }) => {
+import type { ICountryOption } from "@interfaces/ICountryOption";
+import type { FC } from "react";
+
+interface IMobileMenuSelectProps {
+  handleInputText: () => void;
+  options: ICountryOption[]
+  handleOptionClick: (option: ICountryOption) => void
+}
+
+const MobileMenuSelect: FC<IMobileMenuSelectProps> = ({ handleInputText, options, handleOptionClick }) => {
+  
   return (
     <div className="z-10 mt-1 w-full">
       <input

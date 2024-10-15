@@ -8,7 +8,7 @@ const Hero = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="py-[32px] md:py-[64px]">
+    <section className="py-[32px] md:pb-[64px] md:pt-[22px]">
       <div className="container">
         <h1 className="mb-[12px] text-center text-[32px] font-bold md:mb-[22px] md:text-[48px]">
           {t(NavBar.AboutUs)}

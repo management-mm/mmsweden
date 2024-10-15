@@ -1,19 +1,28 @@
-import DecorativeLine from '@components/common/DecorativeLine';
-
 import useOutsideAlerter from '@hooks/useOutsideAlerter';
+import type { ICountryOption } from '@interfaces/ICountryOption';
+import type { FC } from 'react';
 
-const Menu = ({
+interface IMenuProps {
+  handleInputText: () => void;
+  options: ICountryOption[]
+  handleOptionClick: (option: ICountryOption) => void;
+  isOpen: boolean
+  setIsOpen: (value: boolean) => void;
+  setHasClickedOutside: (value: boolean) => void
+}
+
+const Menu:FC<IMenuProps> = ({
   handleInputText,
   options,
   handleOptionClick,
   isOpen,
   setIsOpen,
+  setHasClickedOutside
 }) => {
   const outsideAlerterRef = useOutsideAlerter(() => {
-    console.log('click');
-
+    setHasClickedOutside(true)
     setIsOpen(false);
-  });
+  }, isOpen);
   return (
     <div
       ref={outsideAlerterRef}

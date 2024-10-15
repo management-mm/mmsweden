@@ -1,6 +1,5 @@
-import { type ChangeEvent, useState } from 'react';
+import { type ChangeEvent, type FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSearchParams } from 'react-router-dom';
 
 import * as _ from 'lodash';
 
@@ -8,8 +7,13 @@ import SvgIcon from '@components/common/SvgIcon';
 
 import { Placeholder } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
+ 
+interface ISearchFilterProps {
+  keyword: string;
+  setKeyword: (value: string) => void
+}
 
-const SearchFilter = ({ keyword, setKeyword }) => {
+const SearchFilter: FC<ISearchFilterProps> = ({ keyword, setKeyword }) => {
   const { t } = useTranslation();
 
   const [isEmptyValue, setIsEmptyValue] = useState<boolean>(true);

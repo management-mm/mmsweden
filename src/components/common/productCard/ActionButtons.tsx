@@ -1,17 +1,21 @@
-import { useEffect, useState } from 'react';
+import { type FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import Skeleton from 'react-loading-skeleton';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import clsx from 'clsx';
-
-import NavLinkBtn from '../NavLinkBtn';
 
 import useUpdateRequestedProducts from '@hooks/useUpdateRequestedProducts';
 
 import { Button } from '@enums/i18nConstants';
+import type { IProduct } from '@interfaces/IProduct';
 
-const ActionsButtons = ({ isLoading, product }) => {
+interface IActionsButtonsProps {
+  isLoading: boolean;
+  product: IProduct
+}
+
+const ActionsButtons:FC<IActionsButtonsProps> = ({ isLoading, product }) => {
   const { t } = useTranslation();
   const { isRequested, handleToggleFavorites } =
     useUpdateRequestedProducts(product);

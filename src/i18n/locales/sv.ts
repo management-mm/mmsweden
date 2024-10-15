@@ -178,6 +178,7 @@ export const sv = {
   [Placeholder.SearchProduct]: 'Ange produktnamn eller ID-nummer',
   [Placeholder.Search]: 'Sök...',
   [Placeholder.Subject]: 'Ämnet för ditt meddelande',
+  [Placeholder.SelectCountry]: 'Välj ditt land',
 
   [Filter.Category]: 'Kategori',
   [Filter.Manufacturer]: 'Tillverkare',

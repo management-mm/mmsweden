@@ -8,8 +8,9 @@ import { IconId } from '@enums/iconsSpriteId';
 
 const FirstHeroPart = () => {
   const { t } = useTranslation();
+  
   return (
-    <div className="bg-primary bg-hero-mobile-1x bg-cover bg-no-repeat pb-[51px] pt-[184px] md:bg-hero-tablet-1x lg:bg-hero-desktop-1x retina-mobile:bg-hero-mobile-2x retina-tablet:bg-hero-tablet-2x retina-desktop:bg-hero-desktop-2x">
+    <div className="bg-primary bg-hero-mobile-1x md:bg-hero-tablet-1x lg:bg-hero-desktop-1x bg-cover bg-no-repeat pb-[51px] pt-[184px] retina:bg-hero-mobile-2x md:retina:bg-hero-tablet-2x lg:retina:bg-hero-desktop-2x">
       <div className="container">
         <div className="mb-[164px]">
           <h1 className="mb-[6px] text-[64px] font-bold leading-tight text-secondary md:text-[84px]">

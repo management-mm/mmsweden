@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
-
-import clsx from 'clsx';
 
 import FiltersGroup from './FiltersGroup';
 import FoundProducts from './FoundProducts';

@@ -1,5 +1,3 @@
-import { type ChangeEvent } from 'react';
-
 import clsx from 'clsx';
 
 import Menu from './Menu';
@@ -7,12 +5,30 @@ import SelectedOption from './SelectedOption';
 
 import SvgIcon from '@components/common/SvgIcon';
 
-import useOutsideAlerter from '@hooks/useOutsideAlerter';
 import useWindowWidth from '@hooks/useWindowWidth';
 
 import { IconId } from '@enums/iconsSpriteId';
+import { useTranslation } from 'react-i18next';
+import { Placeholder } from '@enums/i18nConstants';
+import type { FC } from 'react';
+import type { ICountryOption } from '@interfaces/ICountryOption';
 
-const Selector = ({
+interface ISelectorProps {
+  hasClickedOutside: boolean;
+  setHasClickedOutside: (value: boolean) => void;
+  isOpen: boolean;
+  handleInputText: () => void
+  setIsOpen: (value: boolean) => void;
+  handleOptionSelected: (option: ICountryOption) => void;
+  selectedOption: ICountryOption
+  labelName: 'country' | 'phone';
+  filteredOptions: ICountryOption[]
+  toggleMobileMenu: () => void
+}
+
+const Selector:FC<ISelectorProps> = ({
+  hasClickedOutside,
+  setHasClickedOutside,
   isOpen,
   handleInputText,
   setIsOpen,
@@ -23,11 +39,7 @@ const Selector = ({
   toggleMobileMenu,
 }) => {
   console.log(isOpen);
-
-  // const outsideAlerterRef = useOutsideAlerter(() => {
-  //   if (!isOpen) return;
-  //   setIsOpen(false)
-  // });
+  const {t} = useTranslation()
 
   const windowWidth = useWindowWidth();
 
@@ -44,6 +56,10 @@ const Selector = ({
         onClick={() => {
           if (windowWidth < 1178) {
             toggleMobileMenu();
+            return;
+          }
+          if (hasClickedOutside && !isOpen) {
+            setHasClickedOutside(false)
             return;
           }
           setIsOpen(true);
@@ -78,7 +94,7 @@ const Selector = ({
                   size={{ width: 18, height: 18 }}
                   className="fill-primary"
                 />
-                {labelName === 'country' && <p>Select your country</p>}
+                  {labelName === 'country' && <p>{t(Placeholder.SelectCountry)}</p>}
               </div>
 
               <SvgIcon
@@ -96,6 +112,7 @@ const Selector = ({
 
         {isOpen && (
           <Menu
+            setHasClickedOutside={setHasClickedOutside}
             handleInputText={handleInputText}
             options={filteredOptions}
             handleOptionClick={handleOptionSelected}

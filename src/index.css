@@ -74,9 +74,18 @@
 .swiper-scrollbar-drag {
   height: 3px !important;
   top: -1.2px !important;
-  /* transform: translate(0, -50%) !important; */
   position: absolute;
-  width: calc(296 / 6) !important;
+}
+@media screen and (min-width: 768px) {
+  .swiper-scrollbar {
+    width: 738px !important;
+  }
+}
+
+@media screen and (min-width: 1178px) {
+  .swiper-scrollbar {
+    width: 1146px !important;
+  }
 }
 
 ::-webkit-scrollbar {
@@ -103,4 +112,10 @@ input:-webkit-autofill:focus {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.Toastify__toast.Toastify__toast--success {
+  color: white;
+  background-color: rgba(0, 32, 59, 1);
+  border-radius: 15px;
 }

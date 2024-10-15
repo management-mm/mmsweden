@@ -18,15 +18,15 @@ export default {
     },
     extend: {
       screens: {
-        'retina-mobile': {
-          raw: '(min-device-pixel-ratio: 2) and (max-width: 767px)',
-        },
-        'retina-tablet': {
-          raw: '(min-device-pixel-ratio: 2) and (min-width: 768px)',
-        },
-        'retina-desktop': {
-          raw: '(min-device-pixel-ratio: 2) and (min-width: 1200px)',
-        },
+        // 'retina-mobile': {
+        //   raw: '(min-device-pixel-ratio: 2) and (max-width: 767px)',
+        // },
+        // 'retina-tablet': {
+        //   raw: '(min-device-pixel-ratio: 2) and (min-width: 768px)',
+        // },
+        // 'retina-desktop': {
+        //   raw: '(min-device-pixel-ratio: 2) and (min-width: 1200px)',
+        // },
       },
       backgroundImage: {
         'check-icon': "url('@assets/images/check.svg')",
@@ -102,5 +102,8 @@ export default {
       },
     },
   },
-  plugins: [require('tailwind-scrollbar')],
+  plugins: [
+    require('tailwind-scrollbar'),
+    require('tailwindcss-retina')
+  ],
 };

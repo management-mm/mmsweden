@@ -8,7 +8,7 @@ import type { LanguageKeys } from '@enums/languageKeys';
 
 // 'https://mmsweden-server.onrender.com/'
 
-axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.baseURL = 'https://mmsweden-server.onrender.com/';
 
 export interface IFetchCategoriesOrIndustriesParams {
   lang: LanguageKeys;

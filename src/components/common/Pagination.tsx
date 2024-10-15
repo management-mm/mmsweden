@@ -1,9 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactPaginate from 'react-paginate';
 import { useSearchParams } from 'react-router-dom';
-
-import clsx from 'clsx';
 
 import SvgIcon from './SvgIcon';
 
@@ -11,7 +9,9 @@ import { cn } from '@utils/cn';
 
 import { IconId } from '@enums/iconsSpriteId';
 
-const Next = ({ t }) => {
+const Next = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <span className="mr-[8px] hidden md:block">{t('Pagination.Next')}</span>
@@ -19,7 +19,9 @@ const Next = ({ t }) => {
     </>
   );
 };
-const Previous = ({ t }) => {
+const Previous = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <SvgIcon
@@ -32,8 +34,12 @@ const Previous = ({ t }) => {
   );
 };
 
-const Pagination = ({ pageCount, className }) => {
-  const { t } = useTranslation();
+interface IPaginationProps {
+  pageCount: number;
+  className?: string
+}
+
+const Pagination: FC<IPaginationProps> = ({ pageCount, className }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -43,13 +49,13 @@ const Pagination = ({ pageCount, className }) => {
   const condition = searchParams.get('condition');
   const title = searchParams.get('title');
 
-  const handlePageClick = page => {
+  const handlePageClick = (page: number) => {
     const newSearchParams = new URLSearchParams(searchParams);
     if (page === 0) {
       setSearchParams({});
       return;
     }
-    newSearchParams.set('page', page + 1);
+    newSearchParams.set('page', String(page + 1));
     setCurrentPage(page);
 
     setSearchParams(newSearchParams);
@@ -67,7 +73,7 @@ const Pagination = ({ pageCount, className }) => {
     <>
       <ReactPaginate
         breakLabel="..."
-        nextLabel={<Next t={t} />}
+        nextLabel={<Next />}
         disabledClassName="shadow-disabled"
         nextLinkClassName={
           'flex items-center rounded-full w-[36px] h-[36px] md:py-[8px] md:min-w-[96px] justify-center text-desc fill-desc font-openSans text-[12px] md:rounded-[64px] border border-neutral shadow-pagination ml-[8px] md:ml-[24px]'
@@ -78,7 +84,7 @@ const Pagination = ({ pageCount, className }) => {
         }
         disabledLinkClassName="text-disabled fill-disabled shadow-pageDisabled"
         pageLinkClassName="w-full h-full flex justify-center items-center "
-        previousLabel={<Previous t={t} />}
+        previousLabel={<Previous />}
         onPageChange={e => handlePageClick(e.selected)}
         breakClassName="mr-[8px] font-bold text-[16px] text-desc leading-[1.09]"
         forcePage={currentPage}

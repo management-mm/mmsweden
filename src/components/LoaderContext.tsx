@@ -1,4 +1,4 @@
-import React, { ReactNode, createContext, useState } from 'react';
+import React, { type ReactNode, createContext, useState } from 'react';
 
 import Loader from '@components/common/loaders/Loader';
 
@@ -19,11 +19,9 @@ export const LoaderProvider: React.FC<LoaderContextProvider> = ({
   children,
 }) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [loaderMessage, setLoaderMessage] = useState<string | undefined>();
 
   const contextValue: LoaderContext = {
-    showLoader: message => {
-      setLoaderMessage(message);
+    showLoader: () => {
       setIsVisible(true);
     },
     hideLoader: () => {
@@ -33,7 +31,7 @@ export const LoaderProvider: React.FC<LoaderContextProvider> = ({
 
   return (
     <LoaderContext.Provider value={contextValue}>
-      {isVisible && <Loader message={loaderMessage} />}
+      {isVisible && <Loader />}
       {children}
     </LoaderContext.Provider>
   );

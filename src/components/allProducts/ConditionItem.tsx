@@ -1,10 +1,14 @@
-import { type ChangeEvent } from 'react';
+import { type ChangeEvent, type FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 
 import { Filter } from '@enums/i18nConstants';
 
-const ConditionItem = ({ condition }) => {
+interface IConditionItemProps {
+  condition: 'used' | 'new'
+}
+
+const ConditionItem:FC<IConditionItemProps> = ({ condition }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { t } = useTranslation();
 

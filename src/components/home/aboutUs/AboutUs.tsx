@@ -6,6 +6,7 @@ import { Button, Description, NavBar } from '@enums/i18nConstants';
 
 const AboutUs = () => {
   const { t } = useTranslation();
+  
   return (
     <section className="pb-[48px] md:pb-[84px]">
       <div className="container text-center">

@@ -3,8 +3,13 @@ import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 
 import { Filter } from '@enums/i18nConstants';
+import type { FC } from 'react';
 
-const ProductCondition = ({ condition }) => {
+interface IProductConditionProps {
+  condition: 'used' | 'new'
+}
+
+const ProductCondition:FC<IProductConditionProps> = ({ condition }) => {
   const { t } = useTranslation();
   return (
     <span

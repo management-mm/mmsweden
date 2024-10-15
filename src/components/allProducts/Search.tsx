@@ -1,4 +1,4 @@
-import { type ChangeEvent, useState } from 'react';
+import { type ChangeEvent, type FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 
@@ -11,7 +11,11 @@ import { cn } from '@utils/cn';
 import { Placeholder } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
-const Search = ({ className }) => {
+interface ISearchProps {
+  className?: string
+}
+
+const Search:FC<ISearchProps> = ({ className }) => {
   const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [inputValue, setInputValue] = useState(searchParams.get('title') ?? '');
@@ -22,13 +26,13 @@ const Search = ({ className }) => {
   const handleInputText = _.debounce((e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setSearchParams(searchParams => {
-      if (e.target.value === '') {
-        return;
-      }
-
-      searchParams.set('title', e.target.value.trim());
-      return searchParams;
-    });
+  if (e.target.value === '') {
+    searchParams.delete('title');
+  } else {
+    searchParams.set('title', e.target.value.trim());
+  }
+  return searchParams;
+});
 
     if (e.target.value) {
       setIsEmptyValue(false);

@@ -1,21 +1,26 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useState, type FC } from 'react';
 import ReactPlayer from 'react-player';
 
 import SvgIcon from '@components/common/SvgIcon';
 
 import { cn } from '@utils/cn';
 
-import { Title } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
-const youTubeGetId = url => {
+interface IVideoPlayerProps {
+  video: string;
+  className?: string;
+  containerIconClassName?: string;
+  iconClassName?: string
+}
+
+const youTubeGetId = (url:string) => {
   const expression =
     /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be[.]?\/|youtube\.com[.]?\/(?:embed\/|v\/|watch\/?\?(?:\S+=\S*&)*v=))([\w-]{11})\S*$/;
   return url.match(expression) ? RegExp.$1 : '';
 };
 
-const VideoPlayer = ({
+const VideoPlayer:FC<IVideoPlayerProps> = ({
   video,
   className,
   containerIconClassName,

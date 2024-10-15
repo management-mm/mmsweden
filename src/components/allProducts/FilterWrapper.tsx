@@ -2,18 +2,12 @@ import {
   type ChangeEvent,
   type FC,
   useContext,
-  useEffect,
   useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { useSearchParams } from 'react-router-dom';
 
-import {
-  clearAllBodyScrollLocks,
-  disableBodyScroll,
-  enableBodyScroll,
-} from 'body-scroll-lock';
 import clsx from 'clsx';
 import type { ICategory } from 'interfaces/ICategory';
 import type { IIndustry } from 'interfaces/IIndustry';
@@ -35,6 +29,8 @@ interface IFilterWrapperProps {
   filterName: string;
   items: ICategory[] | IManufacturer[] | IIndustry[];
   isLoading: boolean;
+  keyword: string;
+  setKeyword: () => void;
 }
 const FilterWrapper: FC<IFilterWrapperProps> = ({
   filterName,

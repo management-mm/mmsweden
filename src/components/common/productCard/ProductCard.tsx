@@ -1,4 +1,4 @@
-import { type FC, useContext, useEffect } from 'react';
+import { type FC, useContext } from 'react';
 import { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
@@ -19,11 +19,11 @@ import { cn } from '@utils/cn';
 
 export interface IProductCardProps {
   product: IProduct;
+  className?: string
 }
 
 const ProductCard: FC<IProductCardProps> = ({
   product,
-  productId,
   product: { name, idNumber, condition, photos, dimensions, description },
   className,
 }) => {
@@ -61,7 +61,6 @@ const ProductCard: FC<IProductCardProps> = ({
           <ActionsButtons
             isLoading={isLoading}
             product={product}
-            productId={productId}
           />
         </div>
       </article>

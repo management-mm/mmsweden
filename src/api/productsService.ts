@@ -5,7 +5,7 @@ import type { IManufacturer } from 'interfaces/IManufacturer';
 import type { IProduct } from 'interfaces/IProduct';
 
 // 'https://mmsweden-server.onrender.com/'
-axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.baseURL = 'https://mmsweden-server.onrender.com/';
 
 export const fetchCategories = async (): Promise<ICategory[]> => {
   const response = await axios.get('categories/');

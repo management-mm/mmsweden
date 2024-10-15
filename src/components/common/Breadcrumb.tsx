@@ -4,8 +4,14 @@ import { Link, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 
 import { NavBar } from '@enums/i18nConstants';
+import type { FC } from 'react';
 
-export default function Breadcrumb({ productId, name }) {
+interface IBreadcrumbProps {
+  productId?: string | undefined;
+  name?: string;
+}
+
+const Breadcrumb:FC<IBreadcrumbProps> = ({ productId, name }) => {
   const { t } = useTranslation();
   const location = useLocation();
 
@@ -46,3 +52,5 @@ export default function Breadcrumb({ productId, name }) {
     </div>
   );
 }
+
+export default Breadcrumb;

@@ -1,8 +1,20 @@
 import Skeleton from 'react-loading-skeleton';
 
 import getProductName from '@utils/getProductName';
+import type { MultiLanguageString } from '@interfaces/IProduct';
+import type { LanguageKeys } from '@enums/languageKeys';
+import type { FC } from 'react';
 
-const ProductDetails = ({
+interface IProductDetailsProps {
+  isLoading: boolean;
+  name: string | MultiLanguageString;
+  language: LanguageKeys;
+  idNumber: string;
+  description: MultiLanguageString;
+  dimensions: string;
+}
+
+const ProductDetails:FC<IProductDetailsProps> = ({
   isLoading,
   name,
   language,
@@ -16,7 +28,7 @@ const ProductDetails = ({
         {!isLoading ? getProductName(name, language) : <Skeleton width={150} />}
       </h3>
       <p className="mb-[4px] text-[14px] font-semibold text-secondaryAccent">
-        {!isLoading ? 'ID NR' : <Skeleton width={80} />}
+        {!isLoading ? 'ID NR ' : <Skeleton width={80} />}
 
         <span>{!isLoading ? idNumber : <Skeleton width={80} />}</span>
       </p>

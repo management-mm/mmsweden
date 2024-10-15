@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Swiper, SwiperSlide, type SwiperClass } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { type IProduct } from '@interfaces/IProduct';
 import 'swiper/css';
@@ -17,21 +17,12 @@ import { useAppSelector } from '@hooks/useAppSelector';
 
 import { Title } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
+import useSwiperNavigation from '@hooks/useSwiperNavigation';
 
 const LatestArrivals = () => {
   const { t } = useTranslation();
 
-  const sliderRef = useRef<SwiperClass | null>(null);
-
-  const handlePrev = useCallback(() => {
-    if (!sliderRef.current) return;
-    sliderRef.current.slidePrev();
-  }, []);
-
-  const handleNext = useCallback(() => {
-    if (!sliderRef.current) return;
-    sliderRef.current.slideNext();
-  }, []);
+  const { handlePrev, handleNext, onSwiperInit } = useSwiperNavigation();
   const dispatch = useAppDispatch();
 
   const products: IProduct[] = useAppSelector(selectProducts);
@@ -50,7 +41,7 @@ const LatestArrivals = () => {
           <DecorativeLine intent="latestArrivals" />
           <div className="flex gap-[12px]">
             <div
-              className="flex h-[44px] w-[44px] items-center justify-center rounded-full border border-line"
+              className="flex h-[44px] w-[44px] cursor-pointer items-center justify-center rounded-full border border-line"
               onClick={handlePrev}
             >
               <SvgIcon
@@ -60,7 +51,7 @@ const LatestArrivals = () => {
               />
             </div>
             <div
-              className="flex h-[44px] w-[44px] items-center justify-center rounded-full border border-line"
+              className="flex h-[44px] cursor-pointer w-[44px] items-center justify-center rounded-full border border-line"
               onClick={handleNext}
             >
               <SvgIcon
@@ -73,9 +64,7 @@ const LatestArrivals = () => {
         </div>
 
         <Swiper
-          ref={node => {
-            if (node) sliderRef.current = node.swiper;
-          }}
+          onSwiper={onSwiperInit}
           style={{ width: 'calc(49% + 50vw)' }}
           slidesPerView={'auto'}
           spaceBetween={'10px'}

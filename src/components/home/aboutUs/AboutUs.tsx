@@ -19,23 +19,23 @@ const AboutUs = () => {
         <div className="text-center lg:flex lg:justify-between lg:gap-[32px] lg:text-start">
           <picture>
             <source
-              srcSet="@assets/images/home/desktop-home-about-us.webp 1x, @assets/images/home/desktop-home-about-us@2x.webp 2x, @assets/images/home/desktop-home-about-us@3x.webp 3x"
+              srcSet="/assets/images/home/desktop-home-about-us.webp 1x, /assets/images/home/desktop-home-about-us@2x.webp 2x, /assets/images/home/desktop-home-about-us@3x.webp 3x"
               media="(min-width: 1178px)"
               type="image/webp"
             />
 
             <source
-              srcSet="@assets/images/home/tablet-home-about-us.webp 1x, @assets/images/home/tablet-home-about-us@2x.webp 2x, @assets/images/home/tablet-home-about-us@3x.webp 3x"
+              srcSet="/assets/images/home/tablet-home-about-us.webp 1x, /assets/images/home/tablet-home-about-us@2x.webp 2x, /assets/images/home/tablet-home-about-us@3x.webp 3x"
               media="(min-width: 768px)"
               type="image/webp"
             />
             <source
-              srcSet="@assets/images/home/mobile-home-about-us.webp 1x, @assets/images/home/mobile-home-about-us@2x.webp 2x, @assets/images/home/mobile-home-about-us@3x.webp 3x"
+              srcSet="/assets/images/home/mobile-home-about-us.webp 1x, /assets/images/home/mobile-home-about-us@2x.webp 2x, /assets/images/home/mobile-home-about-us@3x.webp 3x"
               media="(max-width: 767px)"
               type="image/webp"
             />
             <img
-              src="@assets/images/home/mobile-home-about-us.webp"
+              src="/assets/images/home/mobile-home-about-us.webp"
               alt="Common photo"
               width="100%"
               className="mx-auto mb-[22px] h-[230px] shrink-0 rounded-[4px] bg-slate-500 md:h-[384px] md:w-[538px] lg:mb-0 lg:h-[478px] lg:w-[686px]"

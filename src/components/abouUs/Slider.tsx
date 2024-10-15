@@ -33,23 +33,23 @@ const Slider = () => {
           <SwiperSlide key={index * 3.45}>
             <picture>
             <source
-              srcSet={`src/assets/images/about-us/${desktop} 1x, src/assets/images/about-us/${desktop2x} 2x, src/assets/images/about-us/${desktop3x} 3x`}
+              srcSet={`${desktop} 1x, ${desktop2x} 2x, ${desktop3x} 3x`}
               media="(min-width: 1178px)"
               type="image/webp"
             />
 
             <source
-              srcSet={`src/assets/images/about-us/${tablet} 1x, src/assets/images/about-us/${tablet2x} 2x, src/assets/images/about-us/${tablet3x} 3x`}
+              srcSet={`${tablet} 1x, ${tablet2x} 2x, ${tablet3x} 3x`}
               media="(min-width: 768px)"
               type="image/webp"
             />
             <source
-              srcSet={`src/assets/images/about-us/${mobile} 1x, src/assets/images/about-us/${mobile2x} 2x, src/assets/images/about-us/${mobile3x} 3x`}
+              srcSet={`${mobile} 1x, ${mobile2x} 2x, ${mobile3x} 3x`}
               media="(max-width: 767px)"
               type="image/webp"
             />
             <img
-              src={`src/assets/images/about-us/${mobile}`}
+              src={`${mobile}`}
               alt={alt}
               width={330}
               className="block rounded-[4px] h-[200px] w-[330px] bg-slate-500 md:h-[362px] md:w-[580px] lg:h-[480px] lg:w-[754px]"

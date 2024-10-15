@@ -1,9 +1,9 @@
-import car from 'assets/images/about-us/car/index';
-import hampus from 'assets/images/about-us/hampus/index';
-import office from 'assets/images/about-us/office/index'
-import bilal from 'assets/images/about-us/bilal/index'
-import washing from 'assets/images/about-us/washing/index'
-import electrician from 'assets/images/about-us/electrician/index';
+import car from '@assets/images/about-us/car/index';
+import hampus from '@assets/images/about-us/hampus/index';
+import office from '@assets/images/about-us/office/index'
+import bilal from '@assets/images/about-us/bilal/index'
+import washing from '@assets/images/about-us/washing/index'
+import electrician from '@assets/images/about-us/electrician/index';
 
 const photosAboutUsList = [
   {

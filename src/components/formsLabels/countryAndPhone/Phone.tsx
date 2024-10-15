@@ -7,7 +7,7 @@ import {
 import InputMask from 'react-input-mask';
 
 import clsx from 'clsx';
-import { Field, useFormikContext } from 'formik';
+import { Field, useFormikContext, type FieldProps } from 'formik';
 import * as _ from 'lodash';
 
 import MobileMenuSelect from './MobileMenuSelect';
@@ -79,12 +79,12 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
   });
   const handleOptionClick = (option: ICountryOption) => {
     setSelectedOption(option);
-    setFieldValue('callingCode', option.label.props.callingCode, false);
+    setFieldValue('callingCode', option?.label?.props.callingCode, false);
     setFieldValue('countryPhone', option.value, false);
 
-    setCallingCode(option.label.props.callingCode);
-    setPhoneFormat(option.label.props.phoneFormat);
-    setPlaceholder(option.label.props.phoneFormat.replace(/#/g, '0'));
+    setCallingCode(option?.label?.props.callingCode);
+    setPhoneFormat(option?.label?.props.phoneFormat);
+    setPlaceholder(option?.label?.props.phoneFormat.replace(/#/g, '0'));
     // setIsOpen(false);
     if (windowWidth < 1178) {
       toggleMobileMenu();
@@ -110,7 +110,7 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
           />
           <Field type="hidden" name="callingCode" value={callingCode} />
           <Field name="phone">
-            {({ field }: { field: { name: string; value: string; onChange: () => void; onBlur: () => void } }) => (
+            {({ field }: FieldProps) => (
               <InputMask
                 {...field}
                 mask={phoneFormat}

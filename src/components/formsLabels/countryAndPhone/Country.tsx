@@ -1,4 +1,4 @@
-import { type ChangeEvent, type ReactNode, useContext, useState } from 'react';
+import { type ChangeEvent, useContext, useState } from 'react';
 import { Field, useFormikContext } from 'formik';
 import * as _ from 'lodash';
 
@@ -10,28 +10,24 @@ import MobileMenu from '@components/common/MobileMenu';
 import countriesList from '@constants/countriesList';
 import { LanguageContext } from '@components/SharedLayout';
 import useWindowWidth from '@hooks/useWindowWidth';
-
-interface CountryOptionType {
-  value: string;
-  label: ReactNode;
-}
-
+import type { ICountryOption } from '@interfaces/ICountryOption';
+ 
 const Country = () => {
   const { language } = useContext(LanguageContext);
-  const options: CountryOptionType[] = countriesList.map(country => ({
+  const options: ICountryOption[] = countriesList.map(country => ({
     value: country.translations[language],
     label: <CountryOption flag={country.flag} name={country.translations[language]} />,
   }));
 
   const { setFieldValue } = useFormikContext<{ country: string }>();
   const windowWidth = useWindowWidth();
-  const [selectedOption, setSelectedOption] = useState<CountryOptionType | null>(null);
+  const [selectedOption, setSelectedOption] = useState<ICountryOption | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [filteredOptions, setFilteredOptions] = useState<CountryOptionType[]>(options);
+  const [filteredOptions, setFilteredOptions] = useState<ICountryOption[]>(options);
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState<boolean>(false);
   const [hasClickedOutside, setHasClickedOutside] = useState<boolean>(false);
 
-  const handleOptionClick = (option: CountryOptionType) => {
+  const handleOptionClick = (option: ICountryOption) => {
     setSelectedOption(option);
     setFieldValue('country', option.value, false);
 
@@ -50,7 +46,7 @@ const Country = () => {
 
     const searchTerm = e.target.value.trim().toLowerCase();
     setFilteredOptions(
-      options.filter((option: CountryOptionType) => {
+      options.filter((option: ICountryOption) => {
         const name = option.label as React.ReactElement;
         return (
           name.props.name.toLowerCase().includes(searchTerm) ||
@@ -73,7 +69,6 @@ const Country = () => {
                 setHasClickedOutside={setHasClickedOutside}
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
-                options={options}
                 handleOptionSelected={handleOptionClick}
                 selectedOption={selectedOption}
                 labelName="country"

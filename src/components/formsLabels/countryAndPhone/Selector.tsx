@@ -22,7 +22,7 @@ interface ISelectorProps {
   handleOptionSelected: (option: ICountryOption) => void;
   selectedOption: ICountryOption | null
   labelName: 'country' | 'phone';
-  filteredOptions: ICountryOption[]
+  filteredOptions: ICountryOption[] | null
   toggleMobileMenu: () => void
 }
 
@@ -69,11 +69,11 @@ const Selector:FC<ISelectorProps> = ({
           {selectedOption ? (
             <SelectedOption
               isOpen={isOpen}
-              name={selectedOption.label.props.name}
-              flag={selectedOption.label.props.flag}
+              name={selectedOption?.label?.props.name}
+              flag={selectedOption?.label?.props.flag}
               labelName={labelName}
               value={
-                selectedOption.label.props[
+                selectedOption?.label?.props[
                   `${labelName === 'country' ? 'name' : 'callingCode'}`
                 ]
               }

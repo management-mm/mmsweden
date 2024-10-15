@@ -4,7 +4,7 @@ import type { ChangeEvent, FC } from 'react';
 
 interface IMenuProps {
   handleInputText: (e: ChangeEvent<HTMLInputElement>) => void;
-  options: ICountryOption[]
+  options: ICountryOption[] | null
   handleOptionClick: (option: ICountryOption) => void;
   isOpen: boolean
   setIsOpen: (value: boolean) => void;
@@ -35,7 +35,7 @@ const Menu:FC<IMenuProps> = ({
         onInput={handleInputText}
       />
       <ul className="mb-[22px] mt-[14px] max-h-60 overflow-auto bg-white">
-        {options.length > 0 ? (
+        {options && options.length > 0 ? (
           options.map(option => (
             <li
               key={option.value}

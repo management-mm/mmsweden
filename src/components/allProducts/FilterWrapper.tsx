@@ -31,7 +31,7 @@ interface IFilterWrapperProps {
   items: ICategory[] | IManufacturer[] | IIndustry[];
   isLoading: boolean;
   keyword: string;
-  setKeyword: () => void;
+  setKeyword: (value: string) => void;
 }
 const FilterWrapper: FC<IFilterWrapperProps> = ({
   filterName,

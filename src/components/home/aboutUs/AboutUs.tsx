@@ -3,6 +3,15 @@ import { Trans, useTranslation } from 'react-i18next';
 import NavLinkBtn from '@components/common/NavLinkBtn';
 
 import { Button, Description, NavBar } from '@enums/i18nConstants';
+import mobile from '@assets/images/home/mobile-home-about-us.webp';
+import mobile2x from '@assets/images/home/mobile-home-about-us@2x.webp';
+import mobile3x from '@assets/images/home/mobile-home-about-us@3x.webp';
+import tablet from '@assets/images/home/tablet-home-about-us.webp';
+import tablet2x from '@assets/images/home/tablet-home-about-us@2x.webp';
+import tablet3x from '@assets/images/home/tablet-home-about-us@3x.webp';
+import desktop from '@assets/images/home/desktop-home-about-us.webp';
+import desktop2x from '@assets/images/home/desktop-home-about-us@2x.webp';
+import desktop3x from '@assets/images/home/desktop-home-about-us@3x.webp';
 
 const AboutUs = () => {
   const { t } = useTranslation();
@@ -19,23 +28,23 @@ const AboutUs = () => {
         <div className="text-center lg:flex lg:justify-between lg:gap-[32px] lg:text-start">
           <picture>
             <source
-              srcSet="/assets/images/home/desktop-home-about-us.webp 1x, /assets/images/home/desktop-home-about-us@2x.webp 2x, /assets/images/home/desktop-home-about-us@3x.webp 3x"
+              srcSet={`${desktop} 1x, ${desktop2x} 2x, ${desktop3x} 3x`}
               media="(min-width: 1178px)"
               type="image/webp"
             />
 
             <source
-              srcSet="/assets/images/home/tablet-home-about-us.webp 1x, /assets/images/home/tablet-home-about-us@2x.webp 2x, /assets/images/home/tablet-home-about-us@3x.webp 3x"
+              srcSet={`${tablet} 1x, ${tablet2x} 2x, ${tablet3x} 3x`}
               media="(min-width: 768px)"
               type="image/webp"
             />
             <source
-              srcSet="/assets/images/home/mobile-home-about-us.webp 1x, /assets/images/home/mobile-home-about-us@2x.webp 2x, /assets/images/home/mobile-home-about-us@3x.webp 3x"
+              srcSet={`${mobile} 1x, ${mobile2x} 2x, ${mobile3x} 3x`}
               media="(max-width: 767px)"
               type="image/webp"
             />
             <img
-              src="/assets/images/home/mobile-home-about-us.webp"
+              src={mobile}
               alt="Common photo"
               width="100%"
               className="mx-auto mb-[22px] h-[230px] shrink-0 rounded-[4px] bg-slate-500 md:h-[384px] md:w-[538px] lg:mb-0 lg:h-[478px] lg:w-[686px]"

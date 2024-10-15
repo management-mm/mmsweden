@@ -12,7 +12,7 @@ import { handlePending, handleRejected } from '@store/handlers';
 interface IProductsState {
   items: IProduct[];
   total: number;
-  productDetails: IProduct;
+  productDetails: IProduct | null;
   itemsForQuote: IProduct[];
   isLoading: boolean;
   error: string | null;
@@ -41,39 +41,12 @@ const productsSlice = createSlice({
   name: 'products',
   initialState: {
     items: [],
-    productDetails: {
-      name: '',
-      idNumber: '',
-      description: {
-        en: '',
-        de: '',
-        sv: '',
-        fr: '',
-        es: '',
-        ru: '',
-        uk: '',
-      },
-      dimensions: '',
-      photos: [],
-      video: '',
-      category: {
-        en: '',
-        de: '',
-        sv: '',
-        fr: '',
-        es: '',
-        ru: '',
-        uk: '',
-      },
-      manufacturer: '',
-      industries: [],
-      condition: 'used',
-    },
+    productDetails: null,
     total: 0,
     itemsForQuote: [],
     isLoading: false,
     error: null,
-  },
+  } as IProductsState,
   reducers: {},
   extraReducers: builder =>
     builder

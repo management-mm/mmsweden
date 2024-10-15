@@ -1,10 +1,13 @@
+import type { ICategory } from '@interfaces/ICategory';
 import findTranslation from './findTranslation';
+import type { IIndustry } from '@interfaces/IIndustry';
+import type { LanguageKeys } from '@enums/languageKeys';
 
 const getFilterValueTranslation = (
-  filter,
-  categories,
-  industries,
-  language
+  filter: { value: string; filterName: 'category' | 'industry' | 'manufacturer' | 'condition' },
+  categories: ICategory[],
+  industries: IIndustry[],
+  language: LanguageKeys
 ) => {
   const { filterName, value } = filter;
 
@@ -13,9 +16,7 @@ const getFilterValueTranslation = (
     industry: industries,
   };
 
-  const items = itemCollections[filterName];
-
-  console.log(items);
+  const items = itemCollections[filterName as 'category' | 'industry'];
 
   return items ? findTranslation(items, value, language) : value;
 };

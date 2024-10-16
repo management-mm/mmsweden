@@ -54,7 +54,7 @@ const ProductDetails: FC<IProductDetailsProps> = ({
       </p>
 
       <p 
-        className="mb-auto line-clamp-6 w-full font-openSans text-[12px] text-title" 
+        className="mb-auto line-clamp-5 w-full font-openSans text-[12px] text-title" 
         key={`description-${language}`} 
         translate="no"
       >

@@ -17,7 +17,7 @@ const ProductImage:FC<IProductImageProps> = ({ isLoading, photos, name, language
       {!isLoading ? (
         photos.length !== 0 ? (
           <img
-            className="h-[218px] w-full rounded-t-[4px] object-cover"
+            className="h-[218px] w-full rounded-t-[4px] object-contain"
             src={photos ? photos[0] : ''}
             alt={name ? getProductName(name, language) : ''}
           />

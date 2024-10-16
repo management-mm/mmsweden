@@ -14,7 +14,7 @@ interface IProductDetailsProps {
   dimensions: string;
 }
 
-const ProductDetails:FC<IProductDetailsProps> = ({
+const ProductDetails: FC<IProductDetailsProps> = ({
   isLoading,
   name,
   language,
@@ -24,19 +24,41 @@ const ProductDetails:FC<IProductDetailsProps> = ({
 }) => {
   return (
     <>
-      <h3 className="mb-[4px] text-[16px] font-semibold uppercase text-primary">
-        {!isLoading ? getProductName(name, language) : <Skeleton width={150} />}
+      <h3 
+        className="mb-[4px] text-[16px] font-semibold uppercase text-primary" 
+        key={`name-${language}`} 
+        translate="no"
+      >
+        {isLoading ? (
+          <Skeleton width={150} />
+        ) : (
+          getProductName(name, language)
+        )}
       </h3>
-      <p className="mb-[4px] text-[14px] font-semibold text-secondaryAccent">
-        {!isLoading ? 'ID NR ' : <Skeleton width={80} />}
 
-        <span>{!isLoading ? idNumber : <Skeleton width={80} />}</span>
+      <p 
+        className="mb-[4px] text-[14px] font-semibold text-secondaryAccent" 
+        key={`id-number-${idNumber}`} 
+        translate="no"
+      >
+        {isLoading ? <Skeleton width={80} /> : 'ID NR '}
+        <span>{isLoading ? <Skeleton width={80} /> : idNumber}</span>
       </p>
-      <p className="mb-[12px] font-openSans text-[12px] text-desc">
-        {!isLoading ? dimensions : <Skeleton width={120} />}
+
+      <p 
+        className="mb-[12px] font-openSans text-[12px] text-desc" 
+        key={`dimensions-${dimensions}`} 
+        translate="no"
+      >
+        {isLoading ? <Skeleton width={120} /> : dimensions}
       </p>
-      <p className="mb-auto line-clamp-6 w-full font-openSans text-[12px] text-title">
-        {!isLoading ? description?.[language] : <Skeleton count={3} />}
+
+      <p 
+        className="mb-auto line-clamp-6 w-full font-openSans text-[12px] text-title" 
+        key={`description-${language}`} 
+        translate="no"
+      >
+        {isLoading ? <Skeleton count={3} /> : description?.[language] || ''}
       </p>
     </>
   );

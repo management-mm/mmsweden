@@ -17,14 +17,25 @@ interface LanguageContextType {
 }
 
 export const LanguageContext = createContext<LanguageContextType>({
-  language: (localStorage.getItem('i18nextLng') as LanguageKeys) || 'en',
+  language: (() => {
+    const storedLanguage = localStorage.getItem('i18nextLng');
+    return storedLanguage && storedLanguage.length > 2
+      ? (storedLanguage.slice(0, 2) as LanguageKeys)
+      : (storedLanguage as LanguageKeys) || 'en';
+  })(),
   setLanguage: () => {},
 });
 
 const SharedLayout = () => {
   const [language, setLanguage] = useState<LanguageKeys>(
-    (localStorage.getItem('i18nextLng') as LanguageKeys) || 'en'
-  );
+  (() => {
+    const storedLanguage = localStorage.getItem('i18nextLng');
+    return storedLanguage && storedLanguage.length > 2
+      ? (storedLanguage.slice(0, 2) as LanguageKeys)
+      : (storedLanguage as LanguageKeys) || 'en';
+  })()
+);
+
   // const getIcon = (type: string): React.ReactComponentElement<any> | undefined => {
   //   switch (type) {
   //     case 'success':

@@ -49,6 +49,7 @@ export const ru = {
   [Title.RequestAQuote]: 'Запросить цену',
   [Title.DateAdded]: 'Дата добавления',
   [Title.EmptyCart]: 'Ваша корзина пуста',
+  [Title.NoResults]: 'По вашему запросу ничего не найдено. Попробуйте изменить фильтры.',
 
   [Description.Industries]: 'Наши товары используются в следующих отраслях:',
   [Description.Hero]: 'Подержанные машины - Новые товары',

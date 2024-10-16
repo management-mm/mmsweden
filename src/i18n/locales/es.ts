@@ -49,6 +49,7 @@ export const es = {
   [Title.RequestAQuote]: 'Solicitar un precio',
   [Title.DateAdded]: 'Fecha añadida',
   [Title.EmptyCart]: 'Tu carrito está vacío',
+  [Title.NoResults]: 'No se encontraron resultados para su consulta. Intente ajustar los filtros.',
 
   [Description.Industries]:
     'Nuestros productos se utilizan en las siguientes industrias:',

@@ -33,7 +33,7 @@ export const en = {
   [Button.ViewDetails]: 'View Details',
   [Button.AddedToQuote]: 'Added to Quote',
   [Button.RequestPricing]: 'Request Pricing',
-  [Button.RequestQuote]: 'Request my price quite',
+  [Button.RequestQuote]: 'Request my price quote',
   [Button.SubmitRequest]: 'Submit Request',
   [Button.AddMoreItems]: 'Add More Items',
   [Button.GoToProducts]: 'Go to Products',
@@ -50,6 +50,7 @@ export const en = {
   [Title.RequestAQuote]: 'Request a quote',
   [Title.DateAdded]: 'Date Added',
   [Title.EmptyCart]: 'Your cart is empty',
+  [Title.NoResults]: 'No results found for your query. Please try adjusting the filters.',
 
   [Description.Industries]: 'Our products are used in such industries:',
   [Description.Hero]: 'Used machines - New products',

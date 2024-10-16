@@ -49,6 +49,7 @@ export const de = {
   [Title.RequestAQuote]: 'Preisanfrage stellen',
   [Title.DateAdded]: 'Hinzugefügt am',
   [Title.EmptyCart]: 'Ihr Warenkorb ist leer',
+  [Title.NoResults]: 'Keine Ergebnisse für Ihre Anfrage gefunden. Bitte versuchen Sie, die Filter anzupassen.',
 
   [Description.Industries]:
     'Unsere Produkte werden in folgenden Branchen eingesetzt:',

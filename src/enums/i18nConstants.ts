@@ -49,6 +49,7 @@ export enum Title {
   RequestAQuote = 'Title.RequestAQuote',
   DateAdded = 'Title.DateAdded',
   EmptyCart = 'Title.EmptyCart',
+  NoResults = 'Title.NoResults'
 }
 
 export enum Description {

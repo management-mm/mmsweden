@@ -20,8 +20,11 @@ import { useAppSelector } from '@hooks/useAppSelector';
 import useWindowWidth from '@hooks/useWindowWidth';
 
 import { filters } from '@enums/filters';
+import { useTranslation } from 'react-i18next';
+import { Title } from '@enums/i18nConstants';
 
 const ProductsList = () => {
+  const {t} = useTranslation()
   const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
   const { language } = useContext(LanguageContext);
@@ -74,8 +77,12 @@ const ProductsList = () => {
         searchParams.get(filters.Manufacturer) ||
         searchParams.get(filters.Industry) ||
         searchParams.get(filters.Condition)) && <ResetFilters />}
-
-      <ul className="mb-[32px] flex w-full flex-wrap justify-center gap-[30px] md:justify-normal lg:mb-[44px] lg:w-[852px]">
+      {products.length === 0 ? (
+        <div className='lg:flex lg:justify-center lg:w-[852px] lg:pt-[32px]'>
+          <p className='font-medium text-[18px] text-title text-center'>{t(Title.NoResults)}</p>
+ </div>
+      ): (
+        <ul className="mb-[32px] flex w-full flex-wrap justify-center gap-[30px] md:justify-normal lg:mb-[44px] lg:w-[852px]">
         {products.map(product => (
           <li
             key={product._id}
@@ -84,7 +91,10 @@ const ProductsList = () => {
             <ProductCard product={product} />
           </li>
         ))}
-      </ul>
+      </ul>  
+      )}
+
+      
       {pageCount !== 1 && <Pagination pageCount={pageCount} className="" />}
     </section>
   );

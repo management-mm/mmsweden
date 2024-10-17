@@ -10,9 +10,9 @@ const FirstHeroPart = () => {
   const { t } = useTranslation();
   
   return (
-    <div className="bg-primary bg-hero-mobile-1x md:bg-hero-tablet-1x lg:bg-hero-desktop-1x bg-cover bg-no-repeat pb-[51px] pt-[184px] retina:bg-hero-mobile-2x md:retina:bg-hero-tablet-2x lg:retina:bg-hero-desktop-2x">
+    <div className="bg-primary relative md:static min-h-[calc(100dvh-64px)] h-sm:static md:min-h-0 h-sm:min-h-0 bg-hero-mobile-1x md:bg-hero-tablet-1x lg:bg-hero-desktop-1x bg-cover bg-no-repeat pb-[90px] md:pb-[51px] pt-[90px] md:pt-[184px] retina:bg-hero-mobile-2x md:retina:bg-hero-tablet-2x lg:retina:bg-hero-desktop-2x">
       <div className="container">
-        <div className="mb-[164px]">
+        <div className="md:mb-[164px] h-sm:mb-[32px]">
           <h1 className="mb-[6px] text-[64px] font-bold leading-tight text-secondary md:text-[84px]">
             Machines Sweden
           </h1>
@@ -33,7 +33,7 @@ const FirstHeroPart = () => {
           </div>
         </div>
         <a
-          className="flex min-w-[226px] items-center"
+          className="absolute md:static h-sm:static bottom-[55px] flex min-w-[226px] items-center"
           href="https://www.youtube.com/@meatmachinesswedenab6915"
         >
           <div className="border-main mr-[12px] flex h-[44px] w-[44px] items-center justify-center rounded-full border bg-[rgba(252,252,252,0.12)]">

@@ -119,3 +119,12 @@ input:-webkit-autofill:focus {
   background-color: rgba(0, 32, 59, 1);
   border-radius: 15px;
 }
+.min-h-fallback {
+  min-height: calc(100vh - 64px);
+}
+
+@supports (height: 100svh) {
+  .min-h-fallback {
+    min-height: calc(100svh - 64px);
+  }
+}

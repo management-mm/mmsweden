@@ -10,7 +10,7 @@ const Home = () => {
     <>
       <Helmet>
         <title>Home | Meat Machines</title>
-        <meta name="description" content="" />
+        <meta name="description" content="Fabriksny utrustning · Krokar, galler & käppar · Bord · Vagnar · Sälj till oss. CHOOSE YOUR LANGUAGE. Copyright @ All Rights Reserved." />
         <meta name="keywords" content="equipment, sell, buy" />
       </Helmet>
       <Hero />

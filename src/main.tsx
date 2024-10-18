@@ -7,11 +7,15 @@ import './i18n';
 import './index.css';
 
 import { store } from '@store/store.ts';
+import { HelmetProvider } from 'react-helmet-async';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
-      <App />
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
+      
     </Provider>
   </StrictMode>
 );

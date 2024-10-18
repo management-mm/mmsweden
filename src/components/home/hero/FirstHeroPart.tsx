@@ -5,12 +5,15 @@ import SvgIcon from '@components/common/SvgIcon';
 
 import { Button, Description } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
+import { cn } from '@utils/cn';
 
 const FirstHeroPart = () => {
   const { t } = useTranslation();
   
   return (
-    <div className="bg-primary relative md:static min-h-fallback h-sm:static md:min-h-0 h-sm:min-h-0 bg-hero-mobile-1x md:bg-hero-tablet-1x lg:bg-hero-desktop-1x bg-cover bg-no-repeat pb-[90px] md:pb-[51px] pt-[90px] md:pt-[184px] retina:bg-hero-mobile-2x md:retina:bg-hero-tablet-2x lg:retina:bg-hero-desktop-2x">
+    <div className={cn("min-h-fallback",
+      "bg-primary relative md:static h-sm:static md:min-h-0 h-sm:min-h-0 bg-hero-mobile-1x md:bg-hero-tablet-1x lg:bg-hero-desktop-1x bg-cover bg-no-repeat pb-[90px] md:pb-[51px] pt-[90px] md:pt-[184px] retina:bg-hero-mobile-2x md:retina:bg-hero-tablet-2x lg:retina:bg-hero-desktop-2x"
+    )}>
       <div className="container">
         <div className="md:mb-[164px] h-sm:mb-[32px]">
           <h1 className="mb-[6px] text-[64px] font-bold leading-tight text-secondary md:text-[84px]">

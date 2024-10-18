@@ -128,3 +128,8 @@ input:-webkit-autofill:focus {
     min-height: calc(100svh - 64px);
   }
 }
+@media (min-width: 768px) {
+  .min-h-fallback {
+    min-height: 0;
+  }
+}

@@ -77,3 +77,17 @@
   position: absolute;
   width: calc(296 / 6) !important;
 }
+.min-h-fallback {
+  min-height: calc(100vh - 64px);
+}
+
+@supports (height: 100svh) {
+  .min-h-fallback {
+    min-height: calc(100svh - 64px);
+  }
+}
+@media (min-width: 768px) {
+  .min-h-fallback {
+    min-height: 0;
+  }
+}

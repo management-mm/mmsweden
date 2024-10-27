@@ -13,26 +13,36 @@ const Footer = () => {
   return (
     <footer className="bg-primary py-[32px] text-secondary">
       <div className="container">
-        <Logo className="mb-[56px] block" iconClassName="w-[140px] h-[72px]" />
+        <div className="lg:flex lg:items-baseline lg:justify-between">
+          <div>
+            <Logo
+              className="mb-[56px] block lg:mb-[12px]"
+              iconClassName="w-[140px] h-[72px]"
+            />
+            <MainContacts />
+            <WorkingHours />
+            <SocialMediaList
+              className="hidden lg:flex lg:flex-col lg:items-start lg:justify-start lg:gap-[22px]"
+              showTitle={true}
+            />
+          </div>
+          <DecorativeLine intent="footer" className="lg:hidden" />
+          <Navbar intent="footer" />
+          <DecorativeLine intent="footer" className="lg:hidden" />
+          <div className="py-[22px] lg:w-[639px]">
+            <div className="lg:mb-[12px] lg:flex lg:items-end lg:justify-between">
+              <Address containerClassName="lg:mb-0" />
+              <ViewOnMap className="hidden lg:flex" />
+            </div>
 
-        <MainContacts />
-
-        <WorkingHours />
-
-        <DecorativeLine intent="footer" />
-        <Navbar intent="footer" />
-        <DecorativeLine intent="footer" />
-
-        <div className="py-[22px]">
-          <Address />
-
-          <Map />
-          <ViewOnMap />
+            <Map />
+            <ViewOnMap className="lg:hidden" />
+          </div>
         </div>
 
-        <DecorativeLine intent="footer" />
+        <DecorativeLine intent="footer" className="lg:hidden" />
 
-        <SocialMediaList />
+        <SocialMediaList className="lg:hidden" />
 
         <DecorativeLine intent="footer" className="mb-[22px]" />
         <span className="block text-center font-openSans text-[12px] font-normal text-[#F9F7F0]">

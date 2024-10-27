@@ -53,7 +53,7 @@ export const sv = {
     'Välkommen till Meat Machines, din pålitliga partner inom högkvalitativ begagnad livsmedelsbearbetnings- och förpackningsutrustning. Grundat 2003 har vi varit dedikerade till att erbjuda exceptionell service och utrustning av högsta klass till våra kunder världen över.',
   [Description.AboutUsShort]: 'Vår historia',
   [Description.AboutUsLong]:
-    '<1>Sedan 2003 har Meat Machines varit din pålitliga källa för högkvalitativ begagnad livsmedelsbearbetnings- och förpackningsutrustning.</1> <1>Med nästan 2 000 maskiner i våra fyra lager i södra Sverige erbjuder vi utrustning från de bästa tillverkarna.</1> <1>Vårt team på över 10 kvalificerade yrkesmän, inklusive erfarna elektriker och mekaniker, underhåller varje enhet noggrant.</1> <1>Tusentals nöjda kunder över hela världen litar på oss för vår pålitlighet, kvalitet och konkurrenskraftiga priser.</1> <1>Låt oss hjälpa ditt företag att blomstra med pålitlig utrustning!</1>',
+    '<1>Sedan 2003 har Meat Machines varit din pålitliga källa för högkvalitativ begagnad livsmedelsbearbetnings- och förpackningsutrustning. Med nästan 2 000 maskiner i våra fyra lager i södra Sverige erbjuder vi utrustning från de bästa tillverkarna.</1> <1>Vårt team på över 10 kvalificerade yrkesmän, inklusive erfarna elektriker och mekaniker, underhåller varje enhet noggrant. Tusentals nöjda kunder över hela världen litar på oss för vår pålitlighet, kvalitet och konkurrenskraftiga priser.</1> <1>Låt oss hjälpa ditt företag att blomstra med pålitlig utrustning!</1>',
   [Description.SellToUs]:
     'Sluta lagra tusentals dollar i dina lager när värdet på din inaktiva utrustning minskar varje år.<1/> Vad väntar du på?',
   [Description.WriteToUs]:

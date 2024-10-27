@@ -33,10 +33,10 @@ const SellToUs = () => {
           </p>
           <NavLinkBtn
             intent="sellToUs"
-            className="hidden lg:block"
+            className="hidden lg:inline-block"
             path="sell-to-us"
           >
-            Sell to Us
+            {t(NavBar.SellToUs)}
           </NavLinkBtn>
         </div>
         <ul className="mb-[22px] md:mx-auto md:w-[calc(100%-200px)] lg:mx-0 lg:mb-0 lg:w-[656px]">

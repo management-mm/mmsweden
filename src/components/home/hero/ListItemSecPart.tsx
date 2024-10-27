@@ -21,7 +21,7 @@ const ListItemSecPart: FC<IListItemSecPartProps> = ({ item, index }) => {
         index === 3 ? 'mb-0' : 'mb-[46px]'
       )}
     >
-      <div className="w-[166px]">
+      <div className="max-w-[200px] text-center">
         <span className="mb-[2px] text-[44px] font-black leading-tight text-primary">
           {item.title}
         </span>

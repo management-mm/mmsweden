@@ -23,7 +23,7 @@ const SellToUsItem: FC<ISellToUsItem> = ({
   return (
     <li
       className={cn(
-        'relative flex min-h-[316px] flex-col items-center justify-center rounded-[4px] bg-[rgba(252,252,252,0.06)] px-[14px] md:min-h-[268px] lg:min-h-[190px] lg:items-start',
+        'relative flex min-h-[352px] flex-col items-center justify-center rounded-[4px] bg-[rgba(252,252,252,0.06)] px-[14px] md:min-h-[268px] lg:min-h-[220px] lg:items-start lg:justify-start lg:pt-[25px]',
         className
       )}
     >

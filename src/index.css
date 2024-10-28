@@ -73,9 +73,18 @@
 .swiper-scrollbar-drag {
   height: 3px !important;
   top: -1.2px !important;
-  /* transform: translate(0, -50%) !important; */
   position: absolute;
-  width: calc(296 / 6) !important;
+}
+@media screen and (min-width: 768px) {
+  .swiper-scrollbar {
+    width: 738px !important;
+  }
+}
+
+@media screen and (min-width: 1178px) {
+  .swiper-scrollbar {
+    width: 1146px !important;
+  }
 }
 .min-h-fallback {
   min-height: calc(100vh - 64px);

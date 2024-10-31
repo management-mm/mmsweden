@@ -4,6 +4,7 @@ import {
   ContactUs,
   Description,
   Employee,
+  Filter,
   Industry,
   Instructions,
   Label,
@@ -172,4 +173,14 @@ export const ru = {
   [Placeholder.SearchProduct]: 'Введите название или ID продукта',
   [Placeholder.Search]: 'Поиск...',
   [Placeholder.Subject]: 'Тема вашего сообщения',
+
+  [Filter.Category]: 'Категория',
+  [Filter.Manufacturer]: 'Производитель',
+  [Filter.Industry]: 'Индустрия',
+  [Filter.Condition]: 'Состояние',
+  [Filter.Found]: 'Найдено {{number}} товаров',
+  [Filter.Filters]: 'Фильтры',
+  [Filter.New]: 'Новый',
+  [Filter.Used]: 'Б/у',
+  [Filter.Reset]: 'Сбросить фильтры',
 };

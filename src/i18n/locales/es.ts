@@ -4,6 +4,7 @@ import {
   ContactUs,
   Description,
   Employee,
+  Filter,
   Industry,
   Instructions,
   Label,
@@ -173,4 +174,14 @@ export const es = {
   [Placeholder.SearchProduct]: 'Introduce el nombre o ID del producto',
   [Placeholder.Search]: 'Buscar...',
   [Placeholder.Subject]: 'Asunto de tu mensaje',
+
+  [Filter.Category]: 'Categoría',
+  [Filter.Manufacturer]: 'Fabricante',
+  [Filter.Industry]: 'Industria',
+  [Filter.Condition]: 'Condición',
+  [Filter.Found]: 'Se encontraron {{number}} productos',
+  [Filter.Filters]: 'Filtros',
+  [Filter.New]: 'Nuevo',
+  [Filter.Used]: 'Usado',
+  [Filter.Reset]: 'Restablecer filtros',
 };

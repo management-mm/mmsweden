@@ -4,6 +4,7 @@ import {
   ContactUs,
   Description,
   Employee,
+  Filter,
   Industry,
   Instructions,
   Label,
@@ -171,4 +172,14 @@ export const uk = {
   [Placeholder.SearchProduct]: 'Введіть назву або ID продукту',
   [Placeholder.Search]: 'Пошук...',
   [Placeholder.Subject]: 'Тема вашого повідомлення',
+
+  [Filter.Category]: 'Категорія',
+  [Filter.Manufacturer]: 'Виробник',
+  [Filter.Industry]: 'Індустрія',
+  [Filter.Condition]: 'Стан',
+  [Filter.Found]: 'Знайдено {{number}} продуктів',
+  [Filter.Filters]: 'Фільтри',
+  [Filter.New]: 'Новий',
+  [Filter.Used]: 'б/в',
+  [Filter.Reset]: 'Скинути фільтри',
 };

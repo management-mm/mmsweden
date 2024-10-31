@@ -154,3 +154,15 @@ export enum Placeholder {
   Subject = 'Placeholder.Subject',
   Company = 'Placeholder.Company',
 }
+
+export enum Filter {
+  Filters = 'Filter.Filters',
+  Found = 'Filter.Found',
+  Category = 'Filter.Category',
+  Manufacturer = 'Filter.Manufacturer',
+  Industry = 'Filter.Industry',
+  Condition = 'Filter.Condition',
+  New = 'Filter.New',
+  Used = 'Filter.Used',
+  Reset = 'Filter.Reset',
+}

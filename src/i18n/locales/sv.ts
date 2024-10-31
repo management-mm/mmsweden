@@ -4,6 +4,7 @@ import {
   ContactUs,
   Description,
   Employee,
+  Filter,
   Industry,
   Instructions,
   Label,
@@ -172,4 +173,14 @@ export const sv = {
   [Placeholder.SearchProduct]: 'Ange produktnamn eller ID-nummer',
   [Placeholder.Search]: 'Sök...',
   [Placeholder.Subject]: 'Ämnet för ditt meddelande',
+
+  [Filter.Category]: 'Kategori',
+  [Filter.Manufacturer]: 'Tillverkare',
+  [Filter.Industry]: 'Industri',
+  [Filter.Condition]: 'Skick',
+  [Filter.Found]: 'Hittade {{number}} produkter',
+  [Filter.Filters]: 'Filter',
+  [Filter.New]: 'Ny',
+  [Filter.Used]: 'Begagnad',
+  [Filter.Reset]: 'Återställ filter',
 };

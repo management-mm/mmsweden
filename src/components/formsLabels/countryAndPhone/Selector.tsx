@@ -38,7 +38,6 @@ const Selector:FC<ISelectorProps> = ({
   filteredOptions,
   toggleMobileMenu,
 }) => {
-  console.log(isOpen);
   const {t} = useTranslation()
 
   const windowWidth = useWindowWidth();

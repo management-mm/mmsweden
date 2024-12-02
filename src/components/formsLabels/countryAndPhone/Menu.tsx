@@ -1,6 +1,7 @@
 import useOutsideAlerter from '@hooks/useOutsideAlerter';
 import type { ICountryOption } from '@interfaces/ICountryOption';
 import type { ChangeEvent, FC } from 'react';
+import { nanoid } from 'nanoid'
 
 interface IMenuProps {
   handleInputText: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -26,7 +27,7 @@ const Menu:FC<IMenuProps> = ({
   return (
     <div
       ref={outsideAlerterRef}
-      className="absolute z-10 mt-1 w-[400px] rounded-[4px] border bg-white px-[14px] pt-[14px] shadow-lg"
+      className="absolute z-10 mt-1 w-[600px] rounded-[4px] border bg-white px-[14px] pt-[14px] shadow-lg"
     >
       <input
         type="text"
@@ -38,7 +39,7 @@ const Menu:FC<IMenuProps> = ({
         {options && options.length > 0 ? (
           options.map(option => (
             <li
-              key={option.value}
+              key={nanoid()}
               className="duration-250 cursor-pointer py-[8px] transition-colors hover:bg-secondary"
               onClick={() => handleOptionClick(option)}
             >

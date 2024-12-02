@@ -1,5 +1,6 @@
 import type { ICountryOption } from "@interfaces/ICountryOption";
 import type { ChangeEvent, FC } from "react";
+import { nanoid } from 'nanoid'
 
 interface IMobileMenuSelectProps {
   handleInputText: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -21,7 +22,7 @@ const MobileMenuSelect: FC<IMobileMenuSelectProps> = ({ handleInputText, options
         {options.length > 0 ? (
           options.map(option => (
             <li
-              key={option.value}
+              key={nanoid()}
               className="cursor-pointer border-t p-2 hover:bg-gray-200"
               onClick={() => handleOptionClick(option)}
             >

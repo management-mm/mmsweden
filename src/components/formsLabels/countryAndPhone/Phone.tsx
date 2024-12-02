@@ -33,19 +33,38 @@ interface IPhoneProps {
 
 const Phone: FC<IPhoneProps> = ({ className }) => {
   const { language } = useContext(LanguageContext);
-  const options = countriesList.map(country => {
+
+  const options = countriesList.flatMap(country => {
+    const { phoneFormat, callingCode, translations, flag } = country;
+  
+    if (Array.isArray(phoneFormat)) {
+      return phoneFormat.map((_, index) => ({
+        value: translations[language],
+        label: (
+          <PhoneCodeOption
+            name={translations[language]}
+            callingCode={callingCode}
+            flag={flag}
+            phoneFormat={phoneFormat}
+            formatIndex={index}
+          />
+        ),
+      }));
+    }
+  
     return {
-      value: country.translations[language],
+      value: translations[language],
       label: (
         <PhoneCodeOption
-          name={country.translations[language]}
-          callingCode={country.callingCode}
-          flag={country.flag}
-          phoneFormat={country.phoneFormat}
+          name={translations[language]}
+          callingCode={callingCode}
+          flag={flag}
+          phoneFormat={phoneFormat}
         />
       ),
     };
   });
+  
   const [filteredOptions, setFilteredOptions] = useState(options);
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
   const [hasClickedOutside, setHasClickedOutside] = useState<boolean>(false);
@@ -79,11 +98,12 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
   });
   const handleOptionClick = (option: ICountryOption) => {
     setSelectedOption(option);
+    const {phoneFormat, formatIndex} = option?.label?.props
     setFieldValue('callingCode', option?.label?.props.callingCode, false);
     setFieldValue('countryPhone', option.value, false);
 
     setCallingCode(option?.label?.props.callingCode);
-    setPhoneFormat(option?.label?.props.phoneFormat);
+    setPhoneFormat(Array.isArray(phoneFormat) ? phoneFormat[formatIndex] : phoneFormat);
     setPlaceholder(option?.label?.props.phoneFormat.replace(/#/g, '0'));
     // setIsOpen(false);
     if (windowWidth < 1178) {

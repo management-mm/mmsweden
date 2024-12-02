@@ -49,7 +49,8 @@ export enum Title {
   RequestAQuote = 'Title.RequestAQuote',
   DateAdded = 'Title.DateAdded',
   EmptyCart = 'Title.EmptyCart',
-  NoResults = 'Title.NoResults'
+  NoResults = 'Title.NoResults',
+  Format = 'Title.Format'
 }
 
 export enum Description {
@@ -141,7 +142,7 @@ export enum Label {
   Description = 'Label.Description',
   AttachPhotos = 'Label.AttachPhotos',
   Message = 'Label.Message',
-  Country = 'Label.',
+  Country = 'Label.Country',
   Company = 'Label.Company',
   Subject = 'Label.Subject',
 }

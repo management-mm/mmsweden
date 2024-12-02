@@ -50,6 +50,7 @@ export const uk = {
   [Title.DateAdded]: 'Дата додавання',
   [Title.EmptyCart]: 'Ваш кошик порожній',
   [Title.NoResults]: 'Не знайдено жодного результату за вашим запитом. Спробуйте відрегулювати фільтри.',
+  [Title.Format]: 'формат {{number}}',
 
   [Description.Industries]: 'Наші товари використовуються в таких галузях:',
   [Description.Hero]: 'Вживані машини - Нові товари',

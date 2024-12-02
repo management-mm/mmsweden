@@ -50,6 +50,7 @@ export const sv = {
   [Title.DateAdded]: 'Datum tillagt',
   [Title.EmptyCart]: 'Din kundvagn är tom',
   [Title.NoResults]: 'Inga resultat hittades för din förfrågan. Vänligen försök justera filtren.',
+  [Title.Format]: 'format {{number}}',
 
   [Description.Industries]: 'Våra produkter används inom följande branscher:',
   [Description.Hero]: 'Begagnade maskiner - Nya produkter',

@@ -50,6 +50,7 @@ export const es = {
   [Title.DateAdded]: 'Fecha añadida',
   [Title.EmptyCart]: 'Tu carrito está vacío',
   [Title.NoResults]: 'No se encontraron resultados para su consulta. Intente ajustar los filtros.',
+  [Title.Format]: 'formato {{number}}',
 
   [Description.Industries]:
     'Nuestros productos se utilizan en las siguientes industrias:',

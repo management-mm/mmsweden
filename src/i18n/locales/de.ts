@@ -9,6 +9,7 @@ import {
   Instructions,
   Label,
   NavBar,
+  Pagination,
   Placeholder,
   SellToUs,
   Title,
@@ -16,6 +17,7 @@ import {
 } from '@enums/i18nConstants';
 
 export const de = {
+  [NavBar.Home]: 'Startseite',
   [NavBar.AllProducts]: 'Alle Produkte',
   [NavBar.SellToUs]: 'Verkaufen Sie an uns',
   [NavBar.AboutUs]: 'Über uns',
@@ -27,12 +29,11 @@ export const de = {
   [Button.WatchOnYoutube]: 'Auf YouTube ansehen',
   [Button.ShopNow]: 'Jetzt einkaufen',
   [Button.ShowMore]: 'Mehr anzeigen',
-  [Button.ViewDetails]: 'Details anzeigen',
-  [Button.AddedToQuote]: 'Zum Angebot hinzugefügt',
+  [Button.ViewDetails]: 'Details',
+  [Button.AddedToQuote]: 'Angebot hinzugefügt',
   [Button.RequestPricing]: 'Preisanfrage',
   [Button.SubmitRequest]: 'Anfrage senden',
   [Button.AddMoreItems]: 'Weitere Artikel hinzufügen',
-  [Button.AddProducts]: 'Produkte hinzufügen',
 
   [Title.Industries]: 'Industrie',
   [Title.LatestArrivals]: 'Neueste Ankünfte',
@@ -41,7 +42,6 @@ export const de = {
   [Title.Step]: 'Schritt {{number}}',
   [Title.FormForSale]: 'Verkaufsformular',
   [Title.VideoOverview]: 'Videoübersicht',
-  [Title.YouMayAlsoLike]: 'Das könnte Ihnen auch gefallen',
   [Title.ItemsForQuote]: 'Artikel zur Preisabfrage',
   [Title.RequestAQuote]: 'Preisanfrage stellen',
 
@@ -185,4 +185,7 @@ export const de = {
   [Filter.New]: 'Neu',
   [Filter.Used]: 'Gebraucht',
   [Filter.Reset]: 'Filter zurücksetzen',
+
+  [Pagination.Next]: 'Nächste',
+  [Pagination.Previous]: 'Vorherige',
 };

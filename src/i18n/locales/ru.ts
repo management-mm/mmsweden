@@ -9,6 +9,7 @@ import {
   Instructions,
   Label,
   NavBar,
+  Pagination,
   Placeholder,
   SellToUs,
   Title,
@@ -16,6 +17,7 @@ import {
 } from '@enums/i18nConstants';
 
 export const ru = {
+  [NavBar.Home]: 'Главная',
   [NavBar.AllProducts]: 'Все товары',
   [NavBar.SellToUs]: 'Продайте нам',
   [NavBar.AboutUs]: 'О нас',
@@ -27,12 +29,11 @@ export const ru = {
   [Button.WatchOnYoutube]: 'Смотреть на YouTube',
   [Button.ShopNow]: 'Купить сейчас',
   [Button.ShowMore]: 'Показать больше',
-  [Button.ViewDetails]: 'Посмотреть детали',
+  [Button.ViewDetails]: 'Детали',
   [Button.AddedToQuote]: 'Добавлено в запрос',
   [Button.RequestPricing]: 'Запросить цену',
   [Button.SubmitRequest]: 'Отправить запрос',
   [Button.AddMoreItems]: 'Добавить больше товаров',
-  [Button.AddProducts]: 'Добавить товары',
 
   [Title.Industries]: 'Индустрии',
   [Title.LatestArrivals]: 'Последние поступления',
@@ -41,7 +42,6 @@ export const ru = {
   [Title.Step]: 'Шаг {{number}}',
   [Title.FormForSale]: 'Форма для продажи',
   [Title.VideoOverview]: 'Видеообзор',
-  [Title.YouMayAlsoLike]: 'Вам также может понравиться',
   [Title.ItemsForQuote]: 'Товары для запроса цены',
   [Title.RequestAQuote]: 'Запросить цену',
 
@@ -135,7 +135,7 @@ export const ru = {
   [Employee.Hakan]: 'Хокан Вальгрен',
   [Employee.HakanDesc]: 'ГЕНЕРАЛЬНЫЙ ДИРЕКТОР / ЗАКУПКИ',
   [Employee.Erika]: 'Эрика Вальгрен',
-  [Employee.ErikaDesc]: 'АДМИНИСТРАЦИЯ. УПРАВЛЕНИЕ НЕДВИЖИМОСТЬЮ',
+  [Employee.ErikaDesc]: 'АДМИН. УПРАВЛЕНИЕ НЕДВИЖИМОСТЬЮ',
   [Employee.Eva]: 'Эва Андерссон',
   [Employee.EvaDesc]: 'ФИНАНСЫ',
   [Employee.Catharine]: 'Катарина Вальгрен',
@@ -183,4 +183,7 @@ export const ru = {
   [Filter.New]: 'Новый',
   [Filter.Used]: 'Б/у',
   [Filter.Reset]: 'Сбросить фильтры',
+
+  [Pagination.Next]: 'Далее',
+  [Pagination.Previous]: 'Назад',
 };

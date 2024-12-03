@@ -1,4 +1,5 @@
 export enum NavBar {
+  Home = 'NavBar.Home',
   AllProducts = 'NavBar.AllProducts',
   SellToUs = 'NavBar.SellToUs',
   AboutUs = 'NavBar.AboutUs',
@@ -165,4 +166,9 @@ export enum Filter {
   New = 'Filter.New',
   Used = 'Filter.Used',
   Reset = 'Filter.Reset',
+}
+
+export enum Pagination {
+  Previous = 'Pagination.Previous',
+  Next = 'Pagination.Next',
 }

@@ -9,6 +9,7 @@ import {
   Instructions,
   Label,
   NavBar,
+  Pagination,
   Placeholder,
   SellToUs,
   Title,
@@ -16,6 +17,7 @@ import {
 } from '@enums/i18nConstants';
 
 export const sv = {
+  [NavBar.Home]: 'Hem',
   [NavBar.AllProducts]: 'Alla produkter',
   [NavBar.SellToUs]: 'Sälj till oss',
   [NavBar.AboutUs]: 'Om oss',
@@ -32,7 +34,6 @@ export const sv = {
   [Button.RequestPricing]: 'Begär pris',
   [Button.SubmitRequest]: 'Skicka förfrågan',
   [Button.AddMoreItems]: 'Lägg till fler artiklar',
-  [Button.AddProducts]: 'Lägg till produkter',
 
   [Title.Industries]: 'Industri',
   [Title.LatestArrivals]: 'Senaste ankomster',
@@ -41,7 +42,6 @@ export const sv = {
   [Title.Step]: 'Steg {{number}}',
   [Title.FormForSale]: 'Formulär för försäljning',
   [Title.VideoOverview]: 'Videoöversikt',
-  [Title.YouMayAlsoLike]: 'Du kanske också gillar',
   [Title.ItemsForQuote]: 'Artiklar för prisförfrågan',
   [Title.RequestAQuote]: 'Begär en prisoffert',
 
@@ -183,4 +183,7 @@ export const sv = {
   [Filter.New]: 'Ny',
   [Filter.Used]: 'Begagnad',
   [Filter.Reset]: 'Återställ filter',
+
+  [Pagination.Next]: 'Nästa',
+  [Pagination.Previous]: 'Föregående',
 };

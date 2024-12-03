@@ -9,6 +9,7 @@ import {
   Instructions,
   Label,
   NavBar,
+  Pagination,
   Placeholder,
   SellToUs,
   Title,
@@ -16,6 +17,7 @@ import {
 } from '@enums/i18nConstants';
 
 export const uk = {
+  [NavBar.Home]: 'Головна',
   [NavBar.AllProducts]: 'Всі продукти',
   [NavBar.SellToUs]: 'Продайте нам',
   [NavBar.AboutUs]: 'Про нас',
@@ -29,10 +31,9 @@ export const uk = {
   [Button.ShowMore]: 'Показати більше',
   [Button.ViewDetails]: 'Деталі',
   [Button.AddedToQuote]: 'Додано до пропозиції',
-  [Button.RequestPricing]: 'Запит ціни',
+  [Button.RequestPricing]: 'Запросити ціну',
   [Button.SubmitRequest]: 'Надіслати запит',
   [Button.AddMoreItems]: 'Додати більше товарів',
-  [Button.AddProducts]: 'Додати товари',
 
   [Title.Industries]: 'Індустрії',
   [Title.LatestArrivals]: 'Останні надходження',
@@ -41,7 +42,6 @@ export const uk = {
   [Title.Step]: 'Крок {{number}}',
   [Title.FormForSale]: 'Форма для продажу',
   [Title.VideoOverview]: 'Відеоогляд',
-  [Title.YouMayAlsoLike]: 'Вам також може сподобатися',
   [Title.ItemsForQuote]: 'Товари для запиту ціни',
   [Title.RequestAQuote]: 'Запросити ціну',
 
@@ -182,4 +182,7 @@ export const uk = {
   [Filter.New]: 'Новий',
   [Filter.Used]: 'б/в',
   [Filter.Reset]: 'Скинути фільтри',
+
+  [Pagination.Next]: 'Далі',
+  [Pagination.Previous]: 'Назад',
 };

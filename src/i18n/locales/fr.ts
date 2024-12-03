@@ -9,6 +9,7 @@ import {
   Instructions,
   Label,
   NavBar,
+  Pagination,
   Placeholder,
   SellToUs,
   Title,
@@ -16,6 +17,7 @@ import {
 } from '@enums/i18nConstants';
 
 export const fr = {
+  [NavBar.Home]: 'Accueil',
   [NavBar.AllProducts]: 'Tous les produits',
   [NavBar.SellToUs]: 'Vendez-nous',
   [NavBar.AboutUs]: 'À propos de nous',
@@ -32,7 +34,6 @@ export const fr = {
   [Button.RequestPricing]: 'Demander le prix',
   [Button.SubmitRequest]: 'Envoyer la demande',
   [Button.AddMoreItems]: "Ajouter d'autres articles",
-  [Button.AddProducts]: 'Ajouter des produits',
 
   [Title.Industries]: 'Industries',
   [Title.LatestArrivals]: 'Dernières arrivées',
@@ -41,7 +42,6 @@ export const fr = {
   [Title.Step]: 'Étape {{number}}',
   [Title.FormForSale]: 'Formulaire de vente',
   [Title.VideoOverview]: 'Aperçu vidéo',
-  [Title.YouMayAlsoLike]: 'Vous aimerez peut-être aussi',
   [Title.ItemsForQuote]: 'Articles pour demande de prix',
   [Title.RequestAQuote]: 'Demander un devis',
 
@@ -136,7 +136,7 @@ export const fr = {
   [Employee.Hakan]: 'Håkan Wahlgren',
   [Employee.HakanDesc]: 'PDG / APPROVISIONNEMENT',
   [Employee.Erika]: 'Erika Walgreen',
-  [Employee.ErikaDesc]: 'ADMINISTRATION. GESTION IMMOBILIÈRE',
+  [Employee.ErikaDesc]: 'ADMIN. GESTION IMMOBILIÈRE',
   [Employee.Eva]: 'Eva Andersson',
   [Employee.EvaDesc]: 'FINANCES',
   [Employee.Catharine]: 'Catharine Wahlgren',
@@ -184,4 +184,7 @@ export const fr = {
   [Filter.New]: 'Nouveau',
   [Filter.Used]: 'Occasion',
   [Filter.Reset]: 'Réinitialiser les filtres',
+
+  [Pagination.Next]: 'Suivant',
+  [Pagination.Previous]: 'Précédent',
 };

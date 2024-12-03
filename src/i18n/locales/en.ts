@@ -9,6 +9,7 @@ import {
   Instructions,
   Label,
   NavBar,
+  Pagination,
   Placeholder,
   SellToUs,
   Title,
@@ -16,6 +17,7 @@ import {
 } from '@enums/i18nConstants';
 
 export const en = {
+  [NavBar.Home]: 'Home',
   [NavBar.AllProducts]: 'All Products',
   [NavBar.SellToUs]: 'Sell To Us',
   [NavBar.AboutUs]: 'About Us',
@@ -30,10 +32,9 @@ export const en = {
   [Button.ViewDetails]: 'View Details',
   [Button.AddedToQuote]: 'Added to Quote',
   [Button.RequestPricing]: 'Request Pricing',
-  [Button.RequestQuote]: 'Request my price quite',
+  [Button.RequestQuote]: 'Request my price quote',
   [Button.SubmitRequest]: 'Submit Request',
   [Button.AddMoreItems]: 'Add More Items',
-  [Button.AddProducts]: 'Add Products',
 
   [Title.Industries]: 'Industries',
   [Title.LatestArrivals]: 'Latest Arrivals',
@@ -42,7 +43,6 @@ export const en = {
   [Title.Step]: 'Step {{number}}',
   [Title.FormForSale]: 'Form For Sale',
   [Title.VideoOverview]: 'Video overview',
-  [Title.YouMayAlsoLike]: 'You May Also Like',
   [Title.ItemsForQuote]: 'Items For Quote',
   [Title.RequestAQuote]: 'Request a quote',
 
@@ -136,7 +136,7 @@ export const en = {
   [Employee.Hakan]: 'Håkan Wahlgren',
   [Employee.HakanDesc]: 'CEO / PROCUREMENT',
   [Employee.Erika]: 'Erika Walgreen',
-  [Employee.ErikaDesc]: 'ADMINISTRATION. PROPERTY MANAGER',
+  [Employee.ErikaDesc]: 'ADMIN. PROPERTY MANAGER',
   [Employee.Eva]: 'Eva Andersson',
   [Employee.EvaDesc]: 'FINANCE',
   [Employee.Catharine]: 'Catharine Wahlgren',
@@ -184,4 +184,7 @@ export const en = {
   [Filter.New]: 'New',
   [Filter.Used]: 'Used',
   [Filter.Reset]: 'Reset filters',
+
+  [Pagination.Next]: 'Next',
+  [Pagination.Previous]: 'Previous',
 };

@@ -9,6 +9,7 @@ import {
   Instructions,
   Label,
   NavBar,
+  Pagination,
   Placeholder,
   SellToUs,
   Title,
@@ -16,6 +17,7 @@ import {
 } from '@enums/i18nConstants';
 
 export const es = {
+  [NavBar.Home]: 'Página Principal',
   [NavBar.AllProducts]: 'Todos los productos',
   [NavBar.SellToUs]: 'Véndenos',
   [NavBar.AboutUs]: 'Sobre nosotros',
@@ -32,7 +34,6 @@ export const es = {
   [Button.RequestPricing]: 'Solicitar precio',
   [Button.SubmitRequest]: 'Enviar solicitud',
   [Button.AddMoreItems]: 'Agregar más artículos',
-  [Button.AddProducts]: 'Agregar productos',
 
   [Title.Industries]: 'Industrias',
   [Title.LatestArrivals]: 'Últimas llegadas',
@@ -41,7 +42,6 @@ export const es = {
   [Title.Step]: 'Paso {{number}}',
   [Title.FormForSale]: 'Formulario de venta',
   [Title.VideoOverview]: 'Visión general en video',
-  [Title.YouMayAlsoLike]: 'También te puede gustar',
   [Title.ItemsForQuote]: 'Artículos para solicitud de precio',
   [Title.RequestAQuote]: 'Solicitar un precio',
 
@@ -136,7 +136,7 @@ export const es = {
   [Employee.Hakan]: 'Håkan Wahlgren',
   [Employee.HakanDesc]: 'CEO / ADQUISICIONES',
   [Employee.Erika]: 'Erika Walgreen',
-  [Employee.ErikaDesc]: 'ADMINISTRACIÓN. GESTIÓN DE PROPIEDADES',
+  [Employee.ErikaDesc]: 'ADMIN. GESTIÓN DE PROPIEDADES',
   [Employee.Eva]: 'Eva Andersson',
   [Employee.EvaDesc]: 'FINANZAS',
   [Employee.Catharine]: 'Catharine Wahlgren',
@@ -184,4 +184,7 @@ export const es = {
   [Filter.New]: 'Nuevo',
   [Filter.Used]: 'Usado',
   [Filter.Reset]: 'Restablecer filtros',
+
+  [Pagination.Next]: 'Siguiente',
+  [Pagination.Previous]: 'Anterior',
 };

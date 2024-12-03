@@ -13,7 +13,7 @@ import {
   type IFetchProductsParams,
   fetchProducts,
 } from '@store/products/operations';
-import { selectProducts, selectTotal } from '@store/selectors';
+import { selectIsLoading, selectProducts, selectTotal } from '@store/selectors';
 
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
@@ -28,6 +28,7 @@ const ProductsList = () => {
   const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
   const { language } = useContext(LanguageContext);
+  const isLoading = useAppSelector(selectIsLoading);
 
   const windowWidth = useWindowWidth();
 
@@ -77,7 +78,7 @@ const ProductsList = () => {
         searchParams.get(filters.Manufacturer) ||
         searchParams.get(filters.Industry) ||
         searchParams.get(filters.Condition)) && <ResetFilters />}
-      {products.length === 0 ? (
+      {(products.length === 0 && isLoading) ? (
         <div className='lg:flex lg:justify-center lg:w-[852px] lg:pt-[32px]'>
           <p className='font-medium text-[18px] text-title text-center'>{t(Title.NoResults)}</p>
  </div>

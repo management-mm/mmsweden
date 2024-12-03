@@ -98,13 +98,13 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
   });
   const handleOptionClick = (option: ICountryOption) => {
     setSelectedOption(option);
-    const {phoneFormat, formatIndex} = option?.label?.props
+    const {phoneFormat, formatIndex} = option.label.props
     setFieldValue('callingCode', option?.label?.props.callingCode, false);
     setFieldValue('countryPhone', option.value, false);
 
     setCallingCode(option?.label?.props.callingCode);
     setPhoneFormat(Array.isArray(phoneFormat) ? phoneFormat[formatIndex] : phoneFormat);
-    setPlaceholder(option?.label?.props.phoneFormat.replace(/#/g, '0'));
+    setPlaceholder(Array.isArray(phoneFormat) ? phoneFormat[formatIndex].replace(/#/g, '0') : phoneFormat.replace(/#/g, '0'));
     // setIsOpen(false);
     if (windowWidth < 1178) {
       toggleMobileMenu();

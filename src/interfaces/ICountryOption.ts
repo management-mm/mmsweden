@@ -1,4 +1,4 @@
 export interface ICountryOption {
   value: string;
-  label: JSX.Element;
+  label: React.ReactElement;
 }

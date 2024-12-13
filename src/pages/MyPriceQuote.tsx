@@ -1,5 +1,7 @@
+import MainWrapper from '@components/myPriceQuote/MainWrapper';
+
 const MyPriceQuote = () => {
-  return <></>;
+  return <MainWrapper />;
 };
 
 export default MyPriceQuote;

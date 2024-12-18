@@ -51,7 +51,9 @@ const LightBox: FC<ILightBoxProps> = ({
   const modalContent = (
     <div
       onClick={e => {
-        if (e.currentTarget === e.target) setCurrentIndex(-1);
+        console.log(e.target)
+        
+        if ((e.currentTarget === e.target) || (e.target instanceof HTMLElement && e.target.classList.contains('swiper-slide'))) setCurrentIndex(-1);
       }}
       className="overlay fixed left-0 top-0 z-30 flex h-full w-full items-center justify-center bg-[rgba(27,27,27,0.7)]"
     >

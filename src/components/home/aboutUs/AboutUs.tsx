@@ -1,21 +1,22 @@
 import { Trans, useTranslation } from 'react-i18next';
 
-import NavLinkBtn from '@components/common/NavLinkBtn';
-
-import { Button, Description, NavBar } from '@enums/i18nConstants';
+import desktop from '@assets/images/home/desktop-home-about-us.webp';
+import desktop2x from '@assets/images/home/desktop-home-about-us@2x.webp';
+import desktop3x from '@assets/images/home/desktop-home-about-us@3x.webp';
 import mobile from '@assets/images/home/mobile-home-about-us.webp';
 import mobile2x from '@assets/images/home/mobile-home-about-us@2x.webp';
 import mobile3x from '@assets/images/home/mobile-home-about-us@3x.webp';
 import tablet from '@assets/images/home/tablet-home-about-us.webp';
 import tablet2x from '@assets/images/home/tablet-home-about-us@2x.webp';
 import tablet3x from '@assets/images/home/tablet-home-about-us@3x.webp';
-import desktop from '@assets/images/home/desktop-home-about-us.webp';
-import desktop2x from '@assets/images/home/desktop-home-about-us@2x.webp';
-import desktop3x from '@assets/images/home/desktop-home-about-us@3x.webp';
+
+import NavLinkBtn from '@components/common/NavLinkBtn';
+
+import { Button, Description, NavBar } from '@enums/i18nConstants';
 
 const AboutUs = () => {
   const { t } = useTranslation();
-  
+
   return (
     <section className="pb-[48px] md:pb-[84px]">
       <div className="container text-center">

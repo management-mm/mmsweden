@@ -1,29 +1,75 @@
-import useOutsideAlerter from '@hooks/useOutsideAlerter';
-import type { ICountryOption } from '@interfaces/ICountryOption';
-import type { ChangeEvent, FC } from 'react';
-import { nanoid } from 'nanoid'
+import { type ChangeEvent, type FC, useEffect, useState } from "react";
+
+import type { ICountryOption } from "@interfaces/ICountryOption";
+import { nanoid } from "nanoid";
+
+import useOutsideAlerter from "@hooks/useOutsideAlerter";
 
 interface IMenuProps {
+  labelName: "country" | "phone";
   handleInputText: (e: ChangeEvent<HTMLInputElement>) => void;
-  options: ICountryOption[] | null
+  options: ICountryOption[] | null;
   handleOptionClick: (option: ICountryOption) => void;
-  isOpen: boolean
+  isOpen: boolean;
   setIsOpen: (value: boolean) => void;
-  setHasClickedOutside: (value: boolean) => void
+  setHasClickedOutside: (value: boolean) => void;
 }
 
-const Menu:FC<IMenuProps> = ({
+const Menu: FC<IMenuProps> = ({
+  labelName,
   handleInputText,
   options,
   handleOptionClick,
   isOpen,
   setIsOpen,
-  setHasClickedOutside
+  setHasClickedOutside,
 }) => {
   const outsideAlerterRef = useOutsideAlerter(() => {
-    setHasClickedOutside(true)
+    setHasClickedOutside(true);
     setIsOpen(false);
   }, isOpen);
+
+  const [visibleCountries, setVisibleCountries] = useState<ICountryOption[]>(
+    []
+  );
+  const [hasMore, setHasMore] = useState(true);
+  const pageSize = 10;
+
+  useEffect(() => {
+    if (options) {
+      setVisibleCountries(options.slice(0, pageSize));
+    }
+  }, [options]);
+
+  const loadMore = () => {
+    if (!hasMore || !options) return;
+
+    const nextItems = visibleCountries.length + pageSize;
+    if (nextItems >= options.length) {
+      setHasMore(false);
+      setVisibleCountries(options);
+    } else {
+      setVisibleCountries(options.slice(0, nextItems));
+    }
+  };
+
+  useEffect(() => {
+    const selector = document.querySelector(`#${labelName}`) as HTMLElement;
+    if (!selector) return;
+
+    const handleScroll = () => {
+      if (
+        selector.scrollTop + selector.clientHeight >=
+        selector.scrollHeight - 100
+      ) {
+        loadMore();
+      }
+    };
+
+    selector.addEventListener("scroll", handleScroll);
+    return () => selector.removeEventListener("scroll", handleScroll);
+  }, [labelName, visibleCountries, options]);
+
   return (
     <div
       ref={outsideAlerterRef}
@@ -35,9 +81,12 @@ const Menu:FC<IMenuProps> = ({
         placeholder="Search by Name or Code"
         onInput={handleInputText}
       />
-      <ul className="mb-[22px] mt-[14px] max-h-60 overflow-auto bg-white">
+      <ul
+        id={labelName}
+        className="mb-[22px] mt-[14px] max-h-60 overflow-auto bg-white"
+      >
         {options && options.length > 0 ? (
-          options.map(option => (
+          visibleCountries.map((option) => (
             <li
               key={nanoid()}
               className="duration-250 cursor-pointer py-[8px] transition-colors hover:bg-secondary"

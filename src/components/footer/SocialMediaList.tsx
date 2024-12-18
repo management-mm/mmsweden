@@ -1,3 +1,5 @@
+import type { FC } from 'react';
+
 import SvgIcon from '@components/common/SvgIcon';
 
 import { cn } from '@utils/cn';
@@ -5,14 +7,16 @@ import { cn } from '@utils/cn';
 import { IconId } from '@enums/iconsSpriteId';
 
 import socialMediaList from '@constants/socialMediaList';
-import type { FC } from 'react';
 
 interface ISocialMediaListProps {
   className?: string;
   showTitle?: boolean;
 }
 
-const SocialMediaList:FC<ISocialMediaListProps> = ({ className, showTitle }) => {
+const SocialMediaList: FC<ISocialMediaListProps> = ({
+  className,
+  showTitle,
+}) => {
   return (
     <ul
       className={cn(

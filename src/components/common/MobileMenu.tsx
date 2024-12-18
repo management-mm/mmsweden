@@ -38,7 +38,7 @@ const MobileMenu: FC<IMobileMenuProps> = ({
     <div
       ref={outsideAlerterRef}
       className={clsx(
-        'fixed z-10 bg-white py-[100px] transition-all ease-in-out scrollbar-none',
+        'fixed z-20 bg-white py-[100px] transition-all ease-in-out scrollbar-none',
         direction === 'left' &&
           'top-0 h-[100vh] w-[300px] overflow-y-auto duration-1000',
         direction === 'right' &&
@@ -66,7 +66,6 @@ const MobileMenu: FC<IMobileMenuProps> = ({
       <button
         type="button"
         onClick={() => {
-          console.log(isOpen);
           handleToggleMenu();
         }}
         className="absolute right-[32px] top-[32px]"

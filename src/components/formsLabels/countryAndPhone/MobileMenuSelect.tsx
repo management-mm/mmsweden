@@ -1,15 +1,19 @@
-import type { ICountryOption } from "@interfaces/ICountryOption";
-import type { ChangeEvent, FC } from "react";
-import { nanoid } from 'nanoid'
+import type { ChangeEvent, FC } from 'react';
+
+import type { ICountryOption } from '@interfaces/ICountryOption';
+import { nanoid } from 'nanoid';
 
 interface IMobileMenuSelectProps {
   handleInputText: (e: ChangeEvent<HTMLInputElement>) => void;
-  options: ICountryOption[]
-  handleOptionClick: (option: ICountryOption) => void
+  options: ICountryOption[];
+  handleOptionClick: (option: ICountryOption) => void;
 }
 
-const MobileMenuSelect: FC<IMobileMenuSelectProps> = ({ handleInputText, options, handleOptionClick }) => {
-  
+const MobileMenuSelect: FC<IMobileMenuSelectProps> = ({
+  handleInputText,
+  options,
+  handleOptionClick,
+}) => {
   return (
     <div className="z-10 mt-1 w-full">
       <input

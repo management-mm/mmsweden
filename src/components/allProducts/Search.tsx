@@ -12,10 +12,10 @@ import { Placeholder } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
 interface ISearchProps {
-  className?: string
+  className?: string;
 }
 
-const Search:FC<ISearchProps> = ({ className }) => {
+const Search: FC<ISearchProps> = ({ className }) => {
   const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [inputValue, setInputValue] = useState(searchParams.get('title') ?? '');
@@ -26,13 +26,13 @@ const Search:FC<ISearchProps> = ({ className }) => {
   const handleInputText = _.debounce((e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setSearchParams(searchParams => {
-  if (e.target.value === '') {
-    searchParams.delete('title');
-  } else {
-    searchParams.set('title', e.target.value.trim());
-  }
-  return searchParams;
-});
+      if (e.target.value === '') {
+        searchParams.delete('title');
+      } else {
+        searchParams.set('title', e.target.value.trim());
+      }
+      return searchParams;
+    });
 
     if (e.target.value) {
       setIsEmptyValue(false);

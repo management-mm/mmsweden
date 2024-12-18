@@ -1,4 +1,3 @@
-import FSLightbox from 'fslightbox-react';
 import { type FC, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -10,6 +9,7 @@ import { FreeMode, Thumbs } from 'swiper/modules';
 
 import VideoPlayer from './VideoPlayer';
 
+import LightBox from '@components/common/LightBox';
 import NaviArrowSlider from '@components/common/NaviArrowSlider';
 
 import useSwiperNavigation from '@hooks/useSwiperNavigation';
@@ -23,12 +23,7 @@ interface ISliderProps {
 const Slider: FC<ISliderProps> = ({ photos, video, alt }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperCore | null>(null);
   const { handlePrev, handleNext, onSwiperInit } = useSwiperNavigation();
-
-  const [toggler, setToggler] = useState(false);
-
-  const openLightbox = () => {
-    setToggler(!toggler);
-  };
+  const [currentIndex, setCurrentIndex] = useState(-1);
 
   return (
     <div className="">
@@ -41,15 +36,15 @@ const Slider: FC<ISliderProps> = ({ photos, video, alt }) => {
           modules={[FreeMode, Thumbs]}
           className="mySwiper2"
         >
-          {photos.map((photo) => {
+          {photos.map((photo, index) => {
             return (
-              <SwiperSlide key={photo} className="rounded-[4px]">
+              <SwiperSlide key={'slider' + photo} className="rounded-[4px]">
                 <img
                   className="rounded-[4px] lg:w-[754px]"
                   src={photo}
                   alt={alt}
                   width={'100%'}
-                  onClick={() => openLightbox()}
+                  onClick={() => setCurrentIndex(index)}
                 />
               </SwiperSlide>
             );
@@ -90,7 +85,7 @@ const Slider: FC<ISliderProps> = ({ photos, video, alt }) => {
         >
           {photos.map(photo => {
             return (
-              <SwiperSlide key={photo}>
+              <SwiperSlide key={'small slider' + photo}>
                 <img
                   src={photo}
                   alt={alt}
@@ -115,8 +110,13 @@ const Slider: FC<ISliderProps> = ({ photos, video, alt }) => {
           )}
         </Swiper>
       </div>
-
-      <FSLightbox toggler={toggler} sources={photos} />
+      {currentIndex !== -1 && (
+        <LightBox
+          photos={photos}
+          currentIndex={currentIndex}
+          setCurrentIndex={setCurrentIndex}
+        />
+      )}
     </div>
   );
 };

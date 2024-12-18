@@ -50,7 +50,8 @@ export const en = {
   [Title.RequestAQuote]: 'Request a quote',
   [Title.DateAdded]: 'Date Added',
   [Title.EmptyCart]: 'Your cart is empty',
-  [Title.NoResults]: 'No results found for your query. Please try adjusting the filters.',
+  [Title.NoResults]:
+    'No results found for your query. Please try adjusting the filters.',
   [Title.Format]: 'format {{number}}',
 
   [Description.Industries]: 'Our products are used in such industries:',

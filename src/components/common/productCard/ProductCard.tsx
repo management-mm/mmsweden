@@ -19,7 +19,7 @@ import { cn } from '@utils/cn';
 
 export interface IProductCardProps {
   product: IProduct;
-  className?: string
+  className?: string;
 }
 
 const ProductCard: FC<IProductCardProps> = ({
@@ -58,10 +58,7 @@ const ProductCard: FC<IProductCardProps> = ({
             dimensions={dimensions}
           />
 
-          <ActionsButtons
-            isLoading={isLoading}
-            product={product}
-          />
+          <ActionsButtons isLoading={isLoading} product={product} />
         </div>
       </article>
     </SkeletonTheme>

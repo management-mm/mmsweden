@@ -20,7 +20,7 @@ const Condition = () => {
         className="flex items-center justify-between py-[10px]"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <legend className="font-openSans text-[12px] font-semibold text-title">
+        <legend className="font-openSans text-[14px] font-semibold text-title">
           {t(Filter.Condition)}
         </legend>
 

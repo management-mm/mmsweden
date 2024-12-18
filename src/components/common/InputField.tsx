@@ -22,7 +22,7 @@ const InputField: FC<IInputField> = ({
   name,
   required = true,
   className = '',
-  pattern = ".*",
+  pattern = '.*',
   title = '',
   as = 'input',
 }) => {

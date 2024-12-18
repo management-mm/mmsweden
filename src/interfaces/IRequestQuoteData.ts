@@ -1,7 +1,7 @@
 interface Product {
   name: string;
   idNumber: string;
-  photo: string
+  photo: string;
 }
 export interface IRequestQuoteData {
   name: string;

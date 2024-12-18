@@ -1,3 +1,7 @@
+import { type ChangeEvent, type FC } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import type { ICountryOption } from '@interfaces/ICountryOption';
 import clsx from 'clsx';
 
 import Menu from './Menu';
@@ -7,26 +11,23 @@ import SvgIcon from '@components/common/SvgIcon';
 
 import useWindowWidth from '@hooks/useWindowWidth';
 
-import { IconId } from '@enums/iconsSpriteId';
-import { useTranslation } from 'react-i18next';
 import { Placeholder } from '@enums/i18nConstants';
-import type { ChangeEvent, FC } from 'react';
-import type { ICountryOption } from '@interfaces/ICountryOption';
+import { IconId } from '@enums/iconsSpriteId';
 
 interface ISelectorProps {
   hasClickedOutside: boolean;
   setHasClickedOutside: (value: boolean) => void;
   isOpen: boolean;
-  handleInputText: (e: ChangeEvent<HTMLInputElement>) => void
+  handleInputText: (e: ChangeEvent<HTMLInputElement>) => void;
   setIsOpen: (value: boolean) => void;
   handleOptionSelected: (option: ICountryOption) => void;
-  selectedOption: ICountryOption | null
+  selectedOption: ICountryOption | null;
   labelName: 'country' | 'phone';
-  filteredOptions: ICountryOption[] | null
-  toggleMobileMenu: () => void
+  filteredOptions: ICountryOption[] | null;
+  toggleMobileMenu: () => void;
 }
 
-const Selector:FC<ISelectorProps> = ({
+const Selector: FC<ISelectorProps> = ({
   hasClickedOutside,
   setHasClickedOutside,
   isOpen,
@@ -38,7 +39,7 @@ const Selector:FC<ISelectorProps> = ({
   filteredOptions,
   toggleMobileMenu,
 }) => {
-  const {t} = useTranslation()
+  const { t } = useTranslation();
 
   const windowWidth = useWindowWidth();
 
@@ -52,15 +53,17 @@ const Selector:FC<ISelectorProps> = ({
           labelName === 'country' &&
             'static w-full shrink-0 rounded-[32px] border border-neutral px-[22px] py-[14px] font-openSans text-[14px] text-desc outline-none transition-border duration-primary focus:border focus:border-secondaryAccent'
         )}
-        onClick={() => {
+        onClick={(e) => {
           if (windowWidth < 1178) {
+            console.log(e.currentTarget)
             toggleMobileMenu();
             return;
           }
           if (hasClickedOutside && !isOpen) {
-            setHasClickedOutside(false)
+            setHasClickedOutside(false);
             return;
           }
+          
           setIsOpen(true);
         }}
       >
@@ -93,7 +96,9 @@ const Selector:FC<ISelectorProps> = ({
                   size={{ width: 18, height: 18 }}
                   className="fill-primary"
                 />
-                  {labelName === 'country' && <p>{t(Placeholder.SelectCountry)}</p>}
+                {labelName === 'country' && (
+                  <p>{t(Placeholder.SelectCountry)}</p>
+                )}
               </div>
 
               <SvgIcon
@@ -111,6 +116,7 @@ const Selector:FC<ISelectorProps> = ({
 
         {isOpen && (
           <Menu
+            labelName={labelName}
             setHasClickedOutside={setHasClickedOutside}
             handleInputText={handleInputText}
             options={filteredOptions}

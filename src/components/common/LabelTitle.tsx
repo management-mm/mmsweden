@@ -5,7 +5,7 @@ interface ILabelTitleProps {
   title: string;
 }
 
-const LabelTitle:FC<ILabelTitleProps> = ({ title }) => {
+const LabelTitle: FC<ILabelTitleProps> = ({ title }) => {
   const { t } = useTranslation();
 
   return (

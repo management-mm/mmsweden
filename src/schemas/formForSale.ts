@@ -9,5 +9,5 @@ export const schema = Yup.object().shape({
   description: Yup.string().required(),
   productName: Yup.string().required(),
   price: Yup.string().required(),
-  photos: Yup.array()
+  photos: Yup.array(),
 });

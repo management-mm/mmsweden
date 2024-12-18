@@ -1,4 +1,4 @@
-import { useEffect, useState, type FC } from 'react';
+import { type FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactPaginate from 'react-paginate';
 import { useSearchParams } from 'react-router-dom';
@@ -36,7 +36,7 @@ const Previous = () => {
 
 interface IPaginationProps {
   pageCount: number;
-  className?: string
+  className?: string;
 }
 
 const Pagination: FC<IPaginationProps> = ({ pageCount, className }) => {

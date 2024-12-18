@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, type FC } from 'react';
+import { type FC, useContext, useEffect, useState } from 'react';
 
 import type { ICategory } from 'interfaces/ICategory';
 import type { IIndustry } from 'interfaces/IIndustry';
@@ -29,10 +29,10 @@ import { useAppSelector } from '@hooks/useAppSelector';
 import { filters } from '@enums/filters';
 
 interface IFiltersGroupProps {
-  className: string
+  className: string;
 }
 
-const FiltersGroup:FC<IFiltersGroupProps> = ({ className }) => {
+const FiltersGroup: FC<IFiltersGroupProps> = ({ className }) => {
   const dispatch = useAppDispatch();
   const [categoryKeyword, setCategoryKeyword] = useState('');
   const [manufacturerKeyword, setManufacturerKeyword] = useState('');

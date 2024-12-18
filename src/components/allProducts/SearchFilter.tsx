@@ -7,10 +7,10 @@ import SvgIcon from '@components/common/SvgIcon';
 
 import { Placeholder } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
- 
+
 interface ISearchFilterProps {
   keyword: string;
-  setKeyword: (value: string) => void
+  setKeyword: (value: string) => void;
 }
 
 const SearchFilter: FC<ISearchFilterProps> = ({ keyword, setKeyword }) => {

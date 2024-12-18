@@ -35,33 +35,27 @@ const ulVariants = cva(
   }
 );
 
-const linkActiveVariants = cva(
-  '',
-  {
-    variants: {
-      intent: {
-        header: 'rounded-[6px] bg-primary p-2 text-secondary',
-        mobileMenu: 'rounded-[6px] bg-primary p-2 text-secondary',
-        footer: ''
-      }
-    }
-  }
-)
+const linkActiveVariants = cva('', {
+  variants: {
+    intent: {
+      header: 'rounded-[6px] bg-primary p-2 text-secondary',
+      mobileMenu: 'rounded-[6px] bg-primary p-2 text-secondary',
+      footer: '',
+    },
+  },
+});
 
-const linkVariants = cva(
-  '',
-  {
-    variants: {
-      intent: {
-        header: 'bg-transparent text-primary',
-        mobileMenu: 'bg-transparent text-primary',
-        footer: ''
-      }
-    }
-  }
-)
+const linkVariants = cva('', {
+  variants: {
+    intent: {
+      header: 'bg-transparent text-primary',
+      mobileMenu: 'bg-transparent text-primary',
+      footer: '',
+    },
+  },
+});
 
-type NavbarProps = VariantProps<typeof navVariants> & 
+type NavbarProps = VariantProps<typeof navVariants> &
   VariantProps<typeof ulVariants>;
 
 const Navbar = ({ intent }: NavbarProps) => {
@@ -77,7 +71,8 @@ const Navbar = ({ intent }: NavbarProps) => {
                 isActive
                   ? linkActiveVariants({ intent })
                   : linkVariants({ intent })
-              )}
+              )
+            }
           >
             {t('NavBar.AllProducts')}
           </NavLink>

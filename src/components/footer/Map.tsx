@@ -10,5 +10,5 @@ const Map = () => {
     />
   );
 };
-
+document.cookie = 'myCookie=value; SameSite=None; Secure';
 export default Map;

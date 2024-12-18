@@ -1,13 +1,14 @@
+import type { FC, ReactNode } from 'react';
+
 import SvgIcon from '@components/common/SvgIcon';
 
 import { IconId } from '@enums/iconsSpriteId';
-import type { FC, ReactNode } from 'react';
 
 interface IInfoProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
-const Info:FC<IInfoProps> = ({ children }) => {
+const Info: FC<IInfoProps> = ({ children }) => {
   return (
     <div className="mb-[12px] flex gap-[14px] rounded-[4px] bg-secondary px-[16px] py-[10px] lg:py-[22px]">
       <SvgIcon

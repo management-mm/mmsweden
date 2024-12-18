@@ -49,7 +49,8 @@ export const ru = {
   [Title.RequestAQuote]: 'Запросить цену',
   [Title.DateAdded]: 'Дата добавления',
   [Title.EmptyCart]: 'Ваша корзина пуста',
-  [Title.NoResults]: 'По вашему запросу ничего не найдено. Попробуйте изменить фильтры.',
+  [Title.NoResults]:
+    'По вашему запросу ничего не найдено. Попробуйте изменить фильтры.',
   [Title.Format]: 'формат {{number}}',
 
   [Description.Industries]: 'Наши товары используются в следующих отраслях:',

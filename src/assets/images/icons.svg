@@ -259,5 +259,19 @@
 <path fill="#ad1519" style="fill: var(--color3, #ad1519)" d="M17.802 29.406h-3.603c-6.619-0.881-11.724-6.548-11.724-13.407 0-7.469 6.056-13.525 13.525-13.525s13.526 6.056 13.526 13.525c0 6.859-5.106 12.526-11.724 13.407z"></path>
 <path fill="#fabd00" style="fill: var(--color4, #fabd00)" d="M3.347 20.786h25.306c0.564-1.488 0.872-3.101 0.872-4.787 0-2.658-0.766-5.135-2.091-7.225h-22.869c-1.324 2.090-2.091 4.567-2.091 7.225 0 1.686 0.309 3.299 0.872 4.787z"></path>
 </symbol>
+<symbol id='zoom-out' viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg" fill="rgba(246,246,246,1)">
+<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="rgba(246,246,246,1)" stroke-width="1.47">
+<g fill="none" fill-rule="evenodd" stroke="rgba(246,246,246,1)" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 3)"> 
+<circle cx="5.5" cy="5.5" r="5"></circle> <path d="m7.5 5.5h-4z"></path> <path d="m14.571 14.5-5.45-5.381"></path> </g> 
+</g>
+<g id="SVGRepo_iconCarrier"> <g fill="none" fill-rule="evenodd" stroke="rgba(246,246,246,1)" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 3)">
+ <circle cx="5.5" cy="5.5" r="5"></circle> 
+ <path d="m7.5 5.5h-4z"></path>
+  <path d="m14.571 14.5-5.45-5.381"></path>
+   </g> </g>
+   </symbol>
+   <symbol id='zoom-in' viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg" fill="rgba(246,246,246,1)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="rgba(246,246,246,1)" stroke-width="1.47"> <g fill="none" fill-rule="evenodd" stroke="rgba(246,246,246,1)" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 3)"> <circle cx="5.5" cy="5.5" r="5"></circle> <path d="m7.5 5.5h-4zm-2 2v-4z"></path> <path d="m14.5 14.5-5.367-5.367"></path> </g> </g><g id="SVGRepo_iconCarrier"> <g fill="none" fill-rule="evenodd" stroke="rgba(246,246,246,1)" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 3)"> <circle cx="5.5" cy="5.5" r="5"></circle> <path d="m7.5 5.5h-4zm-2 2v-4z"></path> <path d="m14.5 14.5-5.367-5.367"></path> </g> </g></symbol>
+   <symbol id='zoom-reset' viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg" fill="rgba(246,246,246,1)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="rgba(246,246,246,1)" stroke-width="1.47"> <g fill="none" fill-rule="evenodd" stroke="rgba(246,246,246,1)" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 1)"> <path d="m.5 7.5c0 2.7614237 2.23857625 5 5 5 2.76142375 0 5-2.2385763 5-5 0-2.76142375-2.23857625-5-5-5-1.60217594 0-3.02834512.75357449-3.94340319 1.92561913"></path> <path d="m1.5.5v4h4"></path> <path d="m14.5 16.5-5.379-5.379"></path> </g> </g><g id="SVGRepo_iconCarrier"> <g fill="none" fill-rule="evenodd" stroke="rgba(246,246,246,1)" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 1)"> <path d="m.5 7.5c0 2.7614237 2.23857625 5 5 5 2.76142375 0 5-2.2385763 5-5 0-2.76142375-2.23857625-5-5-5-1.60217594 0-3.02834512.75357449-3.94340319 1.92561913"></path> <path d="m1.5.5v4h4"></path> <path d="m14.5 16.5-5.379-5.379"></path> </g> </g></symbol>
   </defs>
 </svg>

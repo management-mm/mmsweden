@@ -5,7 +5,11 @@ const useOutsideAlerter = (onOutsideClick: () => void, isOpen: boolean) => {
 
   useEffect(() => {
     function handleClick(event: MouseEvent) {
-      if (isOpen && ref.current && !ref.current.contains(event.target as Node)) {
+      if (
+        isOpen &&
+        ref.current &&
+        !ref.current.contains(event.target as Node)
+      ) {
         console.log(ref.current);
         onOutsideClick();
       }

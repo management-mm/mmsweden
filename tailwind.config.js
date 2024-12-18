@@ -18,7 +18,7 @@ export default {
     },
     extend: {
       screens: {
-        'h-sm': { 'raw': '(max-height: 678px)' },
+        'h-sm': { raw: '(max-height: 678px)' },
       },
       backgroundImage: {
         'check-icon': "url('@assets/images/check.svg')",
@@ -94,8 +94,5 @@ export default {
       },
     },
   },
-  plugins: [
-    require('tailwind-scrollbar'),
-    require('tailwindcss-retina')
-  ],
+  plugins: [require('tailwind-scrollbar'), require('tailwindcss-retina')],
 };

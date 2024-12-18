@@ -50,7 +50,7 @@ export enum Title {
   DateAdded = 'Title.DateAdded',
   EmptyCart = 'Title.EmptyCart',
   NoResults = 'Title.NoResults',
-  Format = 'Title.Format'
+  Format = 'Title.Format',
 }
 
 export enum Description {
@@ -158,7 +158,7 @@ export enum Placeholder {
   Message = 'Placeholder.Message',
   Subject = 'Placeholder.Subject',
   Company = 'Placeholder.Company',
-  SelectCountry = 'Placeholder.SelectCountry'
+  SelectCountry = 'Placeholder.SelectCountry',
 }
 
 export enum Filter {
@@ -185,4 +185,4 @@ export enum Pagination {
 // сделать больше шрифт в фильтрах
 // алфавит
 // открывать продукт при нажатии на текст и фотки
- // на 3 месяца надпись sold (проданна и удаленна машина может быть)
+// на 3 месяца надпись sold (проданна и удаленна машина может быть)

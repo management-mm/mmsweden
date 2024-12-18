@@ -1,7 +1,7 @@
-import { useState, type ChangeEvent } from 'react';
+import { type ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Field, useFormikContext, type FormikValues } from 'formik';
+import { Field, type FormikValues, useFormikContext } from 'formik';
 
 import SvgIcon from '@components/common/SvgIcon';
 
@@ -10,10 +10,9 @@ import { IconId } from '@enums/iconsSpriteId';
 
 const AttachPhotos = () => {
   const { t } = useTranslation();
-   const [editedAvatars, setEditedAvatars] = useState<string[]>([]);
+  const [editedAvatars, setEditedAvatars] = useState<string[]>([]);
   const [fileAvatars, setFileAvatars] = useState<File[]>([]);
   const { setFieldValue } = useFormikContext<FormikValues>();
-
 
   const handleChangePhoto = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -22,21 +21,21 @@ const AttachPhotos = () => {
       const newFileAvatars: File[] = [];
       const newEditedAvatars: string[] = [];
 
-      filesArray.forEach((file) => {
+      filesArray.forEach(file => {
         const reader = new FileReader();
-        reader.onload = (event) => {
+        reader.onload = event => {
           if (event.target?.result) {
             newEditedAvatars.push(event.target.result as string);
           }
           if (newEditedAvatars.length === filesArray.length) {
-            setEditedAvatars((prev) => [...prev, ...newEditedAvatars]);
+            setEditedAvatars(prev => [...prev, ...newEditedAvatars]);
           }
         };
         reader.readAsDataURL(file);
         newFileAvatars.push(file);
       });
 
-      setFileAvatars((prev) => [...prev, ...newFileAvatars]);
+      setFileAvatars(prev => [...prev, ...newFileAvatars]);
       setFieldValue('photos', [...fileAvatars, ...newFileAvatars], false);
 
       e.target.value = '';
@@ -81,7 +80,7 @@ const AttachPhotos = () => {
                 className="sr-only"
                 multiple
                 onChange={handleChangePhoto}
-                value ={""}
+                value={''}
               />
               <SvgIcon
                 iconId={IconId.Plus}
@@ -99,8 +98,8 @@ const AttachPhotos = () => {
             accept="image/*"
             className="sr-only"
             multiple
-              onChange={handleChangePhoto}
-              value ={""}
+            onChange={handleChangePhoto}
+            value={''}
           />
           <SvgIcon
             iconId={IconId.Clip}

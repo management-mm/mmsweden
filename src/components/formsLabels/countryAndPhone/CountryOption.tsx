@@ -1,9 +1,10 @@
 import type { FC } from 'react';
+
 import Flag from './Flag';
 
 interface ICountryOptionProps {
   flag: string;
-  name: string
+  name: string;
 }
 
 const CountryOption: FC<ICountryOptionProps> = ({ flag, name }) => {

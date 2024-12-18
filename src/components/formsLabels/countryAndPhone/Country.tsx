@@ -1,29 +1,41 @@
 import { type ChangeEvent, useContext, useState } from 'react';
+
+import type { ICountryOption } from '@interfaces/ICountryOption';
 import { Field, useFormikContext } from 'formik';
 import * as _ from 'lodash';
 
 import CountryOption from './CountryOption';
 import MobileMenuSelect from './MobileMenuSelect';
 import Selector from './Selector';
+
+import { LanguageContext } from '@components/SharedLayout';
 import LabelTitle from '@components/common/LabelTitle';
 import MobileMenu from '@components/common/MobileMenu';
-import countriesList from '@constants/countriesList';
-import { LanguageContext } from '@components/SharedLayout';
+
 import useWindowWidth from '@hooks/useWindowWidth';
-import type { ICountryOption } from '@interfaces/ICountryOption';
- 
+
+import countriesList from '@constants/countriesList';
+
 const Country = () => {
   const { language } = useContext(LanguageContext);
   const options: ICountryOption[] = countriesList.map(country => ({
     value: country.translations[language],
-    label: <CountryOption flag={country.flag} name={country.translations[language]} />,
+    label: (
+      <CountryOption
+        flag={country.flag}
+        name={country.translations[language]}
+      />
+    ),
   }));
 
   const { setFieldValue } = useFormikContext<{ country: string }>();
   const windowWidth = useWindowWidth();
-  const [selectedOption, setSelectedOption] = useState<ICountryOption | null>(null);
+  const [selectedOption, setSelectedOption] = useState<ICountryOption | null>(
+    null
+  );
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [filteredOptions, setFilteredOptions] = useState<ICountryOption[]>(options);
+  const [filteredOptions, setFilteredOptions] =
+    useState<ICountryOption[]>(options);
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState<boolean>(false);
   const [hasClickedOutside, setHasClickedOutside] = useState<boolean>(false);
 
@@ -50,7 +62,8 @@ const Country = () => {
         const name = option.label as React.ReactElement;
         return (
           name.props.name.toLowerCase().includes(searchTerm) ||
-          (name.props.callingCode && name.props.callingCode.includes(searchTerm))
+          (name.props.callingCode &&
+            name.props.callingCode.includes(searchTerm))
         );
       })
     );
@@ -62,7 +75,16 @@ const Country = () => {
         <LabelTitle title="Country*" />
         <div className="w-full">
           <Field name="country">
-            {({ field }: { field: { name: string; value: string; onChange: () => void; onBlur: () => void } }) => (
+            {({
+              field,
+            }: {
+              field: {
+                name: string;
+                value: string;
+                onChange: () => void;
+                onBlur: () => void;
+              };
+            }) => (
               <Selector
                 {...field}
                 hasClickedOutside={hasClickedOutside}

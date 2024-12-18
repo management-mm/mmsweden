@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
+import { sellToUs } from '@api/mailerService';
 import { schema } from '@schemas/formForSale';
 import { Form, Formik } from 'formik';
 
@@ -11,9 +12,9 @@ import Price from '@components/formsLabels/Price';
 import ProductName from '@components/formsLabels/ProductName';
 import Phone from '@components/formsLabels/countryAndPhone/Phone';
 
-import { Button, Title } from '@enums/i18nConstants';
-import { sellToUs } from '@api/mailerService';
 import { useNotify } from '@hooks/useNotify';
+
+import { Button, Title } from '@enums/i18nConstants';
 
 const FormForSale = () => {
   const { t } = useTranslation();
@@ -40,51 +41,45 @@ const FormForSale = () => {
           }}
           validationSchema={schema}
           onSubmit={async (values, actions) => {
-            console.log(values)
-          try {
-   
-          const phone = values.callingCode + values.phone
-        
-          const {name, email, productName, countryPhone, price, description, photos} = values
- 
-          
-    
-             const formData = new FormData();
+            console.log(values);
+            try {
+              const phone = values.callingCode + values.phone;
 
+              const {
+                name,
+                email,
+                productName,
+                countryPhone,
+                price,
+                description,
+                photos,
+              } = values;
 
-  formData.append('name', name);
-  formData.append('email', email);
-  formData.append('phone', phone);
-  formData.append('productName', productName);
-  formData.append('countryPhone', countryPhone);
-  formData.append('price', price);
-  formData.append('description', description);
+              const formData = new FormData();
 
+              formData.append('name', name);
+              formData.append('email', email);
+              formData.append('phone', phone);
+              formData.append('productName', productName);
+              formData.append('countryPhone', countryPhone);
+              formData.append('price', price);
+              formData.append('description', description);
 
-    for (let i = 0 ; i < photos.length ; i++) {
-    formData.append("photos", photos[i]);
-}
+              for (let i = 0; i < photos.length; i++) {
+                formData.append('photos', photos[i]);
+              }
 
-            
-            const message = await sellToUs(formData);
+              const message = await sellToUs(formData);
 
-
-            notifySuccess(message)
-            actions.resetForm();
-
-            
-            
-          }
-          catch (error) {
-            notifyError('Oops... Something went wrong')
-           console.log(error)
-          }
-          
-        }}
+              notifySuccess(message);
+              actions.resetForm();
+            } catch (error) {
+              notifyError('Oops... Something went wrong');
+              console.log(error);
+            }
+          }}
         >
-     
-            <Form>
-           
+          <Form>
             <div className="mb-[32px] md:flex md:gap-[30px]">
               <div className="mb-[22px] flex flex-col gap-[22px] md:mb-0 md:w-[calc((100%-30px)/2)]">
                 <Name />
@@ -104,8 +99,7 @@ const FormForSale = () => {
             >
               {t(Button.SubmitRequest)}
             </button>
-            </Form>
-
+          </Form>
         </Formik>
       </div>
     </section>

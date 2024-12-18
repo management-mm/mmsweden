@@ -49,7 +49,8 @@ export const fr = {
   [Title.RequestAQuote]: 'Demander un devis',
   [Title.DateAdded]: 'Date ajoutée',
   [Title.EmptyCart]: 'Votre panier est vide',
-  [Title.NoResults]: "Aucun résultat trouvé pour votre demande. Veuillez essayer d'ajuster les filtres.",
+  [Title.NoResults]:
+    "Aucun résultat trouvé pour votre demande. Veuillez essayer d'ajuster les filtres.",
   [Title.Format]: 'format {{number}}',
 
   [Description.Industries]:

@@ -37,70 +37,69 @@ const Product = () => {
   const isLoading = useAppSelector(selectIsLoading);
   const windowWidth = useWindowWidth();
   const { productId } = useParams();
-  const {name, photos, video} = product || {}
+  const { name, photos, video } = product || {};
 
   useEffect(() => {
     dispatch(fetchProductById({ productId }));
   }, [dispatch, productId]);
   return (
-  <div className={cn('container', 'pt-[12px] md:pt-[22px]')}>
-    <Breadcrumb
-      productId={productId}
-      name={name && getProductName(name, language)}
-    />
-    <article className="pb-[48px]">
-      <h2 className="mb-[22px] text-center text-[22px] font-bold md:text-start">
-        {!isLoading && name ? (
-          getProductName(name, language)
-        ) : (
-          <Skeleton width={150} />
-        )}
-      </h2>
-      <div className="gap-[30px] pb-[22px] md:flex md:items-start">
-        <div className="mb-[22px]">
-          {photos && photos.length > 1 ? (
-            <Slider
-              alt={name ? getProductName(name, language) : ''}
-              photos={photos}
-              video={video? video : ''}
-            />
+    <div className={cn('container', 'pt-[12px] md:pt-[22px]')}>
+      <Breadcrumb
+        productId={productId}
+        name={name && getProductName(name, language)}
+      />
+      <article className="pb-[48px]">
+        <h2 className="mb-[22px] text-center text-[22px] font-bold md:text-start">
+          {!isLoading && name ? (
+            getProductName(name, language)
           ) : (
-            photos && photos[0] && (
-              <img
-                className="rounded-[4px]"
-                src={photos[0]}
+            <Skeleton width={150} />
+          )}
+        </h2>
+        <div className="gap-[30px] pb-[22px] md:flex md:items-start">
+          <div className="mb-[22px]">
+            {photos && photos.length > 1 ? (
+              <Slider
                 alt={name ? getProductName(name, language) : ''}
-                width={'100%'}
+                photos={photos}
+                video={video ? video : ''}
               />
-            )
-          )}
-          {video && windowWidth >= 768 && (
-            <>
-              <DecorativeLine intent="video" />
-              <h4 className="mb-[22px] text-[18px] font-semibold text-primary">
-                {t(Title.VideoOverview)}
-              </h4>
-              <VideoPlayer video={video} />
-            </>
-          )}
+            ) : (
+              photos &&
+              photos[0] && (
+                <img
+                  className="rounded-[4px]"
+                  src={photos[0]}
+                  alt={name ? getProductName(name, language) : ''}
+                  width={'100%'}
+                />
+              )
+            )}
+            {video && windowWidth >= 768 && (
+              <>
+                <DecorativeLine intent="video" />
+                <h4 className="mb-[22px] text-[18px] font-semibold text-primary">
+                  {t(Title.VideoOverview)}
+                </h4>
+                <VideoPlayer video={video} />
+              </>
+            )}
+          </div>
+
+          {product && <Details product={product} />}
         </div>
-
-        {product && <Details product={product} />}
-      </div>
-      {video && windowWidth < 768 && (
-        <>
-          <DecorativeLine intent="video" />
-          <h4 className="mb-[22px] text-[18px] font-semibold text-primary">
-            {t(Title.VideoOverview)}
-          </h4>
-          <VideoPlayer video={video} />
-        </>
-      )}
-    </article>
-  </div>
-);
-
-
+        {video && windowWidth < 768 && (
+          <>
+            <DecorativeLine intent="video" />
+            <h4 className="mb-[22px] text-[18px] font-semibold text-primary">
+              {t(Title.VideoOverview)}
+            </h4>
+            <VideoPlayer video={video} />
+          </>
+        )}
+      </article>
+    </div>
+  );
 };
 
 export default Product;

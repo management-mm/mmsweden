@@ -1,8 +1,11 @@
+import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Formik, Form } from 'formik';
+import { requestQuote } from '@api/mailerService';
+import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
+import { LanguageContext } from '@components/SharedLayout';
 import Company from '@components/formsLabels/Company';
 import Email from '@components/formsLabels/Email';
 import Message from '@components/formsLabels/Message';
@@ -10,14 +13,14 @@ import Name from '@components/formsLabels/Name';
 import Country from '@components/formsLabels/countryAndPhone/Country';
 import Phone from '@components/formsLabels/countryAndPhone/Phone';
 
-import { Button } from '@enums/i18nConstants';
-import { requestQuote } from '@api/mailerService';
-import { useAppSelector } from '@hooks/useAppSelector';
 import { selectRequestedProducts } from '@store/selectors';
-import getProductName from '@utils/getProductName';
-import { useContext } from 'react';
-import { LanguageContext } from '@components/SharedLayout';
+
+import { useAppSelector } from '@hooks/useAppSelector';
 import { useNotify } from '@hooks/useNotify';
+
+import getProductName from '@utils/getProductName';
+
+import { Button } from '@enums/i18nConstants';
 
 const schema = Yup.object().shape({
   name: Yup.string().min(1, 'Too Short!').max(30, 'Too Long!').required(),
@@ -39,7 +42,7 @@ const schema = Yup.object().shape({
 
 const FormForRequestQuote = () => {
   const { t } = useTranslation();
-  const requestedProducts = useAppSelector(selectRequestedProducts)
+  const requestedProducts = useAppSelector(selectRequestedProducts);
   const { language } = useContext(LanguageContext);
   const { notifySuccess, notifyError } = useNotify();
 
@@ -60,37 +63,35 @@ const FormForRequestQuote = () => {
         validationSchema={schema}
         onSubmit={async (values, actions) => {
           try {
-            const products = requestedProducts.map(({ name, idNumber, photos }) => ({
-              name: getProductName(name, language),
-    idNumber,
-    photo: photos[0],
-          }));
-          const phone = values.callingCode + values.phone
-        
-          const {name, email, country, countryPhone, company} = values
- 
-          
-    
-            const message = await requestQuote({
-              name, email, phone, country, countryPhone, company, products
-            });
-            notifySuccess(message[language])
-            actions.resetForm();
+            const products = requestedProducts.map(
+              ({ name, idNumber, photos }) => ({
+                name: getProductName(name, language),
+                idNumber,
+                photo: photos[0],
+              })
+            );
+            const phone = values.callingCode + values.phone;
 
-            
-            
+            const { name, email, country, countryPhone, company } = values;
+
+            const message = await requestQuote({
+              name,
+              email,
+              phone,
+              country,
+              countryPhone,
+              company,
+              products,
+            });
+            notifySuccess(message[language]);
+            actions.resetForm();
+          } catch (error) {
+            console.log(error);
+            notifyError('Oops... Something went wrong');
           }
-          catch (error) {
-            console.log(error)
-            notifyError('Oops... Something went wrong')
-          }
-          
         }}
       >
-      
-          
-          <Form>
-  
+        <Form>
           <div className="mb-[32px] flex flex-col gap-[14px]">
             <Name />
             <Email />
@@ -106,8 +107,7 @@ const FormForRequestQuote = () => {
           >
             {t(Button.SubmitRequest)}
           </button>
-          </Form>
-   
+        </Form>
       </Formik>
     </section>
   );

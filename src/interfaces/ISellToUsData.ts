@@ -5,5 +5,5 @@ export interface ISellToUsData {
   countryPhone: string;
   productName: string;
   price: string;
-  description: string
+  description: string;
 }

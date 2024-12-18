@@ -51,7 +51,7 @@ const ProductsList = () => {
         ? { category: searchParams.getAll('category') }
         : {}),
       ...(searchParams.getAll('industry').length
-        ? { industry: searchParams.getAll("industry") }
+        ? { industry: searchParams.getAll('industry') }
         : {}),
       ...(manufacturer ? { manufacturer: manufacturer } : {}),
       ...(condition ? { condition: condition } : {}),
@@ -77,10 +77,11 @@ const ProductsList = () => {
         searchParams.get(filters.Manufacturer) ||
         searchParams.get(filters.Industry) ||
         searchParams.get(filters.Condition)) && <ResetFilters />}
-      {(products.length === 0 && (searchParams.get(filters.Category) ||
+      {products.length === 0 &&
+      (searchParams.get(filters.Category) ||
         searchParams.get(filters.Manufacturer) ||
         searchParams.get(filters.Industry) ||
-        searchParams.get(filters.Condition))) ? (
+        searchParams.get(filters.Condition)) ? (
         <div className="lg:flex lg:w-[852px] lg:justify-center lg:pt-[32px]">
           <p className="text-center text-[18px] font-medium text-title">
             {t(Title.NoResults)}

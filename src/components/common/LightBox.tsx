@@ -1,12 +1,21 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import ReactDOM from "react-dom";
-import SvgIcon from "./SvgIcon";
-import NaviArrowSlider from "@components/common/NaviArrowSlider";
-import useSwiperNavigation from "@hooks/useSwiperNavigation";
-import { IconId } from "@enums/iconsSpriteId";
-import { createRef, useEffect, useRef, useState, type FC } from "react";
-import { TransformWrapper, TransformComponent, type ReactZoomPanPinchContentRef } from "react-zoom-pan-pinch";
+import { type FC, createRef, useRef } from 'react';
+import ReactDOM from 'react-dom';
+import {
+  type ReactZoomPanPinchContentRef,
+  TransformComponent,
+  TransformWrapper,
+} from 'react-zoom-pan-pinch';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import 'swiper/css';
+
+import SvgIcon from './SvgIcon';
+
+import NaviArrowSlider from '@components/common/NaviArrowSlider';
+
+import useSwiperNavigation from '@hooks/useSwiperNavigation';
+
+import { IconId } from '@enums/iconsSpriteId';
 
 interface ILightBoxProps {
   photos: string[];
@@ -14,20 +23,15 @@ interface ILightBoxProps {
   setCurrentIndex: (index: number) => void;
 }
 
-const LightBox: FC<ILightBoxProps> = ({ photos, currentIndex, setCurrentIndex }) => {
+const LightBox: FC<ILightBoxProps> = ({
+  photos,
+  currentIndex,
+  setCurrentIndex,
+}) => {
   const { handlePrev, handleNext, onSwiperInit } = useSwiperNavigation();
   const slideRefs = useRef<React.RefObject<ReactZoomPanPinchContentRef>[]>(
     photos.map(() => createRef<ReactZoomPanPinchContentRef>())
   );
-  const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
-
-  useEffect(() => {
-    const img = new Image();
-    img.src = photos[currentIndex];
-    img.onload = () => {
-      setImageDimensions({ width: img.naturalWidth, height: img.naturalHeight });
-    };
-  }, [currentIndex, photos]);
 
   const handleZoomIn = (index: number) => {
     slideRefs.current[index]?.current?.zoomIn();
@@ -41,20 +45,20 @@ const LightBox: FC<ILightBoxProps> = ({ photos, currentIndex, setCurrentIndex })
     slideRefs.current[index]?.current?.resetTransform();
   };
 
-  const modalRoot = document.getElementById("modal-root");
+  const modalRoot = document.getElementById('modal-root');
   if (!modalRoot) return null;
 
   const modalContent = (
     <div
-      onClick={(e) => {
+      onClick={e => {
         if (e.currentTarget === e.target) setCurrentIndex(-1);
       }}
-      className="overlay fixed left-0 top-0 z-20 flex h-full w-full items-center justify-center bg-[rgba(27,27,27,0.7)]"
+      className="overlay fixed left-0 top-0 z-30 flex h-full w-full items-center justify-center bg-[rgba(27,27,27,0.7)]"
     >
-      <span className="absolute top-2 left-4 text-secondary text-[18px]">
+      <span className="absolute left-4 top-2 text-[18px] text-secondary">
         {currentIndex + 1} / {photos.length}
       </span>
-      <div className="absolute top-0 right-0 h-[45px] flex gap-[20px] px-[20px] bg-[rgba(35,35,35,.65)]">
+      <div className="absolute right-0 top-0 flex h-[45px] gap-[20px] bg-[rgba(35,35,35,.65)] px-[20px]">
         <button onClick={() => handleZoomIn(currentIndex)}>
           <SvgIcon
             className="fill-secondary"
@@ -86,44 +90,37 @@ const LightBox: FC<ILightBoxProps> = ({ photos, currentIndex, setCurrentIndex })
       </div>
 
       <Swiper
-        onSwiper={onSwiperInit}
-        slidesPerView={1}
-        centeredSlides={true}
-        spaceBetween={0}
-        initialSlide={currentIndex}
-        onSlideChange={(swiper) => setCurrentIndex(swiper.activeIndex)}
-        className="flex items-center justify-center"
-        style={{
-          width: imageDimensions.width > 0 ? `${imageDimensions.width}px` : "100%",
-        }}
+  className="lightbox-swiper"
+  onSwiper={onSwiperInit}
+  slidesPerView={1}
+  centeredSlides={true}
+  spaceBetween={0}
+  initialSlide={currentIndex}
+  onSlideChange={swiper => setCurrentIndex(swiper.activeIndex)}
+  simulateTouch={false}
+  touchStartPreventDefault={false}
+>
+  {photos.map((photo, index) => (
+    <SwiperSlide key={`photo-${index}`}>
+      <TransformWrapper
+        initialScale={1}
+        minScale={0.5}
+        maxScale={5}
+        centerOnInit
+        ref={slideRefs.current[index]}
       >
-        {photos.map((photo, index) => (
-          <SwiperSlide key={`photo-${index}`}>
-            <TransformWrapper
-              initialScale={1}
-              minScale={0.5}
-              maxScale={5}
-              centerOnInit
-              ref={slideRefs.current[index]}
-            >
-              <TransformComponent>
-                <img
-                  src={photo}
-                  alt={`Photo ${index + 1}`}
-                  className="max-w-full max-h-screen object-contain"
-                  onLoad={(e) => {
-                    const img = e.target as HTMLImageElement;
-                    if (index === currentIndex) {
-                      const { naturalWidth, naturalHeight } = img;
-                      setImageDimensions({ width: naturalWidth, height: naturalHeight });
-                    }
-                  }}
-                />
-              </TransformComponent>
-            </TransformWrapper>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+        <TransformComponent>
+          <img
+            src={photo}
+            alt={`Photo ${index + 1}`}
+            className="max-h-screen max-w-full object-contain lg:w-[1000px]"
+          />
+        </TransformComponent>
+      </TransformWrapper>
+    </SwiperSlide>
+  ))}
+</Swiper>
+
       <NaviArrowSlider
         intent="details"
         className="left-[20px]"

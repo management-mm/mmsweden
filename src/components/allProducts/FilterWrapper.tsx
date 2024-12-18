@@ -76,11 +76,7 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
   useEffect(() => {
     const grouped = items.reduce(
       (acc, item) => {
-        const characterKey = getFilterItemName(
-          filterName,
-          item,
-          language
-        )
+        const characterKey = getFilterItemName(filterName, item, language)
           .split('')[0]
           ?.toUpperCase();
         if (!acc[characterKey]) {

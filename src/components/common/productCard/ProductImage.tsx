@@ -6,6 +6,7 @@ import type { MultiLanguageString } from '@interfaces/IProduct';
 import { nanoid } from 'nanoid';
 import 'swiper/css';
 
+import LightBox from '../LightBox';
 import NaviArrowSlider from '../NaviArrowSlider';
 
 import useSwiperNavigation from '@hooks/useSwiperNavigation';
@@ -13,7 +14,6 @@ import useSwiperNavigation from '@hooks/useSwiperNavigation';
 import getProductName from '@utils/getProductName';
 
 import type { LanguageKeys } from '@enums/languageKeys';
-import LightBox from '../LightBox';
 
 interface IProductImageProps {
   isLoading: boolean;
@@ -29,13 +29,8 @@ const ProductImage: FC<IProductImageProps> = ({
   language,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [toggler, setToggler] = useState(false);
   const { handlePrev, handleNext, onSwiperInit } = useSwiperNavigation();
-  const [currentIndex, setCurrentIndex] = useState(-1)
-
-  const openLightbox = () => {
-    setToggler(!toggler);
-  };
+  const [currentIndex, setCurrentIndex] = useState(-1);
 
   return (
     <div
@@ -89,7 +84,6 @@ const ProductImage: FC<IProductImageProps> = ({
               }`}
               src={photos[0]}
               alt={name ? getProductName(name, language) : ''}
-              onClick={openLightbox}
             />
           </>
         ) : (

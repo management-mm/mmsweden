@@ -52,5 +52,5 @@ export enum IconId {
   Cancel = '#cancel',
   ZoomIn = '#zoom-in',
   ZoomOut = '#zoom-out',
-  ZoomReset = '#zoom-reset'
+  ZoomReset = '#zoom-reset',
 }

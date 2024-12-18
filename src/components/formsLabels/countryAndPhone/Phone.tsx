@@ -1,9 +1,4 @@
-import {
-  type ChangeEvent,
-  type FC,
-  useContext,
-  useState,
-} from 'react';
+import { type ChangeEvent, type FC, useContext, useState } from 'react';
 import InputMask from 'react-input-mask';
 
 import type { ICountryOption } from '@interfaces/ICountryOption';

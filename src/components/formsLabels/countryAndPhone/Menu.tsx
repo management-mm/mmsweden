@@ -1,12 +1,12 @@
-import { type ChangeEvent, type FC, useEffect, useState } from "react";
+import { type ChangeEvent, type FC, useEffect, useState } from 'react';
 
-import type { ICountryOption } from "@interfaces/ICountryOption";
-import { nanoid } from "nanoid";
+import type { ICountryOption } from '@interfaces/ICountryOption';
+import { nanoid } from 'nanoid';
 
-import useOutsideAlerter from "@hooks/useOutsideAlerter";
+import useOutsideAlerter from '@hooks/useOutsideAlerter';
 
 interface IMenuProps {
-  labelName: "country" | "phone";
+  labelName: 'country' | 'phone';
   handleInputText: (e: ChangeEvent<HTMLInputElement>) => void;
   options: ICountryOption[] | null;
   handleOptionClick: (option: ICountryOption) => void;
@@ -66,8 +66,8 @@ const Menu: FC<IMenuProps> = ({
       }
     };
 
-    selector.addEventListener("scroll", handleScroll);
-    return () => selector.removeEventListener("scroll", handleScroll);
+    selector.addEventListener('scroll', handleScroll);
+    return () => selector.removeEventListener('scroll', handleScroll);
   }, [labelName, visibleCountries, options]);
 
   return (
@@ -86,7 +86,7 @@ const Menu: FC<IMenuProps> = ({
         className="mb-[22px] mt-[14px] max-h-60 overflow-auto bg-white"
       >
         {options && options.length > 0 ? (
-          visibleCountries.map((option) => (
+          visibleCountries.map(option => (
             <li
               key={nanoid()}
               className="duration-250 cursor-pointer py-[8px] transition-colors hover:bg-secondary"

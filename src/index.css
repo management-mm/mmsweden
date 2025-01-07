@@ -100,3 +100,20 @@
     min-height: 0;
   }
 }
+
+.lightbox-swiper .swiper-slide {
+  width: 100% !important;
+  display: flex;
+  justify-content: center;
+}
+
+.lightbox-swiper .swiper-wrapper {
+  align-items: center;
+}
+
+.lightbox-swiper img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  margin: auto;
+}

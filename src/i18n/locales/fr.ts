@@ -11,6 +11,7 @@ import {
   NavBar,
   Pagination,
   Placeholder,
+  Product,
   SellToUs,
   Title,
   WhyChooseUs,
@@ -42,6 +43,7 @@ export const fr = {
   [Title.Step]: 'Étape {{number}}',
   [Title.FormForSale]: 'Formulaire de vente',
   [Title.VideoOverview]: 'Aperçu vidéo',
+  [Title.YouMayAlsoBeInterestedIn]: 'Vous pourriez aussi être intéressé par',
   [Title.ItemsForQuote]: 'Articles pour demande de prix',
   [Title.RequestAQuote]: 'Demander un devis',
 
@@ -184,6 +186,9 @@ export const fr = {
   [Filter.New]: 'Nouveau',
   [Filter.Used]: 'Occasion',
   [Filter.Reset]: 'Réinitialiser les filtres',
+
+  [Product.Dimensions]: 'Dimensions',
+  [Product.Description]: 'Description',
 
   [Pagination.Next]: 'Suivant',
   [Pagination.Previous]: 'Précédent',

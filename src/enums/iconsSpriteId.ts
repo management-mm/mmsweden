@@ -50,4 +50,7 @@ export enum IconId {
   Planet = '#planet',
   Plus = '#plus',
   Cancel = '#cancel',
+  ZoomIn = '#zoom-in',
+  ZoomOut = '#zoom-out',
+  ZoomReset = '#zoom-reset',
 }

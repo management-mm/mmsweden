@@ -11,6 +11,7 @@ import {
   NavBar,
   Pagination,
   Placeholder,
+  Product,
   SellToUs,
   Title,
   WhyChooseUs,
@@ -42,6 +43,7 @@ export const uk = {
   [Title.Step]: 'Крок {{number}}',
   [Title.FormForSale]: 'Форма для продажу',
   [Title.VideoOverview]: 'Відеоогляд',
+  [Title.YouMayAlsoBeInterestedIn]: 'Вас також може зацікавити',
   [Title.ItemsForQuote]: 'Товари для запиту ціни',
   [Title.RequestAQuote]: 'Запросити ціну',
 
@@ -182,6 +184,9 @@ export const uk = {
   [Filter.New]: 'Новий',
   [Filter.Used]: 'б/в',
   [Filter.Reset]: 'Скинути фільтри',
+
+  [Product.Dimensions]: 'Розміри',
+  [Product.Description]: 'Опис',
 
   [Pagination.Next]: 'Далі',
   [Pagination.Previous]: 'Назад',

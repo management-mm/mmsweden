@@ -11,6 +11,7 @@ import {
   NavBar,
   Pagination,
   Placeholder,
+  Product,
   SellToUs,
   Title,
   WhyChooseUs,
@@ -42,6 +43,7 @@ export const sv = {
   [Title.Step]: 'Steg {{number}}',
   [Title.FormForSale]: 'Formulär för försäljning',
   [Title.VideoOverview]: 'Videoöversikt',
+  [Title.YouMayAlsoBeInterestedIn]: 'Du kanske också är intresserad av',
   [Title.ItemsForQuote]: 'Artiklar för prisförfrågan',
   [Title.RequestAQuote]: 'Begär en prisoffert',
 
@@ -183,6 +185,9 @@ export const sv = {
   [Filter.New]: 'Ny',
   [Filter.Used]: 'Begagnad',
   [Filter.Reset]: 'Återställ filter',
+
+  [Product.Dimensions]: 'Dimensioner',
+  [Product.Description]: 'Beskrivning',
 
   [Pagination.Next]: 'Nästa',
   [Pagination.Previous]: 'Föregående',

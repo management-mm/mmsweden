@@ -11,6 +11,7 @@ import {
   NavBar,
   Pagination,
   Placeholder,
+  Product,
   SellToUs,
   Title,
   WhyChooseUs,
@@ -42,6 +43,7 @@ export const ru = {
   [Title.Step]: 'Шаг {{number}}',
   [Title.FormForSale]: 'Форма для продажи',
   [Title.VideoOverview]: 'Видеообзор',
+  [Title.YouMayAlsoBeInterestedIn]: 'Вам также может быть интересно',
   [Title.ItemsForQuote]: 'Товары для запроса цены',
   [Title.RequestAQuote]: 'Запросить цену',
 
@@ -183,6 +185,9 @@ export const ru = {
   [Filter.New]: 'Новый',
   [Filter.Used]: 'Б/у',
   [Filter.Reset]: 'Сбросить фильтры',
+
+  [Product.Dimensions]: 'Размеры',
+  [Product.Description]: 'Описание',
 
   [Pagination.Next]: 'Далее',
   [Pagination.Previous]: 'Назад',

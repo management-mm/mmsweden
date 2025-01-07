@@ -11,6 +11,7 @@ import {
   NavBar,
   Pagination,
   Placeholder,
+  Product,
   SellToUs,
   Title,
   WhyChooseUs,
@@ -43,6 +44,7 @@ export const en = {
   [Title.Step]: 'Step {{number}}',
   [Title.FormForSale]: 'Form For Sale',
   [Title.VideoOverview]: 'Video overview',
+  [Title.YouMayAlsoBeInterestedIn]: 'You may also be interested in',
   [Title.ItemsForQuote]: 'Items For Quote',
   [Title.RequestAQuote]: 'Request a quote',
 
@@ -184,6 +186,9 @@ export const en = {
   [Filter.New]: 'New',
   [Filter.Used]: 'Used',
   [Filter.Reset]: 'Reset filters',
+
+  [Product.Dimensions]: 'Dimensions',
+  [Product.Description]: 'Description',
 
   [Pagination.Next]: 'Next',
   [Pagination.Previous]: 'Previous',

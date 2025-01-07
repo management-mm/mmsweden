@@ -44,7 +44,7 @@ export enum Title {
   Step = 'Title.Step',
   FormForSale = 'Title.FormForSale',
   VideoOverview = 'Title.VideoOverview',
-  YouMayAlsoLike = 'Title.YouMayAlsoLike',
+  YouMayAlsoBeInterestedIn = 'Title.YouMayAlsoBeInterestedIn',
   ItemsForQuote = 'Title.ItemsForQuote',
   RequestAQuote = 'Title.RequestAQuote',
 }
@@ -166,6 +166,11 @@ export enum Filter {
   New = 'Filter.New',
   Used = 'Filter.Used',
   Reset = 'Filter.Reset',
+}
+
+export enum Product {
+  Dimensions = 'Product.Dimensions',
+  Description = 'Product.Description',
 }
 
 export enum Pagination {

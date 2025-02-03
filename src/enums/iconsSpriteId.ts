@@ -53,4 +53,9 @@ export enum IconId {
   ZoomIn = '#zoom-in',
   ZoomOut = '#zoom-out',
   ZoomReset = '#zoom-reset',
+  AddProduct = '#add-product',
+  AllProducts = '#all-products',
+  EditProduct = '#edit-product',
+  Upload = '#upload',
+  Settings = '#settings',
 }

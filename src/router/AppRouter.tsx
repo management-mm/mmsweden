@@ -3,6 +3,9 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import ErrorPage from '@pages/ErrorPage';
 
+import AdminSharedLayout from '@components/AdminSharedLayout';
+import { PrivateRoute } from '@components/PrivateRoute';
+import { RestrictedRoute } from '@components/RestrictedRoute';
 import SharedLayout from '@components/SharedLayout';
 import Loader from '@components/common/loaders/Loader';
 
@@ -14,6 +17,10 @@ const SellToUs = lazy(() => import('@pages/SellToUs'));
 const ContactUs = lazy(() => import('@pages/ContactUs'));
 const MyPriceQuote = lazy(() => import('@pages/MyPriceQuote'));
 const NewArrivals = lazy(() => import('@pages/NewArrivals'));
+const Login = lazy(() => import('@pages/Login'));
+const NewProduct = lazy(() => import('@pages/NewProduct'));
+const EditProduct = lazy(() => import('@pages/EditProduct'));
+const Settings = lazy(() => import('@pages/Settings'));
 
 const router = createBrowserRouter([
   {
@@ -90,6 +97,59 @@ const router = createBrowserRouter([
         element: <ErrorPage />,
       },
     ],
+  },
+  {
+    path: '/admin',
+    element: (
+      <PrivateRoute redirectTo="/login" component={<AdminSharedLayout />} />
+    ),
+    children: [
+      {
+        path: 'all-products',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <AllProducts />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'new-product',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <NewProduct />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'settings',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Settings />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'all-products/edit-product/:productId',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <EditProduct />
+          </Suspense>
+        ),
+      },
+    ],
+  },
+  {
+    path: '/login',
+    element: (
+      <RestrictedRoute
+        redirectTo="/admin/all-products"
+        component={
+          <Suspense fallback={<Loader />}>
+            <Login />
+          </Suspense>
+        }
+      />
+    ),
   },
 ]);
 

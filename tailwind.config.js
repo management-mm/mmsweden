@@ -45,6 +45,7 @@ export default {
         secondaryAccent: 'rgba(0, 75, 135, 1)',
         secondary: 'rgb(234, 241, 248)',
         main: 'rgba(252,252,252,1)',
+        neutral: 'rgba(102, 102, 102, 0.1)',
       },
       colors: {
         accent: 'rgb(253, 198, 47)',

@@ -5,11 +5,11 @@ import { useParams } from 'react-router-dom';
 
 import Details from './Details';
 import Slider from './Slider';
-import VideoPlayer from './VideoPlayer';
 
 import { LanguageContext } from '@components/SharedLayout';
 import Breadcrumb from '@components/common/Breadcrumb';
 import DecorativeLine from '@components/common/DecorativeLine';
+import VideoPlayer from '@components/common/VideoPlayer';
 
 import { fetchProductById } from '@store/products/operations';
 import { selectIsLoading, selectProductDetails } from '@store/selectors';

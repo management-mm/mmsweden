@@ -150,3 +150,10 @@ input:-webkit-autofill:focus {
   object-fit: contain;
   margin: auto;
 }
+.full-width {
+  width: 100%;
+}
+
+.dynamic-width {
+  width: calc((100% - var(--gap) * var(--item-count)) / var(--item-count));
+}

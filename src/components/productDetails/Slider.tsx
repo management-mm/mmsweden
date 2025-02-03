@@ -7,10 +7,9 @@ import 'swiper/css/free-mode';
 import 'swiper/css/thumbs';
 import { FreeMode, Thumbs } from 'swiper/modules';
 
-import VideoPlayer from './VideoPlayer';
-
 import LightBox from '@components/common/LightBox';
 import NaviArrowSlider from '@components/common/NaviArrowSlider';
+import VideoPlayer from '@components/common/VideoPlayer';
 
 import useSwiperNavigation from '@hooks/useSwiperNavigation';
 

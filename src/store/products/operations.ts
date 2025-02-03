@@ -19,6 +19,20 @@ export interface IFetchProductsParams {
   manufacturer?: string;
 }
 
+export interface IAddProductData {
+  name: string;
+  idNumber: string;
+  description: string;
+  dimensions: string;
+  photos: File[];
+  video: string;
+  category: string;
+  manufacturer: string;
+  industries: string;
+  condition: 'used' | 'new';
+  shouldTranslateName: boolean;
+}
+
 export interface IFetchProductsResponse {
   products: IProduct[];
   total: number;
@@ -66,3 +80,50 @@ export const fetchRecommendedProductsById = createAsyncThunk<
     return thunkAPI.rejectWithValue((e as Error).message);
   }
 });
+
+export const addProduct = createAsyncThunk<
+  IProduct,
+  IAddProductData,
+  { rejectValue: string }
+>('products/addProduct', async (newProduct, thunkAPI) => {
+  try {
+    const data = new FormData();
+    for (const property in newProduct) {
+      if (Object.prototype.hasOwnProperty.call(newProduct, property)) {
+        const key = property as keyof IAddProductData;
+        if (key === 'shouldTranslateName') continue;
+        else if (key === 'photos') {
+          newProduct[key].forEach(photo => {
+            data.append('photos', photo);
+          });
+        } else {
+          data.append(key, newProduct[key] as string);
+        }
+      }
+    }
+    const response = await axios.post('products', data, {
+      params: {
+        shouldTranslateName: String(newProduct.shouldTranslateName),
+      },
+    });
+    return response.data;
+  } catch (e) {
+    console.log(e);
+    return thunkAPI.rejectWithValue((e as Error).message);
+  }
+});
+
+export const deleteProduct = createAsyncThunk<
+  IProduct,
+  { productId: string | undefined },
+  { rejectValue: string }
+>("products/deleteProduct",
+  async ({productId}, thunkAPI) => {
+    try {
+      const response = await axios.delete(`products/${productId}`);
+      return response.data
+    } catch (e) {
+      return thunkAPI.rejectWithValue((e as Error).message);
+    }
+  }
+)

@@ -15,9 +15,8 @@ import type { IIndustry } from 'interfaces/IIndustry';
 import type { IManufacturer } from 'interfaces/IManufacturer';
 import { nanoid } from 'nanoid';
 
-import SearchFilter from './SearchFilter';
-
 import { LanguageContext } from '@components/SharedLayout';
+import SearchFilter from '@components/common/SearchFilter';
 import SvgIcon from '@components/common/SvgIcon';
 
 import getFilterItemName from '@utils/getFilterItemName';

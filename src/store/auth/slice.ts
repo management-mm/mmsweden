@@ -1,0 +1,59 @@
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { logIn, logOut, refreshUser } from './operations';
+
+interface AuthState {
+  user: { name: null, email: null } | null;
+  token: string | null;
+  isLoggedIn: boolean;
+  isRefreshing: boolean;
+}
+
+export const initialState: AuthState = {
+  user: { name: null, email: null },
+  token: null,
+  isLoggedIn: false,
+  isRefreshing: false,
+};
+
+const handleLogInFulfilled = (state: AuthState, action: PayloadAction<{ user: { name: null, email: null }, token: string }>) => {
+  state.user = action.payload.user;
+  state.token = action.payload.token;
+  state.isLoggedIn = true;
+};
+
+const handleLogOutFulfilled = (state: AuthState) => {
+  state.user = { name: null, email: null };
+  state.token = null;
+  state.isLoggedIn = false;
+};
+
+const handleRefreshUserPending = (state: AuthState) => {
+  state.isRefreshing = true;
+};
+
+const handleRefreshUserFulfilled = (state: AuthState, action: PayloadAction<{ name: null, email: null }>) => {
+  state.user = action.payload;
+  state.isLoggedIn = true;
+  state.isRefreshing = false;
+};
+
+const handleRefreshUserRejected = (state: AuthState) => {
+  state.isRefreshing = false;
+  state.token = null;
+  state.isLoggedIn = false;
+};
+
+const authSlice = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {},
+  extraReducers: builder =>
+    builder
+      .addCase(logIn.fulfilled, handleLogInFulfilled)
+      .addCase(logOut.fulfilled, handleLogOutFulfilled)
+      .addCase(refreshUser.pending, handleRefreshUserPending)
+      .addCase(refreshUser.fulfilled, handleRefreshUserFulfilled)
+      .addCase(refreshUser.rejected, handleRefreshUserRejected),
+});
+
+export const authReducer = authSlice.reducer;

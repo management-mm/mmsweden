@@ -36,3 +36,9 @@ export const selectIndustriesIsLoading = (state: RootState) =>
 
 export const selectIndustriesError = (state: RootState) =>
   state.industries.error;
+
+export const selectIsLoggedIn = (state: RootState) => state.auth.isLoggedIn;
+
+export const selectUser = (state: RootState) => state.auth.user;
+
+export const selectIsRefreshing = (state: RootState) => state.auth.isRefreshing;

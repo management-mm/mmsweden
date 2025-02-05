@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import type { RootState } from '@store/store';
 import axios from 'axios';
-import { type RootState } from '../store';
+
 
 axios.defaults.baseURL = 'https://mmsweden-server.onrender.com/';
 

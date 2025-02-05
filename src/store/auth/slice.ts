@@ -1,5 +1,6 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { logIn, logOut, refreshUser } from './operations';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+
 
 interface User {
   name: string | null;

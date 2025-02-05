@@ -43,7 +43,7 @@ const InputField: FC<IInputField> = ({
       name={name}
       title={title}
       as={as}
-      onChange={e => setInputValue(e.target.value)}
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
       required={required}
       className={cn(
         'rounded-[32px] border border-neutral px-[22px] py-[14px] text-[14px] outline-none transition-border duration-primary focus:border focus:border-secondaryAccent',

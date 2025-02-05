@@ -1,21 +1,28 @@
 import { MdEmail } from 'react-icons/md';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
-
+import { type AppDispatch } from '@store/store';
 import { logIn } from '@store/auth/operations';
+import { type FormEvent } from 'react';
 
 const LoginForm = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
-  const handleSubmit = e => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
-    dispatch(
-      logIn({
-        email: form.elements.email.value,
-        password: form.elements.password.value,
-      })
-    );
+    const email = form.elements.namedItem('email') as HTMLInputElement;
+    const password = form.elements.namedItem('password') as HTMLInputElement;
+
+    if (email && password) {
+      dispatch(
+        logIn({
+          email: email.value,
+          password: password.value,
+        })
+      );
+    }
+
     form.reset();
   };
 
@@ -37,6 +44,7 @@ const LoginForm = () => {
               type="email"
               name="email"
               placeholder="Enter your email"
+              required
             />
             <MdEmail
               className="absolute left-[16px] top-1/2 -translate-y-1/2 fill-desc peer-focus:fill-secondaryAccent"
@@ -54,6 +62,7 @@ const LoginForm = () => {
               type="password"
               name="password"
               placeholder="Enter your password"
+              required
             />
             <RiLockPasswordFill
               className="absolute left-[16px] top-1/2 -translate-y-1/2 fill-desc peer-focus:fill-secondaryAccent"

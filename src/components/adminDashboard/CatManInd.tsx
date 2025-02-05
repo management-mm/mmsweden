@@ -30,8 +30,8 @@ import type { MultiLanguageString } from '@interfaces/IProduct';
 
 interface ICatManIndProps {
   initialCategory?: string | MultiLanguageString
-  initialManufacturer: string
-  initialIndustries: (MultiLanguageString | string)[]
+  initialManufacturer?: string
+  initialIndustries?: (MultiLanguageString | string)[]
 }
 
 const CatManInd: FC<ICatManIndProps> = ({

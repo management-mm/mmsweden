@@ -11,7 +11,7 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import { authReducer } from './auth/slice';
+import { authReducer, type AuthState } from './auth/slice';
 import { categoriesReducer } from './filters/categoriesSlice';
 import { industriesReducer } from './filters/industriesSlice';
 import { manufacturersReducer } from './filters/manufacturersSlice';
@@ -26,7 +26,7 @@ const authPersistConfig = {
 
 export const store = configureStore({
   reducer: {
-    auth: persistReducer(authPersistConfig, authReducer),
+    auth: persistReducer<AuthState>(authPersistConfig, authReducer),
     products: productsReducer,
     requestedProducts: requestedProductsReducer,
     manufacturers: manufacturersReducer,
@@ -36,19 +36,12 @@ export const store = configureStore({
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [
-          'persist/PERSIST',
-          'persist/REHYDRATE, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER',
-        ],
-        ignoredPaths: ['register'],
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
 });
 
-export type AppStore = typeof store;
-
 export const persistor = persistStore(store);
 
-export type RootState = ReturnType<AppStore['getState']>;
-
-export type AppDispatch = AppStore['dispatch'];
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

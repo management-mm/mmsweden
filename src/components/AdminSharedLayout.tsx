@@ -3,14 +3,10 @@ import { createContext } from 'react';
 import { Outlet } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-import clsx from 'clsx';
-
 import ScrollToTop from './ScrollToTop';
 import Sidebar from './adminDashboard/Sidebar';
 import Topbar from './adminDashboard/Topbar';
 import SvgIcon from './common/SvgIcon';
-
-import useWindowWidth from '@hooks/useWindowWidth';
 
 import { IconId } from '@enums/iconsSpriteId';
 import type { LanguageKeys } from '@enums/languageKeys';
@@ -31,7 +27,6 @@ export const LanguageContext = createContext<LanguageContextType>({
 });
 
 const AdminSharedLayout = () => {
-  const { windowWidth } = useWindowWidth();
   const [language, setLanguage] = useState<LanguageKeys>(
     (() => {
       const storedLanguage = localStorage.getItem('i18nextLng');

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { type RootState } from '../store';
 
 axios.defaults.baseURL = 'https://mmsweden-server.onrender.com/';
 
@@ -18,10 +19,14 @@ interface LogInCredentials {
 
 interface LogInResponse {
   token: string;
-  user: { name: null, email: null };
+  user: { name: string | null; email: string | null };
 }
 
-export const logIn = createAsyncThunk<LogInResponse, LogInCredentials, { rejectValue: string }>(
+export const logIn = createAsyncThunk<
+  LogInResponse,
+  LogInCredentials,
+  { rejectValue: string }
+>(
   'auth/login',
   async (credentials, thunkAPI) => {
     try {
@@ -34,7 +39,11 @@ export const logIn = createAsyncThunk<LogInResponse, LogInCredentials, { rejectV
   }
 );
 
-export const logOut = createAsyncThunk<void, void, { rejectValue: string }>(
+export const logOut = createAsyncThunk<
+  void,
+  void,
+  { rejectValue: string }
+>(
   'auth/logout',
   async (_, thunkAPI) => {
     try {
@@ -46,11 +55,16 @@ export const logOut = createAsyncThunk<void, void, { rejectValue: string }>(
   }
 );
 
-export const refreshUser = createAsyncThunk<{ name: null, email: null }, void, { rejectValue: string }>(
+export const refreshUser = createAsyncThunk<
+  { name: string | null; email: string | null },
+  void,
+  { state: RootState; rejectValue: string }
+>(
   'auth/refresh',
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
     const persistedToken = state.auth.token;
+
     if (!persistedToken) {
       return thunkAPI.rejectWithValue('Unable to fetch user');
     }

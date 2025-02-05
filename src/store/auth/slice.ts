@@ -1,8 +1,13 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { logIn, logOut, refreshUser } from './operations';
 
-interface AuthState {
-  user: { name: null, email: null } | null;
+interface User {
+  name: string | null;
+  email: string | null;
+}
+
+export interface AuthState {
+  user: User;
   token: string | null;
   isLoggedIn: boolean;
   isRefreshing: boolean;
@@ -15,7 +20,7 @@ export const initialState: AuthState = {
   isRefreshing: false,
 };
 
-const handleLogInFulfilled = (state: AuthState, action: PayloadAction<{ user: { name: null, email: null }, token: string }>) => {
+const handleLogInFulfilled = (state: AuthState, action: PayloadAction<{ user: User; token: string }>) => {
   state.user = action.payload.user;
   state.token = action.payload.token;
   state.isLoggedIn = true;
@@ -31,7 +36,7 @@ const handleRefreshUserPending = (state: AuthState) => {
   state.isRefreshing = true;
 };
 
-const handleRefreshUserFulfilled = (state: AuthState, action: PayloadAction<{ name: null, email: null }>) => {
+const handleRefreshUserFulfilled = (state: AuthState, action: PayloadAction<User>) => {
   state.user = action.payload;
   state.isLoggedIn = true;
   state.isRefreshing = false;

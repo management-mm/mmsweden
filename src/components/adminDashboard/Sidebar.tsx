@@ -1,14 +1,6 @@
-import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-
 import Nav from './Nav';
 
 import { Logo } from '@components/common/Logo';
-import SvgIcon from '@components/common/SvgIcon';
-
-import { cn } from '@utils/cn';
-
-import { IconId } from '@enums/iconsSpriteId';
 
 const Sidebar = () => {
   return (

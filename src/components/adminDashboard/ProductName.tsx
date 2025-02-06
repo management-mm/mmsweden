@@ -12,6 +12,7 @@ import LabelTitle from '@components/common/LabelTitle';
 
 import { LanguageKeys } from '@enums/languageKeys';
 import type { MultiLanguageString } from '@interfaces/IProduct';
+import clsx from 'clsx';
 
 interface IProductNameProps {
   name: MultiLanguageString | string | undefined
@@ -32,7 +33,7 @@ const ProductName:FC<IProductNameProps> = ({ name = '' }) => {
 
   return (
     <div>
-      {name && typeof name === 'string' ? (
+      {!name && typeof name === 'string' ? (
         <>
           <label className={'flex flex-col gap-[2px]'}>
             <LabelTitle title="Name" />
@@ -63,10 +64,10 @@ const ProductName:FC<IProductNameProps> = ({ name = '' }) => {
               </label>
               <InputField
                 initialValue={(name as MultiLanguageString)?.[lang] || ''}
-                // className={clsx(
-                //   'w-full pl-[65px]',
-                //   newInputValue ? 'text-gray-400' : ''
-                // )}
+                className={clsx(
+                  'w-full pl-[65px]',
+                  // newInputValue ? 'text-gray-400' : ''
+                )}
                 placeholder={`Enter product name in ${lang.toUpperCase()}`}
                 name={`name.${lang}`}
                 required={lang === 'en'}

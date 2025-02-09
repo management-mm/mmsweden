@@ -5,6 +5,8 @@ import PhotosList from './PhotosList';
 import UploadButtons from './UploadButtons';
 
 import LabelTitle from '@components/common/LabelTitle';
+import type { SlotItemMapArray } from 'swapy';
+import initSlotItemMap from '@utils/initSlotItemMap';
 
 export type Item = {
   id: string;
@@ -44,46 +46,50 @@ const PhotosAndVideo:FC<IPhotoAndVideoProps> = ({ initialPhotos = [], initialVid
   const [items, setItems] = useState<Item[]>(() =>
     editedAvatars.map((src, index) => ({ id: String(index + 1), src }))
   );
+  const [slotItemMap, setSlotItemMap] = useState<SlotItemMapArray>(
+    initSlotItemMap(items, 'id')
+  );
 
 
   const handleChangePhoto = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 7) {
-      alert('No more 7 photos');
-      e.target.value = '';
-      return;
-    }
-    if (e.target.files) {
-      const filesArray = Array.from(e.target.files);
+  if (e.target.files && e.target.files.length > 7) {
+    alert('No more than 7 photos');
+    e.target.value = '';
+    return;
+  }
 
-      const newFileAvatars: File[] = [];
-      const newEditedAvatars: string[] = [];
+  if (e.target.files) {
+    const filesArray = Array.from(e.target.files);
+    const newFileAvatars: File[] = [];
+    const newEditedAvatars: string[] = [];
 
-      filesArray.forEach(file => {
-        const reader = new FileReader();
-        reader.onload = event => {
-          if (event.target?.result) {
-            newEditedAvatars.push(event.target.result as string);
-          }
-          if (newEditedAvatars.length === filesArray.length) {
-            setEditedAvatars(prev => [...prev, ...newEditedAvatars]);
-            setItems(prev => [
-              ...prev,
-              ...newEditedAvatars.map((src, i) => ({
-                id: String(prev.length + i + 1),
-                src,
-              })),
-            ]);
-          }
-        };
-        reader.readAsDataURL(file);
-        newFileAvatars.push(file);
-      });
+    filesArray.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = event => {
+        if (event.target?.result) {
+          newEditedAvatars.push(event.target.result as string);
+        }
+        if (newEditedAvatars.length === filesArray.length) {
 
-      setFileAvatars(prev => [...prev, ...newFileAvatars]);
+          setEditedAvatars(prev => [...prev, ...newEditedAvatars]);
 
-      e.target.value = '';
-    }
-  };
+          const updatedItems = [...items, ...newEditedAvatars.map((src, i) => ({
+            id: String(items.length + i + 1),
+            src,
+          }))];
+
+          setItems(updatedItems);
+          setSlotItemMap(initSlotItemMap(updatedItems, 'id'));
+        }
+      };
+      reader.readAsDataURL(file);
+      newFileAvatars.push(file);
+    });
+
+    setFileAvatars(prev => [...prev, ...newFileAvatars]);
+    e.target.value = '';
+  }
+};
 
   return (
     <div>
@@ -100,6 +106,8 @@ const PhotosAndVideo:FC<IPhotoAndVideoProps> = ({ initialPhotos = [], initialVid
           setFileAvatars={setFileAvatars}
           items={items}
           setItems={setItems}
+          slotItemMap={slotItemMap}
+          setSlotItemMap={setSlotItemMap}
         />
       </div>
 

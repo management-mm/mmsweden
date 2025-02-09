@@ -44,17 +44,17 @@ const AddProduct = () => {
         <Form>
           <div className={cn('container', 'lg:ml-0')}>
             <div className="gap-[24px] pt-[48px] lg:flex">
-              <Block title="Photos and video" intent="main">
+              <Block title="Photos and video" intent="main" className='mb-[20px] lg:mb-0'>
                 <PhotosAndVideo />
               </Block>
-              <div>
-                <Block title="General Information" intent="main">
+              <div className='pb-[64px]'>
+                <Block title="General Information" intent="main" className='mb-[20px]'>
                   <GeneralInformation />
                 </Block>
-                <Block title="Category, Manufacturer, Industry" intent="main">
+                <Block title="Category, Manufacturer, Industry" intent="main" className='mb-[20px]'>
                   <CatManInd />
                 </Block>
-                <Block title="Condition" intent="main">
+                <Block title="Condition" intent="main" className='mb-[20px]'>
                   <Condition />
                 </Block>
                 <button

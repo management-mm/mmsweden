@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useRef, useState, type FC, useCallback } from 'react';
+import { useEffect, useMemo, useRef, type FC, useCallback } from 'react';
 import { useFormikContext, type FormikValues } from 'formik';
 import { createSwapy, type SlotItemMapArray, type Swapy } from 'swapy';
 
 import SvgIcon from '@components/common/SvgIcon';
 import { IconId } from '@enums/iconsSpriteId';
-import initSlotItemMap from '@utils/initSlotItemMap';
+
 import dynamicSwapy from '@utils/dynamicSwapy';
 import toSlottedItems from '@utils/toSlottedItems';
 
@@ -17,6 +17,9 @@ interface IPhotosListProps {
   setFileAvatars: (files: File[]) => void;
   items: Item[];
   setItems: (items: Item[]) => void;
+  slotItemMap: SlotItemMapArray;
+  setSlotItemMap: React.Dispatch<React.SetStateAction<SlotItemMapArray>>;
+
 }
 
 const PhotosList: FC<IPhotosListProps> = ({ 
@@ -25,13 +28,12 @@ const PhotosList: FC<IPhotosListProps> = ({
   fileAvatars, 
   setFileAvatars, 
   items, 
-  setItems 
+  setItems,
+  slotItemMap,
+  setSlotItemMap
+
 }) => {
   const { setFieldValue } = useFormikContext<FormikValues>();
-
-  const [slotItemMap, setSlotItemMap] = useState<SlotItemMapArray>(
-    initSlotItemMap(items, 'id')
-  );
 
   const slottedItems = useMemo(() => toSlottedItems(items, 'id', slotItemMap), [items, slotItemMap])
 
@@ -39,18 +41,16 @@ const PhotosList: FC<IPhotosListProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
 
   const swapItems = useCallback(<T,>(array: T[], index1: number, index2: number): T[] => {
-  const newArray = [...array];
-  [newArray[index1], newArray[index2]] = [newArray[index2], newArray[index1]];
-  return newArray;
-}, []);
+    const newArray = [...array];
+    [newArray[index1], newArray[index2]] = [newArray[index2], newArray[index1]];
+    return newArray;
+  }, []);
 
   useEffect(() => {
     dynamicSwapy(swapyRef.current, items, 'id', slotItemMap, setSlotItemMap);
   }, [items]);
 
   useEffect(() => {
-    console.log("fileAvatars", fileAvatars)
-
     swapyRef.current = createSwapy(containerRef.current!, {
       manualSwap: true,
       autoScrollOnDrag: true,
@@ -58,15 +58,18 @@ const PhotosList: FC<IPhotosListProps> = ({
     });
 
     swapyRef.current.onSwap((event) => {
-      console.log(event.newSlotItemMap.asArray)
-      setSlotItemMap(event.newSlotItemMap.asArray);
+      console.log("slotItemMap", slotItemMap)
+      const filteredSlotItemMap = event.newSlotItemMap.asArray.filter(({ item }) =>
+    items.some(i => i.id === item));
+      
+      setSlotItemMap(items.length !== 0 ? filteredSlotItemMap :  event.newSlotItemMap.asArray);
+      
       if (editedAvatars.length !== 0) {
         const swappedFiles = swapItems(fileAvatars, Number(event.toSlot) - 1, Number(event.fromSlot) - 1);
         setFileAvatars(swappedFiles);
         const swapedPhotos = swapItems(editedAvatars, Number(event.toSlot) - 1, Number(event.fromSlot) - 1);
         setEditedAvatars(swapedPhotos)
       }
-  
     });
 
     return () => {
@@ -75,8 +78,30 @@ const PhotosList: FC<IPhotosListProps> = ({
   }, [fileAvatars, setFileAvatars, swapItems, editedAvatars, setEditedAvatars]);
 
   useEffect(() => {
+    console.log("fileAvatars", fileAvatars)
     setFieldValue('photos', fileAvatars, false);
-  }, [fileAvatars, setFieldValue]);
+  }, [fileAvatars]);
+
+  const handleDelete = useCallback((itemId: string, item: Item) => {
+    const updatedItems = items.filter(item => item.id !== itemId);
+    const updatedEditedAvatars = editedAvatars.filter((_, i) => {
+  const correspondingItem = items[i];
+  return correspondingItem && correspondingItem.id !== item.id;
+                    });
+                    
+
+const updatedFileAvatars = fileAvatars.filter((_, i) => {
+  const correspondingItem = items[i];
+  return correspondingItem && correspondingItem.id !== item.id;
+});
+
+    setItems(updatedItems);
+    setEditedAvatars(updatedEditedAvatars);
+    setFileAvatars(updatedFileAvatars);
+    setSlotItemMap(slotItemMap.filter(({ item }) => updatedItems.some(i => i.id === item)));
+
+
+  }, [items, editedAvatars, fileAvatars, setItems, setEditedAvatars, setFileAvatars, slotItemMap ]);
 
   return (
     <div className="container" ref={containerRef}>
@@ -99,24 +124,7 @@ const PhotosList: FC<IPhotosListProps> = ({
                   type="button"
                   data-swapy-no-drag
                   className="absolute top-1 right-1 bg-white p-1 rounded-full border"
-                  onClick={() => {
-                    const updatedEditedAvatars = editedAvatars.filter((_, i) => {
-  const correspondingItem = items[i];
-  return correspondingItem && correspondingItem.id !== item.id;
-                    });
-                    
-
-const updatedFileAvatars = fileAvatars.filter((_, i) => {
-  const correspondingItem = items[i];
-  return correspondingItem && correspondingItem.id !== item.id;
-});
-                    
-                    setEditedAvatars(updatedEditedAvatars);
-                    setFileAvatars(updatedFileAvatars);
-                    const updatedItems = items.filter(i => i.id !== item.id);
-                    setItems(updatedItems);
-                    // setSlotItemMap(initSlotItemMap(updatedItems, 'id'));
-                  }}
+                  onClick={() => handleDelete(item.id, item)}
                 >
                   <SvgIcon iconId={IconId.Trash} size={{ width: 16, height: 16 }} />
                 </button>

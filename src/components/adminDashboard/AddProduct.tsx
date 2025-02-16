@@ -1,5 +1,6 @@
 import { schema } from '@schemas/addProduct';
 import { Form, Formik } from 'formik';
+
 import Block from './Block';
 import CatManInd from './CatManInd';
 import Condition from './Condition';
@@ -44,17 +45,29 @@ const AddProduct = () => {
         <Form>
           <div className={cn('container', 'lg:ml-0')}>
             <div className="gap-[24px] pt-[48px] lg:flex">
-              <Block title="Photos and video" intent="main" className='mb-[20px] lg:mb-0'>
+              <Block
+                title="Photos and video"
+                intent="main"
+                className="mb-[20px] lg:mb-0"
+              >
                 <PhotosAndVideo />
               </Block>
-              <div className='pb-[64px]'>
-                <Block title="General Information" intent="main" className='mb-[20px]'>
+              <div className="pb-[64px]">
+                <Block
+                  title="General Information"
+                  intent="main"
+                  className="mb-[20px]"
+                >
                   <GeneralInformation />
                 </Block>
-                <Block title="Category, Manufacturer, Industry" intent="main" className='mb-[20px]'>
+                <Block
+                  title="Category, Manufacturer, Industry"
+                  intent="main"
+                  className="mb-[20px]"
+                >
                   <CatManInd />
                 </Block>
-                <Block title="Condition" intent="main" className='mb-[20px]'>
+                <Block title="Condition" intent="main" className="mb-[20px]">
                   <Condition />
                 </Block>
                 <button

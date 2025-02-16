@@ -1,6 +1,7 @@
-import { useState, type FC } from 'react';
+import { type FC, useState } from 'react';
 
-
+import type { MultiLanguageString } from '@interfaces/IProduct';
+import clsx from 'clsx';
 import { useFormikContext } from 'formik';
 
 import AddNewCatManInd from './AddNewCatManInd';
@@ -11,14 +12,12 @@ import InputField from '@components/common/InputField';
 import LabelTitle from '@components/common/LabelTitle';
 
 import { LanguageKeys } from '@enums/languageKeys';
-import type { MultiLanguageString } from '@interfaces/IProduct';
-import clsx from 'clsx';
 
 interface IProductNameProps {
-  name: MultiLanguageString | string | undefined
+  name: MultiLanguageString | string | undefined;
 }
 
-const ProductName:FC<IProductNameProps> = ({ name = '' }) => {
+const ProductName: FC<IProductNameProps> = ({ name = '' }) => {
   const [isClick, setIsClick] = useState(false);
   // const [inputValue, setInputValue] = useState(name);
   // const [newInputValue, setNewInputValue] = useState('');
@@ -33,7 +32,7 @@ const ProductName:FC<IProductNameProps> = ({ name = '' }) => {
 
   return (
     <div>
-      {!name && typeof name === 'string' ? (
+      {!name || typeof name === 'string' ? (
         <>
           <label className={'flex flex-col gap-[2px]'}>
             <LabelTitle title="Name" />
@@ -65,7 +64,7 @@ const ProductName:FC<IProductNameProps> = ({ name = '' }) => {
               <InputField
                 initialValue={(name as MultiLanguageString)?.[lang] || ''}
                 className={clsx(
-                  'w-full pl-[65px]',
+                  'w-full pl-[65px]'
                   // newInputValue ? 'text-gray-400' : ''
                 )}
                 placeholder={`Enter product name in ${lang.toUpperCase()}`}
@@ -78,12 +77,16 @@ const ProductName:FC<IProductNameProps> = ({ name = '' }) => {
           {isClick ? (
             <InputFieldWithCheck
               name="name"
-                placeholder="Enter product name"
-                handleCheck={handleCheck}
+              placeholder="Enter product name"
+              handleCheck={handleCheck}
               // setCheckedValue={setNewInputValue}
             />
           ) : (
-                <AddNewCatManInd itemName={'name'} setIsClick={setIsClick} setFieldCount={() => {}} />
+            <AddNewCatManInd
+              itemName={'name'}
+              setIsClick={setIsClick}
+              setFieldCount={() => {}}
+            />
           )}
         </label>
       )}

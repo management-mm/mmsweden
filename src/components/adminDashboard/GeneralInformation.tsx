@@ -1,14 +1,15 @@
-import { Field, useFormikContext, type FormikValues } from 'formik';
+import type { FC } from 'react';
+
+import type { IProduct } from '@interfaces/IProduct';
+import { Field, type FormikValues, useFormikContext } from 'formik';
 
 import DescriptionProduct from './DescriptionProduct';
 import ProductName from './ProductName';
 
 import LabelTitle from '@components/common/LabelTitle';
-import type { IProduct } from '@interfaces/IProduct';
-import type { FC } from 'react';
 
 interface IGeneralInformationProps {
-  product?: IProduct
+  product?: IProduct;
 }
 
 const GeneralInformation: FC<IGeneralInformationProps> = ({ product }) => {

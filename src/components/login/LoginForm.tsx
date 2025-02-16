@@ -1,9 +1,10 @@
+import { type FormEvent } from 'react';
 import { MdEmail } from 'react-icons/md';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
-import { type AppDispatch } from '@store/store';
+
 import { logIn } from '@store/auth/operations';
-import { type FormEvent } from 'react';
+import { type AppDispatch } from '@store/store';
 
 const LoginForm = () => {
   const dispatch = useDispatch<AppDispatch>();

@@ -11,7 +11,7 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import { authReducer, type AuthState } from './auth/slice';
+import { type AuthState, authReducer } from './auth/slice';
 import { categoriesReducer } from './filters/categoriesSlice';
 import { industriesReducer } from './filters/industriesSlice';
 import { manufacturersReducer } from './filters/manufacturersSlice';

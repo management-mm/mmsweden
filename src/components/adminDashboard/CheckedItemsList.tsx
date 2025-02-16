@@ -1,13 +1,22 @@
 import type { Dispatch, FC, SetStateAction } from 'react';
-import CheckedCatManIndItem from './CheckedCatManIndItem';
+
 import type { MultiLanguageString } from '@interfaces/IProduct';
+
+import CheckedCatManIndItem from './CheckedCatManIndItem';
 
 interface ICheckedItemsListProps {
   checkedValue: (string | MultiLanguageString)[] | string | MultiLanguageString;
-  setCheckedValue: Dispatch<SetStateAction<MultiLanguageString | string | (MultiLanguageString | string)[]>>
+  setCheckedValue: Dispatch<
+    SetStateAction<
+      MultiLanguageString | string | (MultiLanguageString | string)[]
+    >
+  >;
 }
 
-const CheckedItemsList: FC<ICheckedItemsListProps> = ({ checkedValue, setCheckedValue }) => (
+const CheckedItemsList: FC<ICheckedItemsListProps> = ({
+  checkedValue,
+  setCheckedValue,
+}) => (
   <div className="mb-[20px] flex flex-wrap gap-[12px]">
     {Array.isArray(checkedValue) ? (
       checkedValue.map(value => (

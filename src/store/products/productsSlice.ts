@@ -14,7 +14,7 @@ import { handlePending, handleRejected } from '@store/handlers';
 const deleteProductFromList = (products: IProduct[], productId: string) => {
   const index = products.findIndex(product => product._id === productId);
   products.splice(index, 1);
-}
+};
 
 interface IProductsState {
   items: IProduct[];
@@ -59,8 +59,8 @@ const handleDeleteProductFulfilled = (
 ) => {
   state.isLoading = false;
   state.error = null;
-  deleteProductFromList(state.items, action.payload._id)
-}
+  deleteProductFromList(state.items, action.payload._id);
+};
 
 const productsSlice = createSlice({
   name: 'products',
@@ -86,8 +86,7 @@ const productsSlice = createSlice({
       .addCase(addProduct.rejected, handleRejected)
       .addCase(deleteProduct.pending, handlePending)
       .addCase(deleteProduct.fulfilled, handleDeleteProductFulfilled)
-      .addCase(deleteProduct.rejected, handleRejected)
-  
+      .addCase(deleteProduct.rejected, handleRejected),
 });
 
 export const productsReducer = productsSlice.reducer;

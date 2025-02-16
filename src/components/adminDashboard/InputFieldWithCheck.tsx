@@ -20,7 +20,7 @@ interface IInputField {
   title?: string;
   as?: string;
   initialValue?: string;
-  handleCheck: (value: string) => void
+  handleCheck: (value: string) => void;
 }
 
 const InputFieldWithCheck: FC<IInputField> = ({
@@ -35,12 +35,10 @@ const InputFieldWithCheck: FC<IInputField> = ({
   initialValue = '',
   handleCheck,
 }) => {
-
   const { t } = useTranslation();
   const [inputValue, setInputValue] = useState(initialValue);
   const [isClick, setIsClick] = useState(false);
   const { setFieldValue } = useFormikContext();
-
 
   return (
     <div className="relative">

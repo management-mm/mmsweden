@@ -7,7 +7,10 @@ interface IRestrictedRouteProps {
   redirectTo?: string;
 }
 
-export const RestrictedRoute = ({ component: Component, redirectTo = '/' }: IRestrictedRouteProps) => {
+export const RestrictedRoute = ({
+  component: Component,
+  redirectTo = '/',
+}: IRestrictedRouteProps) => {
   const { isLoggedIn } = useAuth();
 
   return isLoggedIn ? <Navigate to={redirectTo} /> : Component;

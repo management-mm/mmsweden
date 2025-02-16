@@ -18,7 +18,7 @@ const AllProducts = () => {
         {(!isLoggedIn || windowWidth < 1178) && <FiltersAndSearch />}
 
         <ProductsList />
-        {(isLoggedIn && windowWidth > 1178) && <FiltersAndSearch />}
+        {isLoggedIn && windowWidth > 1178 && <FiltersAndSearch />}
       </div>
     </div>
   );

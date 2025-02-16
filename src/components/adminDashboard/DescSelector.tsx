@@ -1,4 +1,4 @@
-import { useState, type FC } from 'react';
+import { type FC, useState } from 'react';
 import Select from 'react-select';
 
 import clsx from 'clsx';
@@ -8,10 +8,10 @@ import DropdownIndicator from '@components/header/DropdownIndicator';
 import { LanguageKeys } from '@enums/languageKeys';
 
 interface IDescSelectorProps {
-  setLanguage: (value: LanguageKeys) => void
+  setLanguage: (value: LanguageKeys) => void;
 }
 
-const DescSelector:FC<IDescSelectorProps> = ({ setLanguage }) => {
+const DescSelector: FC<IDescSelectorProps> = ({ setLanguage }) => {
   const optionStyles = {
     base: 'hover:cursor-pointer w-[95px] py-[7px]',
     focus: 'lg:bg-gray-100 lg:active:bg-gray-200',

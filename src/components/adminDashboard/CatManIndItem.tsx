@@ -1,5 +1,14 @@
-import { useState, type ChangeEvent, type Dispatch, type FC, type SetStateAction } from 'react';
+import {
+  type ChangeEvent,
+  type Dispatch,
+  type FC,
+  type SetStateAction,
+  useState,
+} from 'react';
 
+import type { ICategory } from '@interfaces/ICategory';
+import type { IManufacturer } from '@interfaces/IManufacturer';
+import type { MultiLanguageString } from '@interfaces/IProduct';
 import { useFormikContext } from 'formik';
 
 import AddNewCatManInd from './AddNewCatManInd';
@@ -12,20 +21,17 @@ import LabelTitle from '@components/common/LabelTitle';
 import SearchFilter from '@components/common/SearchFilter';
 
 import { filters } from '@enums/filters';
-import type { ICategory } from '@interfaces/ICategory';
-import type { IManufacturer } from '@interfaces/IManufacturer';
-import type { MultiLanguageString } from '@interfaces/IProduct';
 
 interface ICatManIndItemProps {
-  itemName: filters.Category | filters.Manufacturer
-  items: ICategory[] | IManufacturer[]
-  isLoading: boolean
-  keyword: string
-  setKeyword: Dispatch<SetStateAction<string>>
-  initialValue: MultiLanguageString | string | (MultiLanguageString | string)[]
+  itemName: filters.Category | filters.Manufacturer;
+  items: ICategory[] | IManufacturer[];
+  isLoading: boolean;
+  keyword: string;
+  setKeyword: Dispatch<SetStateAction<string>>;
+  initialValue: MultiLanguageString | string | (MultiLanguageString | string)[];
 }
 
-const CatManIndItem: FC<ICatManIndItemProps>= ({
+const CatManIndItem: FC<ICatManIndItemProps> = ({
   itemName,
   items,
   isLoading,
@@ -44,10 +50,8 @@ const CatManIndItem: FC<ICatManIndItemProps>= ({
   };
 
   const handleCheckedValue = (event: ChangeEvent<HTMLInputElement>) => {
-    
-      setCheckedValue(event.target.value);
-      setFieldValue(`${itemName}`, event.target.value, false);
-    
+    setCheckedValue(event.target.value);
+    setFieldValue(`${itemName}`, event.target.value, false);
   };
 
   return (
@@ -86,7 +90,6 @@ const CatManIndItem: FC<ICatManIndItemProps>= ({
             setFieldCount={() => {}}
           />
         )}
-
       </Block>
     </fieldset>
   );

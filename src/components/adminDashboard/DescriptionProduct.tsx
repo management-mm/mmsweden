@@ -1,20 +1,36 @@
-import { useState, type FC } from 'react';
+import { type FC, useState } from 'react';
 
-import { Field, useFormikContext, type FormikValues } from 'formik';
+import type { MultiLanguageString } from '@interfaces/IProduct';
+import { Field, type FormikValues, useFormikContext } from 'formik';
 
 import DescSelector from './DescSelector';
 
 import LabelTitle from '@components/common/LabelTitle';
-import type { MultiLanguageString } from '@interfaces/IProduct';
+
 import { LanguageKeys } from '@enums/languageKeys';
 
 interface IDescriptionProductProps {
-  description?: MultiLanguageString 
+  description?: MultiLanguageString;
 }
 
-const DescriptionProduct:FC<IDescriptionProductProps> = ({ description}) => {
+const DescriptionProduct: FC<IDescriptionProductProps> = ({ description }) => {
   const [language, setLanguage] = useState<LanguageKeys>(LanguageKeys.EN);
-  const { values, handleChange } = useFormikContext<FormikValues>();
+  const { values, setFieldValue, handleChange } =
+    useFormikContext<FormikValues>();
+
+  const handleChangeDescription = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const newValue = e.target.value;
+    if (typeof values.description === 'object') {
+      setFieldValue('description', {
+        ...values.description,
+        [language]: newValue,
+      });
+      return;
+    }
+    handleChange(e);
+  };
 
   return (
     <>
@@ -27,8 +43,8 @@ const DescriptionProduct:FC<IDescriptionProductProps> = ({ description}) => {
               as="textarea"
               name="description"
               placeholder="Enter product description"
-              value={values.description}
-              onChange={handleChange}
+              value={values.description ? values.description[language] : ''}
+              onChange={handleChangeDescription}
               className="h-fit w-full rounded-[22px] border border-neutral px-[22px] py-[14px] pr-[56px] text-[14px] outline-none transition-border duration-primary focus:border focus:border-secondaryAccent md:h-full"
             />
             {description && <DescSelector setLanguage={setLanguage} />}

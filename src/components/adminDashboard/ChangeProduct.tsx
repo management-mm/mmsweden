@@ -11,7 +11,11 @@ import DeleteOrSold from './DeleteOrSold';
 import GeneralInformation from './GeneralInformation';
 import PhotosAndVideo from './PhotosAndVideo';
 
-import { deleteProduct, fetchProductById } from '@store/products/operations';
+import {
+  deleteProduct,
+  fetchProductById,
+  updateProduct,
+} from '@store/products/operations';
 import { selectProductDetails } from '@store/selectors';
 
 import { useAppDispatch } from '@hooks/useAppDispatch';
@@ -35,27 +39,30 @@ const ChangeProduct = () => {
   return (
     <Formik
       initialValues={{
+        id: product._id,
         name: product.name || '',
         idNumber: product.idNumber || '',
         description: product.description || {},
         dimensions: product.dimensions || '',
-        category: product.category || {},
+        category: product.category.en || '',
         manufacturer: product.manufacturer || '',
-        industries: product.industries || [],
+        industries: product.industries.map(industry => industry.en) || [],
         condition: product.condition || 'used',
         video: product.video || '',
-        photos: product.photos || [],
+        photoQueue: product.photos as (string | File)[],
+        photos: [] as File[],
       }}
       validationSchema={schema}
-      onSubmit={async (values) => {
+      onSubmit={async values => {
         try {
           if (isDelete) {
-            console.log(isDelete)
+            console.log(isDelete);
             alert('Form submitted');
-            dispatch(deleteProduct({productId}))
+            dispatch(deleteProduct({ productId }));
           }
-          
+
           console.log(values);
+          dispatch(updateProduct(values));
         } catch (error) {
           console.log(error);
         }
@@ -76,7 +83,7 @@ const ChangeProduct = () => {
               </Block>
               <Block intent="main" title="Category, Manufacturer, Industry">
                 <CatManInd
-                  initialCategory={product.category}
+                  initialCategory={product.category.en}
                   initialManufacturer={product.manufacturer}
                   initialIndustries={product.industries}
                 />

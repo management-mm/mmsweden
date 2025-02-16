@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import type { IProduct } from 'interfaces/IProduct';
+import type { IProduct, MultiLanguageString } from 'interfaces/IProduct';
 
 import type { LanguageKeys } from '@enums/languageKeys';
 
@@ -31,6 +31,21 @@ export interface IAddProductData {
   industries: string;
   condition: 'used' | 'new';
   shouldTranslateName: boolean;
+}
+
+export interface IUpdateProductData {
+  id: string;
+  name: string | MultiLanguageString;
+  idNumber: string;
+  description: MultiLanguageString;
+  dimensions: string;
+  photoQueue: (string | File)[];
+  photos: File[];
+  video: string;
+  category: string;
+  manufacturer: string;
+  industries: string[];
+  condition: 'used' | 'new';
 }
 
 export interface IFetchProductsResponse {
@@ -113,17 +128,63 @@ export const addProduct = createAsyncThunk<
   }
 });
 
+export const updateProduct = createAsyncThunk<
+  IProduct,
+  IUpdateProductData,
+  { rejectValue: string }
+>('products/updateProduct', async (updatedProduct, thunkAPI) => {
+  try {
+    const data = new FormData();
+
+    for (const property in updatedProduct) {
+      if (Object.prototype.hasOwnProperty.call(updatedProduct, property)) {
+        const key = property as keyof IUpdateProductData;
+        if (key === 'id') continue;
+        if (key === 'name' && typeof updatedProduct[key] === 'object') {
+          const nameJson = JSON.stringify(updatedProduct[key]);
+          data.append('name', nameJson);
+        } else if (key === 'description') {
+          const descriptionJson = JSON.stringify(updatedProduct[key]);
+          data.append('name', descriptionJson);
+        } else if (key === 'industries') {
+          data.append('industries', updatedProduct[key].join(','));
+        } else if (key === 'photoQueue') {
+          const stringsArray = updatedProduct[key].map(item => {
+            if (typeof item === 'string') {
+              return item;
+            }
+            return 'file';
+          });
+          data.append('photoQueue', stringsArray.join(','));
+        } else if (key === 'photos') {
+          updatedProduct[key].forEach(photo => {
+            data.append('photos', photo);
+          });
+        } else {
+          data.append(key, updatedProduct[key] as string);
+        }
+      }
+    }
+    for (const pair of data.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+    const response = await axios.put(`products/${updatedProduct.id}`, data);
+    return response.data;
+  } catch (e) {
+    console.log(e);
+    return thunkAPI.rejectWithValue((e as Error).message);
+  }
+});
+
 export const deleteProduct = createAsyncThunk<
   IProduct,
   { productId: string | undefined },
   { rejectValue: string }
->("products/deleteProduct",
-  async ({productId}, thunkAPI) => {
-    try {
-      const response = await axios.delete(`products/${productId}`);
-      return response.data
-    } catch (e) {
-      return thunkAPI.rejectWithValue((e as Error).message);
-    }
+>('products/deleteProduct', async ({ productId }, thunkAPI) => {
+  try {
+    const response = await axios.delete(`products/${productId}`);
+    return response.data;
+  } catch (e) {
+    return thunkAPI.rejectWithValue((e as Error).message);
   }
-)
+});

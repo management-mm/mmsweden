@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent, type FC } from 'react';
+import { type ChangeEvent, type FC, useState } from 'react';
 
 import { Field } from 'formik';
 
@@ -11,12 +11,16 @@ import VideoPlayer from '@components/common/VideoPlayer';
 import { IconId } from '@enums/iconsSpriteId';
 
 interface IUploadButtonsProps {
-  editedAvatars: string[]
-  initialVideo: string
-  handleChangePhoto: (e: ChangeEvent<HTMLInputElement>) => void
+  editedAvatars: string[];
+  initialVideo: string;
+  handleChangePhoto: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const UploadButtons: FC<IUploadButtonsProps> = ({ editedAvatars, initialVideo, handleChangePhoto }) => {
+const UploadButtons: FC<IUploadButtonsProps> = ({
+  editedAvatars,
+  initialVideo,
+  handleChangePhoto,
+}) => {
   const [inputValue, setInputValue] = useState(initialVideo);
 
   const handleCheck = (value: string) => {

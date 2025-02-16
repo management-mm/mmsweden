@@ -1,7 +1,7 @@
-import type { FC } from "react";
+import type { FC } from 'react';
 
 interface IDescProps {
-  text: string
+  text: string;
 }
 
 const Desc: FC<IDescProps> = ({ text }) => {

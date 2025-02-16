@@ -1,8 +1,9 @@
-import { useEffect, useState, type FC } from 'react';
+import { type FC, useEffect, useState } from 'react';
 
 import type { ICategory } from '@interfaces/ICategory';
 import type { IIndustry } from '@interfaces/IIndustry';
 import type { IManufacturer } from '@interfaces/IManufacturer';
+import type { MultiLanguageString } from '@interfaces/IProduct';
 
 import CatManIndItem from './CatManIndItem';
 import Industry from './Industry';
@@ -26,12 +27,11 @@ import { useAppSelector } from '@hooks/useAppSelector';
 
 import { filters } from '@enums/filters';
 import { LanguageKeys } from '@enums/languageKeys';
-import type { MultiLanguageString } from '@interfaces/IProduct';
 
 interface ICatManIndProps {
-  initialCategory?: string | MultiLanguageString
-  initialManufacturer?: string
-  initialIndustries?: (MultiLanguageString | string)[]
+  initialCategory?: string | MultiLanguageString;
+  initialManufacturer?: string;
+  initialIndustries?: (MultiLanguageString | string)[];
 }
 
 const CatManInd: FC<ICatManIndProps> = ({

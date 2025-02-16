@@ -1,16 +1,16 @@
-import { useEffect, useState, type ChangeEvent, type FC } from 'react';
+import { type ChangeEvent, type FC, useEffect, useState } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
 import type { ICategory } from '@interfaces/ICategory';
 import type { IIndustry } from '@interfaces/IIndustry';
 import type { IManufacturer } from '@interfaces/IManufacturer';
+import type { MultiLanguageString } from '@interfaces/IProduct';
 import { nanoid } from 'nanoid';
 
 import getFilterItemName from '@utils/getFilterItemName';
 
-import { LanguageKeys } from '@enums/languageKeys';
 import type { filters } from '@enums/filters';
-import type { MultiLanguageString } from '@interfaces/IProduct';
+import { LanguageKeys } from '@enums/languageKeys';
 
 type FilterItem = ICategory | IManufacturer | IIndustry;
 
@@ -29,21 +29,29 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
   handleCheckedValue,
   checkedValue,
 }) => {
-  const [groupedFilters, setGroupedFilters] = useState<Record<string, FilterItem[]>>({});
+  const [groupedFilters, setGroupedFilters] = useState<
+    Record<string, FilterItem[]>
+  >({});
 
   const isItemSelected = (item: string): boolean => {
-  if (Array.isArray(checkedValue)) {
-    if (typeof checkedValue[0] === 'object') {
-      const enValues = (checkedValue as MultiLanguageString[]).map(value => value.en);
-      return enValues.includes(item);
+    if (Array.isArray(checkedValue)) {
+      if (typeof checkedValue[0] === 'object') {
+        const enValues = (checkedValue as MultiLanguageString[]).map(
+          value => value.en
+        );
+        return enValues.includes(item);
+      }
+      return (checkedValue as string[]).includes(item);
     }
-    return (checkedValue as string[]).includes(item);
-  }
-  if (typeof checkedValue === 'object' && checkedValue !== null && 'en' in checkedValue) {
-    return item === (checkedValue as MultiLanguageString).en;
-  }
-  return item === checkedValue;
-};
+    if (
+      typeof checkedValue === 'object' &&
+      checkedValue !== null &&
+      'en' in checkedValue
+    ) {
+      return item === (checkedValue as MultiLanguageString).en;
+    }
+    return item === checkedValue;
+  };
 
   useEffect(() => {
     const grouped = items.reduce<Record<string, FilterItem[]>>((acc, item) => {
@@ -59,8 +67,16 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
 
     Object.keys(grouped).forEach(key => {
       grouped[key].sort((a, b) => {
-        const nameA = getFilterItemName(itemName, a, LanguageKeys.EN).toLowerCase();
-        const nameB = getFilterItemName(itemName, b, LanguageKeys.EN).toLowerCase();
+        const nameA = getFilterItemName(
+          itemName,
+          a,
+          LanguageKeys.EN
+        ).toLowerCase();
+        const nameB = getFilterItemName(
+          itemName,
+          b,
+          LanguageKeys.EN
+        ).toLowerCase();
         return nameA.localeCompare(nameB);
       });
     });
@@ -76,16 +92,24 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
     <div className="mb-[14px] flex h-[350px] flex-col gap-[16px] overflow-y-scroll">
       {Object.entries(groupedFilters).map(([character, items]) => (
         <div key={nanoid()}>
-          <p className="mb-4 text-[12px] font-semibold text-desc">{character?.toUpperCase()}</p>
+          <p className="mb-4 text-[12px] font-semibold text-desc">
+            {character?.toUpperCase()}
+          </p>
           <div className="flex flex-col gap-[12px]">
             {items.map(item => (
-              <SkeletonTheme key={nanoid()} baseColor="#E1E1E1" highlightColor="#F2F2F2">
+              <SkeletonTheme
+                key={nanoid()}
+                baseColor="#E1E1E1"
+                highlightColor="#F2F2F2"
+              >
                 <div className="flex items-center gap-[6px]">
                   {!isLoading ? (
                     <input
                       type="checkbox"
                       id={item._id}
-                      checked={isItemSelected(getFilterItemName(itemName, item, LanguageKeys.EN))}
+                      checked={isItemSelected(
+                        getFilterItemName(itemName, item, LanguageKeys.EN)
+                      )}
                       name={itemName}
                       onChange={handleCheckedValue}
                       className="h-[16px] w-[16px] cursor-pointer appearance-none rounded-[4px] after:block after:h-[16px] after:w-[16px] after:rounded-[4px] after:border after:border-[rgba(0,32,52,.12)] checked:after:bg-primary checked:after:bg-check-icon checked:after:bg-center checked:after:bg-no-repeat"
@@ -94,7 +118,10 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
                   ) : (
                     <Skeleton width={16} />
                   )}
-                  <label className="font-openSans text-[14px] capitalize" htmlFor={item._id}>
+                  <label
+                    className="font-openSans text-[14px] capitalize"
+                    htmlFor={item._id}
+                  >
                     {getFilterItemName(itemName, item, LanguageKeys.EN)}
                   </label>
                 </div>

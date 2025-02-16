@@ -1,21 +1,26 @@
+import type { Dispatch, FC, SetStateAction } from 'react';
+
+import type { MultiLanguageString } from '@interfaces/IProduct';
 import { nanoid } from 'nanoid';
 
 import SvgIcon from '@components/common/SvgIcon';
 
 import { IconId } from '@enums/iconsSpriteId';
-import type { MultiLanguageString } from '@interfaces/IProduct';
-import type { Dispatch, FC, SetStateAction } from 'react';
 
 interface ICheckedCatManIndItemProps {
-  checkedValue: MultiLanguageString | string
-  checkedValuesArray?: (string | MultiLanguageString)[] | string
-  setCheckedValue: Dispatch<SetStateAction<MultiLanguageString | string | (MultiLanguageString | string)[]>>
+  checkedValue: MultiLanguageString | string;
+  checkedValuesArray?: (string | MultiLanguageString)[] | string;
+  setCheckedValue: Dispatch<
+    SetStateAction<
+      MultiLanguageString | string | (MultiLanguageString | string)[]
+    >
+  >;
 }
 
 const CheckedCatManIndItem: FC<ICheckedCatManIndItemProps> = ({
   checkedValue,
   checkedValuesArray,
-  setCheckedValue
+  setCheckedValue,
 }) => {
   return (
     <button
@@ -30,7 +35,7 @@ const CheckedCatManIndItem: FC<ICheckedCatManIndItemProps> = ({
           );
           return;
         }
-        setCheckedValue([""]);
+        setCheckedValue(['']);
       }}
       className="flex items-center gap-[8px] rounded-[32px] border border-primary bg-secondary px-[8px] py-[7px] text-[12px] text-primary"
     >

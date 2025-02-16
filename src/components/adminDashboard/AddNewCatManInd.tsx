@@ -1,16 +1,21 @@
+import type { FC } from 'react';
+
 import SvgIcon from '@components/common/SvgIcon';
 
 import { filters } from '@enums/filters';
 import { IconId } from '@enums/iconsSpriteId';
-import type { FC } from 'react';
 
 interface IAddNewCatManIndProps {
-  itemName: filters.Category | filters.Industry | filters.Manufacturer | 'name'
+  itemName: filters.Category | filters.Industry | filters.Manufacturer | 'name';
   setIsClick: (value: boolean) => void;
   setFieldCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const AddNewCatManInd: FC<IAddNewCatManIndProps> = ({ itemName, setIsClick, setFieldCount }) => {
+const AddNewCatManInd: FC<IAddNewCatManIndProps> = ({
+  itemName,
+  setIsClick,
+  setFieldCount,
+}) => {
   return (
     <button
       type="button"

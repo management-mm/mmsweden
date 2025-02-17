@@ -37,7 +37,7 @@ const TimeSelector: FC<ITimeSelectorProps> = ({
         //   ),
         // }}
         closeMenuOnSelect={true}
-        defaultMenuIsOpen={true}
+        // defaultMenuIsOpen={true}
         onChange={selectedOption => setValue(selectedOption?.value)}
         unstyled
         styles={{

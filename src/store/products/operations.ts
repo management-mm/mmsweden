@@ -46,7 +46,7 @@ export interface IUpdateProductData {
   manufacturer: string;
   industries: string[];
   condition: 'used' | 'new';
-  deletionDate: string | null;
+  deletionDate: Date | null | string;
 }
 
 export interface IFetchProductsResponse {
@@ -143,6 +143,7 @@ export const updateProduct = createAsyncThunk<
         console.log(updatedProduct.deletionDate);
         if (key === 'id') continue;
         if (key === 'deletionDate' && !updatedProduct[key]) continue;
+
         if (key === 'name' && typeof updatedProduct[key] === 'object') {
           const nameJson = JSON.stringify(updatedProduct[key]);
           data.append('name', nameJson);

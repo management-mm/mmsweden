@@ -46,6 +46,7 @@ export interface IUpdateProductData {
   manufacturer: string;
   industries: string[];
   condition: 'used' | 'new';
+  deletionDate: string | null;
 }
 
 export interface IFetchProductsResponse {
@@ -139,7 +140,9 @@ export const updateProduct = createAsyncThunk<
     for (const property in updatedProduct) {
       if (Object.prototype.hasOwnProperty.call(updatedProduct, property)) {
         const key = property as keyof IUpdateProductData;
+        console.log(updatedProduct.deletionDate);
         if (key === 'id') continue;
+        if (key === 'deletionDate' && !updatedProduct[key]) continue;
         if (key === 'name' && typeof updatedProduct[key] === 'object') {
           const nameJson = JSON.stringify(updatedProduct[key]);
           data.append('name', nameJson);

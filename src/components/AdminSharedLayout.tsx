@@ -40,7 +40,7 @@ const AdminSharedLayout = () => {
     <div className="bg-main font-inter">
       <ScrollToTop />
       <LanguageContext.Provider value={{ language, setLanguage }}>
-        <main className="lg:flex">
+        <main className="pb-[120px] lg:flex">
           <Sidebar />
           <div>
             <Topbar />

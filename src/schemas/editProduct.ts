@@ -27,4 +27,5 @@ export const schema = Yup.object().shape({
   video: Yup.string().nullable(),
   photoQueue: Yup.array().of(Yup.mixed<File | string>()).required(),
   photos: Yup.array().of(Yup.mixed<File>()).required(),
+  deletionDate: Yup.string().nullable().notRequired(),
 });

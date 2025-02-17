@@ -17,4 +17,5 @@ export interface IProduct {
   industries: MultiLanguageString[];
   condition: 'used' | 'new';
   createdAt: Date;
+  deletionDate: Date | null;
 }

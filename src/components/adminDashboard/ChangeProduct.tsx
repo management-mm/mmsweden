@@ -51,6 +51,7 @@ const ChangeProduct = () => {
         video: product.video || '',
         photoQueue: product.photos as (string | File)[],
         photos: [] as File[],
+        deletionDate: product.deletionDate?.toISOString() || null,
       }}
       validationSchema={schema}
       onSubmit={async values => {
@@ -62,6 +63,7 @@ const ChangeProduct = () => {
           }
 
           console.log(values);
+          alert('Form submitted');
           dispatch(updateProduct(values));
         } catch (error) {
           console.log(error);

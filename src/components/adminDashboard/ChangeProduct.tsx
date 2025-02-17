@@ -35,7 +35,7 @@ const ChangeProduct = () => {
   if (isLoading || !product) {
     return <div>Loading...</div>;
   }
-
+  
   return (
     <Formik
       initialValues={{
@@ -51,7 +51,7 @@ const ChangeProduct = () => {
         video: product.video || '',
         photoQueue: product.photos as (string | File)[],
         photos: [] as File[],
-        deletionDate: product.deletionDate?.toISOString() || null,
+        deletionDate: product.deletionDate || null,
       }}
       validationSchema={schema}
       onSubmit={async values => {

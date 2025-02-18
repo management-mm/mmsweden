@@ -85,7 +85,12 @@ const Details: FC<IDetailsProps> = ({
       <p className="mb-auto pb-[32px] font-openSans text-[14px] text-title">
         {description[language]}
       </p>
-      <button
+      {product.deletionDate ? (
+        <span className='bg-red-900 text-secondary flex w-full items-center justify-center rounded-[32px] py-[14px] text-[12px] font-semibold'>
+          Sold
+        </span>
+      ): (
+         <button
         className={clsx(
           'flex w-full items-center justify-center rounded-[32px] py-[14px] text-[12px] font-semibold text-primary',
           isRequested
@@ -104,7 +109,9 @@ const Details: FC<IDetailsProps> = ({
           size={{ width: 16, height: 16 }}
         />
         {isRequested ? t(Button.AddedToQuote) : t(Button.RequestQuote)}
-      </button>
+      </button> 
+      )}
+      
     </div>
   );
 };

@@ -104,6 +104,7 @@ export const addProduct = createAsyncThunk<
 >('products/addProduct', async (newProduct, thunkAPI) => {
   try {
     const data = new FormData();
+    console.log(newProduct.photos)
     for (const property in newProduct) {
       if (Object.prototype.hasOwnProperty.call(newProduct, property)) {
         const key = property as keyof IAddProductData;
@@ -149,7 +150,7 @@ export const updateProduct = createAsyncThunk<
           data.append('name', nameJson);
         } else if (key === 'description') {
           const descriptionJson = JSON.stringify(updatedProduct[key]);
-          data.append('name', descriptionJson);
+          data.append('description', descriptionJson);
         } else if (key === 'industries') {
           data.append('industries', updatedProduct[key].join(','));
         } else if (key === 'photoQueue') {

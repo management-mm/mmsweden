@@ -20,8 +20,6 @@ import { selectIsLoading } from '@store/selectors';
 import { useAppSelector } from '@hooks/useAppSelector';
 import { useAuth } from '@hooks/useAuth';
 
-import { cn } from '@utils/cn';
-
 import { IconId } from '@enums/iconsSpriteId';
 
 export interface IProductCardProps {
@@ -31,7 +29,7 @@ export interface IProductCardProps {
 
 const ProductCard: FC<IProductCardProps> = ({
   product,
-  product: { name, idNumber, condition, photos, dimensions, description },
+  product: { name, idNumber, condition, photos, dimensions, description, deletionDate },
   className,
 }) => {
   const { language } = useContext(LanguageContext);
@@ -42,9 +40,10 @@ const ProductCard: FC<IProductCardProps> = ({
   return (
     <SkeletonTheme baseColor="#E1E1E1" highlightColor="#F2F2F2">
       <article
-        className={cn(
+        className={clsx(
           'flex h-[504px] w-full flex-col rounded-[4px] border border-secondary pb-[20px]',
-          className
+          className,
+          deletionDate && 'opacity-70'
         )}
       >
         <div className="relative mb-[8px]">
@@ -55,6 +54,14 @@ const ProductCard: FC<IProductCardProps> = ({
             language={language}
           />
           <ProductCondition condition={condition} />
+          {deletionDate && (
+            <span
+                className={'absolute right-[8px] top-[8px] z-[11] text-secondary inline-block rounded-[32px] px-[6px] py-[3px] text-[12px] bg-red-900 font-medium uppercase leading-tight'}
+              >
+                Sold
+              </span>
+          )}
+          
         </div>
         <div
           className={clsx(

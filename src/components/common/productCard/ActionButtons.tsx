@@ -36,7 +36,8 @@ const ActionsButtons: FC<IActionsButtonsProps> = ({ isLoading, product }) => {
           >
             {t(Button.ViewDetails)}
           </button>
-          <button
+          {!product.deletionDate && (
+<button
             className={clsx(
               'h-[40px] shrink-0 rounded-[32px] px-[15px] text-[12px] font-semibold text-primary md:w-[calc((100%-16px)/2)] lg:w-auto',
               isRequested ? 'bg-secondaryAccent text-secondary' : 'bg-accent'
@@ -45,6 +46,8 @@ const ActionsButtons: FC<IActionsButtonsProps> = ({ isLoading, product }) => {
           >
             {isRequested ? t(Button.AddedToQuote) : t(Button.RequestPricing)}
           </button>
+          )}
+          
         </>
       ) : (
         <>

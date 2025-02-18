@@ -1,4 +1,4 @@
-import { type FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { type FC, useCallback, useEffect, useMemo, useRef } from 'react';
 
 import { type FormikValues, useFormikContext } from 'formik';
 import { type SlotItemMapArray, type Swapy, createSwapy } from 'swapy';

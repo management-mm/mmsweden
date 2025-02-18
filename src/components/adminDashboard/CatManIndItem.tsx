@@ -81,6 +81,7 @@ const CatManIndItem: FC<ICatManIndItemProps> = ({
               name={itemName}
               title={`Enter ${itemName}`}
               handleCheck={handleCheck}
+              required={false}
             />
           </>
         ) : (

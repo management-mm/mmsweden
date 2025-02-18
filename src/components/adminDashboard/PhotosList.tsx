@@ -1,4 +1,4 @@
-import { type FC, useCallback, useEffect, useMemo, useRef } from 'react';
+import { type FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { type FormikValues, useFormikContext } from 'formik';
 import { type SlotItemMapArray, type Swapy, createSwapy } from 'swapy';
@@ -47,6 +47,7 @@ const PhotosList: FC<IPhotosListProps> = ({
   const swapyRef = useRef<Swapy | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
+
   const swapItems = useCallback(
     <T,>(array: T[], index1: number, index2: number): T[] => {
       const newArray = [...array];
@@ -72,6 +73,7 @@ const PhotosList: FC<IPhotosListProps> = ({
 
     swapyRef.current.onSwap(event => {
       const slots = event.newSlotItemMap.asArray;
+
       const toSlot = slots.findIndex(item => item.slot === event.toSlot);
       const fromSlot = slots.findIndex(item => item.slot === event.fromSlot);
       // console.log("slotItemMap", slotItemMap)
@@ -107,7 +109,6 @@ const PhotosList: FC<IPhotosListProps> = ({
   ]);
 
   useEffect(() => {
-    console.log('fileAvatars', fileAvatars);
     setFieldValue(
       'photos',
       fileAvatars.filter(file => Boolean(file) !== false),
@@ -116,28 +117,21 @@ const PhotosList: FC<IPhotosListProps> = ({
   }, [fileAvatars]);
 
   useEffect(() => {
-    console.log('photoQueue', photoQueue);
     setFieldValue('photoQueue', photoQueue, false);
   }, [photoQueue]);
 
-  const handleDelete = (itemId: string, item: Item) => {
-    console.log('itemId', itemId, 'item', item);
-    const updatedItems = items.filter(item => item.id !== itemId);
-    const updatedEditedAvatars = editedAvatars.filter((_, i) => {
-      const correspondingItem = items[i];
-      return correspondingItem && correspondingItem.id !== item.id;
-    });
+  const handleDelete = (itemId: string, slotId: string) => {
+    const slotToDeleteId = slotItemMap.findIndex(item => item.slot === slotId);
 
-    const updatedFileAvatars = fileAvatars.filter((_, i) => {
-      const correspondingItem = items[i];
-      return correspondingItem && correspondingItem.id !== item.id;
-    });
+    const updatedItems = items.filter(item => item.id !== itemId);
+
+    const updatedEditedAvatars = editedAvatars.filter((_, i) => i != slotToDeleteId)
+
+    const updatedFileAvatars = fileAvatars.filter((_, i) => i != slotToDeleteId);
 
     const updatedPhotoQueue = photoQueue.filter(
-      (_: File | string, i: number) => {
-        const correspondingItem = items[i];
-        return correspondingItem && correspondingItem.id !== item.id;
-      }
+      (_: File | string, i: number) => i != slotToDeleteId
+      
     );
 
     setItems(updatedItems);
@@ -172,7 +166,7 @@ const PhotosList: FC<IPhotosListProps> = ({
                   type="button"
                   data-swapy-no-drag
                   className="absolute right-1 top-1 rounded-full border bg-white p-1"
-                  onClick={() => handleDelete(item.id, item)}
+                  onClick={() => handleDelete(item.id, slotId)}
                 >
                   <SvgIcon
                     iconId={IconId.Trash}

@@ -42,6 +42,7 @@ const Product = () => {
   useEffect(() => {
     dispatch(fetchProductById({ productId }));
   }, [dispatch, productId]);
+  console.log('product', product)
   return (
     <div className={cn('container', 'pt-[12px] md:pt-[22px]')}>
       <Breadcrumb

@@ -15,6 +15,7 @@ interface IGeneralInformationProps {
 const GeneralInformation: FC<IGeneralInformationProps> = ({ product }) => {
   const { values, handleChange } = useFormikContext<FormikValues>();
 
+
   return (
     <div className="flex flex-col gap-[20px]">
       <ProductName name={product?.name} />

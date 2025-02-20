@@ -21,6 +21,8 @@ import { useAppSelector } from '@hooks/useAppSelector';
 import { useAuth } from '@hooks/useAuth';
 
 import { IconId } from '@enums/iconsSpriteId';
+import { useDispatch } from 'react-redux';
+import { clearProduct } from '@store/products/productsSlice';
 
 export interface IProductCardProps {
   product: IProduct;
@@ -44,6 +46,12 @@ const ProductCard: FC<IProductCardProps> = ({
   const { isLoggedIn } = useAuth();
 
   const isLoading = useAppSelector(selectIsLoading);
+
+   const dispatch = useDispatch();
+
+  const handleClear = () => {
+    dispatch(clearProduct());
+  };
 
   return (
     <SkeletonTheme baseColor="#E1E1E1" highlightColor="#F2F2F2">
@@ -89,6 +97,7 @@ const ProductCard: FC<IProductCardProps> = ({
           {isLoggedIn ? (
             <NavLink
               to={`edit-product/${product._id}`}
+              onClick={handleClear}
               className="flex w-full items-center justify-center gap-[8px] rounded-[32px] border border-primary py-[10px] text-[12px] font-semibold text-primary"
             >
               <SvgIcon

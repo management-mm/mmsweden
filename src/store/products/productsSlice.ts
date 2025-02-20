@@ -84,7 +84,11 @@ const productsSlice = createSlice({
     isLoading: false,
     error: null,
   } as IProductsState,
-  reducers: {},
+  reducers: {
+    clearProduct: (state) => {
+      state.productDetails = null;
+    },
+  },
   extraReducers: builder =>
     builder
       .addCase(fetchProducts.pending, handlePending)
@@ -104,4 +108,5 @@ const productsSlice = createSlice({
       .addCase(updateProduct.rejected, handleRejected),
 });
 
+export const { clearProduct } = productsSlice.actions;
 export const productsReducer = productsSlice.reducer;

@@ -29,7 +29,7 @@ const BackBtn = () => {
     <div
       className={cn(
         'flex items-center gap-[12px]',
-        windowWidth < 768 && 'container'
+        windowWidth < 1178 && 'container'
       )}
     >
       <NavLink

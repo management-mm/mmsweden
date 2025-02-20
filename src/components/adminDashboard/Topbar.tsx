@@ -9,10 +9,13 @@ import MobileMenu from '@components/common/MobileMenu';
 import BurgerMenu from '@components/header/BurgerMenu';
 
 import { cn } from '@utils/cn';
+import clsx from 'clsx';
+import useWindowWidth from '@hooks/useWindowWidth';
 
 const Topbar = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const location = useLocation();
+  const windowWidth = useWindowWidth();
 
   const toggleMobileMenu = () => {
     setIsOpen(!isOpen);
@@ -29,7 +32,10 @@ const Topbar = () => {
         <BurgerMenu handleToggleMobileMenu={toggleMobileMenu} />
       </div>
       {location.pathname === '/admin/all-products' ? (
-        <h1 className="text-primiry text-[24px] font-semibold">Product List</h1>
+        <h1 className={clsx(
+          "text-primiry text-[24px] font-semibold",
+         (windowWidth < 1178) && 'container'
+        )}>Product List</h1>
       ) : (
         <BackBtn />
       )}

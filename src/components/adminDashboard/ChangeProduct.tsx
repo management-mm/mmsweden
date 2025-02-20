@@ -65,6 +65,7 @@ const ChangeProduct = () => {
   return (
     <>
       <Formik
+  enableReinitialize={true} 
         initialValues={{
           id: product._id,
           name: product.name || '',

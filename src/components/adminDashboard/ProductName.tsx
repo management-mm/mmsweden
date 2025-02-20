@@ -19,12 +19,9 @@ interface IProductNameProps {
 
 const ProductName: FC<IProductNameProps> = ({ name = '' }) => {
   const [isClick, setIsClick] = useState(false);
-  // const [inputValue, setInputValue] = useState(name);
-  // const [newInputValue, setNewInputValue] = useState('');
+
   const { setFieldValue } = useFormikContext();
-  // useEffect(() => {
-  //   setInputValue(name);
-  // }, [name]);
+
 
   const handleCheck = () => {
     setFieldValue('shouldTranslateName', true, false);

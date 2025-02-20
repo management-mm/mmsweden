@@ -99,12 +99,9 @@ const PhotosList: FC<IPhotosListProps> = ({
     };
   }, [
     fileAvatars,
-    setFileAvatars,
     swapItems,
     editedAvatars,
-    setEditedAvatars,
     photoQueue,
-    setPhotoQueue,
   ]);
 
   useEffect(() => {

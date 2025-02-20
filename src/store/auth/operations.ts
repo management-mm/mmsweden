@@ -2,6 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 import type { RootState } from '@store/store';
+// http://localhost:3000/
+// https://mmsweden-server.onrender.com/
 
 axios.defaults.baseURL = 'https://mmsweden-server.onrender.com/';
 
@@ -51,7 +53,7 @@ export const logOut = createAsyncThunk<void, void, { rejectValue: string }>(
 );
 
 export const refreshUser = createAsyncThunk<
-  { name: string | null; email: string | null },
+  { email: string | null },
   void,
   { state: RootState; rejectValue: string }
 >('auth/refresh', async (_, thunkAPI) => {

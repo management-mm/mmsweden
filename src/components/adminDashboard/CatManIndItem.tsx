@@ -50,7 +50,7 @@ const CatManIndItem: FC<ICatManIndItemProps> = ({
   };
 
   const handleCheckedValue = (event: ChangeEvent<HTMLInputElement>) => {
-    setCheckedValue(event.target.value);
+    setCheckedValue(event.target.value !== checkedValue ? event.target.value : '');
     setFieldValue(`${itemName}`, event.target.value, false);
   };
 

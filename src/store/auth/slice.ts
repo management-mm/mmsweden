@@ -3,7 +3,6 @@ import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { logIn, logOut, refreshUser } from './operations';
 
 interface User {
-  name: string | null;
   email: string | null;
 }
 
@@ -15,7 +14,7 @@ export interface AuthState {
 }
 
 export const initialState: AuthState = {
-  user: { name: null, email: null },
+  user: { email: null },
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
@@ -31,7 +30,7 @@ const handleLogInFulfilled = (
 };
 
 const handleLogOutFulfilled = (state: AuthState) => {
-  state.user = { name: null, email: null };
+  state.user = { email: null };
   state.token = null;
   state.isLoggedIn = false;
 };

@@ -36,42 +36,46 @@ const Industry: FC<IIndustryProps> = ({
   setKeyword,
   initialValue,
 }) => {
-  const [checkedValue, setCheckedValue] = useState(
-    Array.isArray(initialValue)
-      ? initialValue
-      : initialValue
-        ? [initialValue]
-        : []
-  );
+  const [checkedValues, setCheckedValues] = useState(
+  Array.isArray(initialValue)
+    ? initialValue.map(value =>
+        typeof value === 'object' && value !== null ? value.en : value
+      )
+    : typeof initialValue === 'object' && initialValue !== null
+      ? [initialValue.en]
+      : [initialValue]
+);
 
   const [newFieldCount, setNewFieldCount] = useState(0);
 
   const { setFieldValue } = useFormikContext();
 
   const handleCheck = (value: string) => {
+    console.log('array', checkedValues)
     if (value) {
-      const newCheckedValue = [...checkedValue, value];
+      const newCheckedValue =checkedValues.includes(value) ? checkedValues.filter(checkedValue => checkedValue !== value) : [...checkedValues, value];
       setFieldValue('industries', newCheckedValue.toString(), false);
-      setCheckedValue(newCheckedValue);
+      setCheckedValues(newCheckedValue);
     }
   };
 
   const handleCheckedValue = (event: ChangeEvent<HTMLInputElement>) => {
-    if (!checkedValue.includes(event.target.value)) {
-      const newCheckedValue = [...checkedValue, event.target.value];
+    if (event.target.value) {
+      console.log('array', checkedValues)
+      const newCheckedValue = checkedValues.includes(event.target.value) ? checkedValues.filter(checkedValue => checkedValue !== event.target.value) : [...checkedValues, event.target.value];
       setFieldValue('industries', newCheckedValue.toString(), false);
-      setCheckedValue(newCheckedValue);
+      setCheckedValues(newCheckedValue);
     }
   };
 
   return (
     <fieldset className="mb-[10px]">
       <Block title={'industries'} intent="filter">
-        {checkedValue && (
+        {checkedValues && (
           <CheckedItemsList
-            checkedValue={checkedValue}
+            checkedValue={checkedValues}
             setCheckedValue={
-              setCheckedValue as Dispatch<
+              setCheckedValues as Dispatch<
                 SetStateAction<
                   | string
                   | MultiLanguageString
@@ -89,7 +93,7 @@ const Industry: FC<IIndustryProps> = ({
           itemName={'industries'}
           isLoading={isLoading}
           handleCheckedValue={handleCheckedValue}
-          checkedValue={checkedValue}
+          checkedValue={checkedValues}
         />
 
         {newFieldCount === 0 ? (

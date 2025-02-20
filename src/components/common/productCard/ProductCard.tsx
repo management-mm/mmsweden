@@ -18,7 +18,6 @@ import { LanguageContext } from '@components/SharedLayout';
 import { selectIsLoading } from '@store/selectors';
 
 import { useAppSelector } from '@hooks/useAppSelector';
-import { useAuth } from '@hooks/useAuth';
 
 import { IconId } from '@enums/iconsSpriteId';
 import { useDispatch } from 'react-redux';
@@ -43,7 +42,7 @@ const ProductCard: FC<IProductCardProps> = ({
   className,
 }) => {
   const { language } = useContext(LanguageContext);
-  const { isLoggedIn } = useAuth();
+  const isAdmin = window.location.pathname.includes('admin');
 
   const isLoading = useAppSelector(selectIsLoading);
 
@@ -83,7 +82,7 @@ const ProductCard: FC<IProductCardProps> = ({
         <div
           className={clsx(
             'flex flex-grow flex-col',
-            isLoggedIn ? 'px-[6px]' : 'px-[14px]'
+            isAdmin ? 'px-[6px]' : 'px-[14px]'
           )}
         >
           <ProductDetails
@@ -94,7 +93,7 @@ const ProductCard: FC<IProductCardProps> = ({
             description={description}
             dimensions={dimensions}
           />
-          {isLoggedIn ? (
+          {isAdmin ? (
             <NavLink
               to={`edit-product/${product._id}`}
               onClick={handleClear}

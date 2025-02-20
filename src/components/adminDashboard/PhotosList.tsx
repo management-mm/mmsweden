@@ -47,7 +47,6 @@ const PhotosList: FC<IPhotosListProps> = ({
   const swapyRef = useRef<Swapy | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-
   const swapItems = useCallback(
     <T,>(array: T[], index1: number, index2: number): T[] => {
       const newArray = [...array];
@@ -125,13 +124,16 @@ const PhotosList: FC<IPhotosListProps> = ({
 
     const updatedItems = items.filter(item => item.id !== itemId);
 
-    const updatedEditedAvatars = editedAvatars.filter((_, i) => i != slotToDeleteId)
+    const updatedEditedAvatars = editedAvatars.filter(
+      (_, i) => i != slotToDeleteId
+    );
 
-    const updatedFileAvatars = fileAvatars.filter((_, i) => i != slotToDeleteId);
+    const updatedFileAvatars = fileAvatars.filter(
+      (_, i) => i != slotToDeleteId
+    );
 
     const updatedPhotoQueue = photoQueue.filter(
       (_: File | string, i: number) => i != slotToDeleteId
-      
     );
 
     setItems(updatedItems);

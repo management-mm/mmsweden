@@ -16,10 +16,16 @@ import timeframeList from '@constants/timeframeList';
 interface IDeleteOrSoldProps {
   setIsDelete: (value: boolean) => void;
   isDelete: boolean;
+  setDeletionDate: (value: string | null) => void,
+  deletionDate: string | null
 }
 
-const DeleteOrSold: FC<IDeleteOrSoldProps> = ({ setIsDelete, isDelete }) => {
-  const [isSold, setIsSold] = useState(false);
+const DeleteOrSold: FC<IDeleteOrSoldProps> = ({
+  setIsDelete,
+  isDelete,
+  setDeletionDate,
+  deletionDate,
+}) => {
   const { setFieldValue } = useFormikContext<FormikValues>();
 
   const [numbr, setNumbr] = useState<number>(1);
@@ -30,7 +36,7 @@ const DeleteOrSold: FC<IDeleteOrSoldProps> = ({ setIsDelete, isDelete }) => {
   });
 
   useEffect(() => {
-    if (isSold) {
+    if (deletionDate) {
       const deletionDate = new Date();
       switch (timeframe) {
         case 'day':
@@ -43,10 +49,12 @@ const DeleteOrSold: FC<IDeleteOrSoldProps> = ({ setIsDelete, isDelete }) => {
           deletionDate.setMonth(deletionDate.getMonth() + numbr);
           break;
       }
-      console.log(deletionDate.toISOString());
+      setDeletionDate(
+        new Date(deletionDate).toLocaleString('en', { dateStyle: 'long' })
+      );
       setFieldValue('deletionDate', deletionDate.toISOString(), false);
     }
-  }, [isSold, timeframe, numbr]);
+  }, [deletionDate, timeframe, numbr]);
 
   return (
     <div>
@@ -55,7 +63,7 @@ const DeleteOrSold: FC<IDeleteOrSoldProps> = ({ setIsDelete, isDelete }) => {
         onClick={() => {
           setIsDelete(!isDelete);
           if (!isDelete) {
-            setIsSold(false);
+            setDeletionDate(null);
           }
         }}
         className={clsx(
@@ -71,8 +79,8 @@ const DeleteOrSold: FC<IDeleteOrSoldProps> = ({ setIsDelete, isDelete }) => {
         <button
           type="button"
           onClick={() => {
-            setIsSold(!isSold);
-            if (isSold) {
+            setDeletionDate(deletionDate);
+            if (deletionDate) {
               setFieldValue('deletionDate', null, false);
               return;
             }
@@ -80,7 +88,7 @@ const DeleteOrSold: FC<IDeleteOrSoldProps> = ({ setIsDelete, isDelete }) => {
           }}
           className={clsx(
             'mb-[20px] w-[100px] rounded-[32px] py-[10px] text-center md:w-[calc((100%-12px)/2)]',
-            isSold
+            deletionDate
               ? 'border border-red-900 bg-red-900 text-secondary'
               : 'border border-primary bg-transparent text-primary'
           )}

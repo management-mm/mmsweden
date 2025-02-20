@@ -29,7 +29,15 @@ export interface IProductCardProps {
 
 const ProductCard: FC<IProductCardProps> = ({
   product,
-  product: { name, idNumber, condition, photos, dimensions, description, deletionDate },
+  product: {
+    name,
+    idNumber,
+    condition,
+    photos,
+    dimensions,
+    description,
+    deletionDate,
+  },
   className,
 }) => {
   const { language } = useContext(LanguageContext);
@@ -56,12 +64,13 @@ const ProductCard: FC<IProductCardProps> = ({
           <ProductCondition condition={condition} />
           {deletionDate && (
             <span
-                className={'absolute right-[8px] top-[8px] z-[11] text-secondary inline-block rounded-[32px] px-[6px] py-[3px] text-[12px] bg-red-900 font-medium uppercase leading-tight'}
-              >
-                Sold
-              </span>
+              className={
+                'absolute right-[8px] top-[8px] z-[11] inline-block rounded-[32px] bg-red-900 px-[6px] py-[3px] text-[12px] font-medium uppercase leading-tight text-secondary'
+              }
+            >
+              Sold
+            </span>
           )}
-          
         </div>
         <div
           className={clsx(

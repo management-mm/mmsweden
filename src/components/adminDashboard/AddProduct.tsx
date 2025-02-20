@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+
 import { schema } from '@schemas/addProduct';
 import { Form, Formik } from 'formik';
 
@@ -7,14 +10,35 @@ import Condition from './Condition';
 import GeneralInformation from './GeneralInformation';
 import PhotosAndVideo from './PhotosAndVideo';
 
+import StatusModal from '@components/common/StatusModal';
+import Loader from '@components/common/loaders/Loader';
+
 import { type IAddProductData, addProduct } from '@store/products/operations';
+import { selectIsLoading, selectProductDetails } from '@store/selectors';
 
 import { useAppDispatch } from '@hooks/useAppDispatch';
+import { useAppSelector } from '@hooks/useAppSelector';
 
 import { cn } from '@utils/cn';
 
 const AddProduct = () => {
   const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(selectIsLoading);
+  const product = useAppSelector(selectProductDetails);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false)
+
+  const handleToggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  useEffect(() => {
+    if (!product) {
+      setIsOpen(false);
+      return;
+    }
+    handleToggleMenu();
+  }, [product]);
 
   return (
     <>
@@ -35,7 +59,7 @@ const AddProduct = () => {
         validationSchema={schema}
         onSubmit={async (values: IAddProductData) => {
           try {
-            alert('Form submitted');
+            setIsSubmit(true)
             dispatch(addProduct(values));
           } catch (error) {
             console.log(error);
@@ -81,6 +105,38 @@ const AddProduct = () => {
           </div>
         </Form>
       </Formik>
+      {isLoading && (
+        <StatusModal
+          title={'Please wait, the product is being added to the website.'}
+        >
+          <Loader />
+        </StatusModal>
+      )}
+      {(isOpen && isSubmit) && (
+        <StatusModal
+          title={'🎉🎉🎉Great! Your product is now live on the website.'}
+          handleToggleMenu={handleToggleMenu}
+        >
+          <div className="flex w-full gap-[10px]">
+            <NavLink
+              className={
+                'w-[calc((100%-10px)/2)] rounded-[32px] border border-primary py-[10px] text-center font-semibold text-primary'
+              }
+              to={`/admin/all-products/edit-product/${product?._id}`}
+            >
+              Go to added product
+            </NavLink>
+            <NavLink
+              className={
+                'w-[calc((100%-10px)/2)] rounded-[32px] border border-primary py-[10px] text-center font-semibold text-primary'
+              }
+              to="/admin/all-products"
+            >
+              Go to Product List
+            </NavLink>
+          </div>
+        </StatusModal>
+      )}
     </>
   );
 };

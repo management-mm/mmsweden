@@ -7,6 +7,7 @@ import {
   deleteProduct,
   fetchProductById,
   fetchProducts,
+  updateProduct,
 } from './operations';
 
 import { handlePending, handleRejected } from '@store/handlers';
@@ -51,6 +52,7 @@ const handleAddProductFulfilled = (
   state.isLoading = false;
   state.error = null;
   state.items.push(action.payload);
+  state.productDetails = action.payload;
 };
 
 const handleDeleteProductFulfilled = (
@@ -60,6 +62,16 @@ const handleDeleteProductFulfilled = (
   state.isLoading = false;
   state.error = null;
   deleteProductFromList(state.items, action.payload._id);
+  state.productDetails = null;
+};
+
+const handleUpdateProductFulfilled = (
+  state: IProductsState,
+  action: PayloadAction<IProduct>
+) => {
+  state.isLoading = false;
+  state.error = null;
+  state.productDetails = action.payload;
 };
 
 const productsSlice = createSlice({
@@ -86,7 +98,10 @@ const productsSlice = createSlice({
       .addCase(addProduct.rejected, handleRejected)
       .addCase(deleteProduct.pending, handlePending)
       .addCase(deleteProduct.fulfilled, handleDeleteProductFulfilled)
-      .addCase(deleteProduct.rejected, handleRejected),
+      .addCase(deleteProduct.rejected, handleRejected)
+      .addCase(updateProduct.pending, handlePending)
+      .addCase(updateProduct.fulfilled, handleUpdateProductFulfilled)
+      .addCase(updateProduct.rejected, handleRejected),
 });
 
 export const productsReducer = productsSlice.reducer;

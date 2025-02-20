@@ -104,7 +104,7 @@ export const addProduct = createAsyncThunk<
 >('products/addProduct', async (newProduct, thunkAPI) => {
   try {
     const data = new FormData();
-    console.log(newProduct.photos)
+    console.log(newProduct.photos);
     for (const property in newProduct) {
       if (Object.prototype.hasOwnProperty.call(newProduct, property)) {
         const key = property as keyof IAddProductData;
@@ -141,7 +141,7 @@ export const updateProduct = createAsyncThunk<
     for (const property in updatedProduct) {
       if (Object.prototype.hasOwnProperty.call(updatedProduct, property)) {
         const key = property as keyof IUpdateProductData;
-        console.log(updatedProduct.deletionDate);
+  
         if (key === 'id') continue;
         if (key === 'deletionDate' && !updatedProduct[key]) continue;
 
@@ -170,9 +170,9 @@ export const updateProduct = createAsyncThunk<
         }
       }
     }
-    for (const pair of data.entries()) {
-      console.log(pair[0], pair[1]);
-    }
+    // for (const pair of data.entries()) {
+    //   console.log(pair[0], pair[1]);
+    // }
     const response = await axios.put(`products/${updatedProduct.id}`, data);
     return response.data;
   } catch (e) {

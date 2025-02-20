@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
+import { NavLink, useParams } from 'react-router-dom';
 
 import { schema } from '@schemas/editProduct';
 import { Form, Formik } from 'formik';
@@ -9,108 +9,174 @@ import CatManInd from './CatManInd';
 import Condition from './Condition';
 import DeleteOrSold from './DeleteOrSold';
 import GeneralInformation from './GeneralInformation';
+import MessageDeleteOrSold from './MessageDeleteOrSold';
 import PhotosAndVideo from './PhotosAndVideo';
+
+import StatusModal from '@components/common/StatusModal';
+import Loader from '@components/common/loaders/Loader';
 
 import {
   deleteProduct,
   fetchProductById,
   updateProduct,
 } from '@store/products/operations';
-import { selectProductDetails } from '@store/selectors';
+import { selectIsLoading, selectProductDetails } from '@store/selectors';
 
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
+import useMessageDelOrSold from '@hooks/useMessageDelOrSold';
 
 const ChangeProduct = () => {
   const dispatch = useAppDispatch();
   const { productId } = useParams();
   const product = useAppSelector(selectProductDetails);
-  const isLoading = useAppSelector(state => state.products.isLoading);
+  const isLoading = useAppSelector(selectIsLoading);
   const [isDelete, setIsDelete] = useState(false);
+  const [deletionDate, setDeletionDate] = useState<string | null>(
+  product?.deletionDate 
+    ? new Date(product.deletionDate).toLocaleString('en', { dateStyle: 'long' }) 
+    : null
+);
+
+  const [isProductUpdated, setIsProductUpdated] = useState(false);
+  const { isMessageOpen, handleToggleMenu } =
+    useMessageDelOrSold(isProductUpdated);
 
   useEffect(() => {
     dispatch(fetchProductById({ productId }));
   }, [dispatch, productId]);
 
-  if (isLoading || !product) {
-    return <div>Loading...</div>;
+  if (!product) {
+    return (
+      <div className="w-max-screen flex w-full items-center justify-center">
+        <p>There is no product anymore</p>
+        <NavLink
+          className={
+            'w-full rounded-[32px] border border-primary py-[10px] text-center font-semibold text-primary'
+          }
+          to="/admin/all-products"
+        >
+          Go to Product List
+        </NavLink>
+      </div>
+    );
   }
- 
 
   return (
-    <Formik
-      initialValues={{
-        id: product._id,
-        name: product.name || '',
-        idNumber: product.idNumber || '',
-        description: product.description || {},
-        dimensions: product.dimensions || '',
-        category: product.category.en || '',
-        manufacturer: product.manufacturer || '',
-        industries: product.industries.map(industry => industry.en) || [],
-        condition: product.condition || 'used',
-        video: product.video || '',
-        photoQueue: product.photos as (string | File)[],
-        photos: [] as File[],
-        deletionDate: product.deletionDate || null,
-      }}
-      validationSchema={schema}
-      onSubmit={async values => {
-        try {
-          if (isDelete) {
-            console.log(isDelete);
-            alert('Form submitted');
-            dispatch(deleteProduct({ productId }));
+    <>
+      <Formik
+        initialValues={{
+          id: product._id,
+          name: product.name || '',
+          idNumber: product.idNumber || '',
+          description: product.description || {},
+          dimensions: product.dimensions || '',
+          category: product.category.en || '',
+          manufacturer: product.manufacturer || '',
+          industries: product.industries.map(industry => industry.en) || [],
+          condition: product.condition || 'used',
+          video: product.video || '',
+          photoQueue: product.photos as (string | File)[],
+          photos: [] as File[],
+          deletionDate: product.deletionDate || null,
+        }}
+        validationSchema={schema}
+        onSubmit={async values => {
+          try {
+            if (isDelete) {
+              dispatch(deleteProduct({ productId }));
+              return;
+            }
+            const response = await dispatch(updateProduct(values));
+            if (response) {
+              setIsProductUpdated(true);
+            }
+          } catch (error) {
+            console.log(error);
           }
-
-          console.log(values);
-          alert('Form submitted');
-          dispatch(updateProduct(values));
-        } catch (error) {
-          console.log(error);
-        }
-      }}
-    >
-      <Form>
-        <div className="container">
-          <div className="gap-[24px] pt-[48px] lg:flex">
-            <Block intent="main" title="Photos and video">
-              <PhotosAndVideo
-                initialPhotos={product.photos}
-                initialVideo={product.video ?? ''}
-              />
-            </Block>
-            <div className="flex flex-col gap-[24px]">
-              <Block intent="main" title="General Information">
-                <GeneralInformation product={product} />
-              </Block>
-              <Block intent="main" title="Category, Manufacturer, Industry">
-                <CatManInd
-                  initialCategory={product.category.en}
-                  initialManufacturer={product.manufacturer}
-                  initialIndustries={product.industries}
+        }}
+      >
+        <Form>
+          <div className="container">
+            <div className="gap-[24px] pt-[48px] lg:flex">
+              <Block intent="main" title="Photos and video">
+                <PhotosAndVideo
+                  initialPhotos={product.photos}
+                  initialVideo={product.video ?? ''}
                 />
               </Block>
-              <Block intent="main" title="Condition">
-                <Condition initialValue={product?.condition} />
-              </Block>
-              <Block
-                intent="main"
-                title="Deleting a product or setting the status to 'Sold'"
-              >
-                <DeleteOrSold setIsDelete={setIsDelete} isDelete={isDelete} />
-              </Block>
-              <button
-                className="w-full rounded-[32px] bg-accent py-[16px]"
-                type="submit"
-              >
-                Save
-              </button>
+              <div className="flex flex-col gap-[24px]">
+                <Block intent="main" title="General Information">
+                  <GeneralInformation product={product} />
+                </Block>
+                <Block intent="main" title="Category, Manufacturer, Industry">
+                  <CatManInd
+                    initialCategory={product.category.en}
+                    initialManufacturer={product.manufacturer}
+                    initialIndustries={product.industries}
+                  />
+                </Block>
+                <Block intent="main" title="Condition">
+                  <Condition initialValue={product?.condition} />
+                </Block>
+                <Block
+                  intent="main"
+                  title="Deleting a product or setting the status to 'Sold'"
+                >
+                  <DeleteOrSold
+                    setIsDelete={setIsDelete}
+                    isDelete={isDelete}
+                    setDeletionDate={setDeletionDate}
+                    deletionDate={deletionDate}
+                  />
+                </Block>
+                <button
+                  className="w-full rounded-[32px] bg-accent py-[16px]"
+                  type="submit"
+                >
+                  Save
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </Form>
-    </Formik>
+        </Form>
+      </Formik>
+      <MessageDeleteOrSold
+        title={'Do you want to delete this product?'}
+        isDeleteOrDeletionDate={isDelete}
+        setIsDeleteOrDeletionDate={setIsDelete as Dispatch<SetStateAction<boolean | string | null>>}
+      />
+      <MessageDeleteOrSold
+        title={`This product will be deleted on ${deletionDate}. Do you want to mark it as sold?`}
+        isDeleteOrDeletionDate={deletionDate}
+        setIsDeleteOrDeletionDate={setDeletionDate as Dispatch<SetStateAction<boolean | string | null>>}
+      />
+      {isLoading && (
+        <StatusModal
+          title={'Please wait, the product is being uppdated.'}
+          handleToggleMenu={handleToggleMenu}
+        >
+          <Loader />
+        </StatusModal>
+      )}
+      {isMessageOpen && (
+        <StatusModal
+          title={'🎉🎉🎉Great! Your product is succesfully updated'}
+          handleToggleMenu={handleToggleMenu}
+        >
+          <div className="flex w-full gap-[10px]">
+            <NavLink
+              className={
+                'w-full rounded-[32px] border border-primary py-[10px] text-center font-semibold text-primary'
+              }
+              to="/admin/all-products"
+            >
+              Go to Product List
+            </NavLink>
+          </div>
+        </StatusModal>
+      )}
+    </>
   );
 };
 

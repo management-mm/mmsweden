@@ -86,32 +86,31 @@ const Details: FC<IDetailsProps> = ({
         {description[language]}
       </p>
       {product.deletionDate ? (
-        <span className='bg-red-900 text-secondary flex w-full items-center justify-center rounded-[32px] py-[14px] text-[12px] font-semibold'>
+        <span className="flex w-full items-center justify-center rounded-[32px] bg-red-900 py-[14px] text-[12px] font-semibold text-secondary">
           Sold
         </span>
-      ): (
-         <button
-        className={clsx(
-          'flex w-full items-center justify-center rounded-[32px] py-[14px] text-[12px] font-semibold text-primary',
-          isRequested
-            ? 'bg-secondaryAccent text-secondary'
-            : 'bg-accent shadow-accent'
-        )}
-        type="button"
-        onClick={() => handleToggleFavorites(product)}
-      >
-        <SvgIcon
+      ) : (
+        <button
           className={clsx(
-            'mr-[12px]',
-            isRequested ? 'fill-secondary' : 'fill-primary'
+            'flex w-full items-center justify-center rounded-[32px] py-[14px] text-[12px] font-semibold text-primary',
+            isRequested
+              ? 'bg-secondaryAccent text-secondary'
+              : 'bg-accent shadow-accent'
           )}
-          iconId={IconId.Cart}
-          size={{ width: 16, height: 16 }}
-        />
-        {isRequested ? t(Button.AddedToQuote) : t(Button.RequestQuote)}
-      </button> 
+          type="button"
+          onClick={() => handleToggleFavorites(product)}
+        >
+          <SvgIcon
+            className={clsx(
+              'mr-[12px]',
+              isRequested ? 'fill-secondary' : 'fill-primary'
+            )}
+            iconId={IconId.Cart}
+            size={{ width: 16, height: 16 }}
+          />
+          {isRequested ? t(Button.AddedToQuote) : t(Button.RequestQuote)}
+        </button>
       )}
-      
     </div>
   );
 };

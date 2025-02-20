@@ -126,7 +126,7 @@ const ChangeProduct = () => {
                   <DeleteOrSold
                     setIsDelete={setIsDelete}
                     isDelete={isDelete}
-                    setDeletionDate={setDeletionDate}
+                    setDeletionDate={setDeletionDate as Dispatch<SetStateAction<string | null | boolean>>}
                     deletionDate={deletionDate}
                   />
                 </Block>

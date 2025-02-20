@@ -16,8 +16,8 @@ import timeframeList from '@constants/timeframeList';
 interface IDeleteOrSoldProps {
   setIsDelete: (value: boolean) => void;
   isDelete: boolean;
-  setDeletionDate: (value: string | null) => void,
-  deletionDate: string | null
+  setDeletionDate: (value: string | null | boolean) => void,
+  deletionDate: string | null | boolean
 }
 
 const DeleteOrSold: FC<IDeleteOrSoldProps> = ({
@@ -79,7 +79,7 @@ const DeleteOrSold: FC<IDeleteOrSoldProps> = ({
         <button
           type="button"
           onClick={() => {
-            setDeletionDate(deletionDate);
+            setDeletionDate(!deletionDate);
             if (deletionDate) {
               setFieldValue('deletionDate', null, false);
               return;

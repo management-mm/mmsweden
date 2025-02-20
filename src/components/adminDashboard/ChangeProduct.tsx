@@ -145,11 +145,13 @@ const ChangeProduct = () => {
         title={'Do you want to delete this product?'}
         isDeleteOrDeletionDate={isDelete}
         setIsDeleteOrDeletionDate={setIsDelete as Dispatch<SetStateAction<boolean | string | null>>}
+        isProductUpdated={isProductUpdated}
       />
       <MessageDeleteOrSold
         title={`This product will be deleted on ${deletionDate}. Do you want to mark it as sold?`}
         isDeleteOrDeletionDate={deletionDate}
         setIsDeleteOrDeletionDate={setDeletionDate as Dispatch<SetStateAction<boolean | string | null>>}
+        isProductUpdated={isProductUpdated}
       />
       {(isLoading && isProductUpdated) && (
         <StatusModal

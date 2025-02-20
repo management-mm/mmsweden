@@ -151,7 +151,7 @@ const ChangeProduct = () => {
         isDeleteOrDeletionDate={deletionDate}
         setIsDeleteOrDeletionDate={setDeletionDate as Dispatch<SetStateAction<boolean | string | null>>}
       />
-      {isLoading && (
+      {(isLoading && isProductUpdated) && (
         <StatusModal
           title={'Please wait, the product is being uppdated.'}
           handleToggleMenu={handleToggleMenu}

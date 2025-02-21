@@ -75,11 +75,11 @@ const PhotosList: FC<IPhotosListProps> = ({
 
       const toSlot = slots.findIndex(item => item.slot === event.toSlot);
       const fromSlot = slots.findIndex(item => item.slot === event.fromSlot);
-      // console.log("slotItemMap", slotItemMap)
+      // console.log("toSlot", toSlot, "fromSlot", fromSlot)
       const filteredSlotItemMap = event.newSlotItemMap.asArray.filter(
         ({ item }) => items.some(i => i.id === item)
       );
-
+ 
       setSlotItemMap(
         items.length !== 0 ? filteredSlotItemMap : event.newSlotItemMap.asArray
       );
@@ -105,16 +105,17 @@ const PhotosList: FC<IPhotosListProps> = ({
   ]);
 
   useEffect(() => {
+    console.log("fileAvatars", fileAvatars)
     setFieldValue(
       'photos',
       fileAvatars.filter(file => Boolean(file) !== false),
       false
     );
-  }, [fileAvatars]);
+  }, [fileAvatars, setFieldValue]);
 
   useEffect(() => {
     setFieldValue('photoQueue', photoQueue, false);
-  }, [photoQueue]);
+  }, [photoQueue, setFieldValue]);
 
   const handleDelete = (itemId: string, slotId: string) => {
     const slotToDeleteId = slotItemMap.findIndex(item => item.slot === slotId);

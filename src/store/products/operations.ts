@@ -28,7 +28,7 @@ export interface IAddProductData {
   video: string;
   category: string;
   manufacturer: string;
-  industries: string;
+  industries: string[];
   condition: 'used' | 'new';
   shouldTranslateName: boolean;
 }
@@ -109,6 +109,9 @@ export const addProduct = createAsyncThunk<
       if (Object.prototype.hasOwnProperty.call(newProduct, property)) {
         const key = property as keyof IAddProductData;
         if (key === 'shouldTranslateName') continue;
+        else if (key === 'industries') {
+          data.append('industries', newProduct[key].join(','));
+        }
         else if (key === 'photos') {
           newProduct[key].forEach(photo => {
             data.append('photos', photo);

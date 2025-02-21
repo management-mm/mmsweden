@@ -54,7 +54,7 @@ const Industry: FC<IIndustryProps> = ({
     console.log('array', checkedValues)
     if (value) {
       const newCheckedValue =checkedValues.includes(value) ? checkedValues.filter(checkedValue => checkedValue !== value) : [...checkedValues, value];
-      setFieldValue('industries', newCheckedValue.toString(), false);
+      setFieldValue('industries', newCheckedValue, false);
       setCheckedValues(newCheckedValue);
     }
   };
@@ -63,7 +63,7 @@ const Industry: FC<IIndustryProps> = ({
     if (event.target.value) {
       console.log('array', checkedValues)
       const newCheckedValue = checkedValues.includes(event.target.value) ? checkedValues.filter(checkedValue => checkedValue !== event.target.value) : [...checkedValues, event.target.value];
-      setFieldValue('industries', newCheckedValue.toString(), false);
+      setFieldValue('industries', newCheckedValue, false);
       setCheckedValues(newCheckedValue);
     }
   };

@@ -56,7 +56,7 @@ const ProductCard: FC<IProductCardProps> = ({
     <SkeletonTheme baseColor="#E1E1E1" highlightColor="#F2F2F2">
       <article
         className={clsx(
-          'flex h-[504px] w-full flex-col rounded-[4px] border border-secondary pb-[20px]',
+          'flex h-[504px] flex-col rounded-[4px] border border-secondary pb-[20px]',
           className,
           deletionDate && 'opacity-70'
         )}

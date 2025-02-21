@@ -52,7 +52,8 @@ const CatManInd: FC<ICatManIndProps> = ({
   const industriesIsLoading = useAppSelector(selectIndustriesIsLoading);
 
   useEffect(() => {
-    const fetchingCategories = async () => {
+    if (!categories || categoryKeyword) {
+      const fetchingCategories = async () => {
       try {
         dispatch(
           fetchCategories({ keyword: categoryKeyword, lang: LanguageKeys.EN })
@@ -61,31 +62,37 @@ const CatManInd: FC<ICatManIndProps> = ({
         console.error('Error fetching data:', error);
       }
     };
-    fetchingCategories();
+      fetchingCategories();
+    }
+    
   }, [dispatch, categoryKeyword]);
 
   useEffect(() => {
-    const fetchingManufacturers = async () => {
-      try {
-        dispatch(fetchManufacturers({ keyword: manufacturerKeyword }));
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchingManufacturers();
+    if (!manufacturers || manufacturerKeyword) {
+      const fetchingManufacturers = async () => {
+        try {
+          dispatch(fetchManufacturers({ keyword: manufacturerKeyword }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+      fetchingManufacturers();
+    }
   }, [dispatch, manufacturerKeyword]);
 
   useEffect(() => {
-    const fetchingIndustries = async () => {
-      try {
-        dispatch(
-          fetchIndustries({ keyword: industryKeyword, lang: LanguageKeys.EN })
-        );
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchingIndustries();
+    if (!industries || industryKeyword) {
+      const fetchingIndustries = async () => {
+        try {
+          dispatch(
+            fetchIndustries({ keyword: industryKeyword, lang: LanguageKeys.EN })
+          );
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+      fetchingIndustries();
+    }
   }, [dispatch, industryKeyword]);
 
   return (

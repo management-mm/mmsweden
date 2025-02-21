@@ -21,7 +21,7 @@ const Topbar = () => {
     setIsOpen(!isOpen);
   };
   return (
-    <div className="flex flex-col border-b-2 border-neutral pb-[8px] md:pb-[14px] lg:h-[112px] lg:flex-row lg:items-center lg:pl-[24px]">
+    <div className="flex flex-col border-b-2 lg:w-[calc(100vw-290px)] border-neutral pb-[8px] md:pb-[14px] lg:h-[112px] lg:flex-row lg:items-center lg:pl-[24px]">
       <div
         className={cn(
           'container',

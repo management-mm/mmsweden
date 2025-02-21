@@ -36,21 +36,6 @@ const SharedLayout = () => {
     })()
   );
 
-  // const getIcon = (type: string): React.ReactComponentElement<any> | undefined => {
-  //   switch (type) {
-  //     case 'success':
-  //       return < />;
-  //     case 'error':
-  //       return <ErrorIcon />;
-  //     case 'warning':
-  //       return <WarningIcon />;
-  //     case 'info':
-  //       return <InfoIcon />;
-  //     default:
-  //       return undefined;
-  //   }
-  // };
-
   return (
     <div className="bg-main font-inter">
       <ScrollToTop />

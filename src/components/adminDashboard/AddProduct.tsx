@@ -20,6 +20,7 @@ import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
 
 import { cn } from '@utils/cn';
+import { clearProduct } from '@store/products/productsSlice';
 
 const AddProduct = () => {
   const dispatch = useAppDispatch();
@@ -31,6 +32,10 @@ const AddProduct = () => {
   const handleToggleMenu = () => {
     setIsOpen(!isOpen);
   };
+  useEffect(() => {
+    console.log("Ia tyt")
+    dispatch(clearProduct())
+  }, [])
 
   useEffect(() => {
     if (!product) {
@@ -39,6 +44,12 @@ const AddProduct = () => {
     }
     handleToggleMenu();
   }, [product]);
+
+  if (!product && isLoading && !isSubmit) {
+    return (
+      <Loader />
+    );
+  }
 
   return (
     <>
@@ -50,7 +61,7 @@ const AddProduct = () => {
           dimensions: '',
           category: '',
           manufacturer: '',
-          industries: '',
+          industries: [],
           condition: 'used',
           photos: [],
           video: '',
@@ -59,6 +70,7 @@ const AddProduct = () => {
         validationSchema={schema}
         onSubmit={async (values: IAddProductData) => {
           try {
+            console.log(values)
             setIsSubmit(true)
             dispatch(addProduct(values));
           } catch (error) {

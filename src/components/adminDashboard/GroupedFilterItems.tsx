@@ -29,9 +29,17 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
   handleCheckedValue,
   checkedValue,
 }) => {
+  // const [hasMore, setHasMore] = useState(true);
+  // const pageSize = 10;
   const [groupedFilters, setGroupedFilters] = useState<
     Record<string, FilterItem[]>
-  >({});
+    >({});
+  // const [visibleItems, setVisibleItems] = useState<
+  //   Record<string, FilterItem[]>
+  //   >(
+  //     groupedFilters
+  //   );
+
 
   const isItemSelected = (item: string): boolean => {
     if (Array.isArray(checkedValue)) {
@@ -87,6 +95,12 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
 
     setGroupedFilters(sortedGrouped);
   }, [items, itemName]);
+
+  // useEffect(() => {
+  //   if (options) {
+  //     setVisibleItems(options.slice(0, pageSize));
+  //   }
+  // }, [options]);
 
   return (
     <div className="mb-[14px] flex h-[350px] flex-col gap-[16px] overflow-y-scroll">

@@ -25,6 +25,8 @@ import { selectIsLoading, selectProductDetails } from '@store/selectors';
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
 import useMessageDelOrSold from '@hooks/useMessageDelOrSold';
+import SvgIcon from '@components/common/SvgIcon';
+import { IconId } from '@enums/iconsSpriteId';
 
 const ChangeProduct = () => {
   const dispatch = useAppDispatch();
@@ -46,25 +48,38 @@ const ChangeProduct = () => {
     dispatch(fetchProductById({ productId }));
   }, [dispatch, productId]);
 
-  if (!product) {
+  if (!product && isDelete) {
     return (
-      <div className="w-max-screen flex w-full items-center justify-center">
-        <p>There is no product anymore</p>
+      <div className="w-max-screen h-[calc(100vh-115px)] flex w-full items-center justify-center">
+        <div>
+         
+            <SvgIcon className='block mx-auto fill-primary mb-[20px]' iconId={IconId.Cancel} size={{width: 90, height: 90}} />
+          
+          <p className='text-[22px] mb-6'>There is no product anymore</p>
         <NavLink
           className={
-            'w-full rounded-[32px] border border-primary py-[10px] text-center font-semibold text-primary'
+            'w-full px-[10px] mx-auto block rounded-[32px] border border-primary py-[10px] text-center font-semibold text-primary'
           }
           to="/admin/all-products"
         >
           Go to Product List
         </NavLink>
+        </div>
+        
       </div>
+    );
+  }
+
+   if (isLoading && !isProductUpdated) {
+    return (
+      <Loader />
     );
   }
 
   return (
     <>
-      <Formik
+      {product && (
+        <Formik
   enableReinitialize={true} 
         initialValues={{
           id: product._id,
@@ -84,6 +99,7 @@ const ChangeProduct = () => {
         validationSchema={schema}
         onSubmit={async values => {
           try {
+            console.log(values)
             if (isDelete) {
               dispatch(deleteProduct({ productId }));
               return;
@@ -142,6 +158,8 @@ const ChangeProduct = () => {
           </div>
         </Form>
       </Formik>
+      )}
+      
       <MessageDeleteOrSold
         title={'Do you want to delete this product?'}
         isDeleteOrDeletionDate={isDelete}

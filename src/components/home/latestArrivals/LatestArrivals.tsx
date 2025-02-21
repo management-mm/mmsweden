@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { type IProduct } from '@interfaces/IProduct';
-import { nanoid } from 'nanoid';
 import 'swiper/css';
 
 import DecorativeLine from '@components/common/DecorativeLine';
@@ -78,10 +77,10 @@ const LatestArrivals = () => {
         >
           {products.map(product => {
             return (
-              <SwiperSlide key={nanoid()}>
+              <SwiperSlide key={product._id}>
                 <ProductCard
                   product={product}
-                  className="w-[296px] md:w-[264px]"
+                  className="w-[296px] md:w-[264px] lg:w-[264px]"
                 />
               </SwiperSlide>
             );

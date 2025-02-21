@@ -40,8 +40,9 @@ interface IPaginationProps {
 }
 
 const Pagination: FC<IPaginationProps> = ({ pageCount, className }) => {
-  const [currentPage, setCurrentPage] = useState(0);
+  
   const [searchParams, setSearchParams] = useSearchParams();
+  const [currentPage, setCurrentPage] = useState(searchParams.get('page') ? Number(searchParams.get('page')) - 1 : 0);
 
   const manufacturer = searchParams.get('manufacturer');
   const category = searchParams.get('category');
@@ -62,11 +63,14 @@ const Pagination: FC<IPaginationProps> = ({ pageCount, className }) => {
   };
 
   useEffect(() => {
-    setSearchParams(prevParams => {
+    if (manufacturer || category || industry || condition || title) {
+      setSearchParams(prevParams => {
       prevParams.delete('page');
       return prevParams;
     });
     setCurrentPage(0);
+    }
+    
   }, [manufacturer, category, industry, condition, title]);
 
   return (

@@ -7,7 +7,7 @@ export const schema = Yup.object().shape({
   dimensions: Yup.string(),
   category: Yup.string(),
   manufacturer: Yup.string(),
-  industries: Yup.string(),
+  industries: Yup.array(),
   condition: Yup.mixed().oneOf(
     ['used', 'new'],
     "Condition must be either 'used' or 'new'"

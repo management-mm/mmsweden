@@ -27,6 +27,8 @@ import { useAppSelector } from '@hooks/useAppSelector';
 import useMessageDelOrSold from '@hooks/useMessageDelOrSold';
 import SvgIcon from '@components/common/SvgIcon';
 import { IconId } from '@enums/iconsSpriteId';
+import useWindowWidth from '@hooks/useWindowWidth';
+import clsx from 'clsx';
 
 const ChangeProduct = () => {
   const dispatch = useAppDispatch();
@@ -34,6 +36,7 @@ const ChangeProduct = () => {
   const product = useAppSelector(selectProductDetails);
   const isLoading = useAppSelector(selectIsLoading);
   const [isDelete, setIsDelete] = useState(false);
+  const windowWidth = useWindowWidth();
   const [deletionDate, setDeletionDate] = useState<string | null>(
   product?.deletionDate 
     ? new Date(product.deletionDate).toLocaleString('en', { dateStyle: 'long' }) 
@@ -114,7 +117,9 @@ const ChangeProduct = () => {
         }}
       >
         <Form>
-          <div className="container">
+            <div className={clsx(
+              "container",
+              windowWidth > 1178 && "ml-0")}>
             <div className="gap-[24px] pt-[48px] lg:flex">
               <Block intent="main" title="Photos and video">
                 <PhotosAndVideo

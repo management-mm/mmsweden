@@ -39,48 +39,50 @@ const PhotosAndVideo: FC<IPhotoAndVideoProps> = ({
   );
 
   const handleChangePhoto = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 7) {
-      alert('No more than 7 photos');
-      e.target.value = '';
-      return;
-    }
+  if (e.target.files && e.target.files.length > 7) {
+    alert('No more than 7 photos');
+    e.target.value = '';
+    return;
+  }
 
-    if (e.target.files) {
-      console.log(editedAvatars);
-      const filesArray = Array.from(e.target.files);
-      const newFileAvatars: File[] = [];
-      const newEditedAvatars: string[] = [];
+  if (e.target.files) {
+    console.log("editedAvatars", editedAvatars);
+    const filesArray = Array.from(e.target.files);
+    const newFileAvatars: File[] = [];
 
-      filesArray.forEach(file => {
+    const readFile = (file: File): Promise<string> => {
+      return new Promise((resolve) => {
         const reader = new FileReader();
-        reader.onload = event => {
-          if (event.target?.result) {
-            newEditedAvatars.push(event.target.result as string);
-          }
-          if (newEditedAvatars.length === filesArray.length) {
-            setEditedAvatars(prev => [...prev, ...newEditedAvatars]);
-
-            const updatedItems = [
-              ...items,
-              ...newEditedAvatars.map((src, i) => ({
-                id: String(items.length + i + 1),
-                src,
-              })),
-            ];
-
-            setItems(updatedItems);
-            setSlotItemMap(initSlotItemMap(updatedItems, 'id'));
-          }
-        };
+        reader.onload = event => resolve(event.target?.result as string);
         reader.readAsDataURL(file);
-        newFileAvatars.push(file);
       });
+    };
+
+    Promise.all(filesArray.map(file => {
+      newFileAvatars.push(file);
+      return readFile(file);
+    })).then(newEditedAvatars => {
+      setEditedAvatars(prev => [...prev, ...newEditedAvatars]);
+
+      const updatedItems = [
+        ...items,
+        ...newEditedAvatars.map((src, i) => ({
+          id: String(items.length + i + 1),
+          src,
+        })),
+      ];
+
+      setItems(updatedItems);
+      setSlotItemMap(initSlotItemMap(updatedItems, 'id'));
 
       setFileAvatars(prev => [...prev, ...newFileAvatars]);
       setPhotoQueue(prev => [...prev, ...newFileAvatars]);
-      e.target.value = '';
-    }
-  };
+    });
+
+    e.target.value = '';
+  }
+};
+
 
   return (
     <div>

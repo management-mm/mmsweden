@@ -1,40 +1,54 @@
-import { type FC, useState } from 'react';
+import { useState } from 'react';
 
 import type { MultiLanguageString } from '@interfaces/IProduct';
 import clsx from 'clsx';
-import { useFormikContext } from 'formik';
+import { Field, useFormikContext, type FormikValues } from 'formik';
 
 import AddNewCatManInd from './AddNewCatManInd';
 import Desc from './Desc';
 import InputFieldWithCheck from './InputFieldWithCheck';
 
-import InputField from '@components/common/InputField';
 import LabelTitle from '@components/common/LabelTitle';
 
 import { LanguageKeys } from '@enums/languageKeys';
 
-interface IProductNameProps {
-  name: MultiLanguageString | string | undefined;
-}
-
-const ProductName: FC<IProductNameProps> = ({ name = '' }) => {
+const ProductName = () => {
   const [isClick, setIsClick] = useState(false);
 
-  const { setFieldValue } = useFormikContext();
+  const { values, setFieldValue, handleChange } =
+      useFormikContext<FormikValues>();
+  
+    const handleChangeName = (
+      e: React.ChangeEvent<HTMLTextAreaElement>,
+      lang: LanguageKeys
+    ) => {
+      const newValue = e.target.value;
+      if (typeof values.name === 'object') {
+        setFieldValue('name', {
+          ...values.name,
+          [lang]: newValue,
+        });
+        return;
+      }
+      handleChange(e);
+    };
 
 
-  const handleCheck = () => {
-    setFieldValue('shouldTranslateName', true, false);
+  const handleCheck = (shouldTranslate: boolean | string) => {
+    console.log('shouldTranslate', shouldTranslate)
+    setFieldValue('shouldTranslateName', shouldTranslate, false);
   };
+
+  
 
   return (
     <div>
-      {!name || typeof name === 'string' ? (
+      {!values.name || typeof values.name === 'string' ? (
         <>
           <label className={'flex flex-col gap-[2px]'}>
             <LabelTitle title="Name" />
             <InputFieldWithCheck
-              initialValue={name}
+              initialValue={values.name}
               name="name"
               placeholder="Enter product name"
               // setCheckedValue={setInputValue}
@@ -58,12 +72,13 @@ const ProductName: FC<IProductNameProps> = ({ name = '' }) => {
                 </span>
                 &nbsp;&nbsp;|
               </label>
-              <InputField
-                initialValue={(name as MultiLanguageString)?.[lang] || ''}
+              <Field
+                initialValue={(values.name as MultiLanguageString)?.[lang] || ''}
                 className={clsx(
-                  'w-full pl-[65px]'
+                  'w-full rounded-[22px] border border-neutral py-[14px] pr-[56px] pl-[65px] text-[14px] outline-none transition-border duration-primary focus:border focus:border-secondaryAccent md:h-full'
                   // newInputValue ? 'text-gray-400' : ''
                 )}
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handleChangeName(e, lang)}
                 placeholder={`Enter product name in ${lang.toUpperCase()}`}
                 name={`name.${lang}`}
                 required={lang === 'en'}

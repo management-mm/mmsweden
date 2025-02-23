@@ -44,9 +44,9 @@ const CatManIndItem: FC<ICatManIndItemProps> = ({
 
   const { setFieldValue } = useFormikContext();
 
-  const handleCheck = (value: string) => {
+  const handleCheck = (value: string | boolean) => {
     setFieldValue(`${itemName}`, value, false);
-    setCheckedValue(value);
+    setCheckedValue(value as string);
   };
 
   const handleCheckedValue = (event: ChangeEvent<HTMLInputElement>) => {

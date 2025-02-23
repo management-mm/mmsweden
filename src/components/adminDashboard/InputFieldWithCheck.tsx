@@ -20,7 +20,7 @@ interface IInputField {
   title?: string;
   as?: string;
   initialValue?: string;
-  handleCheck: (value: string) => void;
+  handleCheck: (value: boolean | string) => void;
 }
 
 const InputFieldWithCheck: FC<IInputField> = ({
@@ -67,7 +67,12 @@ const InputFieldWithCheck: FC<IInputField> = ({
         )}
         type="button"
         onClick={() => {
-          handleCheck(isClick ? '' : inputValue);
+          if (name === 'name') {
+            handleCheck(!isClick)
+          } else {
+            handleCheck(isClick ? '' : inputValue);
+          }
+          
           setIsClick(!isClick);
         }}
       >

@@ -50,18 +50,16 @@ const Industry: FC<IIndustryProps> = ({
 
   const { setFieldValue } = useFormikContext();
 
-  const handleCheck = (value: string) => {
-    console.log('array', checkedValues)
+  const handleCheck = (value: string | boolean) => {
     if (value) {
-      const newCheckedValue =checkedValues.includes(value) ? checkedValues.filter(checkedValue => checkedValue !== value) : [...checkedValues, value];
+      const newCheckedValue =checkedValues.includes(value as string) ? checkedValues.filter(checkedValue => checkedValue !== value) : [...checkedValues, value];
       setFieldValue('industries', newCheckedValue, false);
-      setCheckedValues(newCheckedValue);
+      setCheckedValues(newCheckedValue as string[]);
     }
   };
 
   const handleCheckedValue = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.value) {
-      console.log('array', checkedValues)
       const newCheckedValue = checkedValues.includes(event.target.value) ? checkedValues.filter(checkedValue => checkedValue !== event.target.value) : [...checkedValues, event.target.value];
       setFieldValue('industries', newCheckedValue, false);
       setCheckedValues(newCheckedValue);

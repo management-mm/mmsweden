@@ -23,8 +23,8 @@ const UploadButtons: FC<IUploadButtonsProps> = ({
 }) => {
   const [inputValue, setInputValue] = useState(initialVideo);
 
-  const handleCheck = (value: string) => {
-    setInputValue(value);
+  const handleCheck = (value: string | boolean) => {
+    setInputValue(value as string);
   };
 
   return (

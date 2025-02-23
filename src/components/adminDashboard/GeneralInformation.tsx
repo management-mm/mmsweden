@@ -18,12 +18,14 @@ const GeneralInformation: FC<IGeneralInformationProps> = ({ product }) => {
   // Дебаунсим обновление Formik
   const debouncedSetFieldValue = useCallback(
     _.debounce((field: string, value: string) => {
+      console.log("Change")
       setFieldValue(field, value);
-    }, 300),
+    }),
     [] // Важно: пустой массив зависимостей, чтобы debounce не пересоздавался
   );
 
   const handleChange = (field: string) => (e: ChangeEvent<HTMLInputElement>) => {
+    console.log("Change")
     e.persist(); // предотвращает баги в React с SyntheticEvent
     const value = e.target.value;
     
@@ -36,7 +38,7 @@ const GeneralInformation: FC<IGeneralInformationProps> = ({ product }) => {
 
   return (
     <div className="flex flex-col gap-[20px]">
-      <ProductName name={product?.name} />
+      <ProductName />
 
       <label className="flex flex-col gap-[2px]">
         <LabelTitle title="ID Number" />

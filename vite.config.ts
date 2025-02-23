@@ -4,6 +4,9 @@ import { defineConfig } from 'vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  build: {
+    chunkSizeWarningLimit: 1000,
+  },
   plugins: [react()],
   resolve: {
     alias: {
@@ -12,17 +15,13 @@ export default defineConfig({
       '@components': '/src/components',
       '@pages': '/src/pages',
       '@router': '/src/router',
-      // '@routes': '/src/routes',
-
       '@store': '/src/store',
       '@utils': '/src/utils',
       '@interfaces': '/src/interfaces',
       '@schemas': '/src/schemas',
       '@enums': '/src/enums',
       '@hooks': '/src/hooks',
-
       '@constants': '/src/constants',
-
       '@i18n': '/src/i18n',
     },
   },

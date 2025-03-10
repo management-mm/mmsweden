@@ -20,6 +20,7 @@ const NewArrivals = lazy(() => import('@pages/NewArrivals'));
 const Login = lazy(() => import('@pages/Login'));
 const NewProduct = lazy(() => import('@pages/NewProduct'));
 const EditProduct = lazy(() => import('@pages/EditProduct'));
+const FiltersSettings = lazy(() => import('@pages/FiltersSettings'));
 const Settings = lazy(() => import('@pages/Settings'));
 
 const router = createBrowserRouter([
@@ -117,6 +118,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loader />}>
             <NewProduct />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'filters-settings',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <FiltersSettings />
           </Suspense>
         ),
       },

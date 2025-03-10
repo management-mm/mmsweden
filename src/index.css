@@ -61,6 +61,10 @@
   width: fit-content !important;
 }
 
+.photo-slide {
+  width: 100% !important;
+}
+
 .swiper-wrapper {
   margin-bottom: 25px;
 }

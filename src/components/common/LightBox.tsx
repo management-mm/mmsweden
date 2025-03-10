@@ -51,8 +51,6 @@ const LightBox: FC<ILightBoxProps> = ({
   const modalContent = (
     <div
       onClick={e => {
-        console.log(e.target);
-
         if (
           e.currentTarget === e.target ||
           (e.target instanceof HTMLElement &&

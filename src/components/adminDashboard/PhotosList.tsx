@@ -74,7 +74,7 @@ const PhotosList: FC<IPhotosListProps> = ({
 
       const toSlot = slots.findIndex(item => item.slot === event.toSlot);
       const fromSlot = slots.findIndex(item => item.slot === event.fromSlot);
-      console.log("toSlot", toSlot, "fromSlot", fromSlot)
+
       const filteredSlotItemMap = event.newSlotItemMap.asArray.filter(
         ({ item }) => items.some(i => i.id === item)
       );
@@ -104,7 +104,6 @@ const PhotosList: FC<IPhotosListProps> = ({
   ]);
 
   useEffect(() => {
-    console.log("fileAvatars", fileAvatars)
     setFieldValue(
       'photos',
       fileAvatars.filter(file => Boolean(file) !== false),
@@ -176,11 +175,6 @@ const PhotosList: FC<IPhotosListProps> = ({
             )}
           </div>
         ))}
-        <div>
-          {fileAvatars && fileAvatars.map(file => {
-            return (<p>{file?.name}</p>)
-          })}
-        </div>
       </div>
     </div>
   );

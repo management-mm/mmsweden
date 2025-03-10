@@ -33,9 +33,8 @@ const AddProduct = () => {
     setIsOpen(!isOpen);
   };
   useEffect(() => {
-    console.log("Ia tyt")
     dispatch(clearProduct())
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     if (!product) {

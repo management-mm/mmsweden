@@ -1,7 +1,6 @@
 import { type ChangeEvent, type FC, useEffect, useState } from 'react';
 
 import type { ICountryOption } from '@interfaces/ICountryOption';
-import { nanoid } from 'nanoid';
 
 import useOutsideAlerter from '@hooks/useOutsideAlerter';
 
@@ -88,7 +87,7 @@ const Menu: FC<IMenuProps> = ({
         {options && options.length > 0 ? (
           visibleCountries.map(option => (
             <li
-              key={nanoid()}
+              key={option.value}
               className="duration-250 cursor-pointer py-[8px] transition-colors hover:bg-secondary"
               onClick={() => handleOptionClick(option)}
             >

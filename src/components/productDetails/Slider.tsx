@@ -37,9 +37,9 @@ const Slider: FC<ISliderProps> = ({ photos, video, alt }) => {
         >
           {photos.map((photo, index) => {
             return (
-              <SwiperSlide key={'slider' + photo} className="rounded-[4px]">
+              <SwiperSlide key={photo} className="rounded-[4px]">
                 <img
-                  className="rounded-[4px] lg:w-[754px]"
+                  className="rounded-[4px] lg:w-[754px] screen-none"
                   src={photo}
                   alt={alt}
                   width={'100%'}
@@ -84,12 +84,12 @@ const Slider: FC<ISliderProps> = ({ photos, video, alt }) => {
         >
           {photos.map(photo => {
             return (
-              <SwiperSlide key={'small slider' + photo}>
+              <SwiperSlide key={photo}>
                 <img
                   src={photo}
                   alt={alt}
                   width={98}
-                  className="rounded-[2px]"
+                  className="rounded-[2px] screen-none"
                 />
               </SwiperSlide>
             );

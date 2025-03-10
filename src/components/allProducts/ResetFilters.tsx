@@ -2,8 +2,6 @@ import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 
-import { nanoid } from 'nanoid';
-
 import { LanguageContext } from '@components/SharedLayout';
 import SvgIcon from '@components/common/SvgIcon';
 
@@ -77,7 +75,7 @@ const ResetFilters = () => {
       {filtersToReset.map(filter => {
         return (
           <button
-            key={nanoid()}
+            // key={}
             onClick={() =>
               setSearchParams(searchParams => {
                 subtractSearchParam(

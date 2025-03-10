@@ -27,7 +27,7 @@ const ProductDetails: FC<IProductDetailsProps> = ({
   return (
     <>
       <h3
-        className="mb-[4px] text-[16px] font-semibold uppercase text-primary"
+        className="mb-[4px] text-[16px] font-semibold line-clamp-2 uppercase text-primary"
         key={`name-${language}`}
         translate="no"
       >

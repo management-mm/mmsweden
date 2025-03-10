@@ -3,7 +3,6 @@ import Skeleton from 'react-loading-skeleton';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import type { MultiLanguageString } from '@interfaces/IProduct';
-import { nanoid } from 'nanoid';
 import 'swiper/css';
 
 import LightBox from '../LightBox';
@@ -14,6 +13,7 @@ import useSwiperNavigation from '@hooks/useSwiperNavigation';
 import getProductName from '@utils/getProductName';
 
 import type { LanguageKeys } from '@enums/languageKeys';
+import { cn } from '@utils/cn';
 
 interface IProductImageProps {
   isLoading: boolean;
@@ -50,13 +50,15 @@ const ProductImage: FC<IProductImageProps> = ({
                 onSwiper={onSwiperInit}
                 slidesPerView={1}
                 spaceBetween={0}
-                className="mySwiper2"
+                className="mySwiper2 h-[218px]"
               >
                 {photos.map(photo => (
-                  <SwiperSlide key={nanoid()} className="rounded-[4px]">
+                  <SwiperSlide key={photo} className={cn("rounded-[4px] select-none  ", "photo-slide")}>
                     <img
-                      className="h-[218px] rounded-[4px] object-cover"
+                      className="rounded-[4px] h-[218px] object-cover"
                       src={photo}
+                      width={'100%'}
+                      height={218}
                       alt="Image"
                       onClick={() => setCurrentIndex(0)}
                     />
@@ -79,7 +81,7 @@ const ProductImage: FC<IProductImageProps> = ({
               </Swiper>
             </div>
             <img
-              className={`h-[218px] w-full rounded-t-[4px] object-cover transition-opacity duration-300 ${
+              className={`h-[218px] select-none w-full rounded-t-[4px] object-cover transition-opacity duration-300 ${
                 isHovered ? 'opacity-0' : 'opacity-100'
               }`}
               src={photos[0]}

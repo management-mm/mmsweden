@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import Skeleton from 'react-loading-skeleton';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { useParams } from 'react-router-dom';
 
 import Details from './Details';
@@ -22,6 +22,7 @@ import { cn } from '@utils/cn';
 import getProductName from '@utils/getProductName';
 
 import { Title } from '@enums/i18nConstants';
+import { clearProduct } from '@store/products/productsSlice';
 
 const Product = () => {
   const context = useContext(LanguageContext);
@@ -40,15 +41,17 @@ const Product = () => {
   const { name, photos, video } = product || {};
 
   useEffect(() => {
+    dispatch(clearProduct())
     dispatch(fetchProductById({ productId }));
   }, [dispatch, productId]);
-  console.log('product', product)
+
   return (
     <div className={cn('container', 'pt-[12px] md:pt-[22px]')}>
       <Breadcrumb
         productId={productId}
         name={name && getProductName(name, language)}
       />
+      <SkeletonTheme baseColor="#E1E1E1" highlightColor="#F2F2F2">
       <article className="pb-[48px]">
         <h2 className="mb-[22px] text-center text-[22px] font-bold md:text-start">
           {!isLoading && name ? (
@@ -98,7 +101,8 @@ const Product = () => {
             <VideoPlayer video={video} />
           </>
         )}
-      </article>
+        </article>
+        </SkeletonTheme>
     </div>
   );
 };

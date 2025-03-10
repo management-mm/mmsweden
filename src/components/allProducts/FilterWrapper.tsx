@@ -13,7 +13,6 @@ import clsx from 'clsx';
 import type { ICategory } from 'interfaces/ICategory';
 import type { IIndustry } from 'interfaces/IIndustry';
 import type { IManufacturer } from 'interfaces/IManufacturer';
-import { nanoid } from 'nanoid';
 
 import { LanguageContext } from '@components/SharedLayout';
 import SearchFilter from '@components/common/SearchFilter';
@@ -131,7 +130,9 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
         <SearchFilter keyword={keyword} setKeyword={setKeyword} />
         <div className="flex h-[350px] flex-col gap-[16px] overflow-y-scroll">
           {Object.entries(groupedFilters).map(([character, items]) => (
-            <div key={nanoid()}>
+            <div
+              key={character}
+            >
               <p className="mb-4 text-[12px] font-semibold text-desc">
                 {character?.toUpperCase()}
               </p>
@@ -139,7 +140,7 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
                 {items.map(item => {
                   return (
                     <SkeletonTheme
-                      key={nanoid()}
+                      key={item._id}
                       baseColor="#E1E1E1"
                       highlightColor="#F2F2F2"
                     >

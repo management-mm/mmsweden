@@ -1,11 +1,11 @@
 import type { Dispatch, FC, SetStateAction } from 'react';
 
 import type { MultiLanguageString } from '@interfaces/IProduct';
-import { nanoid } from 'nanoid';
 
 import SvgIcon from '@components/common/SvgIcon';
 
 import { IconId } from '@enums/iconsSpriteId';
+import { useFormikContext } from 'formik';
 
 interface ICheckedCatManIndItemProps {
   checkedValue: MultiLanguageString | string;
@@ -22,17 +22,20 @@ const CheckedCatManIndItem: FC<ICheckedCatManIndItemProps> = ({
   checkedValuesArray,
   setCheckedValue,
 }) => {
+
+  const { setFieldValue } = useFormikContext();
+
   return (
     <button
       type="button"
-      key={nanoid()}
+      // key={}
       onClick={e => {
         if (Array.isArray(checkedValuesArray)) {
-          setCheckedValue(
-            checkedValuesArray.filter(
+          const withoutDeletedCheckedValue = checkedValuesArray.filter(
               value => value !== e.currentTarget.textContent
             )
-          );
+          setCheckedValue(withoutDeletedCheckedValue);
+          setFieldValue('industries', withoutDeletedCheckedValue, false);
           return;
         }
         setCheckedValue(['']);

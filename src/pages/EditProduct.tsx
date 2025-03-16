@@ -1,4 +1,4 @@
-import ChangeProduct from '@components/adminDashboard/ChangeProduct';
+import ChangeProduct from '@components/adminDashboard/forms/ChangeProduct';
 
 const EditProduct = () => {
   return (

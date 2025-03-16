@@ -16,8 +16,8 @@ import timeframeList from '@constants/timeframeList';
 interface IDeleteOrSoldProps {
   setIsDelete: (value: boolean) => void;
   isDelete: boolean;
-  setDeletionDate: (value: string | null | boolean) => void,
-  deletionDate: string | null | boolean
+  setDeletionDate: (value: string | null | boolean) => void;
+  deletionDate: string | null | boolean;
 }
 
 const DeleteOrSold: FC<IDeleteOrSoldProps> = ({
@@ -27,7 +27,7 @@ const DeleteOrSold: FC<IDeleteOrSoldProps> = ({
   deletionDate,
 }) => {
   const { setFieldValue } = useFormikContext<FormikValues>();
-
+  console.log(deletionDate);
   const [numbr, setNumbr] = useState<number>(1);
   const [timeframe, setTimeframe] = useState<string>('month');
 

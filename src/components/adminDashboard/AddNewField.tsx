@@ -5,13 +5,18 @@ import SvgIcon from '@components/common/SvgIcon';
 import { filters } from '@enums/filters';
 import { IconId } from '@enums/iconsSpriteId';
 
-interface IAddNewCatManIndProps {
-  itemName: filters.Category | filters.Industry | filters.Manufacturer | 'name';
+interface IAddNewFieldProps {
+  itemName:
+    | filters.Category
+    | filters.Industry
+    | filters.Manufacturer
+    | 'name'
+    | 'description';
   setIsClick: (value: boolean) => void;
   setFieldCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const AddNewCatManInd: FC<IAddNewCatManIndProps> = ({
+const AddNewField: FC<IAddNewFieldProps> = ({
   itemName,
   setIsClick,
   setFieldCount,
@@ -34,10 +39,13 @@ const AddNewCatManInd: FC<IAddNewCatManIndProps> = ({
         size={{ width: 14, height: 14 }}
       />
       <span className="font-openSans text-[14px] text-secondaryAccent">
-        Add new {itemName}
+        {itemName === 'description' || itemName === 'name'
+          ? 'Add input field to change'
+          : 'Add new'}{' '}
+        {itemName}
       </span>
     </button>
   );
 };
 
-export default AddNewCatManInd;
+export default AddNewField;

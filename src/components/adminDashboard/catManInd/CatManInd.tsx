@@ -5,7 +5,7 @@ import type { IIndustry } from '@interfaces/IIndustry';
 import type { IManufacturer } from '@interfaces/IManufacturer';
 import type { MultiLanguageString } from '@interfaces/IProduct';
 
-import CatManIndItem from './CatManIndItem';
+import CatManItem from './CatManItem';
 import Industry from './Industry';
 
 import {
@@ -52,8 +52,7 @@ const CatManInd: FC<ICatManIndProps> = ({
   const industriesIsLoading = useAppSelector(selectIndustriesIsLoading);
 
   useEffect(() => {
-    if (!categories || categoryKeyword) {
-      const fetchingCategories = async () => {
+    const fetchingCategories = async () => {
       try {
         dispatch(
           fetchCategories({ keyword: categoryKeyword, lang: LanguageKeys.EN })
@@ -62,42 +61,36 @@ const CatManInd: FC<ICatManIndProps> = ({
         console.error('Error fetching data:', error);
       }
     };
-      fetchingCategories();
-    }
-    
+    fetchingCategories();
   }, [dispatch, categoryKeyword]);
 
   useEffect(() => {
-    if (!manufacturers || manufacturerKeyword) {
-      const fetchingManufacturers = async () => {
-        try {
-          dispatch(fetchManufacturers({ keyword: manufacturerKeyword }));
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      };
-      fetchingManufacturers();
-    }
+    const fetchingManufacturers = async () => {
+      try {
+        dispatch(fetchManufacturers({ keyword: manufacturerKeyword }));
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchingManufacturers();
   }, [dispatch, manufacturerKeyword]);
 
   useEffect(() => {
-    if (!industries || industryKeyword) {
-      const fetchingIndustries = async () => {
-        try {
-          dispatch(
-            fetchIndustries({ keyword: industryKeyword, lang: LanguageKeys.EN })
-          );
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      };
-      fetchingIndustries();
-    }
+    const fetchingIndustries = async () => {
+      try {
+        dispatch(
+          fetchIndustries({ keyword: industryKeyword, lang: LanguageKeys.EN })
+        );
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchingIndustries();
   }, [dispatch, industryKeyword]);
 
   return (
     <>
-      <CatManIndItem
+      <CatManItem
         itemName={filters.Category}
         items={categories}
         isLoading={categoriesIsLoading}
@@ -105,7 +98,7 @@ const CatManInd: FC<ICatManIndProps> = ({
         setKeyword={setCategoryKeyword}
         initialValue={initialCategory}
       />
-      <CatManIndItem
+      <CatManItem
         itemName={filters.Manufacturer}
         items={manufacturers}
         isLoading={manufacturersIsLoading}

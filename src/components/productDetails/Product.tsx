@@ -12,6 +12,7 @@ import DecorativeLine from '@components/common/DecorativeLine';
 import VideoPlayer from '@components/common/VideoPlayer';
 
 import { fetchProductById } from '@store/products/operations';
+import { clearProduct } from '@store/products/productsSlice';
 import { selectIsLoading, selectProductDetails } from '@store/selectors';
 
 import { useAppDispatch } from '@hooks/useAppDispatch';
@@ -22,7 +23,6 @@ import { cn } from '@utils/cn';
 import getProductName from '@utils/getProductName';
 
 import { Title } from '@enums/i18nConstants';
-import { clearProduct } from '@store/products/productsSlice';
 
 const Product = () => {
   const context = useContext(LanguageContext);
@@ -41,7 +41,7 @@ const Product = () => {
   const { name, photos, video } = product || {};
 
   useEffect(() => {
-    dispatch(clearProduct())
+    dispatch(clearProduct());
     dispatch(fetchProductById({ productId }));
   }, [dispatch, productId]);
 
@@ -52,57 +52,57 @@ const Product = () => {
         name={name && getProductName(name, language)}
       />
       <SkeletonTheme baseColor="#E1E1E1" highlightColor="#F2F2F2">
-      <article className="pb-[48px]">
-        <h2 className="mb-[22px] text-center text-[22px] font-bold md:text-start">
-          {!isLoading && name ? (
-            getProductName(name, language)
-          ) : (
-            <Skeleton width={150} />
-          )}
-        </h2>
-        <div className="gap-[30px] pb-[22px] md:flex md:items-start">
-          <div className="mb-[22px]">
-            {photos && photos.length > 1 ? (
-              <Slider
-                alt={name ? getProductName(name, language) : ''}
-                photos={photos}
-                video={video ? video : ''}
-              />
+        <article className="pb-[48px]">
+          <h2 className="mb-[22px] text-center text-[22px] font-bold md:text-start">
+            {!isLoading && name ? (
+              getProductName(name, language)
             ) : (
-              photos &&
-              photos[0] && (
-                <img
-                  className="rounded-[4px]"
-                  src={photos[0]}
+              <Skeleton width={150} />
+            )}
+          </h2>
+          <div className="gap-[30px] pb-[22px] md:flex md:items-start">
+            <div className="mb-[22px]">
+              {photos && photos.length > 1 ? (
+                <Slider
                   alt={name ? getProductName(name, language) : ''}
-                  width={'100%'}
+                  photos={photos}
+                  video={video ? video : ''}
                 />
-              )
-            )}
-            {video && windowWidth >= 768 && (
-              <>
-                <DecorativeLine intent="video" />
-                <h4 className="mb-[22px] text-[18px] font-semibold text-primary">
-                  {t(Title.VideoOverview)}
-                </h4>
-                <VideoPlayer video={video} />
-              </>
-            )}
-          </div>
+              ) : (
+                photos &&
+                photos[0] && (
+                  <img
+                    className="rounded-[4px]"
+                    src={photos[0]}
+                    alt={name ? getProductName(name, language) : ''}
+                    width={'100%'}
+                  />
+                )
+              )}
+              {video && windowWidth >= 768 && (
+                <>
+                  <DecorativeLine intent="video" />
+                  <h4 className="mb-[22px] text-[18px] font-semibold text-primary">
+                    {t(Title.VideoOverview)}
+                  </h4>
+                  <VideoPlayer video={video} />
+                </>
+              )}
+            </div>
 
-          {product && <Details product={product} />}
-        </div>
-        {video && windowWidth < 768 && (
-          <>
-            <DecorativeLine intent="video" />
-            <h4 className="mb-[22px] text-[18px] font-semibold text-primary">
-              {t(Title.VideoOverview)}
-            </h4>
-            <VideoPlayer video={video} />
-          </>
-        )}
+            {product && <Details product={product} />}
+          </div>
+          {video && windowWidth < 768 && (
+            <>
+              <DecorativeLine intent="video" />
+              <h4 className="mb-[22px] text-[18px] font-semibold text-primary">
+                {t(Title.VideoOverview)}
+              </h4>
+              <VideoPlayer video={video} />
+            </>
+          )}
         </article>
-        </SkeletonTheme>
+      </SkeletonTheme>
     </div>
   );
 };

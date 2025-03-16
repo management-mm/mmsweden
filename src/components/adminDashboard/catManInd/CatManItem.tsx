@@ -11,18 +11,19 @@ import type { IManufacturer } from '@interfaces/IManufacturer';
 import type { MultiLanguageString } from '@interfaces/IProduct';
 import { useFormikContext } from 'formik';
 
-import AddNewCatManInd from './AddNewCatManInd';
-import Block from './Block';
 import CheckedItemsList from './CheckedItemsList';
 import GroupedFilterItems from './GroupedFilterItems';
-import InputFieldWithCheck from './InputFieldWithCheck';
+
+import AddNewCatManInd from '../AddNewField';
+import Block from '../Block';
+import InputFieldWithCheck from '../formsFields/InputFieldWithCheck';
 
 import LabelTitle from '@components/common/LabelTitle';
 import SearchFilter from '@components/common/SearchFilter';
 
 import { filters } from '@enums/filters';
 
-interface ICatManIndItemProps {
+interface ICatManItemProps {
   itemName: filters.Category | filters.Manufacturer;
   items: ICategory[] | IManufacturer[];
   isLoading: boolean;
@@ -31,7 +32,7 @@ interface ICatManIndItemProps {
   initialValue: MultiLanguageString | string | (MultiLanguageString | string)[];
 }
 
-const CatManIndItem: FC<ICatManIndItemProps> = ({
+const CatManItem: FC<ICatManItemProps> = ({
   itemName,
   items,
   isLoading,
@@ -50,7 +51,9 @@ const CatManIndItem: FC<ICatManIndItemProps> = ({
   };
 
   const handleCheckedValue = (event: ChangeEvent<HTMLInputElement>) => {
-    setCheckedValue(event.target.value !== checkedValue ? event.target.value : '');
+    setCheckedValue(
+      event.target.value !== checkedValue ? event.target.value : ''
+    );
     setFieldValue(`${itemName}`, event.target.value, false);
   };
 
@@ -96,4 +99,4 @@ const CatManIndItem: FC<ICatManIndItemProps> = ({
   );
 };
 
-export default CatManIndItem;
+export default CatManItem;

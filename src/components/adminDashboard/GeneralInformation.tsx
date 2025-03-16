@@ -1,11 +1,13 @@
-import type { FC, ChangeEvent } from 'react';
-import { Field, type FormikValues, useFormikContext } from 'formik';
+import type { ChangeEvent, FC } from 'react';
 import { useCallback, useMemo } from 'react';
-import * as _ from 'lodash';
 
 import type { IProduct } from '@interfaces/IProduct';
-import DescriptionProduct from './DescriptionProduct';
-import ProductName from './ProductName';
+import { Field, type FormikValues, useFormikContext } from 'formik';
+import * as _ from 'lodash';
+
+import DescriptionProduct from './formsFields/DescriptionProduct';
+import ProductName from './formsFields/ProductName';
+
 import LabelTitle from '@components/common/LabelTitle';
 
 interface IGeneralInformationProps {
@@ -16,38 +18,29 @@ const GeneralInformation: FC<IGeneralInformationProps> = ({ product }) => {
   const { values, setFieldValue } = useFormikContext<FormikValues>();
 
   const debouncedSetFieldValue = useMemo(
-    () => _.debounce((field: string, value: string) => setFieldValue(field, value, false), 1000),
+    () =>
+      _.debounce(
+        (field: string, value: string) => setFieldValue(field, value, false),
+        1000
+      ),
     []
   );
 
-  // // Дебаунсим обновление Formik
-  // const debouncedSetFieldValue = useCallback(
-  //   _.debounce((field: string, value: string) => {
-  //     console.log("Change")
-  //     setFieldValue(field, value);
-  //   }, 300),
-  //   [] // Важно: пустой массив зависимостей, чтобы debounce не пересоздавался
-  // );
+  const handleChange = useCallback(
+    (field: string) => (e: ChangeEvent<HTMLInputElement>) => {
+      e.persist();
+      const value = e.target.value;
 
-  const handleChange = useCallback((field: string) => (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("Change")
-    e.persist(); // предотвращает баги в React с SyntheticEvent
-    const value = e.target.value;
-    
-    setFieldValue(field, value, false);
-    
-    debouncedSetFieldValue(field, value);
-  }, [setFieldValue, debouncedSetFieldValue]);
+      setFieldValue(field, value, false);
 
-  // const onChange = useCallback(event => {
-  //   const value = event.target.value;
-  //   setFieldValue("websiteUrl", value);
-  //   debouncedSave(value);
-  // }, [setFieldValue]);
+      debouncedSetFieldValue(field, value);
+    },
+    [setFieldValue, debouncedSetFieldValue]
+  );
 
   return (
     <div className="flex flex-col gap-[20px]">
-      <ProductName />
+      <ProductName initialValue={product?.name} />
 
       <label className="flex flex-col gap-[2px]">
         <LabelTitle title="ID Number" />

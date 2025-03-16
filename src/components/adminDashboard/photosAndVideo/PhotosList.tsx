@@ -3,7 +3,7 @@ import { type FC, useEffect, useMemo, useRef } from 'react';
 import { type FormikValues, useFormikContext } from 'formik';
 import { type SlotItemMapArray, type Swapy, createSwapy } from 'swapy';
 
-import type { Item } from './PhotosAndVideo';
+import type { Item } from './photosAndVideo/PhotosAndVideo';
 
 import SvgIcon from '@components/common/SvgIcon';
 
@@ -48,15 +48,10 @@ const PhotosList: FC<IPhotosListProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
 
   const swapItems = <T,>(array: T[], index1: number, index2: number): T[] => {
-      const newArray = [...array];
-      [newArray[index1], newArray[index2]] = [
-        newArray[index2],
-        newArray[index1],
-      ];
-      return newArray;
-    }
-   
-  
+    const newArray = [...array];
+    [newArray[index1], newArray[index2]] = [newArray[index2], newArray[index1]];
+    return newArray;
+  };
 
   useEffect(() => {
     dynamicSwapy(swapyRef.current, items, 'id', slotItemMap, setSlotItemMap);
@@ -78,7 +73,7 @@ const PhotosList: FC<IPhotosListProps> = ({
       const filteredSlotItemMap = event.newSlotItemMap.asArray.filter(
         ({ item }) => items.some(i => i.id === item)
       );
- 
+
       setSlotItemMap(
         items.length !== 0 ? filteredSlotItemMap : event.newSlotItemMap.asArray
       );
@@ -96,12 +91,7 @@ const PhotosList: FC<IPhotosListProps> = ({
     return () => {
       swapyRef.current?.destroy();
     };
-  }, [
-    fileAvatars,
-    swapItems,
-    editedAvatars,
-    photoQueue,
-  ]);
+  }, [fileAvatars, swapItems, editedAvatars, photoQueue]);
 
   useEffect(() => {
     setFieldValue(

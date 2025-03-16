@@ -13,7 +13,11 @@ export const PrivateRoute = ({
 }: IPrivateRouteProps) => {
   const { isLoggedIn, isRefreshing } = useAuth();
   const shouldRedirect = !isLoggedIn && !isRefreshing;
-  const location = useLocation()
+  const location = useLocation();
 
-  return shouldRedirect ? <Navigate to={location.state?.from ?? redirectTo} /> : component;
+  return shouldRedirect ? (
+    <Navigate to={location.state?.from ?? redirectTo} />
+  ) : (
+    component
+  );
 };

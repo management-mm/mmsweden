@@ -39,7 +39,7 @@ const Slider: FC<ISliderProps> = ({ photos, video, alt }) => {
             return (
               <SwiperSlide key={photo} className="rounded-[4px]">
                 <img
-                  className="rounded-[4px] lg:w-[754px] screen-none"
+                  className="screen-none rounded-[4px] lg:w-[754px]"
                   src={photo}
                   alt={alt}
                   width={'100%'}
@@ -89,7 +89,7 @@ const Slider: FC<ISliderProps> = ({ photos, video, alt }) => {
                   src={photo}
                   alt={alt}
                   width={98}
-                  className="rounded-[2px] screen-none"
+                  className="screen-none rounded-[2px]"
                 />
               </SwiperSlide>
             );

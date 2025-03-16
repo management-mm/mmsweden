@@ -47,6 +47,7 @@ export interface IUpdateProductData {
   industries: string[];
   condition: 'used' | 'new';
   deletionDate: Date | null | string;
+  // shouldTranslateName: boolean;
 }
 
 export interface IFetchProductsResponse {
@@ -111,8 +112,7 @@ export const addProduct = createAsyncThunk<
         if (key === 'shouldTranslateName') continue;
         else if (key === 'industries') {
           data.append('industries', newProduct[key].join(','));
-        }
-        else if (key === 'photos') {
+        } else if (key === 'photos') {
           newProduct[key].forEach(photo => {
             data.append('photos', photo);
           });
@@ -144,8 +144,9 @@ export const updateProduct = createAsyncThunk<
     for (const property in updatedProduct) {
       if (Object.prototype.hasOwnProperty.call(updatedProduct, property)) {
         const key = property as keyof IUpdateProductData;
-  
+
         if (key === 'id') continue;
+        //  if (key === 'shouldTranslateName') continue;
         if (key === 'deletionDate' && !updatedProduct[key]) continue;
 
         if (key === 'name' && typeof updatedProduct[key] === 'object') {

@@ -130,9 +130,7 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
         <SearchFilter keyword={keyword} setKeyword={setKeyword} />
         <div className="flex h-[350px] flex-col gap-[16px] overflow-y-scroll">
           {Object.entries(groupedFilters).map(([character, items]) => (
-            <div
-              key={character}
-            >
+            <div key={character}>
               <p className="mb-4 text-[12px] font-semibold text-desc">
                 {character?.toUpperCase()}
               </p>

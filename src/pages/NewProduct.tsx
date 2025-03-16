@@ -1,4 +1,4 @@
-import AddProduct from '@components/adminDashboard/AddProduct';
+import AddProduct from '@components/adminDashboard/forms/AddProduct';
 
 const NewProduct = () => {
   return (

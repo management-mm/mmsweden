@@ -2,7 +2,7 @@ import { type ChangeEvent, type FC, useState } from 'react';
 
 import { Field } from 'formik';
 
-import InputFieldWithCheck from './InputFieldWithCheck';
+import InputFieldWithCheck from '../formsFields/InputFieldWithCheck';
 
 import LabelTitle from '@components/common/LabelTitle';
 import SvgIcon from '@components/common/SvgIcon';

@@ -10,10 +10,10 @@ import NaviArrowSlider from '../NaviArrowSlider';
 
 import useSwiperNavigation from '@hooks/useSwiperNavigation';
 
+import { cn } from '@utils/cn';
 import getProductName from '@utils/getProductName';
 
 import type { LanguageKeys } from '@enums/languageKeys';
-import { cn } from '@utils/cn';
 
 interface IProductImageProps {
   isLoading: boolean;
@@ -53,9 +53,12 @@ const ProductImage: FC<IProductImageProps> = ({
                 className="mySwiper2 h-[218px]"
               >
                 {photos.map(photo => (
-                  <SwiperSlide key={photo} className={cn("rounded-[4px] select-none  ", "photo-slide")}>
+                  <SwiperSlide
+                    key={photo}
+                    className={cn('select-none rounded-[4px]', 'photo-slide')}
+                  >
                     <img
-                      className="rounded-[4px] h-[218px] object-cover"
+                      className="h-[218px] rounded-[4px] object-cover"
                       src={photo}
                       width={'100%'}
                       height={218}
@@ -81,7 +84,7 @@ const ProductImage: FC<IProductImageProps> = ({
               </Swiper>
             </div>
             <img
-              className={`h-[218px] select-none w-full rounded-t-[4px] object-cover transition-opacity duration-300 ${
+              className={`h-[218px] w-full select-none rounded-t-[4px] object-cover transition-opacity duration-300 ${
                 isHovered ? 'opacity-0' : 'opacity-100'
               }`}
               src={photos[0]}

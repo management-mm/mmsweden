@@ -1,20 +1,21 @@
+import type { Dispatch, FC, SetStateAction } from 'react';
+
 import StatusModal from '@components/common/StatusModal';
 
 import useMessageDelOrSold from '@hooks/useMessageDelOrSold';
-import type { Dispatch, FC, SetStateAction } from 'react';
 
 interface IMessageDeleteOrSoldProps {
   title: string;
   isDeleteOrDeletionDate: boolean | string | null;
   setIsDeleteOrDeletionDate: Dispatch<SetStateAction<boolean | string | null>>;
-  isProductUpdated: boolean
+  isProductUpdated: boolean;
 }
 
-const MessageDeleteOrSold:FC<IMessageDeleteOrSoldProps> = ({
+const MessageDeleteOrSold: FC<IMessageDeleteOrSoldProps> = ({
   title,
   isDeleteOrDeletionDate,
   setIsDeleteOrDeletionDate,
-  isProductUpdated
+  isProductUpdated,
 }) => {
   const { isMessageOpen, handleToggleMenu } = useMessageDelOrSold(
     isDeleteOrDeletionDate
@@ -22,7 +23,7 @@ const MessageDeleteOrSold:FC<IMessageDeleteOrSoldProps> = ({
 
   return (
     <>
-      {(isMessageOpen && isProductUpdated) && (
+      {isMessageOpen && isProductUpdated && (
         <StatusModal title={title} handleToggleMenu={handleToggleMenu}>
           <div className="flex w-full gap-[10px]">
             <button

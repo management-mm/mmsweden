@@ -16,7 +16,11 @@ export const schema = Yup.object().shape({
     typeof value === 'string' ? Yup.string() : MultiLanguageSchema
   ),
   idNumber: Yup.string().required(),
-  description: MultiLanguageSchema.required(),
+  description: Yup.lazy(value =>
+    typeof value === 'string'
+      ? Yup.string().required()
+      : MultiLanguageSchema.required()
+  ),
   dimensions: Yup.string().nullable(),
   category: Yup.string().required(),
   manufacturer: Yup.string().required(),
@@ -28,4 +32,5 @@ export const schema = Yup.object().shape({
   photoQueue: Yup.array().of(Yup.mixed<File | string>()).required(),
   photos: Yup.array().of(Yup.mixed<File>()).required(),
   deletionDate: Yup.string().nullable().notRequired(),
+  // shouldTranslateName: Yup.boolean()
 });

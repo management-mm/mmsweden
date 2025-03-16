@@ -76,6 +76,8 @@ const LatestArrivals = () => {
           }}
         >
           {products.map(product => {
+            if (product.deletionDate) return null;
+
             return (
               <SwiperSlide key={product._id}>
                 <ProductCard

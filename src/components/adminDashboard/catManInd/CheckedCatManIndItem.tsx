@@ -1,11 +1,11 @@
 import type { Dispatch, FC, SetStateAction } from 'react';
 
 import type { MultiLanguageString } from '@interfaces/IProduct';
+import { useFormikContext } from 'formik';
 
 import SvgIcon from '@components/common/SvgIcon';
 
 import { IconId } from '@enums/iconsSpriteId';
-import { useFormikContext } from 'formik';
 
 interface ICheckedCatManIndItemProps {
   checkedValue: MultiLanguageString | string;
@@ -22,7 +22,6 @@ const CheckedCatManIndItem: FC<ICheckedCatManIndItemProps> = ({
   checkedValuesArray,
   setCheckedValue,
 }) => {
-
   const { setFieldValue } = useFormikContext();
 
   return (
@@ -32,8 +31,8 @@ const CheckedCatManIndItem: FC<ICheckedCatManIndItemProps> = ({
       onClick={e => {
         if (Array.isArray(checkedValuesArray)) {
           const withoutDeletedCheckedValue = checkedValuesArray.filter(
-              value => value !== e.currentTarget.textContent
-            )
+            value => value !== e.currentTarget.textContent
+          );
           setCheckedValue(withoutDeletedCheckedValue);
           setFieldValue('industries', withoutDeletedCheckedValue, false);
           return;

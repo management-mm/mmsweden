@@ -85,7 +85,7 @@ const productsSlice = createSlice({
     error: null,
   } as IProductsState,
   reducers: {
-    clearProduct: (state) => {
+    clearProduct: state => {
       state.productDetails = null;
     },
   },

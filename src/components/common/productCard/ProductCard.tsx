@@ -1,6 +1,7 @@
 import { type FC, useContext } from 'react';
 import { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 import clsx from 'clsx';
@@ -15,13 +16,12 @@ import SvgIcon from '../SvgIcon';
 
 import { LanguageContext } from '@components/SharedLayout';
 
+import { clearProduct } from '@store/products/productsSlice';
 import { selectIsLoading } from '@store/selectors';
 
 import { useAppSelector } from '@hooks/useAppSelector';
 
 import { IconId } from '@enums/iconsSpriteId';
-import { useDispatch } from 'react-redux';
-import { clearProduct } from '@store/products/productsSlice';
 
 export interface IProductCardProps {
   product: IProduct;
@@ -46,7 +46,7 @@ const ProductCard: FC<IProductCardProps> = ({
 
   const isLoading = useAppSelector(selectIsLoading);
 
-   const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const handleClear = () => {
     dispatch(clearProduct());

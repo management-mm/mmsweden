@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import clsx from 'clsx';
+
 import BackBtn from './BackBtn';
 import Nav from './Nav';
 
@@ -8,9 +10,9 @@ import { Logo } from '@components/common/Logo';
 import MobileMenu from '@components/common/MobileMenu';
 import BurgerMenu from '@components/header/BurgerMenu';
 
-import { cn } from '@utils/cn';
-import clsx from 'clsx';
 import useWindowWidth from '@hooks/useWindowWidth';
+
+import { cn } from '@utils/cn';
 
 const Topbar = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -21,7 +23,7 @@ const Topbar = () => {
     setIsOpen(!isOpen);
   };
   return (
-    <div className="flex flex-col border-b-2 lg:w-[calc(100vw-290px)] border-neutral pb-[8px] md:pb-[14px] lg:h-[112px] lg:flex-row lg:items-center lg:pl-[24px]">
+    <div className="flex flex-col border-b-2 border-neutral pb-[8px] md:pb-[14px] lg:h-[112px] lg:w-[calc(100vw-290px)] lg:flex-row lg:items-center lg:pl-[24px]">
       <div
         className={cn(
           'container',
@@ -32,10 +34,14 @@ const Topbar = () => {
         <BurgerMenu handleToggleMobileMenu={toggleMobileMenu} />
       </div>
       {location.pathname === '/admin/all-products' ? (
-        <h1 className={clsx(
-          "text-primiry text-[24px] font-semibold",
-         (windowWidth < 1178) && 'container'
-        )}>Product List</h1>
+        <h1
+          className={clsx(
+            'text-primiry text-[24px] font-semibold',
+            windowWidth < 1178 && 'container'
+          )}
+        >
+          Product List
+        </h1>
       ) : (
         <BackBtn />
       )}

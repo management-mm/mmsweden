@@ -4,37 +4,37 @@ import { NavLink } from 'react-router-dom';
 import { schema } from '@schemas/addProduct';
 import { Form, Formik } from 'formik';
 
-import Block from './Block';
-import CatManInd from './CatManInd';
-import Condition from './Condition';
-import GeneralInformation from './GeneralInformation';
-import PhotosAndVideo from './PhotosAndVideo';
+import Block from '../Block';
+import Condition from '../Condition';
+import GeneralInformation from '../GeneralInformation';
+import CatManInd from '../catManInd/CatManInd';
+import PhotosAndVideo from '../photosAndVideo/PhotosAndVideo';
 
 import StatusModal from '@components/common/StatusModal';
 import Loader from '@components/common/loaders/Loader';
 
 import { type IAddProductData, addProduct } from '@store/products/operations';
+import { clearProduct } from '@store/products/productsSlice';
 import { selectIsLoading, selectProductDetails } from '@store/selectors';
 
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
 
 import { cn } from '@utils/cn';
-import { clearProduct } from '@store/products/productsSlice';
 
 const AddProduct = () => {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsLoading);
   const product = useAppSelector(selectProductDetails);
   const [isOpen, setIsOpen] = useState(false);
-  const [isSubmit, setIsSubmit] = useState(false)
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const handleToggleMenu = () => {
     setIsOpen(!isOpen);
   };
   useEffect(() => {
-    dispatch(clearProduct())
-  }, [dispatch])
+    dispatch(clearProduct());
+  }, [dispatch]);
 
   useEffect(() => {
     if (!product) {
@@ -45,9 +45,7 @@ const AddProduct = () => {
   }, [product]);
 
   if (!product && isLoading && !isSubmit) {
-    return (
-      <Loader />
-    );
+    return <Loader />;
   }
 
   return (
@@ -69,8 +67,8 @@ const AddProduct = () => {
         validationSchema={schema}
         onSubmit={async (values: IAddProductData) => {
           try {
-            console.log(values)
-            setIsSubmit(true)
+            console.log(values);
+            setIsSubmit(true);
             dispatch(addProduct(values));
           } catch (error) {
             console.log(error);
@@ -123,7 +121,7 @@ const AddProduct = () => {
           <Loader />
         </StatusModal>
       )}
-      {(isOpen && isSubmit) && (
+      {isOpen && isSubmit && (
         <StatusModal
           title={'🎉🎉🎉Great! Your product is now live on the website.'}
           handleToggleMenu={handleToggleMenu}

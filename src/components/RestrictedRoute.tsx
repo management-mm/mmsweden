@@ -2,7 +2,6 @@ import { Navigate } from 'react-router-dom';
 
 import { useAuth } from '@hooks/useAuth';
 
-
 interface IRestrictedRouteProps {
   component: JSX.Element;
   redirectTo?: string;

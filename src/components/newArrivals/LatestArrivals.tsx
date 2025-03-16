@@ -57,13 +57,15 @@ const LatestArrivals = () => {
               {new Date(date).toLocaleString(language, { dateStyle: 'long' })}
             </p>
             <div className="flex flex-wrap justify-center gap-4 md:justify-start">
-              {products.map(product => (
-                <ProductCard
-                  key={product._id}
-                  product={product}
-                  className="w-[296px] md:w-[264px]"
-                />
-              ))}
+              {products.map(product =>
+                !product.deletionDate ? (
+                  <ProductCard
+                    key={product._id}
+                    product={product}
+                    className="w-[296px] md:w-[264px]"
+                  />
+                ) : null
+              )}
             </div>
           </div>
         ))}

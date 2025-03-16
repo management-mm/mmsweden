@@ -25,7 +25,7 @@ const NavProducts = () => {
       </NavLink>
       <NavLink
         to="new-product"
-        state={{ from: "/admin/new-product" }}
+        state={{ from: '/admin/new-product' }}
         className={({ isActive }) =>
           cn(
             'flex items-center gap-[12px] py-[8px] pl-[16px]',
@@ -40,7 +40,7 @@ const NavProducts = () => {
       </NavLink>
       <NavLink
         to="filters-settings"
-        state={{ from: "/admin/filters-settings" }}
+        state={{ from: '/admin/filters-settings' }}
         className={({ isActive }) =>
           cn(
             'flex items-center gap-[12px] py-[8px] pl-[16px]',

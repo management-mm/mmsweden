@@ -2,9 +2,10 @@ import { type ChangeEvent, type FC, useState } from 'react';
 
 import type { SlotItemMapArray } from 'swapy';
 
-import Desc from './Desc';
 import PhotosList from './PhotosList';
 import UploadButtons from './UploadButtons';
+
+import Desc from '../common/Desc';
 
 import LabelTitle from '@components/common/LabelTitle';
 
@@ -24,7 +25,6 @@ const PhotosAndVideo: FC<IPhotoAndVideoProps> = ({
   initialPhotos = [],
   initialVideo = '',
 }) => {
-
   const [editedAvatars, setEditedAvatars] = useState<string[]>(initialPhotos);
   const [photoQueue, setPhotoQueue] =
     useState<(string | File)[]>(initialPhotos);
@@ -39,50 +39,51 @@ const PhotosAndVideo: FC<IPhotoAndVideoProps> = ({
   );
 
   const handleChangePhoto = (e: ChangeEvent<HTMLInputElement>) => {
-  if (e.target.files && e.target.files.length > 7) {
-    alert('No more than 7 photos');
-    e.target.value = '';
-    return;
-  }
+    if (e.target.files && e.target.files.length > 7) {
+      alert('No more than 7 photos');
+      e.target.value = '';
+      return;
+    }
 
-  if (e.target.files) {
-    console.log("editedAvatars", editedAvatars);
-    const filesArray = Array.from(e.target.files);
-    const newFileAvatars: File[] = [];
+    if (e.target.files) {
+      console.log('editedAvatars', editedAvatars);
+      const filesArray = Array.from(e.target.files);
+      const newFileAvatars: File[] = [];
 
-    const readFile = (file: File): Promise<string> => {
-      return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onload = event => resolve(event.target?.result as string);
-        reader.readAsDataURL(file);
+      const readFile = (file: File): Promise<string> => {
+        return new Promise(resolve => {
+          const reader = new FileReader();
+          reader.onload = event => resolve(event.target?.result as string);
+          reader.readAsDataURL(file);
+        });
+      };
+
+      Promise.all(
+        filesArray.map(file => {
+          newFileAvatars.push(file);
+          return readFile(file);
+        })
+      ).then(newEditedAvatars => {
+        setEditedAvatars(prev => [...prev, ...newEditedAvatars]);
+
+        const updatedItems = [
+          ...items,
+          ...newEditedAvatars.map((src, i) => ({
+            id: String(items.length + i + 1),
+            src,
+          })),
+        ];
+
+        setItems(updatedItems);
+        setSlotItemMap(initSlotItemMap(updatedItems, 'id'));
+
+        setFileAvatars(prev => [...prev, ...newFileAvatars]);
+        setPhotoQueue(prev => [...prev, ...newFileAvatars]);
       });
-    };
 
-    Promise.all(filesArray.map(file => {
-      newFileAvatars.push(file);
-      return readFile(file);
-    })).then(newEditedAvatars => {
-      setEditedAvatars(prev => [...prev, ...newEditedAvatars]);
-
-      const updatedItems = [
-        ...items,
-        ...newEditedAvatars.map((src, i) => ({
-          id: String(items.length + i + 1),
-          src,
-        })),
-      ];
-
-      setItems(updatedItems);
-      setSlotItemMap(initSlotItemMap(updatedItems, 'id'));
-
-      setFileAvatars(prev => [...prev, ...newFileAvatars]);
-      setPhotoQueue(prev => [...prev, ...newFileAvatars]);
-    });
-
-    e.target.value = '';
-  }
-};
-
+      e.target.value = '';
+    }
+  };
 
   return (
     <div>

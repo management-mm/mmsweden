@@ -2,6 +2,7 @@ import { type FC, type ReactNode } from 'react';
 import ReactDOM from 'react-dom';
 
 import SvgIcon from './SvgIcon';
+
 import { IconId } from '@enums/iconsSpriteId';
 
 interface IStatusModalProps {
@@ -10,7 +11,11 @@ interface IStatusModalProps {
   handleToggleMenu?: () => void;
 }
 
-const StatusModal:FC<IStatusModalProps> = ({ children, title, handleToggleMenu }) => {
+const StatusModal: FC<IStatusModalProps> = ({
+  children,
+  title,
+  handleToggleMenu,
+}) => {
   const modalRoot = document.getElementById('modal-root');
   if (!modalRoot) return null;
 
@@ -22,8 +27,7 @@ const StatusModal:FC<IStatusModalProps> = ({ children, title, handleToggleMenu }
         <button
           type="button"
           onClick={() => {
-            if(handleToggleMenu)
-            handleToggleMenu();
+            if (handleToggleMenu) handleToggleMenu();
           }}
           className="absolute right-[16px] top-[16px]"
         >

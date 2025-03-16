@@ -32,13 +32,12 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
   // const pageSize = 10;
   const [groupedFilters, setGroupedFilters] = useState<
     Record<string, FilterItem[]>
-    >({});
+  >({});
   // const [visibleItems, setVisibleItems] = useState<
   //   Record<string, FilterItem[]>
   //   >(
   //     groupedFilters
   //   );
-
 
   const isItemSelected = (item: string): boolean => {
     if (Array.isArray(checkedValue)) {
@@ -104,16 +103,14 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
   return (
     <div className="mb-[14px] flex h-[350px] flex-col gap-[16px] overflow-y-scroll">
       {Object.entries(groupedFilters).map(([character, items]) => (
-        <div
-          // key={}
-        >
+        <div key={character}>
           <p className="mb-4 text-[12px] font-semibold text-desc">
             {character?.toUpperCase()}
           </p>
           <div className="flex flex-col gap-[12px]">
             {items.map(item => (
               <SkeletonTheme
-                // key={}
+                key={item._id}
                 baseColor="#E1E1E1"
                 highlightColor="#F2F2F2"
               >

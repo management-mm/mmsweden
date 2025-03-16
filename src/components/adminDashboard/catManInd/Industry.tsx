@@ -10,11 +10,12 @@ import type { IIndustry } from '@interfaces/IIndustry';
 import type { MultiLanguageString } from '@interfaces/IProduct';
 import { useFormikContext } from 'formik';
 
-import AddNewCatManInd from './AddNewCatManInd';
-import Block from './Block';
 import CheckedItemsList from './CheckedItemsList';
 import GroupedFilterItems from './GroupedFilterItems';
-import InputFieldWithCheck from './InputFieldWithCheck';
+
+import AddNewCatManInd from '../AddNewField';
+import Block from '../Block';
+import InputFieldWithCheck from '../formsFields/InputFieldWithCheck';
 
 import LabelTitle from '@components/common/LabelTitle';
 import SearchFilter from '@components/common/SearchFilter';
@@ -37,14 +38,14 @@ const Industry: FC<IIndustryProps> = ({
   initialValue,
 }) => {
   const [checkedValues, setCheckedValues] = useState(
-  Array.isArray(initialValue)
-    ? initialValue.map(value =>
-        typeof value === 'object' && value !== null ? value.en : value
-      )
-    : typeof initialValue === 'object' && initialValue !== null
-      ? [initialValue.en]
-      : [initialValue]
-);
+    Array.isArray(initialValue)
+      ? initialValue.map(value =>
+          typeof value === 'object' && value !== null ? value.en : value
+        )
+      : typeof initialValue === 'object' && initialValue !== null
+        ? [initialValue.en]
+        : [initialValue]
+  );
 
   const [newFieldCount, setNewFieldCount] = useState(0);
 
@@ -52,7 +53,9 @@ const Industry: FC<IIndustryProps> = ({
 
   const handleCheck = (value: string | boolean) => {
     if (value) {
-      const newCheckedValue =checkedValues.includes(value as string) ? checkedValues.filter(checkedValue => checkedValue !== value) : [...checkedValues, value];
+      const newCheckedValue = checkedValues.includes(value as string)
+        ? checkedValues.filter(checkedValue => checkedValue !== value)
+        : [...checkedValues, value];
       setFieldValue('industries', newCheckedValue, false);
       setCheckedValues(newCheckedValue as string[]);
     }
@@ -60,7 +63,11 @@ const Industry: FC<IIndustryProps> = ({
 
   const handleCheckedValue = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.value) {
-      const newCheckedValue = checkedValues.includes(event.target.value) ? checkedValues.filter(checkedValue => checkedValue !== event.target.value) : [...checkedValues, event.target.value];
+      const newCheckedValue = checkedValues.includes(event.target.value)
+        ? checkedValues.filter(
+            checkedValue => checkedValue !== event.target.value
+          )
+        : [...checkedValues, event.target.value];
       setFieldValue('industries', newCheckedValue, false);
       setCheckedValues(newCheckedValue);
     }

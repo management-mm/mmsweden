@@ -8,14 +8,12 @@ interface IMessageDeleteOrSoldProps {
   title: string;
   isDeleteOrDeletionDate: boolean | string | null;
   setIsDeleteOrDeletionDate: Dispatch<SetStateAction<boolean | string | null>>;
-  isProductUpdated: boolean;
 }
 
 const MessageDeleteOrSold: FC<IMessageDeleteOrSoldProps> = ({
   title,
   isDeleteOrDeletionDate,
   setIsDeleteOrDeletionDate,
-  isProductUpdated,
 }) => {
   const { isMessageOpen, handleToggleMenu } = useMessageDelOrSold(
     isDeleteOrDeletionDate
@@ -23,7 +21,7 @@ const MessageDeleteOrSold: FC<IMessageDeleteOrSoldProps> = ({
 
   return (
     <>
-      {isMessageOpen && isProductUpdated && (
+      {isMessageOpen && (
         <StatusModal title={title} handleToggleMenu={handleToggleMenu}>
           <div className="flex w-full gap-[10px]">
             <button

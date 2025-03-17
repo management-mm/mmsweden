@@ -26,8 +26,8 @@ const DeleteOrSold: FC<IDeleteOrSoldProps> = ({
   setDeletionDate,
   deletionDate,
 }) => {
-  const { setFieldValue } = useFormikContext<FormikValues>();
-  console.log(deletionDate);
+  const { setFieldValue, values } = useFormikContext<FormikValues>();
+
   const [numbr, setNumbr] = useState<number>(1);
   const [timeframe, setTimeframe] = useState<string>('month');
 
@@ -88,7 +88,7 @@ const DeleteOrSold: FC<IDeleteOrSoldProps> = ({
           }}
           className={clsx(
             'mb-[20px] w-[100px] rounded-[32px] py-[10px] text-center md:w-[calc((100%-12px)/2)]',
-            deletionDate
+            values.deletionDate
               ? 'border border-red-900 bg-red-900 text-secondary'
               : 'border border-primary bg-transparent text-primary'
           )}

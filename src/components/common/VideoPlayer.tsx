@@ -29,7 +29,6 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
   const [playing, setPlaying] = useState(false);
 
   const videoId = youTubeGetId(video);
-  console.log(videoId);
   const previewImage = videoId
     ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
     : '';

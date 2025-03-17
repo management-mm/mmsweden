@@ -47,7 +47,7 @@ export interface IUpdateProductData {
   industries: string[];
   condition: 'used' | 'new';
   deletionDate: Date | null | string;
-  // shouldTranslateName: boolean;
+  shouldTranslateName: boolean;
 }
 
 export interface IFetchProductsResponse {
@@ -146,13 +146,13 @@ export const updateProduct = createAsyncThunk<
         const key = property as keyof IUpdateProductData;
 
         if (key === 'id') continue;
-        //  if (key === 'shouldTranslateName') continue;
+         if (key === 'shouldTranslateName') continue;
         if (key === 'deletionDate' && !updatedProduct[key]) continue;
 
         if (key === 'name' && typeof updatedProduct[key] === 'object') {
           const nameJson = JSON.stringify(updatedProduct[key]);
           data.append('name', nameJson);
-        } else if (key === 'description') {
+        } else if (key === 'description' && typeof updatedProduct[key] === 'object') {
           const descriptionJson = JSON.stringify(updatedProduct[key]);
           data.append('description', descriptionJson);
         } else if (key === 'industries') {
@@ -177,7 +177,11 @@ export const updateProduct = createAsyncThunk<
     // for (const pair of data.entries()) {
     //   console.log(pair[0], pair[1]);
     // }
-    const response = await axios.put(`products/${updatedProduct.id}`, data);
+    const response = await axios.put(`products/${updatedProduct.id}`, data, {
+      params: {
+        shouldTranslateName: String(updatedProduct.shouldTranslateName),
+      },
+    });
     return response.data;
   } catch (e) {
     console.log(e);

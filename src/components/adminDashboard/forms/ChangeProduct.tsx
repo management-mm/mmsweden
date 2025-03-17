@@ -101,7 +101,7 @@ const ChangeProduct = () => {
             photoQueue: product.photos as (string | File)[],
             photos: [] as File[],
             deletionDate: product.deletionDate || null,
-            // shouldTranslateName: false,
+            shouldTranslateName: false,
           }}
           validationSchema={schema}
           onSubmit={async values => {
@@ -177,7 +177,6 @@ const ChangeProduct = () => {
         setIsDeleteOrDeletionDate={
           setIsDelete as Dispatch<SetStateAction<boolean | string | null>>
         }
-        isProductUpdated={isProductUpdated}
       />
       <MessageDeleteOrSold
         title={`This product will be deleted on ${deletionDate}. Do you want to mark it as sold?`}
@@ -185,7 +184,6 @@ const ChangeProduct = () => {
         setIsDeleteOrDeletionDate={
           setDeletionDate as Dispatch<SetStateAction<boolean | string | null>>
         }
-        isProductUpdated={isProductUpdated}
       />
       {isLoading && isProductUpdated && (
         <StatusModal

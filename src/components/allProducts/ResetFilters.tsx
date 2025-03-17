@@ -28,12 +28,17 @@ const ResetFilters = () => {
   const { language } = context;
 
   const [filtersToReset, setFiltersToReset] = useState<
-    { value: string; filterName: 'category' | 'industry' | 'manufacturer' | 'condition' }[]
+    {
+      value: string;
+      filterName: 'category' | 'industry' | 'manufacturer' | 'condition';
+    }[]
   >([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    const getFilterParams = (filterName: 'category' | 'industry' | 'manufacturer' | 'condition') => {
+    const getFilterParams = (
+      filterName: 'category' | 'industry' | 'manufacturer' | 'condition'
+    ) => {
       return searchParams.getAll(filterName).map(param => {
         return {
           value: param,
@@ -70,6 +75,7 @@ const ResetFilters = () => {
       {filtersToReset.map(filter => {
         return (
           <button
+            // key={}
             onClick={() =>
               setSearchParams(searchParams => {
                 subtractSearchParam(
@@ -87,7 +93,7 @@ const ResetFilters = () => {
               categories,
               industries,
               language
-            )} 
+            )}
 
             <div className="flex h-[12px] w-[12px] items-center justify-center rounded-full bg-primary">
               <SvgIcon

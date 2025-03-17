@@ -5,10 +5,10 @@ import { useSearchParams } from 'react-router-dom';
 import { Filter } from '@enums/i18nConstants';
 
 interface IConditionItemProps {
-  condition: 'used' | 'new'
+  condition: 'used' | 'new';
 }
 
-const ConditionItem:FC<IConditionItemProps> = ({ condition }) => {
+const ConditionItem: FC<IConditionItemProps> = ({ condition }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { t } = useTranslation();
 
@@ -39,7 +39,7 @@ const ConditionItem:FC<IConditionItemProps> = ({ condition }) => {
         value={condition}
       />
       <label
-        className="font-openSans text-[12px] capitalize peer-disabled:text-gray-400"
+        className="font-openSans text-[14px] capitalize peer-disabled:text-gray-400"
         htmlFor={condition}
       >
         {condition === 'new' ? t(Filter.New) : t(Filter.Used)}

@@ -6,7 +6,7 @@ export type MultiLanguageString = {
 
 export interface IProduct {
   _id: string;
-  name: MultiLanguageString;
+  name: MultiLanguageString | string;
   idNumber: string;
   description: MultiLanguageString;
   dimensions: string;
@@ -16,4 +16,6 @@ export interface IProduct {
   manufacturer: string;
   industries: MultiLanguageString[];
   condition: 'used' | 'new';
+  createdAt: Date;
+  deletionDate: Date | null;
 }

@@ -1,9 +1,11 @@
+import type { FC } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
-import getProductName from '@utils/getProductName';
 import type { MultiLanguageString } from '@interfaces/IProduct';
+
+import getProductName from '@utils/getProductName';
+
 import type { LanguageKeys } from '@enums/languageKeys';
-import type { FC } from 'react';
 
 interface IProductDetailsProps {
   isLoading: boolean;
@@ -24,38 +26,34 @@ const ProductDetails: FC<IProductDetailsProps> = ({
 }) => {
   return (
     <>
-      <h3 
-        className="mb-[4px] text-[16px] font-semibold uppercase text-primary" 
-        key={`name-${language}`} 
+      <h3
+        className="mb-[4px] line-clamp-2 text-[16px] font-semibold uppercase text-primary"
+        key={`name-${language}`}
         translate="no"
       >
-        {isLoading ? (
-          <Skeleton width={150} />
-        ) : (
-          getProductName(name, language)
-        )}
+        {isLoading ? <Skeleton width={150} /> : getProductName(name, language)}
       </h3>
 
-      <p 
-        className="mb-[4px] text-[14px] font-semibold text-secondaryAccent" 
-        key={`id-number-${idNumber}`} 
+      <p
+        className="mb-[4px] text-[14px] font-semibold text-secondaryAccent"
+        key={`id-number-${idNumber}`}
         translate="no"
       >
         {isLoading ? <Skeleton width={80} /> : 'ID NR '}
         <span>{isLoading ? <Skeleton width={80} /> : idNumber}</span>
       </p>
 
-      <p 
-        className="mb-[12px] line-clamp-2 font-openSans text-[12px] text-desc" 
-        key={`dimensions-${dimensions}`} 
+      <p
+        className="mb-[12px] line-clamp-2 font-openSans text-[12px] text-desc"
+        key={`dimensions-${dimensions}`}
         translate="no"
       >
         {isLoading ? <Skeleton width={120} /> : dimensions}
       </p>
 
-      <p 
-        className="mb-auto line-clamp-4 w-full font-openSans text-[12px] text-title" 
-        key={`description-${language}`} 
+      <p
+        className="mb-auto line-clamp-4 w-full font-openSans text-[12px] text-title"
+        key={`description-${language}`}
         translate="no"
       >
         {isLoading ? <Skeleton count={3} /> : description?.[language] || ''}

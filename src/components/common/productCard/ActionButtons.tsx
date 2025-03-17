@@ -3,19 +3,19 @@ import { useTranslation } from 'react-i18next';
 import Skeleton from 'react-loading-skeleton';
 import { useNavigate } from 'react-router-dom';
 
+import type { IProduct } from '@interfaces/IProduct';
 import clsx from 'clsx';
 
 import useUpdateRequestedProducts from '@hooks/useUpdateRequestedProducts';
 
 import { Button } from '@enums/i18nConstants';
-import type { IProduct } from '@interfaces/IProduct';
 
 interface IActionsButtonsProps {
   isLoading: boolean;
-  product: IProduct
+  product: IProduct;
 }
 
-const ActionsButtons:FC<IActionsButtonsProps> = ({ isLoading, product }) => {
+const ActionsButtons: FC<IActionsButtonsProps> = ({ isLoading, product }) => {
   const { t } = useTranslation();
   const { isRequested, handleToggleFavorites } =
     useUpdateRequestedProducts(product);
@@ -36,15 +36,17 @@ const ActionsButtons:FC<IActionsButtonsProps> = ({ isLoading, product }) => {
           >
             {t(Button.ViewDetails)}
           </button>
-          <button
-            className={clsx(
-              'h-[40px] shrink-0 rounded-[32px] px-[15px] text-[12px] font-semibold text-primary md:w-[calc((100%-16px)/2)] lg:w-auto',
-              isRequested ? 'bg-secondaryAccent text-secondary' : 'bg-accent'
-            )}
-            onClick={() => handleToggleFavorites(product)}
-          >
-            {isRequested ? t(Button.AddedToQuote) : t(Button.RequestPricing)}
-          </button>
+          {!product.deletionDate && (
+            <button
+              className={clsx(
+                'h-[40px] shrink-0 rounded-[32px] px-[15px] text-[12px] font-semibold text-primary md:w-[calc((100%-16px)/2)] lg:w-auto',
+                isRequested ? 'bg-secondaryAccent text-secondary' : 'bg-accent'
+              )}
+              onClick={() => handleToggleFavorites(product)}
+            >
+              {isRequested ? t(Button.AddedToQuote) : t(Button.RequestPricing)}
+            </button>
+          )}
         </>
       ) : (
         <>

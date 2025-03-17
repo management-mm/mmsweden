@@ -1,4 +1,5 @@
 import { useContext, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 
 import type { IProduct } from 'interfaces/IProduct';
@@ -20,11 +21,10 @@ import { useAppSelector } from '@hooks/useAppSelector';
 import useWindowWidth from '@hooks/useWindowWidth';
 
 import { filters } from '@enums/filters';
-import { useTranslation } from 'react-i18next';
 import { Title } from '@enums/i18nConstants';
 
 const ProductsList = () => {
-  const {t} = useTranslation()
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
   const { language } = useContext(LanguageContext);
@@ -77,24 +77,29 @@ const ProductsList = () => {
         searchParams.get(filters.Manufacturer) ||
         searchParams.get(filters.Industry) ||
         searchParams.get(filters.Condition)) && <ResetFilters />}
-      {products.length === 0 ? (
-        <div className='lg:flex lg:justify-center lg:w-[852px] lg:pt-[32px]'>
-          <p className='font-medium text-[18px] text-title text-center'>{t(Title.NoResults)}</p>
- </div>
-      ): (
+      {products.length === 0 &&
+      (searchParams.get(filters.Category) ||
+        searchParams.get(filters.Manufacturer) ||
+        searchParams.get(filters.Industry) ||
+        searchParams.get(filters.Condition)) ? (
+        <div className="lg:flex lg:w-[852px] lg:justify-center lg:pt-[32px]">
+          <p className="text-center text-[18px] font-medium text-title">
+            {t(Title.NoResults)}
+          </p>
+        </div>
+      ) : (
         <ul className="mb-[32px] flex w-full flex-wrap justify-center gap-[30px] md:justify-normal lg:mb-[44px] lg:w-[852px]">
-        {products.map(product => (
-          <li
-            key={product._id}
-            className="w-[296px] md:w-[calc((100%-30px)/2)] lg:w-[calc((100%-2*30px)/3)]"
-          >
-            <ProductCard product={product} />
-          </li>
-        ))}
-      </ul>  
+          {products.map(product => (
+            <li
+              key={product._id}
+              className="w-[296px] md:w-[calc((100%-30px)/2)] lg:w-[calc((100%-2*30px)/3)]"
+            >
+              <ProductCard product={product} />
+            </li>
+          ))}
+        </ul>
       )}
 
-      
       {pageCount !== 1 && <Pagination pageCount={pageCount} className="" />}
     </section>
   );

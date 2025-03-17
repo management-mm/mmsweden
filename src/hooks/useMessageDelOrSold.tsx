@@ -6,7 +6,6 @@ const useMessageDelOrSold = (
   const [isMessageOpen, setIsMessageOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(isDeleteOrDeletionDate);
     setIsMessageOpen(Boolean(isDeleteOrDeletionDate));
   }, [isDeleteOrDeletionDate]);
 

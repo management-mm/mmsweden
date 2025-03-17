@@ -53,9 +53,9 @@ const Selector: FC<ISelectorProps> = ({
           labelName === 'country' &&
             'static w-full shrink-0 rounded-[32px] border border-neutral px-[22px] py-[14px] font-openSans text-[14px] text-desc outline-none transition-border duration-primary focus:border focus:border-secondaryAccent'
         )}
-        onClick={e => {
+        onClick={(event) => {
+          event.preventDefault()
           if (windowWidth < 1178) {
-            console.log(e.currentTarget);
             toggleMobileMenu();
             return;
           }
@@ -123,6 +123,7 @@ const Selector: FC<ISelectorProps> = ({
             handleOptionClick={handleOptionSelected}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
+            intent={'desktop'}
           />
         )}
       </div>

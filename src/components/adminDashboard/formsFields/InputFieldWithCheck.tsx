@@ -23,7 +23,7 @@ interface IInputField {
   initialValue?: string;
   isNewValueEntered?: boolean;
   handleCheck?: (value: boolean | string) => void;
-  handleRemoveField?: () => void;
+  handleRemoveField?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   setPreviousValueObject?: (value: MultiLanguageString) => void;
 }
 

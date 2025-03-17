@@ -26,7 +26,7 @@ const DeleteOrSold: FC<IDeleteOrSoldProps> = ({
   setDeletionDate,
   deletionDate,
 }) => {
-  const { setFieldValue, values } = useFormikContext<FormikValues>();
+  const { setFieldValue, values, isSubmitting } = useFormikContext<FormikValues>();
 
   const [numbr, setNumbr] = useState<number>(1);
   const [timeframe, setTimeframe] = useState<string>('month');
@@ -34,6 +34,11 @@ const DeleteOrSold: FC<IDeleteOrSoldProps> = ({
   const numberList = Array.from({ length: 6 }, (_, index) => {
     return { value: index + 1, label: index + 1 };
   });
+
+    useEffect(() => {
+    console.log(isSubmitting)
+  }, [isSubmitting])
+
 
   useEffect(() => {
     if (deletionDate) {

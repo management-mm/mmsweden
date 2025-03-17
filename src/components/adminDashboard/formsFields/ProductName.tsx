@@ -60,7 +60,8 @@ const ProductName: FC<IProductNameProps> = ({ initialValue }) => {
     setFieldValue('shouldTranslateName', shouldTranslate, false);
   };
 
-  const handleRemoveField = () => {
+  const handleRemoveField = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
     setIsClick(false);
     setIsNewNameEntered(false);
     setFieldValue('name', previousNameObject, false);
@@ -127,7 +128,8 @@ const ProductName: FC<IProductNameProps> = ({ initialValue }) => {
           {isClick ? (
             <>
               <InputFieldWithCheck
-                name="name"
+                  name="name"
+                  required={false}
                 placeholder="Enter product name"
                 handleCheck={handleCheck}
                 isNewValueEntered={isNewNameEntered}

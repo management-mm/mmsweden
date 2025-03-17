@@ -174,9 +174,6 @@ export const updateProduct = createAsyncThunk<
         }
       }
     }
-    // for (const pair of data.entries()) {
-    //   console.log(pair[0], pair[1]);
-    // }
     const response = await axios.put(`products/${updatedProduct.id}`, data, {
       params: {
         shouldTranslateName: String(updatedProduct.shouldTranslateName),

@@ -22,17 +22,20 @@ const PhoneCodeOption: FC<IPhoneCodeOptionProps> = ({
   const { t } = useTranslation();
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center flex-wrap">
       <Flag name={name} flag={flag} />
 
       <span className="mr-[4px]">{name}</span>
       {Array.isArray(phoneFormat) && (
         <span>({t(Title.Format, { number: formatIndex + 1 })})</span>
       )}
-      <span>{callingCode}</span>
-      {Array.isArray(phoneFormat) && (
+      <div>
+        <span>{callingCode}</span>
+        {Array.isArray(phoneFormat) && (
         <span> {phoneFormat[formatIndex ?? 0]}</span>
       )}
+      </div>
+      
     </div>
   );
 };

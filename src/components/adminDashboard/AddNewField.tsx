@@ -24,7 +24,8 @@ const AddNewField: FC<IAddNewFieldProps> = ({
   return (
     <button
       type="button"
-      onClick={() => {
+      onClick={(event) => {
+        event.preventDefault()
         if (itemName === filters.Industry) {
           setFieldCount((prev: number) => prev + 1);
         } else {

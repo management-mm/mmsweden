@@ -1,4 +1,4 @@
-import type { Dispatch, FC, SetStateAction } from 'react';
+import { type Dispatch, type FC, type SetStateAction } from 'react';
 
 import StatusModal from '@components/common/StatusModal';
 
@@ -15,9 +15,12 @@ const MessageDeleteOrSold: FC<IMessageDeleteOrSoldProps> = ({
   isDeleteOrDeletionDate,
   setIsDeleteOrDeletionDate,
 }) => {
+ 
+  
   const { isMessageOpen, handleToggleMenu } = useMessageDelOrSold(
     isDeleteOrDeletionDate
   );
+
 
   return (
     <>

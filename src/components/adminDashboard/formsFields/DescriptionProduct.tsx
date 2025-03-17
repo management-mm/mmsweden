@@ -54,7 +54,8 @@ const DescriptionProduct: FC<IDescriptionProductProps> = ({ description }) => {
     }
   }, [values.description]);
 
-  const handleRemoveField = () => {
+  const handleRemoveField = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
     setIsClick(false);
     setIsNewDescriptionEntered(false);
     setFieldValue('description', previousDescriptionObject, false);
@@ -85,6 +86,7 @@ const DescriptionProduct: FC<IDescriptionProductProps> = ({ description }) => {
             <>
               <InputFieldWithCheck
                 name="description"
+                required={false}
                 placeholder="Enter product description"
                 isNewValueEntered={isNewDescriptionEntered}
                 handleRemoveField={handleRemoveField}

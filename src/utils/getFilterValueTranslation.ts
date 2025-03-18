@@ -1,10 +1,15 @@
 import type { ICategory } from '@interfaces/ICategory';
-import findTranslation from './findTranslation';
 import type { IIndustry } from '@interfaces/IIndustry';
+
+import findTranslation from './findTranslation';
+
 import type { LanguageKeys } from '@enums/languageKeys';
 
 const getFilterValueTranslation = (
-  filter: { value: string; filterName: 'category' | 'industry' | 'manufacturer' | 'condition' },
+  filter: {
+    value: string;
+    filterName: 'category' | 'industry' | 'manufacturer' | 'condition';
+  },
   categories: ICategory[],
   industries: IIndustry[],
   language: LanguageKeys

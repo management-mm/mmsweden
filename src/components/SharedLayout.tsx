@@ -49,7 +49,7 @@ const SharedLayout = () => {
             closeButton={
               <SvgIcon
                 iconId={IconId.Close}
-                size={{ width: 14, height: 14 }}
+                size={{ width: 36, height: 36 }}
                 className="fill-white"
               />
             }

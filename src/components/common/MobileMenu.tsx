@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import SvgIcon from './SvgIcon';
 
 import useOutsideAlerter from '@hooks/useOutsideAlerter';
+import useWindowWidth from '@hooks/useWindowWidth';
 
 import { IconId } from '@enums/iconsSpriteId';
 
@@ -21,22 +22,23 @@ const MobileMenu: FC<IMobileMenuProps> = ({
   isOpen,
   handleToggleMenu,
 }) => {
+  const windowWidth = useWindowWidth();
   const outsideAlerterRef = useOutsideAlerter(() => {
-    if (!isOpen) return;
+    if (!isOpen || windowWidth > 1178) return;
     handleToggleMenu();
-  });
+  }, isOpen);
   useEffect(() => {
     if (isOpen) {
-      document.querySelector('body').classList.add('overflow-y-hidden');
+      document.querySelector('body')?.classList.add('overflow-y-hidden');
     } else {
-      document.querySelector('body').classList.remove('overflow-y-hidden');
+      document.querySelector('body')?.classList.remove('overflow-y-hidden');
     }
   }, [isOpen]);
   return (
     <div
       ref={outsideAlerterRef}
       className={clsx(
-        'scrollbar-none fixed z-10 bg-white py-[100px] transition-all ease-in-out',
+        'fixed z-20 bg-white py-[100px] transition-all ease-in-out scrollbar-none',
         direction === 'left' &&
           'top-0 h-[100vh] w-[300px] overflow-y-auto duration-1000',
         direction === 'right' &&
@@ -55,16 +57,15 @@ const MobileMenu: FC<IMobileMenuProps> = ({
           'left-[-300px] shadow-closeMobileMenuShadow',
         isOpen &&
           direction === 'bottom' &&
-          'shadow-openMobileMenuVerticalShadow bottom-0',
+          'bottom-0 shadow-openMobileMenuVerticalShadow',
         !isOpen &&
           direction === 'bottom' &&
-          'shadow-closeMobileMenuVerticalShadow bottom-[-80vh]'
+          'bottom-[-80vh] shadow-closeMobileMenuVerticalShadow'
       )}
     >
       <button
         type="button"
         onClick={() => {
-          console.log(isOpen);
           handleToggleMenu();
         }}
         className="absolute right-[32px] top-[32px]"

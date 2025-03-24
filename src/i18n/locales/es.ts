@@ -35,6 +35,7 @@ export const es = {
   [Button.RequestPricing]: 'Solicitar precio',
   [Button.SubmitRequest]: 'Enviar solicitud',
   [Button.AddMoreItems]: 'Agregar más artículos',
+  [Button.GoToProducts]: 'Ir a productos',
 
   [Title.Industries]: 'Industrias',
   [Title.LatestArrivals]: 'Últimas llegadas',
@@ -46,6 +47,11 @@ export const es = {
   [Title.YouMayAlsoBeInterestedIn]: 'También te puede interesar',
   [Title.ItemsForQuote]: 'Artículos para solicitud de precio',
   [Title.RequestAQuote]: 'Solicitar un precio',
+  [Title.DateAdded]: 'Fecha añadida',
+  [Title.EmptyCart]: 'Tu carrito está vacío',
+  [Title.NoResults]:
+    'No se encontraron resultados para su consulta. Intente ajustar los filtros.',
+  [Title.Format]: 'formato {{number}}',
 
   [Description.Industries]:
     'Nuestros productos se utilizan en las siguientes industrias:',
@@ -176,6 +182,7 @@ export const es = {
   [Placeholder.SearchProduct]: 'Introduce el nombre o ID del producto',
   [Placeholder.Search]: 'Buscar...',
   [Placeholder.Subject]: 'Asunto de tu mensaje',
+  [Placeholder.SelectCountry]: 'Seleccione su país',
 
   [Filter.Category]: 'Categoría',
   [Filter.Manufacturer]: 'Fabricante',

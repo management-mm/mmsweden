@@ -12,6 +12,12 @@ export const RestrictedRoute = ({
   redirectTo = '/',
 }: IRestrictedRouteProps) => {
   const { isLoggedIn } = useAuth();
+  // let location = useLocation()
+
+  // useEffect(() => {
+
+  //   console.log(location.state)
+  // }, [location]);
 
   return isLoggedIn ? <Navigate to={redirectTo} /> : Component;
 };

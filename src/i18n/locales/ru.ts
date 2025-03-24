@@ -35,6 +35,7 @@ export const ru = {
   [Button.RequestPricing]: 'Запросить цену',
   [Button.SubmitRequest]: 'Отправить запрос',
   [Button.AddMoreItems]: 'Добавить больше товаров',
+  [Button.GoToProducts]: 'Перейти к товарам',
 
   [Title.Industries]: 'Индустрии',
   [Title.LatestArrivals]: 'Последние поступления',
@@ -46,6 +47,11 @@ export const ru = {
   [Title.YouMayAlsoBeInterestedIn]: 'Вам также может быть интересно',
   [Title.ItemsForQuote]: 'Товары для запроса цены',
   [Title.RequestAQuote]: 'Запросить цену',
+  [Title.DateAdded]: 'Дата добавления',
+  [Title.EmptyCart]: 'Ваша корзина пуста',
+  [Title.NoResults]:
+    'По вашему запросу ничего не найдено. Попробуйте изменить фильтры.',
+  [Title.Format]: 'формат {{number}}',
 
   [Description.Industries]: 'Наши товары используются в следующих отраслях:',
   [Description.Hero]: 'Подержанные машины - Новые товары',
@@ -175,6 +181,7 @@ export const ru = {
   [Placeholder.SearchProduct]: 'Введите название или ID продукта',
   [Placeholder.Search]: 'Поиск...',
   [Placeholder.Subject]: 'Тема вашего сообщения',
+  [Placeholder.SelectCountry]: 'Выберите страну',
 
   [Filter.Category]: 'Категория',
   [Filter.Manufacturer]: 'Производитель',

@@ -1,4 +1,10 @@
-const Flag = ({ name, flag }) => {
+import type { FC } from 'react';
+
+interface IFlagProps {
+  name: string;
+  flag: string;
+}
+const Flag: FC<IFlagProps> = ({ name, flag }) => {
   return (
     <div className="relative z-0 mr-[4px] h-[20px] w-[20px] shrink-0">
       <img

@@ -1,9 +1,9 @@
+import bilal from '@assets/images/about-us/bilal/index';
 import car from '@assets/images/about-us/car/index';
-import hampus from '@assets/images/about-us/hampus/index';
-import office from '@assets/images/about-us/office/index'
-import bilal from '@assets/images/about-us/bilal/index'
-import washing from '@assets/images/about-us/washing/index'
 import electrician from '@assets/images/about-us/electrician/index';
+import hampus from '@assets/images/about-us/hampus/index';
+import office from '@assets/images/about-us/office/index';
+import washing from '@assets/images/about-us/washing/index';
 
 const photosAboutUsList = [
   {
@@ -16,7 +16,7 @@ const photosAboutUsList = [
     desktop: hampus.desktop,
     desktop2x: hampus.desktop2x,
     desktop3x: hampus.desktop3x,
-    alt: 'Our seller'
+    alt: 'Our seller',
   },
   {
     mobile: electrician.mobile,
@@ -28,7 +28,7 @@ const photosAboutUsList = [
     desktop: electrician.desktop,
     desktop2x: electrician.desktop2x,
     desktop3x: electrician.desktop3x,
-    alt: 'Our elctrician'
+    alt: 'Our elctrician',
   },
   {
     mobile: office.mobile,
@@ -40,7 +40,7 @@ const photosAboutUsList = [
     desktop: office.desktop,
     desktop2x: office.desktop2x,
     desktop3x: office.desktop3x,
-    alt: 'Our office'
+    alt: 'Our office',
   },
   {
     mobile: car.mobile,
@@ -52,7 +52,7 @@ const photosAboutUsList = [
     desktop: car.desktop,
     desktop2x: car.desktop2x,
     desktop3x: car.desktop3x,
-    alt: 'Machine loading'
+    alt: 'Machine loading',
   },
   {
     mobile: washing.mobile,
@@ -64,7 +64,7 @@ const photosAboutUsList = [
     desktop: washing.desktop,
     desktop2x: washing.desktop2x,
     desktop3x: washing.desktop3x,
-    alt: 'Machine washing'
+    alt: 'Machine washing',
   },
   {
     mobile: bilal.mobile,
@@ -76,8 +76,8 @@ const photosAboutUsList = [
     desktop: bilal.desktop,
     desktop2x: bilal.desktop2x,
     desktop3x: bilal.desktop3x,
-    alt: 'Our mechanic'
-  }
-]
+    alt: 'Our mechanic',
+  },
+];
 
-export default photosAboutUsList
+export default photosAboutUsList;

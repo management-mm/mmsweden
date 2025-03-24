@@ -2,10 +2,10 @@ import { useState } from 'react';
 
 import BurgerMenu from './BurgerMenu';
 import LanguageSelect from './LanguageSelect';
-import MobileMenu from './MobileMenu';
 import PriceQuoteBtn from './PriceQuoteBtn';
 
 import { Logo } from '@components/common/Logo';
+import MobileMenu from '@components/common/MobileMenu';
 import Navbar from '@components/common/Navbar';
 
 const Header = () => {
@@ -16,7 +16,7 @@ const Header = () => {
   };
 
   return (
-    <header className="py-[12px] md:py-[28px]">
+    <header className="py-[8px] md:py-[14px]">
       <div className="container flex items-center justify-between">
         <Logo />
         <Navbar intent="header" />
@@ -26,9 +26,16 @@ const Header = () => {
           <PriceQuoteBtn />
           <BurgerMenu handleToggleMobileMenu={toggleMobileMenu} />
         </div>
-
-        <MobileMenu handleToggleMobileMenu={toggleMobileMenu} isOpen={isOpen} />
       </div>
+      <MobileMenu
+        direction="right"
+        isOpen={isOpen}
+        handleToggleMenu={toggleMobileMenu}
+      >
+        <div className="flex items-center justify-center">
+          <Navbar intent="mobileMenu" />
+        </div>
+      </MobileMenu>
     </header>
   );
 };

@@ -19,7 +19,7 @@ const Email: FC<IEmailProps> = ({ className }) => {
         placeholder={Placeholder.Email}
         type="email"
         name="email"
-        pattern="/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/"
+        // pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
         title="Please enter a valid email address."
         required={true}
       />

@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { type ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Field, FieldArray } from 'formik';
+import { Field, type FormikValues, useFormikContext } from 'formik';
 
 import SvgIcon from '@components/common/SvgIcon';
 
@@ -10,23 +10,35 @@ import { IconId } from '@enums/iconsSpriteId';
 
 const AttachPhotos = () => {
   const { t } = useTranslation();
-  const [editedAvatars, setEditedAvatars] = useState([]);
-  const [fileAvatars, setFileAvatars] = useState([]);
+  const [editedAvatars, setEditedAvatars] = useState<string[]>([]);
+  const [fileAvatars, setFileAvatars] = useState<File[]>([]);
+  const { setFieldValue } = useFormikContext<FormikValues>();
 
-  const handleChangePhoto = e => {
+  const handleChangePhoto = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files);
 
-      const filePreviews = filesArray.map(file => {
+      const newFileAvatars: File[] = [];
+      const newEditedAvatars: string[] = [];
+
+      filesArray.forEach(file => {
         const reader = new FileReader();
-        reader.onload = function (e) {
-          setEditedAvatars(prev => [...prev, e.target.result]);
+        reader.onload = event => {
+          if (event.target?.result) {
+            newEditedAvatars.push(event.target.result as string);
+          }
+          if (newEditedAvatars.length === filesArray.length) {
+            setEditedAvatars(prev => [...prev, ...newEditedAvatars]);
+          }
         };
         reader.readAsDataURL(file);
-        return file;
+        newFileAvatars.push(file);
       });
 
-      setFileAvatars(prev => [...prev, ...filePreviews]);
+      setFileAvatars(prev => [...prev, ...newFileAvatars]);
+      setFieldValue('photos', [...fileAvatars, ...newFileAvatars], false);
+
+      e.target.value = '';
     }
   };
 
@@ -63,11 +75,12 @@ const AttachPhotos = () => {
             <label className="flex cursor-pointer items-center gap-[12px]">
               <Field
                 type="file"
-                name="products"
+                name="photos"
                 accept="image/*"
                 className="sr-only"
                 multiple
                 onChange={handleChangePhoto}
+                value={''}
               />
               <SvgIcon
                 iconId={IconId.Plus}
@@ -81,11 +94,12 @@ const AttachPhotos = () => {
         <label className="flex cursor-pointer items-center gap-[12px]">
           <Field
             type="file"
-            name="products"
+            name="photos"
             accept="image/*"
             className="sr-only"
             multiple
             onChange={handleChangePhoto}
+            value={''}
           />
           <SvgIcon
             iconId={IconId.Clip}

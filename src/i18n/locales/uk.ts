@@ -35,6 +35,7 @@ export const uk = {
   [Button.RequestPricing]: 'Запросити ціну',
   [Button.SubmitRequest]: 'Надіслати запит',
   [Button.AddMoreItems]: 'Додати більше товарів',
+  [Button.GoToProducts]: 'Перейти до товарів',
 
   [Title.Industries]: 'Індустрії',
   [Title.LatestArrivals]: 'Останні надходження',
@@ -46,6 +47,11 @@ export const uk = {
   [Title.YouMayAlsoBeInterestedIn]: 'Вас також може зацікавити',
   [Title.ItemsForQuote]: 'Товари для запиту ціни',
   [Title.RequestAQuote]: 'Запросити ціну',
+  [Title.DateAdded]: 'Дата додавання',
+  [Title.EmptyCart]: 'Ваш кошик порожній',
+  [Title.NoResults]:
+    'Не знайдено жодного результату за вашим запитом. Спробуйте відрегулювати фільтри.',
+  [Title.Format]: 'формат {{number}}',
 
   [Description.Industries]: 'Наші товари використовуються в таких галузях:',
   [Description.Hero]: 'Вживані машини - Нові товари',
@@ -174,6 +180,7 @@ export const uk = {
   [Placeholder.SearchProduct]: 'Введіть назву або ID продукту',
   [Placeholder.Search]: 'Пошук...',
   [Placeholder.Subject]: 'Тема вашого повідомлення',
+  [Placeholder.SelectCountry]: 'Виберіть країну',
 
   [Filter.Category]: 'Категорія',
   [Filter.Manufacturer]: 'Виробник',

@@ -33,7 +33,7 @@ export enum Button {
   RequestQuote = 'Button.RequestQuote',
   SubmitRequest = 'Button.SubmitRequest',
   AddMoreItems = 'Button.AddMoreItems',
-  AddProducts = 'Button.AddProducts',
+  GoToProducts = 'Button.GoToProducts',
 }
 
 export enum Title {
@@ -47,6 +47,10 @@ export enum Title {
   YouMayAlsoBeInterestedIn = 'Title.YouMayAlsoBeInterestedIn',
   ItemsForQuote = 'Title.ItemsForQuote',
   RequestAQuote = 'Title.RequestAQuote',
+  DateAdded = 'Title.DateAdded',
+  EmptyCart = 'Title.EmptyCart',
+  NoResults = 'Title.NoResults',
+  Format = 'Title.Format',
 }
 
 export enum Description {
@@ -138,7 +142,7 @@ export enum Label {
   Description = 'Label.Description',
   AttachPhotos = 'Label.AttachPhotos',
   Message = 'Label.Message',
-  Country = 'Label.',
+  Country = 'Label.Country',
   Company = 'Label.Company',
   Subject = 'Label.Subject',
 }
@@ -154,6 +158,7 @@ export enum Placeholder {
   Message = 'Placeholder.Message',
   Subject = 'Placeholder.Subject',
   Company = 'Placeholder.Company',
+  SelectCountry = 'Placeholder.SelectCountry',
 }
 
 export enum Filter {

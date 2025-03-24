@@ -1,15 +1,15 @@
 import { Suspense, useState } from 'react';
 import { createContext } from 'react';
 import { Outlet } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import ScrollToTop from './ScrollToTop';
+import SvgIcon from './common/SvgIcon';
 import Footer from './footer/Footer';
 import Header from './header/Header';
 
-import type { LanguageKeys } from '@enums/languageKeys';
-import { ToastContainer } from 'react-toastify';
-import SvgIcon from './common/SvgIcon';
 import { IconId } from '@enums/iconsSpriteId';
+import type { LanguageKeys } from '@enums/languageKeys';
 
 interface LanguageContextType {
   language: LanguageKeys;
@@ -28,28 +28,13 @@ export const LanguageContext = createContext<LanguageContextType>({
 
 const SharedLayout = () => {
   const [language, setLanguage] = useState<LanguageKeys>(
-  (() => {
-    const storedLanguage = localStorage.getItem('i18nextLng');
-    return storedLanguage && storedLanguage.length > 2
-      ? (storedLanguage.slice(0, 2) as LanguageKeys)
-      : (storedLanguage as LanguageKeys) || 'en';
-  })()
-);
-
-  // const getIcon = (type: string): React.ReactComponentElement<any> | undefined => {
-  //   switch (type) {
-  //     case 'success':
-  //       return < />;
-  //     case 'error':
-  //       return <ErrorIcon />;
-  //     case 'warning':
-  //       return <WarningIcon />;
-  //     case 'info':
-  //       return <InfoIcon />;
-  //     default:
-  //       return undefined;
-  //   }
-  // };
+    (() => {
+      const storedLanguage = localStorage.getItem('i18nextLng');
+      return storedLanguage && storedLanguage.length > 2
+        ? (storedLanguage.slice(0, 2) as LanguageKeys)
+        : (storedLanguage as LanguageKeys) || 'en';
+    })()
+  );
 
   return (
     <div className="bg-main font-inter">
@@ -61,8 +46,20 @@ const SharedLayout = () => {
             <Outlet />
           </Suspense>
           <ToastContainer
-            closeButton={<SvgIcon iconId={IconId.Close} size={{width: 14, height:14}} className='fill-white'/>}
-            icon={<SvgIcon iconId={IconId.Check} className='fill-white' size={{width: 20, height:20}} />}
+            closeButton={
+              <SvgIcon
+                iconId={IconId.Close}
+                size={{ width: 14, height: 14 }}
+                className="fill-white"
+              />
+            }
+            icon={
+              <SvgIcon
+                iconId={IconId.Check}
+                className="fill-white"
+                size={{ width: 20, height: 20 }}
+              />
+            }
           />
         </main>
         <Footer />

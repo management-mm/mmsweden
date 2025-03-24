@@ -18,15 +18,7 @@ export default {
     },
     extend: {
       screens: {
-        'retina-mobile': {
-          raw: '(min-device-pixel-ratio: 2) and (max-width: 767px)',
-        },
-        'retina-tablet': {
-          raw: '(min-device-pixel-ratio: 2) and (min-width: 768px)',
-        },
-        'retina-desktop': {
-          raw: '(min-device-pixel-ratio: 2) and (min-width: 1200px)',
-        },
+        'h-sm': { raw: '(max-height: 678px)' },
       },
       backgroundImage: {
         'check-icon': "url('@assets/images/check.svg')",
@@ -53,6 +45,7 @@ export default {
         secondaryAccent: 'rgba(0, 75, 135, 1)',
         secondary: 'rgb(234, 241, 248)',
         main: 'rgba(252,252,252,1)',
+        neutral: 'rgba(102, 102, 102, 0.1)',
       },
       colors: {
         accent: 'rgb(253, 198, 47)',
@@ -68,14 +61,18 @@ export default {
       boxShadow: {
         openMobileMenuShadow: '0px 0px 0px 100vw rgba(0, 36, 66, 0.48)',
         closeMobileMenuShadow: '0px 0px 0px 100vw rgba(0, 36, 66, 0)',
+        openMobileMenuVerticalShadow: '0px 0px 0px 100vh rgba(0, 36, 66, 0.48)',
+        closeMobileMenuVerticalShadow: '0px 0px 0px 100vh rgba(0, 36, 66, 0)',
+
         accent: '4px 4px 14px 0px rgba(253, 198, 47, 0.64)',
         card: '4px 4px 16px 0px rgba(52, 109, 155, 0.12)',
         pagination: '0px 4px 22px 0px rgba(57,57,57,0.08)',
-        disabled: 'none',
+        pageDisabled: 'none',
       },
       transitionProperty: {
         right: 'right',
         left: 'left',
+        bottom: 'bottom',
         boxShadow: 'box-shadow',
         height: 'height',
         border: 'border-color',
@@ -98,5 +95,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require('tailwind-scrollbar'), require('tailwindcss-retina')],
 };

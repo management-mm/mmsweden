@@ -3,10 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { fetchRecommendedProductsById } from '@api/productService';
+import { fetchRecommendedProductsById } from '@api/productsService';
 import clsx from 'clsx';
 import type { IProduct } from 'interfaces/IProduct';
-import { nanoid } from 'nanoid';
 
 import DecorativeLine from '@components/common/DecorativeLine';
 import NaviArrowSlider from '@components/common/NaviArrowSlider';
@@ -36,7 +35,7 @@ const RecommendedProducts = () => {
     }
     fetchingRecommendedProducts();
   }, [productId]);
-  console.log(recommendedProducts.length);
+
   return (
     <section>
       <div className="container">
@@ -65,7 +64,7 @@ const RecommendedProducts = () => {
         >
           {recommendedProducts.map(product => {
             return (
-              <SwiperSlide key={nanoid()}>
+              <SwiperSlide key={product._id}>
                 <ProductCard
                   product={product}
                   className="w-[296px] md:w-[264px]"

@@ -11,7 +11,7 @@ import WorkingHours from '@components/common/WorkingHours';
 
 const Footer = () => {
   return (
-    <footer className="bg-primary py-[32px] text-secondary">
+    <footer className="min-h-[400px] bg-primary py-[32px] text-secondary">
       <div className="container">
         <div className="lg:flex lg:items-baseline lg:justify-between">
           <div>

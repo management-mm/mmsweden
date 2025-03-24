@@ -35,6 +35,7 @@ export const sv = {
   [Button.RequestPricing]: 'Begär pris',
   [Button.SubmitRequest]: 'Skicka förfrågan',
   [Button.AddMoreItems]: 'Lägg till fler artiklar',
+  [Button.GoToProducts]: 'Gå till produkter',
 
   [Title.Industries]: 'Industri',
   [Title.LatestArrivals]: 'Senaste ankomster',
@@ -46,6 +47,11 @@ export const sv = {
   [Title.YouMayAlsoBeInterestedIn]: 'Du kanske också är intresserad av',
   [Title.ItemsForQuote]: 'Artiklar för prisförfrågan',
   [Title.RequestAQuote]: 'Begär en prisoffert',
+  [Title.DateAdded]: 'Datum tillagt',
+  [Title.EmptyCart]: 'Din kundvagn är tom',
+  [Title.NoResults]:
+    'Inga resultat hittades för din förfrågan. Vänligen försök justera filtren.',
+  [Title.Format]: 'format {{number}}',
 
   [Description.Industries]: 'Våra produkter används inom följande branscher:',
   [Description.Hero]: 'Begagnade maskiner - Nya produkter',
@@ -175,6 +181,7 @@ export const sv = {
   [Placeholder.SearchProduct]: 'Ange produktnamn eller ID-nummer',
   [Placeholder.Search]: 'Sök...',
   [Placeholder.Subject]: 'Ämnet för ditt meddelande',
+  [Placeholder.SelectCountry]: 'Välj ditt land',
 
   [Filter.Category]: 'Kategori',
   [Filter.Manufacturer]: 'Tillverkare',

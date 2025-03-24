@@ -7,10 +7,9 @@ import 'swiper/css/free-mode';
 import 'swiper/css/thumbs';
 import { FreeMode, Thumbs } from 'swiper/modules';
 
-import VideoPlayer from '@components/common/VideoPlayer';
-
 import LightBox from '@components/common/LightBox';
 import NaviArrowSlider from '@components/common/NaviArrowSlider';
+import VideoPlayer from '@components/common/VideoPlayer';
 
 import useSwiperNavigation from '@hooks/useSwiperNavigation';
 
@@ -38,9 +37,9 @@ const Slider: FC<ISliderProps> = ({ photos, video, alt }) => {
         >
           {photos.map((photo, index) => {
             return (
-              <SwiperSlide key={'slider' + photo} className="rounded-[4px]">
+              <SwiperSlide key={photo} className="rounded-[4px]">
                 <img
-                  className="rounded-[4px] lg:w-[754px]"
+                  className="screen-none rounded-[4px] lg:w-[754px]"
                   src={photo}
                   alt={alt}
                   width={'100%'}
@@ -85,12 +84,12 @@ const Slider: FC<ISliderProps> = ({ photos, video, alt }) => {
         >
           {photos.map(photo => {
             return (
-              <SwiperSlide key={'small slider' + photo}>
+              <SwiperSlide key={photo}>
                 <img
                   src={photo}
                   alt={alt}
                   width={98}
-                  className="rounded-[2px]"
+                  className="screen-none rounded-[2px]"
                 />
               </SwiperSlide>
             );

@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 
 import { requestQuote } from '@api/mailerService';
 import { Form, Formik } from 'formik';
-import * as Yup from 'yup';
 
 import { LanguageContext } from '@components/SharedLayout';
 import Company from '@components/formsLabels/Company';
@@ -21,28 +20,13 @@ import { useNotify } from '@hooks/useNotify';
 import getProductName from '@utils/getProductName';
 
 import { Button } from '@enums/i18nConstants';
-
-const schema = Yup.object().shape({
-  name: Yup.string().min(1, 'Too Short!').max(30, 'Too Long!').required(),
-  phone: Yup.string().required(),
-  countryPhone: Yup.string().required(),
-  callingCode: Yup.string().required(),
-  email: Yup.string().required().email(),
-  country: Yup.string().required(),
-  company: Yup.string().required(),
-  message: Yup.string().required(),
-  products: Yup.array().of(
-    Yup.object().shape({
-      idNumber: Yup.string().required('Product ID is required'),
-      name: Yup.string().required('Product name is required'),
-      photo: Yup.string().required("Product's photo is required"),
-    })
-  ),
-});
+import { schema } from '@schemas/formForRequestQuote';
+import { LanguageKeys } from '@enums/languageKeys';
 
 const FormForRequestQuote = () => {
   const { t } = useTranslation();
   const requestedProducts = useAppSelector(selectRequestedProducts);
+
   const { language } = useContext(LanguageContext);
   const { notifySuccess, notifyError } = useNotify();
 
@@ -56,7 +40,7 @@ const FormForRequestQuote = () => {
           countryPhone: '',
           callingCode: '',
           country: '',
-          // products: [],
+          products: [],
           company: '',
           message: '',
         }}
@@ -65,7 +49,7 @@ const FormForRequestQuote = () => {
           try {
             const products = requestedProducts.map(
               ({ name, idNumber, photos }) => ({
-                name: getProductName(name, language),
+                name: getProductName(name, LanguageKeys.EN),
                 idNumber,
                 photo: photos[0],
               })
@@ -83,6 +67,7 @@ const FormForRequestQuote = () => {
               company,
               products,
             });
+            
             notifySuccess(message[language]);
             actions.resetForm();
           } catch (error) {

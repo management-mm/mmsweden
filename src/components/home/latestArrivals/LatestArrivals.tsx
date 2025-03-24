@@ -14,10 +14,10 @@ import { selectProducts } from '@store/selectors';
 
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
+import useSwiperNavigation from '@hooks/useSwiperNavigation';
 
 import { Title } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
-import useSwiperNavigation from '@hooks/useSwiperNavigation';
 
 const LatestArrivals = () => {
   const { t } = useTranslation();
@@ -51,7 +51,7 @@ const LatestArrivals = () => {
               />
             </div>
             <div
-              className="flex h-[44px] cursor-pointer w-[44px] items-center justify-center rounded-full border border-line"
+              className="flex h-[44px] w-[44px] cursor-pointer items-center justify-center rounded-full border border-line"
               onClick={handleNext}
             >
               <SvgIcon
@@ -76,11 +76,13 @@ const LatestArrivals = () => {
           }}
         >
           {products.map(product => {
+            if (product.deletionDate) return null;
+
             return (
-              <SwiperSlide key={product.idNumber}>
+              <SwiperSlide key={product._id}>
                 <ProductCard
                   product={product}
-                  className="w-[296px] md:w-[264px]"
+                  className="w-[296px] md:w-[264px] lg:w-[264px]"
                 />
               </SwiperSlide>
             );

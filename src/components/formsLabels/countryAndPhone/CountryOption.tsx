@@ -1,6 +1,13 @@
+import type { FC } from 'react';
+
 import Flag from './Flag';
 
-const CountryOption = ({ flag, name }) => {
+interface ICountryOptionProps {
+  flag: string;
+  name: string;
+}
+
+const CountryOption: FC<ICountryOptionProps> = ({ flag, name }) => {
   return (
     <div className="flex">
       <Flag name={name} flag={flag} />

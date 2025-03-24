@@ -21,18 +21,23 @@ const TimeSelector: FC<ITimeSelectorProps> = ({
   };
   const menuStyles = 'bg-main rounded-[4px] pb-[7px] text-center shadow-xl';
   const singleValueStyles = 'mr-[6px]';
-
+  // const [isMenuOpen, SetIsMenuOpen] = useState(false);
   return (
     <div className="">
       <Select<{ value: string | number; label: string | number }>
         menuPortalTarget={document.body}
         defaultValue={defaultValue}
-  
+        // onMenuOpen={() => SetIsMenuOpen(true)}
+        // onMenuClose={() => SetIsMenuOpen(false)}
         options={options}
         isSearchable={false}
-
+        // components={{
+        //   DropdownIndicator: props => (
+        //     <DropdownIndicator {...props} isMenuOpen={isMenuOpen} />
+        //   ),
+        // }}
         closeMenuOnSelect={true}
-      
+        // defaultMenuIsOpen={true}
         onChange={selectedOption => setValue(selectedOption?.value)}
         unstyled
         styles={{

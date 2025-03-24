@@ -41,6 +41,8 @@ const VideoPlayer: FC<IVideoPlayerProps> = ({
           playing={playing}
           onClickPreview={() => setPlaying(true)}
           style={{ height: 0 }}
+          controls={true}
+    
           width={'100%'}
           height={'100%'}
           light={

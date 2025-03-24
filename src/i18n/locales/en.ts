@@ -36,6 +36,7 @@ export const en = {
   [Button.RequestQuote]: 'Request my price quote',
   [Button.SubmitRequest]: 'Submit Request',
   [Button.AddMoreItems]: 'Add More Items',
+  [Button.GoToProducts]: 'Go to Products',
 
   [Title.Industries]: 'Industries',
   [Title.LatestArrivals]: 'Latest Arrivals',
@@ -47,6 +48,11 @@ export const en = {
   [Title.YouMayAlsoBeInterestedIn]: 'You may also be interested in',
   [Title.ItemsForQuote]: 'Items For Quote',
   [Title.RequestAQuote]: 'Request a quote',
+  [Title.DateAdded]: 'Date Added',
+  [Title.EmptyCart]: 'Your cart is empty',
+  [Title.NoResults]:
+    'No results found for your query. Please try adjusting the filters.',
+  [Title.Format]: 'format {{number}}',
 
   [Description.Industries]: 'Our products are used in such industries:',
   [Description.Hero]: 'Used machines - New products',
@@ -176,6 +182,7 @@ export const en = {
   [Placeholder.SearchProduct]: 'Enter product name or ID NR',
   [Placeholder.Search]: 'Search...',
   [Placeholder.Subject]: 'Subject of your message',
+  [Placeholder.SelectCountry]: 'Select your country',
 
   [Filter.Category]: 'Category',
   [Filter.Manufacturer]: 'Manufacturer',

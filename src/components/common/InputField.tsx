@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { type FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Field } from 'formik';
@@ -14,6 +14,7 @@ interface IInputField {
   pattern?: string;
   title?: string;
   as?: string;
+  initialValue?: string;
 }
 
 const InputField: FC<IInputField> = ({
@@ -22,20 +23,29 @@ const InputField: FC<IInputField> = ({
   name,
   required = true,
   className = '',
-  pattern = '',
+  pattern = '.*',
   title = '',
   as = 'input',
+  initialValue = '',
 }) => {
   const { t } = useTranslation();
+  const [inputValue, setInputValue] = useState(initialValue);
+  useEffect(() => {
+    setInputValue(initialValue);
+  }, [initialValue]);
 
   return (
     <Field
       type={type}
+      value={inputValue}
       pattern={pattern}
       placeholder={t(placeholder)}
       name={name}
       title={title}
       as={as}
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+        setInputValue(e.target.value)
+      }
       required={required}
       className={cn(
         'rounded-[32px] border border-neutral px-[22px] py-[14px] text-[14px] outline-none transition-border duration-primary focus:border focus:border-secondaryAccent',

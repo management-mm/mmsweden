@@ -51,9 +51,12 @@ const LightBox: FC<ILightBoxProps> = ({
   const modalContent = (
     <div
       onClick={e => {
-        console.log(e.target)
-        
-        if ((e.currentTarget === e.target) || (e.target instanceof HTMLElement && e.target.classList.contains('swiper-slide'))) setCurrentIndex(-1);
+        if (
+          e.currentTarget === e.target ||
+          (e.target instanceof HTMLElement &&
+            e.target.classList.contains('swiper-slide'))
+        )
+          setCurrentIndex(-1);
       }}
       className="overlay fixed left-0 top-0 z-30 flex h-full w-full items-center justify-center bg-[rgba(27,27,27,0.7)]"
     >
@@ -92,36 +95,36 @@ const LightBox: FC<ILightBoxProps> = ({
       </div>
 
       <Swiper
-  className="lightbox-swiper"
-  onSwiper={onSwiperInit}
-  slidesPerView={1}
-  centeredSlides={true}
-  spaceBetween={0}
-  initialSlide={currentIndex}
-  onSlideChange={swiper => setCurrentIndex(swiper.activeIndex)}
-  simulateTouch={false}
-  touchStartPreventDefault={false}
->
-  {photos.map((photo, index) => (
-    <SwiperSlide key={`photo-${index}`}>
-      <TransformWrapper
-        initialScale={1}
-        minScale={0.5}
-        maxScale={5}
-        centerOnInit
-        ref={slideRefs.current[index]}
+        className="lightbox-swiper"
+        onSwiper={onSwiperInit}
+        slidesPerView={1}
+        centeredSlides={true}
+        spaceBetween={0}
+        initialSlide={currentIndex}
+        onSlideChange={swiper => setCurrentIndex(swiper.activeIndex)}
+        simulateTouch={false}
+        touchStartPreventDefault={false}
       >
-        <TransformComponent>
-          <img
-            src={photo}
-            alt={`Photo ${index + 1}`}
-            className="max-h-screen max-w-full object-contain lg:w-[1000px]"
-          />
-        </TransformComponent>
-      </TransformWrapper>
-    </SwiperSlide>
-  ))}
-</Swiper>
+        {photos.map((photo, index) => (
+          <SwiperSlide key={`photo-${index}`}>
+            <TransformWrapper
+              initialScale={1}
+              minScale={0.5}
+              maxScale={5}
+              centerOnInit
+              ref={slideRefs.current[index]}
+            >
+              <TransformComponent>
+                <img
+                  src={photo}
+                  alt={`Photo ${index + 1}`}
+                  className="max-h-screen max-w-full object-contain lg:w-[1000px]"
+                />
+              </TransformComponent>
+            </TransformWrapper>
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
       <NaviArrowSlider
         intent="details"

@@ -55,10 +55,13 @@ const Details: FC<IDetailsProps> = ({
         <h4 className="text-desc">{t(Filter.Category)}:</h4>
         <p className="text-title">{category[language]}</p>
       </div>
-      <div className="mb-[12px] flex gap-[8px] font-openSans text-[14px]">
+      {manufacturer && (
+        <div className="mb-[12px] flex gap-[8px] font-openSans text-[14px]">
         <h4 className="text-desc">{t(Filter.Manufacturer)}:</h4>
         <p className="text-title">{manufacturer}</p>
       </div>
+      )}
+      
       <div className="mb-[12px] gap-[8px] font-openSans text-[14px]">
         <h4 className="inline text-desc">{t(Filter.Industry)}:</h4>
 
@@ -85,26 +88,32 @@ const Details: FC<IDetailsProps> = ({
       <p className="mb-auto pb-[32px] font-openSans text-[14px] text-title">
         {description[language]}
       </p>
-      <button
-        className={clsx(
-          'flex w-full items-center justify-center rounded-[32px] py-[14px] text-[12px] font-semibold text-primary',
-          isRequested
-            ? 'bg-secondaryAccent text-secondary'
-            : 'bg-accent shadow-accent'
-        )}
-        type="button"
-        onClick={() => handleToggleFavorites(product)}
-      >
-        <SvgIcon
+      {product.deletionDate ? (
+        <span className="flex w-full items-center justify-center rounded-[32px] bg-red-900 py-[14px] text-[12px] font-semibold text-secondary">
+          Sold
+        </span>
+      ) : (
+        <button
           className={clsx(
-            'mr-[12px]',
-            isRequested ? 'fill-secondary' : 'fill-primary'
+            'flex w-full items-center justify-center rounded-[32px] py-[14px] text-[12px] font-semibold text-primary',
+            isRequested
+              ? 'bg-secondaryAccent text-secondary'
+              : 'bg-accent shadow-accent'
           )}
-          iconId={IconId.Cart}
-          size={{ width: 16, height: 16 }}
-        />
-        {isRequested ? t(Button.AddedToQuote) : t(Button.RequestQuote)}
-      </button>
+          type="button"
+          onClick={() => handleToggleFavorites(product)}
+        >
+          <SvgIcon
+            className={clsx(
+              'mr-[12px]',
+              isRequested ? 'fill-secondary' : 'fill-primary'
+            )}
+            iconId={IconId.Cart}
+            size={{ width: 16, height: 16 }}
+          />
+          {isRequested ? t(Button.AddedToQuote) : t(Button.RequestQuote)}
+        </button>
+      )}
     </div>
   );
 };

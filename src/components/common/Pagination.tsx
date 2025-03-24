@@ -1,4 +1,4 @@
-import { useEffect, useState, type FC } from 'react';
+import { type FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactPaginate from 'react-paginate';
 import { useSearchParams } from 'react-router-dom';
@@ -36,12 +36,14 @@ const Previous = () => {
 
 interface IPaginationProps {
   pageCount: number;
-  className?: string
+  className?: string;
 }
 
 const Pagination: FC<IPaginationProps> = ({ pageCount, className }) => {
-  const [currentPage, setCurrentPage] = useState(0);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [currentPage, setCurrentPage] = useState(
+    searchParams.get('page') ? Number(searchParams.get('page')) - 1 : 0
+  );
 
   const manufacturer = searchParams.get('manufacturer');
   const category = searchParams.get('category');
@@ -62,11 +64,13 @@ const Pagination: FC<IPaginationProps> = ({ pageCount, className }) => {
   };
 
   useEffect(() => {
-    setSearchParams(prevParams => {
-      prevParams.delete('page');
-      return prevParams;
-    });
-    setCurrentPage(0);
+    if (manufacturer || category || industry || condition || title) {
+      setSearchParams(prevParams => {
+        prevParams.delete('page');
+        return prevParams;
+      });
+      setCurrentPage(0);
+    }
   }, [manufacturer, category, industry, condition, title]);
 
   return (

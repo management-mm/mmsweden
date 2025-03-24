@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /deals/krokar,%20galler%20&%20k%C3%A4ppar/fabriksnys%20bord.html
+Disallow: /store/begagnademaskiner/kokgrytor.html
+
+Sitemap: https://www.mmsweden.se/sitemap.xml

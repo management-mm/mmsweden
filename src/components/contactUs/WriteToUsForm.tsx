@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
+import { contactUs } from '@api/mailerService';
 import { schema } from '@schemas/writeToUs';
 import { Form, Formik } from 'formik';
 
@@ -7,12 +8,15 @@ import Email from '@components/formsLabels/Email';
 import Message from '@components/formsLabels/Message';
 import Name from '@components/formsLabels/Name';
 import Subject from '@components/formsLabels/Subject';
-import Phone from '@components/formsLabels/phone/Phone';
+import Phone from '@components/formsLabels/countryAndPhone/Phone';
+
+import { useNotify } from '@hooks/useNotify';
 
 import { Button, Description, Title } from '@enums/i18nConstants';
 
 const WriteToUsForm = () => {
   const { t } = useTranslation();
+  const { notifySuccess, notifyError } = useNotify();
 
   return (
     <section className="pb-[104px] md:pb-[140px]">
@@ -34,8 +38,26 @@ const WriteToUsForm = () => {
             message: '',
           }}
           validationSchema={schema}
-          onSubmit={e => {
-            console.log(e);
+          onSubmit={async (values, actions) => {
+            try {
+              const phone = values.callingCode + values.phone;
+
+              const { name, email, countryPhone, subject, message } = values;
+
+              const response = await contactUs({
+                name,
+                email,
+                phone,
+                countryPhone,
+                subject,
+                message,
+              });
+              notifySuccess(response);
+              actions.resetForm();
+            } catch (error) {
+              console.log(error);
+              notifyError('Oops... Something went wrong');
+            }
           }}
         >
           <Form>

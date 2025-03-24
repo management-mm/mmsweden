@@ -34,6 +34,7 @@ const SearchFilter: FC<ISearchFilterProps> = ({ keyword, setKeyword }) => {
         type="text"
         placeholder={t(Placeholder.Search)}
         className="w-full rounded-[32px] border border-neutral px-[22px] py-[8px] pl-[14px] text-[12px] outline-none transition-border duration-primary focus:border focus:border-secondaryAccent"
+        // defaultValue={keyword ?? ''}
         value={keyword}
         onChange={e => setKeyword(e.target.value)}
         onInput={handleInputText}

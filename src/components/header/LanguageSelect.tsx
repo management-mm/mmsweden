@@ -64,6 +64,7 @@ const LanguageSelect = () => {
       styles={{
         menu: base => ({
           ...base,
+          zIndex: '20',
           width: '95px',
           right: 'calc(50% + 4px)',
           transform: 'translate(50%, 0)',
@@ -80,7 +81,9 @@ const LanguageSelect = () => {
           },
         }),
       }}
+      className="cursor-pointer"
       classNames={{
+        container: () => 'cursor-pointer',
         menu: () => menuStyles,
         option: ({ isFocused, isSelected }) =>
           clsx(
@@ -88,7 +91,7 @@ const LanguageSelect = () => {
             isSelected && optionStyles.selected,
             optionStyles.base
           ),
-        dropdownIndicator: () => 'absolute',
+        dropdownIndicator: () => 'absolute cursor-pointer',
         singleValue: () => singleValueStyles,
       }}
     />

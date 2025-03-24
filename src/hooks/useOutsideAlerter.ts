@@ -1,11 +1,15 @@
 import { useEffect, useRef } from 'react';
 
-const useOutsideAlerter = onOutsideClick => {
-  const ref = useRef();
+const useOutsideAlerter = (onOutsideClick: () => void, isOpen: boolean) => {
+  const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    function handleClick(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
+    function handleClick(event: MouseEvent) {
+      if (
+        isOpen &&
+        ref.current &&
+        !ref.current.contains(event.target as Node)
+      ) {
         console.log(ref.current);
         onOutsideClick();
       }
@@ -16,7 +20,7 @@ const useOutsideAlerter = onOutsideClick => {
     return () => {
       document.removeEventListener('mousedown', handleClick);
     };
-  }, [onOutsideClick]);
+  }, [onOutsideClick, isOpen]);
 
   return ref;
 };

@@ -1,6 +1,11 @@
+import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const LabelTitle = ({ title }) => {
+interface ILabelTitleProps {
+  title: string;
+}
+
+const LabelTitle: FC<ILabelTitleProps> = ({ title }) => {
   const { t } = useTranslation();
 
   return (

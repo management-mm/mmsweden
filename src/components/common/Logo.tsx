@@ -14,7 +14,7 @@ interface ILogogProps {
 
 export const Logo: FC<ILogogProps> = ({ className, iconClassName }) => {
   return (
-    <NavLink to="./" className={className}>
+    <NavLink to="/" className={className}>
       <SvgIcon
         iconId={IconId.Logo}
         size={{ width: 94, height: 48 }}

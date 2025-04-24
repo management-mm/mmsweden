@@ -20,3 +20,16 @@ export const handleFetchFulfilled = <T, U>(
   state.error = null;
   state.items = action.payload;
 };
+
+export const handleUpdateFulfilled = <T, U extends { _id: string }>(
+  state: T & { items: U[]; isLoading: boolean; error: string | null },
+  action: PayloadAction<U>
+) => {
+  state.isLoading = false;
+  state.error = null;
+
+  const index = state.items.findIndex(item => item._id === action.payload._id);
+  if (index !== -1) {
+    state.items[index] = action.payload;
+  }
+};

@@ -15,12 +15,9 @@ const MessageDeleteOrSold: FC<IMessageDeleteOrSoldProps> = ({
   isDeleteOrDeletionDate,
   setIsDeleteOrDeletionDate,
 }) => {
- 
-  
   const { isMessageOpen, handleToggleMenu } = useMessageDelOrSold(
     isDeleteOrDeletionDate
   );
-
 
   return (
     <>

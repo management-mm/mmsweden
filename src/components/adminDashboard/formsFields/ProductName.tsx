@@ -61,7 +61,7 @@ const ProductName: FC<IProductNameProps> = ({ initialValue }) => {
   };
 
   const handleRemoveField = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
+    event.preventDefault();
     setIsClick(false);
     setIsNewNameEntered(false);
     setFieldValue('name', previousNameObject, false);
@@ -128,8 +128,8 @@ const ProductName: FC<IProductNameProps> = ({ initialValue }) => {
           {isClick ? (
             <>
               <InputFieldWithCheck
-                  name="name"
-                  required={false}
+                name="name"
+                required={false}
                 placeholder="Enter product name"
                 handleCheck={handleCheck}
                 isNewValueEntered={isNewNameEntered}

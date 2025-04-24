@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { ICategory } from 'interfaces/ICategory';
 
-import { fetchCategories } from './operations';
+import { fetchCategories, updateCategory } from './operations';
 
 import {
   handleFetchFulfilled,
   handlePending,
   handleRejected,
+  handleUpdateFulfilled,
 } from '@store/handlers';
 
 const categoriesSlice = createSlice({
@@ -23,7 +24,10 @@ const categoriesSlice = createSlice({
       .addCase(fetchCategories.fulfilled, (state, action) =>
         handleFetchFulfilled(state, action)
       )
-      .addCase(fetchCategories.rejected, handleRejected),
+      .addCase(fetchCategories.rejected, handleRejected)
+      .addCase(updateCategory.pending, handlePending)
+      .addCase(updateCategory.fulfilled, (state, action) => handleUpdateFulfilled(state, action))
+      .addCase(updateCategory.rejected, handleRejected),
 });
 
 export const categoriesReducer = categoriesSlice.reducer;

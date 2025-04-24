@@ -21,8 +21,10 @@ const BackBtn = () => {
     title = 'Product Change';
   } else if (location.pathname === '/admin/new-product') {
     title = 'Add New Product';
+  } else if (location.pathname === '/admin/filters-settings') {
+    title = 'Filters Settings';
   } else {
-    title = 'Default Title';
+    title = '';
   }
 
   return (

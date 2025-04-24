@@ -55,7 +55,7 @@ const DescriptionProduct: FC<IDescriptionProductProps> = ({ description }) => {
   }, [values.description]);
 
   const handleRemoveField = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
+    event.preventDefault();
     setIsClick(false);
     setIsNewDescriptionEntered(false);
     setFieldValue('description', previousDescriptionObject, false);

@@ -5,6 +5,7 @@ import { Field, useFormikContext } from 'formik';
 import * as _ from 'lodash';
 
 import CountryOption from './CountryOption';
+import Menu from './Menu';
 import Selector from './Selector';
 
 import { LanguageContext } from '@components/SharedLayout';
@@ -14,7 +15,6 @@ import MobileMenu from '@components/common/MobileMenu';
 import useWindowWidth from '@hooks/useWindowWidth';
 
 import countriesList from '@constants/countriesList';
-import Menu from './Menu';
 
 const Country = () => {
   const { language } = useContext(LanguageContext);
@@ -108,7 +108,7 @@ const Country = () => {
         handleToggleMenu={toggleMobileMenu}
       >
         <Menu
-          labelName='country'
+          labelName="country"
           handleInputText={handleInputText}
           options={filteredOptions}
           handleOptionClick={handleOptionClick}

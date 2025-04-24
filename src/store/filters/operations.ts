@@ -1,3 +1,4 @@
+import type { MultiLanguageString } from '@interfaces/IProduct';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import type { ICategory } from 'interfaces/ICategory';
@@ -17,6 +18,11 @@ export interface IFetchCategoriesOrIndustriesParams {
 
 export interface IFetchManufacturersParams {
   keyword?: string;
+}
+
+export interface IUpdateFilterData {
+  id: string;
+  name: MultiLanguageString | string;
 }
 
 export const fetchCategories = createAsyncThunk<
@@ -60,6 +66,55 @@ export const fetchIndustries = createAsyncThunk<
     });
     return response.data;
   } catch (e) {
+    return thunkAPI.rejectWithValue((e as Error).message);
+  }
+});
+
+export const updateCategory = createAsyncThunk<
+  ICategory,
+  IUpdateFilterData,
+  { rejectValue: string }
+>('categories/updateCategory', async (updatedCategory, thunkAPI) => {
+  try {
+    const response = await axios.put(`categories/${updatedCategory.id}`, {
+      name: updatedCategory.name,
+    });
+    return response.data;
+  } catch (e) {
+    console.log(e);
+    return thunkAPI.rejectWithValue((e as Error).message);
+  }
+});
+
+export const updateManufacturer = createAsyncThunk<
+  IManufacturer,
+  IUpdateFilterData,
+  { rejectValue: string }
+>('manufacturers/updateManufacturer', async (updatedManufacturer, thunkAPI) => {
+  try {
+    const response = await axios.put(
+      `manufacturers/${updatedManufacturer.id}`,
+      { name: updatedManufacturer.name }
+    );
+    return response.data;
+  } catch (e) {
+    console.log(e);
+    return thunkAPI.rejectWithValue((e as Error).message);
+  }
+});
+
+export const updateIndustry = createAsyncThunk<
+  IIndustry,
+  IUpdateFilterData,
+  { rejectValue: string }
+>('industries/updateIndustry', async (updatedIndustry, thunkAPI) => {
+  try {
+    const response = await axios.put(`industries/${updatedIndustry.id}`, {
+      name: updatedIndustry.name,
+    });
+    return response.data;
+  } catch (e) {
+    console.log(e);
     return thunkAPI.rejectWithValue((e as Error).message);
   }
 });

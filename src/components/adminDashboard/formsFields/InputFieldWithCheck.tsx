@@ -44,7 +44,9 @@ const InputFieldWithCheck: FC<IInputField> = ({
 }) => {
   const { t } = useTranslation();
   const [inputValue, setInputValue] = useState(initialValue);
-  const [isClick, setIsClick] = useState((name === 'video' && initialValue) ? true : false);
+  const [isClick, setIsClick] = useState(
+    name === 'video' && initialValue ? true : false
+  );
   const { values, setFieldValue } = useFormikContext<FormikValues>();
 
   return (

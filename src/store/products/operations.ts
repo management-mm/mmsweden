@@ -146,13 +146,16 @@ export const updateProduct = createAsyncThunk<
         const key = property as keyof IUpdateProductData;
 
         if (key === 'id') continue;
-         if (key === 'shouldTranslateName') continue;
+        if (key === 'shouldTranslateName') continue;
         if (key === 'deletionDate' && !updatedProduct[key]) continue;
 
         if (key === 'name' && typeof updatedProduct[key] === 'object') {
           const nameJson = JSON.stringify(updatedProduct[key]);
           data.append('name', nameJson);
-        } else if (key === 'description' && typeof updatedProduct[key] === 'object') {
+        } else if (
+          key === 'description' &&
+          typeof updatedProduct[key] === 'object'
+        ) {
           const descriptionJson = JSON.stringify(updatedProduct[key]);
           data.append('description', descriptionJson);
         } else if (key === 'industries') {

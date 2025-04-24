@@ -1,15 +1,17 @@
 import { type ChangeEvent, type FC, useEffect, useState } from 'react';
 
 import type { ICountryOption } from '@interfaces/ICountryOption';
+import { type VariantProps, cva } from 'class-variance-authority';
 
 import useOutsideAlerter from '@hooks/useOutsideAlerter';
-import { cva, type VariantProps } from 'class-variance-authority';
+
 import { cn } from '@utils/cn';
 
-interface IMenuProps extends VariantProps<typeof divVariants>,
-  VariantProps<typeof inputVariants>,
-  VariantProps<typeof listVariants>,
-  VariantProps<typeof itemVariants> {
+interface IMenuProps
+  extends VariantProps<typeof divVariants>,
+    VariantProps<typeof inputVariants>,
+    VariantProps<typeof listVariants>,
+    VariantProps<typeof itemVariants> {
   labelName: 'country' | 'phone';
   handleInputText: (e: ChangeEvent<HTMLInputElement>) => void;
   options: ICountryOption[] | null;
@@ -22,47 +24,43 @@ interface IMenuProps extends VariantProps<typeof divVariants>,
 const divVariants = cva('mt-1', {
   variants: {
     intent: {
-      desktop: 'absolute z-10 w-[600px] rounded-[4px] border bg-white px-[14px] pt-[14px] shadow-lg',
+      desktop:
+        'absolute z-10 w-[600px] rounded-[4px] border bg-white px-[14px] pt-[14px] shadow-lg',
       mobile: 'z-10 w-full',
     },
-  }
+  },
 });
 
 const inputVariants = cva(
   'rounded-[32px] border border-[rgba(102,102,102,0.22)] py-[10px] pl-[16px] pr-[18px] font-openSans text-[12px] outline-none transition-border duration-primary focus:border focus:border-secondaryAccent',
   {
     variants: {
-    intent: {
-      desktop: 'w-full',
-      mobile: 'w-[calc(100%-50px)]',
+      intent: {
+        desktop: 'w-full',
+        mobile: 'w-[calc(100%-50px)]',
+      },
     },
-  }
   }
 );
 
-const listVariants = cva(
-  'overflow-auto',
-  {
-    variants: {
+const listVariants = cva('overflow-auto', {
+  variants: {
     intent: {
       desktop: 'mb-[22px] mt-[14px] max-h-60 bg-white',
       mobile: 'my-[14px] max-h-[calc(70vh)] scrollbar-none',
     },
-  }
-  }
-);
+  },
+});
 
-const itemVariants = cva(
-  'overflow-auto',
-  {
-    variants: {
+const itemVariants = cva('overflow-auto', {
+  variants: {
     intent: {
-      desktop: 'duration-250 cursor-pointer py-[8px] transition-colors hover:bg-secondary',
+      desktop:
+        'duration-250 cursor-pointer py-[8px] transition-colors hover:bg-secondary',
       mobile: 'border-t p-2',
     },
-  }
-  }
-);
+  },
+});
 
 const Menu: FC<IMenuProps> = ({
   labelName,
@@ -72,9 +70,8 @@ const Menu: FC<IMenuProps> = ({
   isOpen,
   setIsOpen,
   setHasClickedOutside,
-  intent
+  intent,
 }) => {
-
   const outsideAlerterRef = useOutsideAlerter(() => {
     setHasClickedOutside?.(true);
     setIsOpen?.(false);
@@ -122,20 +119,14 @@ const Menu: FC<IMenuProps> = ({
   }, [labelName, visibleCountries, options]);
 
   return (
-    <div
-      ref={outsideAlerterRef}
-      className={cn(divVariants({ intent }))}
-    >
+    <div ref={outsideAlerterRef} className={cn(divVariants({ intent }))}>
       <input
         type="text"
         className={cn(inputVariants({ intent }))}
         placeholder="Search by Name or Code"
         onInput={handleInputText}
       />
-      <ul
-        id={labelName}
-        className={cn(listVariants({ intent }))}
-      >
+      <ul id={labelName} className={cn(listVariants({ intent }))}>
         {options && options.length > 0 ? (
           visibleCountries.map((option, index) => (
             <li

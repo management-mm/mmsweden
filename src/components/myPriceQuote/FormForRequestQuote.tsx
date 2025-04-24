@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { requestQuote } from '@api/mailerService';
+import { schema } from '@schemas/formForRequestQuote';
 import { Form, Formik } from 'formik';
 
 import { LanguageContext } from '@components/SharedLayout';
@@ -20,7 +21,6 @@ import { useNotify } from '@hooks/useNotify';
 import getProductName from '@utils/getProductName';
 
 import { Button } from '@enums/i18nConstants';
-import { schema } from '@schemas/formForRequestQuote';
 import { LanguageKeys } from '@enums/languageKeys';
 
 const FormForRequestQuote = () => {
@@ -67,7 +67,7 @@ const FormForRequestQuote = () => {
               company,
               products,
             });
-            
+
             notifySuccess(message[language]);
             actions.resetForm();
           } catch (error) {

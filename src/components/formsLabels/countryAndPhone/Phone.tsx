@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { Field, type FieldProps, useFormikContext } from 'formik';
 import * as _ from 'lodash';
 
+import Menu from './Menu';
 import PhoneCodeOption from './PhoneCodeOption';
 import Selector from './Selector';
 
@@ -20,7 +21,6 @@ import { cn } from '@utils/cn';
 import { Label } from '@enums/i18nConstants';
 
 import countriesList from '@constants/countriesList';
-import Menu from './Menu';
 
 interface IPhoneProps {
   className?: string;
@@ -162,7 +162,7 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
         handleToggleMenu={toggleMobileMenu}
       >
         <Menu
-          labelName='phone'
+          labelName="phone"
           handleInputText={handleInputText}
           options={filteredOptions}
           handleOptionClick={handleOptionClick}

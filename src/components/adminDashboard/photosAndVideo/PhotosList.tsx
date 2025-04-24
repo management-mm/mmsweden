@@ -3,7 +3,7 @@ import { type FC, useEffect, useMemo, useRef } from 'react';
 import { type FormikValues, useFormikContext } from 'formik';
 import { type SlotItemMapArray, type Swapy, createSwapy } from 'swapy';
 
-import { type Item } from './PhotosAndVideo'
+import { type Item } from './PhotosAndVideo';
 
 import SvgIcon from '@components/common/SvgIcon';
 

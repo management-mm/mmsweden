@@ -1,5 +1,11 @@
+import FiltersSettingsMain from '@components/adminDashboard/FiltersSettingsMain';
+
 const FiltersSettings = () => {
-  return <></>;
+  return (
+    <>
+      <FiltersSettingsMain />
+    </>
+  );
 };
 
 export default FiltersSettings;

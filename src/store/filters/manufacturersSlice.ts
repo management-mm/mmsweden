@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { IManufacturer } from 'interfaces/IManufacturer';
 
-import { fetchManufacturers } from './operations';
+import { fetchManufacturers, updateManufacturer } from './operations';
 
 import {
   handleFetchFulfilled,
   handlePending,
   handleRejected,
+  handleUpdateFulfilled,
 } from '@store/handlers';
 
 const manufacturersSlice = createSlice({
@@ -23,7 +24,12 @@ const manufacturersSlice = createSlice({
       .addCase(fetchManufacturers.fulfilled, (state, action) =>
         handleFetchFulfilled(state, action)
       )
-      .addCase(fetchManufacturers.rejected, handleRejected),
+      .addCase(fetchManufacturers.rejected, handleRejected)
+      .addCase(updateManufacturer.pending, handlePending)
+      .addCase(updateManufacturer.fulfilled, (state, action) =>
+        handleUpdateFulfilled(state, action)
+      )
+      .addCase(updateManufacturer.rejected, handleRejected),
 });
 
 export const manufacturersReducer = manufacturersSlice.reducer;

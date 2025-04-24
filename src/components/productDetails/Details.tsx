@@ -57,11 +57,11 @@ const Details: FC<IDetailsProps> = ({
       </div>
       {manufacturer && (
         <div className="mb-[12px] flex gap-[8px] font-openSans text-[14px]">
-        <h4 className="text-desc">{t(Filter.Manufacturer)}:</h4>
-        <p className="text-title">{manufacturer}</p>
-      </div>
+          <h4 className="text-desc">{t(Filter.Manufacturer)}:</h4>
+          <p className="text-title">{manufacturer}</p>
+        </div>
       )}
-      
+
       <div className="mb-[12px] gap-[8px] font-openSans text-[14px]">
         <h4 className="inline text-desc">{t(Filter.Industry)}:</h4>
 

@@ -22,7 +22,7 @@ const PhoneCodeOption: FC<IPhoneCodeOptionProps> = ({
   const { t } = useTranslation();
 
   return (
-    <div className="flex items-center flex-wrap">
+    <div className="flex flex-wrap items-center">
       <Flag name={name} flag={flag} />
 
       <span className="mr-[4px]">{name}</span>
@@ -32,10 +32,9 @@ const PhoneCodeOption: FC<IPhoneCodeOptionProps> = ({
       <div>
         <span>{callingCode}</span>
         {Array.isArray(phoneFormat) && (
-        <span> {phoneFormat[formatIndex ?? 0]}</span>
-      )}
+          <span> {phoneFormat[formatIndex ?? 0]}</span>
+        )}
       </div>
-      
     </div>
   );
 };

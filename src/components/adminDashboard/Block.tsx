@@ -50,9 +50,9 @@ const blockWrapperVariants = cva(
   {
     variants: {
       intent: {
-        main: 'w-fill lg:w-[548px]',
+        main: 'w-full lg:w-[548px]',
         nav: 'font-openSans font-semibold text-title',
-        filter: '',
+        filter: 'lg:w-[480px]',
       },
     },
   }
@@ -66,7 +66,7 @@ type BlockProps = VariantProps<typeof titleWrapperVariants> &
   } & { className?: string } & { title: string };
 
 const Block = ({ intent, title, children, className }: BlockProps) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(intent === 'filter' ? false : true);
 
   return (
     <div className={className}>
@@ -81,7 +81,7 @@ const Block = ({ intent, title, children, className }: BlockProps) => {
         >
           <SvgIcon
             iconId={isOpen ? IconId.ArrowTop : IconId.ArrowDown}
-            size={{ width: 10, height: 6 }}
+            size={{ width: 12, height: 8 }}
             className="fill-title"
           />
         </button>

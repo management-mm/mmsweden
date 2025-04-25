@@ -1,58 +1,128 @@
-# React + TypeScript + Vite
+# <img src="./src/assets/images/logo.svg" alt="Meat Machines Logo"  style="vertical-align: middle; margin-right: 10px;"/> Meat Machines – Industrial Equipment Marketplace & Admin Panel
 
-This template provides a minimal setup to get React working in Vite with HMR and
-some ESLint rules.
+## 📦 Project Description
 
-Currently, two official plugins are available:
+**Meat Machines** is a full-featured web platform for showcasing, managing, and
+selling industrial equipment. It includes:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md)
-  uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc)
-  uses [SWC](https://swc.rs/) for Fast Refresh
+A public-facing website, where users can view available equipment, request
+pricing, send messages, or submit items for sale.
 
-## Expanding the ESLint configuration
+An internal admin panel, where authorized staff can manage products, categories,
+manufacturers, and industries.
 
-If you are developing a production application, we recommend updating the
-configuration to enable type aware lint rules:
+The system is designed for a company engaged in buying and reselling industrial
+machinery, with support for media uploads, smart filtering, and multilingual
+translations via AI.
 
-- Configure the top-level `parserOptions` property like this:
+---
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+## 🧱 Project Structure
+
+```
+/
+├── client/         # Frontend (React admin panel)
+├── server/         # Backend (NestJS + MongoDB)
+├── README.md       # Project documentation
 ```
 
-- Replace `tseslint.configs.recommended` to
-  `tseslint.configs.recommendedTypeChecked` or
-  `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install
-  [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and
-  update the config:
+---
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react';
+## ⚙️ Technologies
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-});
+**Frontend:**
+
+- React
+- TypeScript
+- Vite
+- Redux Toolkit
+- React Router
+
+**Backend:**
+
+- NestJS
+- MongoDB (Mongoose)
+- JWT Authentication
+- Multer (File Upload)
+- AI Integration (Automatic Translation)
+
+---
+
+## 🚀 Quick Start
+
+### 📡 Backend
+
+```bash
+cd server
+npm install
+npm run start:dev
 ```
+
+### 💻 Frontend
+
+```bash
+cd client
+npm install
+npm run dev
+```
+
+## 🔧 Key Features
+
+- Browse and filter industrial products
+
+- Request product prices directly via forms
+
+- Contact the company or submit items for sale
+
+- Admin panel with:
+
+  - Create / Edit / Delete Products
+
+  - Manage Industries, Manufacturers, Categories
+
+  - Upload Product Images and Videos
+
+  - Mark products as "Sold" (automatically removed after a time period)
+
+- Product search and sorting
+
+- AI-powered automatic translation system
+
+- Secure access for staff (JWT-based authentication)
+
+---
+
+## 🖼 Admin Panel Screenshots
+
+### ✏️ Edit Product
+
+![Edit Product](./src/assets/screenshots/edit-product.png)
+
+### ➕ Add Product
+
+![Add Product](./src/assets/screenshots/add-product.png)
+
+### ⚙️ Filters settings
+
+![Filters settings](./src/assets/screenshots/edit-filters.png)
+
+> Screenshots are located in `src/assets/screenshots`
+
+---
+
+## 📝 Notes
+
+- This project is intended for **internal use only** by Meat Machines staff.
+- Access to the admin panel is restricted to authorized users.
+- The system can be scaled to support an external product catalog if needed.
+
+---
+
+## 📬 Contact
+
+Development and support: [Marharyta Katsan]  
+Emails:
+
+- 3margo10@gmail.com
+- marharyta.katsan@gmail.com
+- info@mmsweden.se

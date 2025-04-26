@@ -128,7 +128,8 @@ npm run dev
 
 ## 📬 Contact
 
-Development and support: Marharyta Katsan Emails:
+Development and support: Marharyta Katsan 
+Emails:
 
 - 3margo10@gmail.com
 - marharyta.katsan@gmail.com

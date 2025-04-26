@@ -1,4 +1,9 @@
-# <img src="./src/assets/images/logo.svg" alt="Meat Machines Logo"  style="vertical-align: middle; margin-right: 10px;"/> Meat Machines – Industrial Equipment Marketplace & Admin Panel
+<table>
+  <tr>
+    <td><img src="./src/assets/images/logo.svg" alt="Meat Machines Logo"></td>
+    <td><h1>Meat Machines – Industrial Equipment Marketplace & Admin Panel</h1></td>
+  </tr>
+</table>
 
 ## 📦 Project Description
 
@@ -112,16 +117,18 @@ npm run dev
 
 ## 📝 Notes
 
-- This project is intended for **internal use only** by Meat Machines staff.
-- Access to the admin panel is restricted to authorized users.
-- The system can be scaled to support an external product catalog if needed.
+- The admin panel is accessible only to authorized staff.
+
+- The system is actively used for managing real product inventory and
+  communication.
+
+- Built with flexibility in mind to scale with business growth.
 
 ---
 
 ## 📬 Contact
 
-Development and support: [Marharyta Katsan]  
-Emails:
+Development and support: Marharyta Katsan Emails:
 
 - 3margo10@gmail.com
 - marharyta.katsan@gmail.com

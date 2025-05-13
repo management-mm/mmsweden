@@ -54,7 +54,8 @@ const Pagination: FC<IPaginationProps> = ({ pageCount, className }) => {
   const handlePageClick = (page: number) => {
     const newSearchParams = new URLSearchParams(searchParams);
     if (page === 0) {
-      setSearchParams({});
+      newSearchParams.delete('page');
+      setSearchParams(newSearchParams);
       return;
     }
     newSearchParams.set('page', String(page + 1));

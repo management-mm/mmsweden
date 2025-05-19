@@ -106,7 +106,6 @@ const ChangeProduct = () => {
           validationSchema={schema}
           onSubmit={async values => {
             try {
-              console.log(values);
               if (isDelete) {
                 dispatch(deleteProduct({ productId }));
                 return;

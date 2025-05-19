@@ -21,16 +21,16 @@ export const schema = Yup.object().shape({
       ? Yup.string().required()
       : MultiLanguageSchema.required()
   ),
-  dimensions: Yup.string().nullable(),
+  dimensions: Yup.string().nullable().notRequired(),
   category: Yup.string().required(),
-  manufacturer: Yup.string().required(),
-  industries: Yup.array().of(Yup.string()).required(),
+  manufacturer: Yup.string().notRequired(),
+  industries: Yup.array().of(Yup.string()).notRequired(),
   condition: Yup.string()
     .oneOf(['used', 'new'], "Condition must be either 'used' or 'new'")
     .required(),
-  video: Yup.string().nullable(),
-  photoQueue: Yup.array().of(Yup.mixed<File | string>()).required(),
-  photos: Yup.array().of(Yup.mixed<File>()).required(),
+  video: Yup.string().nullable().notRequired(),
+  photoQueue: Yup.array().of(Yup.mixed<File | string>()).notRequired(),
+  photos: Yup.array().of(Yup.mixed<File>()).notRequired(),
   deletionDate: Yup.string().nullable().notRequired(),
   // shouldTranslateName: Yup.boolean()
 });

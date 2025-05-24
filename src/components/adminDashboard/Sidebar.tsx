@@ -1,7 +1,7 @@
 import Nav from './Nav';
 
+import LanguageSelect from '@components/common/LanguageSelect';
 import { Logo } from '@components/common/Logo';
-import LanguageSelect from '@components/header/LanguageSelect';
 
 const Sidebar = () => {
   return (

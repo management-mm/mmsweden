@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
 import BurgerMenu from './BurgerMenu';
-import LanguageSelect from './LanguageSelect';
 import PriceQuoteBtn from './PriceQuoteBtn';
+
+import LanguageSelect from '../common/LanguageSelect';
 
 import { Logo } from '@components/common/Logo';
 import MobileMenu from '@components/common/MobileMenu';

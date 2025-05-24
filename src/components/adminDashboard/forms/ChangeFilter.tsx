@@ -1,3 +1,6 @@
+import type { FC } from 'react';
+
+import type { MultiLanguageString } from '@interfaces/IProduct';
 import { schema } from '@schemas/editFilter';
 import { Field, Form, Formik } from 'formik';
 
@@ -11,15 +14,13 @@ import { useAppDispatch } from '@hooks/useAppDispatch';
 
 import { filters } from '@enums/filters';
 import { LanguageKeys } from '@enums/languageKeys';
-import type { FC } from 'react';
-import type { MultiLanguageString } from '@interfaces/IProduct';
 
 interface IChangeFilterProps {
-  filterName: filters.Category | filters.Manufacturer | "industries",
-  filterValue: { _id: string, name: string | MultiLanguageString}
+  filterName: filters.Category | filters.Manufacturer | 'industries';
+  filterValue: { _id: string; name: string | MultiLanguageString };
 }
 
-const ChangeFilter:FC<IChangeFilterProps> = ({ filterValue, filterName }) => {
+const ChangeFilter: FC<IChangeFilterProps> = ({ filterValue, filterName }) => {
   const dispatch = useAppDispatch();
 
   return (
@@ -31,7 +32,7 @@ const ChangeFilter:FC<IChangeFilterProps> = ({ filterValue, filterName }) => {
           name: filterValue.name || '',
         }}
         validationSchema={schema}
-        onSubmit={async (values) => {
+        onSubmit={async values => {
           try {
             switch (filterName) {
               case filters.Category:
@@ -43,7 +44,7 @@ const ChangeFilter:FC<IChangeFilterProps> = ({ filterValue, filterName }) => {
               case 'industries':
                 dispatch(updateIndustry(values));
             }
-            console.log(values)
+            console.log(values);
           } catch (error) {
             console.log(error);
           }

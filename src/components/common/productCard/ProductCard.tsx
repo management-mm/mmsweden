@@ -14,6 +14,7 @@ import ProductImage from './ProductImage';
 
 import SvgIcon from '../SvgIcon';
 
+import { LanguageContextAdmin } from '@components/AdminSharedLayout';
 import { LanguageContext } from '@components/SharedLayout';
 
 import { clearProduct } from '@store/products/productsSlice';
@@ -41,8 +42,10 @@ const ProductCard: FC<IProductCardProps> = ({
   },
   className,
 }) => {
-  const { language } = useContext(LanguageContext);
   const isAdmin = window.location.pathname.includes('admin');
+  const { language } = useContext(
+    isAdmin ? LanguageContextAdmin : LanguageContext
+  );
 
   const isLoading = useAppSelector(selectIsLoading);
 

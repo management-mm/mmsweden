@@ -6,6 +6,7 @@ import type { IProduct } from 'interfaces/IProduct';
 
 import ResetFilters from './ResetFilters';
 
+import { LanguageContextAdmin } from '@components/AdminSharedLayout';
 import { LanguageContext } from '@components/SharedLayout';
 import Pagination from '@components/common/Pagination';
 import ProductCard from '@components/common/productCard/ProductCard';
@@ -26,8 +27,11 @@ import { Title } from '@enums/i18nConstants';
 const ProductsList = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const isAdmin = window.location.pathname.includes('admin');
   const [searchParams] = useSearchParams();
-  const { language } = useContext(LanguageContext);
+  const { language } = useContext(
+    isAdmin ? LanguageContextAdmin : LanguageContext
+  );
 
   const windowWidth = useWindowWidth();
 

@@ -26,7 +26,9 @@ const categoriesSlice = createSlice({
       )
       .addCase(fetchCategories.rejected, handleRejected)
       .addCase(updateCategory.pending, handlePending)
-      .addCase(updateCategory.fulfilled, (state, action) => handleUpdateFulfilled(state, action))
+      .addCase(updateCategory.fulfilled, (state, action) =>
+        handleUpdateFulfilled(state, action)
+      )
       .addCase(updateCategory.rejected, handleRejected),
 });
 

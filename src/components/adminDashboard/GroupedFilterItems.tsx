@@ -1,4 +1,4 @@
-import { type FC, useEffect, useState } from 'react';
+import { type FC, useContext, useEffect, useState } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
 import type { ICategory } from '@interfaces/ICategory';
@@ -8,10 +8,12 @@ import type { IManufacturer } from '@interfaces/IManufacturer';
 import Block from './Block';
 import ChangeFilter from './forms/ChangeFilter';
 
+import { LanguageContextAdmin } from '@components/AdminSharedLayout';
+import { LanguageContext } from '@components/SharedLayout';
+
 import getFilterItemName from '@utils/getFilterItemName';
 
 import type { filters } from '@enums/filters';
-import { LanguageKeys } from '@enums/languageKeys';
 
 type FilterItem = ICategory | IManufacturer | IIndustry;
 
@@ -26,14 +28,17 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
   itemName,
   isLoading,
 }) => {
+  const isAdmin = window.location.pathname.includes('admin');
+  const { language } = useContext(
+    isAdmin ? LanguageContextAdmin : LanguageContext
+  );
   const [groupedFilters, setGroupedFilters] = useState<
     Record<string, FilterItem[]>
-    >({});
-  
+  >({});
 
   useEffect(() => {
     const grouped = items.reduce<Record<string, FilterItem[]>>((acc, item) => {
-      const characterKey = getFilterItemName(itemName, item, LanguageKeys.EN)
+      const characterKey = getFilterItemName(itemName, item, language)
         .charAt(0)
         .toUpperCase();
       if (!acc[characterKey]) {
@@ -45,16 +50,8 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
 
     Object.keys(grouped).forEach(key => {
       grouped[key].sort((a, b) => {
-        const nameA = getFilterItemName(
-          itemName,
-          a,
-          LanguageKeys.EN
-        ).toLowerCase();
-        const nameB = getFilterItemName(
-          itemName,
-          b,
-          LanguageKeys.EN
-        ).toLowerCase();
+        const nameA = getFilterItemName(itemName, a, language).toLowerCase();
+        const nameB = getFilterItemName(itemName, b, language).toLowerCase();
         return nameA.localeCompare(nameB);
       });
     });
@@ -64,7 +61,7 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
     );
 
     setGroupedFilters(sortedGrouped);
-  }, [items, itemName]);
+  }, [items, itemName, language]);
 
   // useEffect(() => {
   //   if (options) {
@@ -86,10 +83,10 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
                 baseColor="#E1E1E1"
                 highlightColor="#F2F2F2"
               >
-                <div className="flex justify-between  w-full">
+                <div className="flex w-full justify-between">
                   {!isLoading ? (
                     <Block
-                      title={getFilterItemName(itemName, item, LanguageKeys.EN)}
+                      title={getFilterItemName(itemName, item, language)}
                       intent={'filter'}
                     >
                       <ChangeFilter filterName={itemName} filterValue={item} />

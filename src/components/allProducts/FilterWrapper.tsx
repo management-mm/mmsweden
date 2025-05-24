@@ -14,6 +14,7 @@ import type { ICategory } from 'interfaces/ICategory';
 import type { IIndustry } from 'interfaces/IIndustry';
 import type { IManufacturer } from 'interfaces/IManufacturer';
 
+import { LanguageContextAdmin } from '@components/AdminSharedLayout';
 import { LanguageContext } from '@components/SharedLayout';
 import SearchFilter from '@components/common/SearchFilter';
 import SvgIcon from '@components/common/SvgIcon';
@@ -40,7 +41,10 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
   keyword,
   setKeyword,
 }) => {
-  const context = useContext(LanguageContext);
+  const isAdmin = window.location.pathname.includes('admin');
+  const { language } = useContext(
+    isAdmin ? LanguageContextAdmin : LanguageContext
+  );
   const [groupedFilters, setGroupedFilters] = useState<
     Record<string, (ICategory | IManufacturer | IIndustry)[]>
   >({});
@@ -49,12 +53,6 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
   );
   const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
-
-  if (!context) {
-    throw new Error('LanguageContext must be used within a LanguageProvider');
-  }
-
-  const { language } = context;
 
   const isItemSelected = (item: string) =>
     searchParams.getAll(filterName).includes(item);

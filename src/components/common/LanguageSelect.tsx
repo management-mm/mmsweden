@@ -4,9 +4,10 @@ import Select from 'react-select';
 import clsx from 'clsx';
 import i18next from 'i18next';
 
-import DropdownIndicator from './DropdownIndicator';
-import LanguageOption from './LanguageOption';
+import DropdownIndicator from '../header/DropdownIndicator';
+import LanguageOption from '../header/LanguageOption';
 
+import { LanguageContextAdmin } from '@components/AdminSharedLayout';
 import { LanguageContext } from '@components/SharedLayout';
 
 import type { LanguageKeys } from '@enums/languageKeys';
@@ -23,7 +24,8 @@ const singleValueStyles = 'mr-[6px]';
 
 const LanguageSelect = () => {
   const [isMenuOpen, SetIsMenuOpen] = useState(false);
-  const context = useContext(LanguageContext);
+  const isAdmin = window.location.pathname.includes('admin');
+  const context = useContext(isAdmin ? LanguageContextAdmin : LanguageContext);
 
   if (!context) {
     throw new Error('LanguageContext must be used within a LanguageProvider');

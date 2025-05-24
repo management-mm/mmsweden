@@ -7,6 +7,8 @@ import type { IManufacturer } from '@interfaces/IManufacturer';
 import Block from './Block';
 import GroupedFilterItems from './GroupedFilterItems';
 
+import SearchFilter from '@components/common/SearchFilter';
+
 import {
   fetchCategories,
   fetchIndustries,
@@ -24,10 +26,10 @@ import {
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
 
+import { cn } from '@utils/cn';
+
 import { filters } from '@enums/filters';
 import { LanguageKeys } from '@enums/languageKeys';
-import SearchFilter from '@components/common/SearchFilter';
-import { cn } from '@utils/cn';
 
 const FiltersSettingsMain = () => {
   const dispatch = useAppDispatch();
@@ -81,36 +83,44 @@ const FiltersSettingsMain = () => {
   }, [dispatch, industryKeyword]);
   return (
     <div className={cn('container', 'lg:ml-0')}>
-      <div className="md:flex gap-[24px] pt-[30px] md:pt-[48px] lg:mb-0">
-      <Block title="Category" intent="main" className="mb-[20px]">
-        <SearchFilter keyword={categoryKeyword} setKeyword={setCategoryKeyword}/>
-        <GroupedFilterItems
-          items={categories}
-          itemName={filters.Category}
-          isLoading={categoriesIsLoading}
-        />
-      </Block>
-      <div>
-        <Block title="Manufacturer" intent="main" className="mb-[20px]">
-          <SearchFilter keyword={manufacturerKeyword} setKeyword={setManufacturerKeyword}/>
+      <div className="gap-[24px] pt-[30px] md:flex md:pt-[48px] lg:mb-0">
+        <Block title="Category" intent="main" className="mb-[20px]">
+          <SearchFilter
+            keyword={categoryKeyword}
+            setKeyword={setCategoryKeyword}
+          />
           <GroupedFilterItems
-            items={manufacturers}
-            itemName={filters.Manufacturer}
-            isLoading={manufacturersIsLoading}
+            items={categories}
+            itemName={filters.Category}
+            isLoading={categoriesIsLoading}
           />
         </Block>
-        <Block title="Industry" intent="main" className="mb-[20px]">
-          <SearchFilter keyword={industryKeyword} setKeyword={setIndustryKeyword}/>
-          <GroupedFilterItems
-            items={industries}
-            itemName={'industries'}
-            isLoading={industriesIsLoading}
-          />
-        </Block>
+        <div>
+          <Block title="Manufacturer" intent="main" className="mb-[20px]">
+            <SearchFilter
+              keyword={manufacturerKeyword}
+              setKeyword={setManufacturerKeyword}
+            />
+            <GroupedFilterItems
+              items={manufacturers}
+              itemName={filters.Manufacturer}
+              isLoading={manufacturersIsLoading}
+            />
+          </Block>
+          <Block title="Industry" intent="main" className="mb-[20px]">
+            <SearchFilter
+              keyword={industryKeyword}
+              setKeyword={setIndustryKeyword}
+            />
+            <GroupedFilterItems
+              items={industries}
+              itemName={'industries'}
+              isLoading={industriesIsLoading}
+            />
+          </Block>
+        </div>
       </div>
     </div>
-    </div>
-    
   );
 };
 

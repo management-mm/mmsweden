@@ -26,7 +26,9 @@ const industriesSlice = createSlice({
       )
       .addCase(fetchIndustries.rejected, handleRejected)
       .addCase(updateIndustry.pending, handlePending)
-      .addCase(updateIndustry.fulfilled, (state, action) => handleUpdateFulfilled(state, action))
+      .addCase(updateIndustry.fulfilled, (state, action) =>
+        handleUpdateFulfilled(state, action)
+      )
       .addCase(updateIndustry.rejected, handleRejected),
 });
 

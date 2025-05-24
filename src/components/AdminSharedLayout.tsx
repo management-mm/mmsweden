@@ -16,7 +16,7 @@ interface LanguageContextType {
   setLanguage: (language: LanguageKeys) => void;
 }
 
-export const LanguageContext = createContext<LanguageContextType>({
+export const LanguageContextAdmin = createContext<LanguageContextType>({
   language: (() => {
     const storedLanguage = localStorage.getItem('i18nextLng');
     return storedLanguage && storedLanguage.length > 2
@@ -39,7 +39,7 @@ const AdminSharedLayout = () => {
   return (
     <div className="bg-main font-inter">
       <ScrollToTop />
-      <LanguageContext.Provider value={{ language, setLanguage }}>
+      <LanguageContextAdmin.Provider value={{ language, setLanguage }}>
         <main className="pb-[120px] lg:flex">
           <Sidebar />
           <div>
@@ -66,7 +66,7 @@ const AdminSharedLayout = () => {
             }
           />
         </main>
-      </LanguageContext.Provider>
+      </LanguageContextAdmin.Provider>
     </div>
   );
 };

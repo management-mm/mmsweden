@@ -2,10 +2,7 @@ import { type FC, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import type SwiperType from 'swiper';
-import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/thumbs';
-import { FreeMode, Thumbs, Keyboard } from 'swiper/modules';
+import { FreeMode, Keyboard, Thumbs } from 'swiper/modules';
 
 import LightBox from '@components/common/LightBox';
 import NaviArrowSlider from '@components/common/NaviArrowSlider';
@@ -28,7 +25,7 @@ const Slider: FC<ISliderProps> = ({ photos, alt }) => {
         <Swiper
           keyboard={{
             enabled: true,
-            onlyInViewport: false
+            onlyInViewport: false,
           }}
           onSwiper={onSwiperInit}
           slidesPerView={1}

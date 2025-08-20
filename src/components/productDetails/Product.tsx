@@ -66,7 +66,6 @@ const Product = () => {
                 <Slider
                   alt={name ? getProductName(name, language) : ''}
                   photos={photos}
-                  video={video ? video : ''}
                 />
               ) : (
                 photos &&

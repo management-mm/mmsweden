@@ -1,7 +1,7 @@
 import { type FC, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import SwiperCore from 'swiper';
+import type SwiperType from 'swiper';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/thumbs';
@@ -18,7 +18,7 @@ interface ISliderProps {
 }
 
 const Slider: FC<ISliderProps> = ({ photos, alt }) => {
-  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperCore | null>(null);
+  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
   const { handlePrev, handleNext, onSwiperInit } = useSwiperNavigation();
   const [currentIndex, setCurrentIndex] = useState(-1);
 
@@ -73,6 +73,7 @@ const Slider: FC<ISliderProps> = ({ photos, alt }) => {
           slidesPerView={4}
           freeMode={true}
           watchSlidesProgress={true}
+          watchOverflow={true}
           modules={[FreeMode, Thumbs]}
           className="mySwiper"
         >

@@ -35,7 +35,7 @@ const Slider: FC<ISliderProps> = ({ photos, video, alt }) => {
           onSwiper={onSwiperInit}
           slidesPerView={1}
           spaceBetween={0}
-          thumbs={thumbsSwiper ? { swiper: thumbsSwiper } : undefined}
+          thumbs={thumbsSwiper && !thumbsSwiper.destroyed ? { swiper: thumbsSwiper } : undefined}
           modules={[FreeMode, Thumbs, Keyboard]}
           className="mySwiper2"
         >
@@ -100,16 +100,15 @@ const Slider: FC<ISliderProps> = ({ photos, video, alt }) => {
           })}
           {video && (
             <SwiperSlide>
-              <div className="relative">
-                <div className="pointer-events-auto absolute z-[1] h-full w-full bg-transparent" />
-                <VideoPlayer
-                  video={video}
-                  className="h-[73px] w-[98px] lg:h-[73px]"
-                  containerIconClassName="w-[30px] h-[30px]"
-                  iconClassName="w-[15px] h-[15px]"
-                />
-              </div>
-            </SwiperSlide>
+            <div className="relative">
+              <VideoPlayer
+                video={video}
+                className="h-[73px] w-[98px] lg:h-[73px] pointer-events-none"
+                containerIconClassName="w-[30px] h-[30px]"
+                iconClassName="w-[15px] h-[15px]"
+              />
+            </div>
+          </SwiperSlide>
           )}
         </Swiper>
       </div>

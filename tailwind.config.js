@@ -96,4 +96,11 @@ export default {
     },
   },
   plugins: [require('tailwind-scrollbar'), require('tailwindcss-retina')],
+  safelist: [
+    'swiper',
+    'swiper-slide',
+    'swiper-wrapper',
+    'mySwiper',
+    'mySwiper2'
+  ]
 };

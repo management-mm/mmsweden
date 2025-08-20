@@ -5,7 +5,7 @@ import SwiperCore from 'swiper';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/thumbs';
-import { FreeMode, Thumbs } from 'swiper/modules';
+import { FreeMode, Thumbs, Keyboard } from 'swiper/modules';
 
 import LightBox from '@components/common/LightBox';
 import NaviArrowSlider from '@components/common/NaviArrowSlider';
@@ -28,11 +28,15 @@ const Slider: FC<ISliderProps> = ({ photos, video, alt }) => {
     <div className="">
       <div className="mb-[32px]">
         <Swiper
+          keyboard={{
+            enabled: true,
+            onlyInViewport: false
+          }}
           onSwiper={onSwiperInit}
           slidesPerView={1}
           spaceBetween={0}
           thumbs={thumbsSwiper ? { swiper: thumbsSwiper } : undefined}
-          modules={[FreeMode, Thumbs]}
+          modules={[FreeMode, Thumbs, Keyboard]}
           className="mySwiper2"
         >
           {photos.map((photo, index) => {

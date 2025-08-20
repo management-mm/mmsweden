@@ -4,6 +4,10 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/thumbs';
+
 import App from './App.tsx';
 import './i18n';
 import './index.css';

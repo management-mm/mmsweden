@@ -9,17 +9,15 @@ import { FreeMode, Thumbs, Keyboard } from 'swiper/modules';
 
 import LightBox from '@components/common/LightBox';
 import NaviArrowSlider from '@components/common/NaviArrowSlider';
-import VideoPlayer from '@components/common/VideoPlayer';
 
 import useSwiperNavigation from '@hooks/useSwiperNavigation';
 
 interface ISliderProps {
   photos: string[];
-  video: string;
   alt: string;
 }
 
-const Slider: FC<ISliderProps> = ({ photos, video, alt }) => {
+const Slider: FC<ISliderProps> = ({ photos, alt }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperCore | null>(null);
   const { handlePrev, handleNext, onSwiperInit } = useSwiperNavigation();
   const [currentIndex, setCurrentIndex] = useState(-1);
@@ -35,7 +33,7 @@ const Slider: FC<ISliderProps> = ({ photos, video, alt }) => {
           onSwiper={onSwiperInit}
           slidesPerView={1}
           spaceBetween={0}
-          thumbs={thumbsSwiper && !thumbsSwiper.destroyed ? { swiper: thumbsSwiper } : undefined}
+          thumbs={thumbsSwiper ? { swiper: thumbsSwiper } : undefined}
           modules={[FreeMode, Thumbs, Keyboard]}
           className="mySwiper2"
         >
@@ -52,14 +50,6 @@ const Slider: FC<ISliderProps> = ({ photos, video, alt }) => {
               </SwiperSlide>
             );
           })}
-          {video && (
-            <SwiperSlide>
-              <VideoPlayer
-                video={video}
-                className="h-[248px] w-[330px] md:h-[306px] md:w-[408px] lg:h-[566px] lg:w-[754px]"
-              />
-            </SwiperSlide>
-          )}
 
           <NaviArrowSlider
             intent="details"
@@ -98,18 +88,6 @@ const Slider: FC<ISliderProps> = ({ photos, video, alt }) => {
               </SwiperSlide>
             );
           })}
-          {video && (
-            <SwiperSlide>
-            <div className="relative">
-              <VideoPlayer
-                video={video}
-                className="h-[73px] w-[98px] lg:h-[73px] pointer-events-none"
-                containerIconClassName="w-[30px] h-[30px]"
-                iconClassName="w-[15px] h-[15px]"
-              />
-            </div>
-          </SwiperSlide>
-          )}
         </Swiper>
       </div>
       {currentIndex !== -1 && (

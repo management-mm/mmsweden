@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@tailwind variants;
+
 @layer base {
   @font-face {
     font-family: 'Inter';
@@ -57,6 +57,7 @@
     font-display: swap;
   }
 }
+
 .swiper-slide {
   width: fit-content !important;
 }

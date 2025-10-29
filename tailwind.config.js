@@ -1,3 +1,6 @@
+import tailwindScrollbar from 'tailwind-scrollbar';
+import tailwindcssRetina from 'tailwindcss-retina';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
@@ -95,5 +98,5 @@ export default {
       },
     },
   },
-  plugins: [require('tailwind-scrollbar'), require('tailwindcss-retina')],
+  plugins: [tailwindScrollbar, tailwindcssRetina],
 };

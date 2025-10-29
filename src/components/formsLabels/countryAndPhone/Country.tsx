@@ -14,6 +14,8 @@ import MobileMenu from '@components/common/MobileMenu';
 
 import useWindowWidth from '@hooks/useWindowWidth';
 
+import { Label } from '@enums/i18nConstants';
+
 import countriesList from '@constants/countriesList';
 
 const Country = () => {
@@ -72,7 +74,7 @@ const Country = () => {
   return (
     <>
       <label className="flex flex-col gap-[2px]">
-        <LabelTitle title="Country*" />
+        <LabelTitle title={Label.Country} />
         <div className="w-full">
           <Field name="country">
             {({

@@ -47,23 +47,10 @@ const AttachPhotos = () => {
       {editedAvatars.length > 0 ? (
         <div className="grid grid-cols-2 place-items-center gap-[10px] sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12">
           {editedAvatars.map((avatar, index) => (
-            <div className="relative">
-              {/* <button 
-                className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hover:w-full hover-h-full hover:bg-[linear-gradient(0deg,rgba(5,5,5,0.40)0%,rgba(5,5,5,0.40)100%)'
-                onClick={() => {
-                  setEditedAvatars(prev => prev.filter((_, fileIndex) => fileIndex !== index));
-
-                }}
-                type='button'>
-                  <SvgIcon
-                
-                className=" fill-white transition-opacity duration-primary opacity-0 hover:opacity-100" 
-                iconId={IconId.Cancel}
-                size={{ width: 20, height: 20 }} />
-              </button> */}
+            <div key={index} className="relative">
+              <button className="rounded-full"></button>
 
               <img
-                key={index}
                 src={avatar}
                 alt={`photo-${index}`}
                 className="h-[80px] w-full rounded-[4px] object-cover"

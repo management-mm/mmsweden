@@ -1,6 +1,7 @@
 import { Suspense, lazy } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
+import EmailNewsletter from '@pages/EmailNewsletter';
 import ErrorPage from '@pages/ErrorPage';
 
 import AdminSharedLayout from '@components/AdminSharedLayout';
@@ -126,6 +127,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loader />}>
             <FiltersSettings />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'email-newsletter',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <EmailNewsletter />
           </Suspense>
         ),
       },

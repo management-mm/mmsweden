@@ -2,6 +2,7 @@ import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 import type { IProduct } from 'interfaces/IProduct';
 
 import {
+  type IFetchProductsParams,
   type IFetchProductsResponse,
   addProduct,
   deleteProduct,
@@ -28,11 +29,23 @@ interface IProductsState {
 
 const handleFetchProductsFulfilled = (
   state: IProductsState,
-  action: PayloadAction<IFetchProductsResponse>
+  action: PayloadAction<
+    IFetchProductsResponse,
+    string,
+    { arg: IFetchProductsParams }
+  >
 ) => {
   state.isLoading = false;
   state.error = null;
-  state.items = action.payload.products;
+
+  const mode = action.meta.arg.mode ?? 'replace';
+
+  if (mode === 'append') {
+    state.items = [...state.items, ...action.payload.products];
+  } else {
+    state.items = action.payload.products;
+  }
+
   state.total = action.payload.total;
 };
 

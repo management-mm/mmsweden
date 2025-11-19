@@ -1,4 +1,15 @@
+import { createSelector } from '@reduxjs/toolkit';
+
 import type { RootState } from '@store/store';
+
+export const makeSelectIsProductSelected = () =>
+  createSelector(
+    [
+      (state: RootState) => state.selectedProducts.items,
+      (_: RootState, productId: string) => productId,
+    ],
+    (items, productId) => items.some(p => p._id === productId)
+  );
 
 export const selectProducts = (state: RootState) => state.products.items;
 
@@ -42,3 +53,6 @@ export const selectIsLoggedIn = (state: RootState) => state.auth.isLoggedIn;
 export const selectUser = (state: RootState) => state.auth.user;
 
 export const selectIsRefreshing = (state: RootState) => state.auth.isRefreshing;
+
+export const selectSelectedProducts = (state: RootState) =>
+  state.selectedProducts.items;

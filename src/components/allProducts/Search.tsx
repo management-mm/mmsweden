@@ -42,12 +42,7 @@ const Search: FC<ISearchProps> = ({ className }) => {
   });
 
   return (
-    <label
-      className={cn(
-        'md:w-278px mb-[22px] block w-full md:w-[264px]',
-        className
-      )}
-    >
+    <label className={cn('mb-[22px] block w-full md:w-[264px]', className)}>
       <div className="relative">
         <input
           type="text"

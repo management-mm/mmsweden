@@ -17,6 +17,7 @@ import { industriesReducer } from './filters/industriesSlice';
 import { manufacturersReducer } from './filters/manufacturersSlice';
 import { productsReducer } from './products/productsSlice';
 import { requestedProductsReducer } from './requestedProducts/requestedProductsSlice';
+import { selectedProductsReducer } from './selectedProductsSlice';
 
 const authPersistConfig = {
   key: 'auth',
@@ -27,6 +28,7 @@ const authPersistConfig = {
 export const store = configureStore({
   reducer: {
     auth: persistReducer<AuthState>(authPersistConfig, authReducer),
+    selectedProducts: selectedProductsReducer,
     products: productsReducer,
     requestedProducts: requestedProductsReducer,
     manufacturers: manufacturersReducer,

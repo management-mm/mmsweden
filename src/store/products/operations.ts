@@ -17,6 +17,7 @@ export interface IFetchProductsParams {
   category?: string[];
   industry?: string[];
   manufacturer?: string;
+  mode?: 'replace' | 'append';
 }
 
 export interface IAddProductData {

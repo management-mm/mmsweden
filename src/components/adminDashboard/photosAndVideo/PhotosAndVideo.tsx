@@ -46,7 +46,6 @@ const PhotosAndVideo: FC<IPhotoAndVideoProps> = ({
     }
 
     if (e.target.files) {
-      console.log('editedAvatars', editedAvatars);
       const filesArray = Array.from(e.target.files);
       const newFileAvatars: File[] = [];
 

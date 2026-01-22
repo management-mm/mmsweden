@@ -81,11 +81,10 @@ const SelectedProductsList = () => {
     <section>
       {products.length !== 0 && (
         <div className="mb-[24px] flex shrink-0 items-center text-[18px] font-semibold md:text-[24px] md:leading-[0.8] lg:mb-[36px]">
-        <h2 className="">Selected Products</h2>
-        <span>&nbsp;({products.length})</span>
-      </div>
+          <h2 className="">Selected Products</h2>
+          <span>&nbsp;({products.length})</span>
+        </div>
       )}
-      
 
       <div className="container" ref={containerRef}>
         <div className="flex flex-wrap gap-[16px]">

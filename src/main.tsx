@@ -4,6 +4,8 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/thumbs';
@@ -18,9 +20,11 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
       <PersistGate loading={<div>Loading...</div>} persistor={persistor}>
-        <HelmetProvider>
-          <App />
-        </HelmetProvider>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <HelmetProvider>
+            <App />
+          </HelmetProvider>
+        </LocalizationProvider>
       </PersistGate>
     </Provider>
   </StrictMode>

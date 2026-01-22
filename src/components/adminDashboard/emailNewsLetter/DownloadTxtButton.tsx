@@ -1,13 +1,20 @@
+import type { FC } from 'react';
+
 import { selectSelectedProducts } from '@store/selectors';
 
 import { useAppSelector } from '@hooks/useAppSelector';
 
 import { buildNewsletterHtml } from '@utils/newsletterTemplate';
 
-const DownloadTxtButton = () => {
+interface IDownloadTxtButtonProps {
+  dateRangeText: string;
+}
+
+const DownloadTxtButton: FC<IDownloadTxtButtonProps> = ({ dateRangeText }) => {
   const selectedProducts = useAppSelector(selectSelectedProducts);
+
   const handleDownload = () => {
-    const html = buildNewsletterHtml(selectedProducts);
+    const html = buildNewsletterHtml(selectedProducts, dateRangeText);
     const blob = new Blob([html], {
       type: 'text/plain;charset=utf-8',
     });

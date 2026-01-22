@@ -2,6 +2,7 @@ import { type ChangeEvent, type FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 
+import clsx from 'clsx';
 import * as _ from 'lodash';
 
 import SvgIcon from '@components/common/SvgIcon';
@@ -17,6 +18,7 @@ interface ISearchProps {
 
 const Search: FC<ISearchProps> = ({ className }) => {
   const { t } = useTranslation();
+  const isAdmin = window.location.pathname.includes('admin/email-newsletter');
   const [searchParams, setSearchParams] = useSearchParams();
   const [inputValue, setInputValue] = useState(searchParams.get('title') ?? '');
   const [isEmptyValue, setIsEmptyValue] = useState<boolean>(
@@ -48,16 +50,22 @@ const Search: FC<ISearchProps> = ({ className }) => {
           type="text"
           placeholder={t(Placeholder.SearchProduct)}
           value={inputValue}
-          className="w-full rounded-[32px] border border-[rgba(102,102,102,0.22)] bg-transparent py-[10px] pl-[16px] pr-[18px] font-openSans text-[12px] outline-none transition-border duration-primary focus:border focus:border-secondaryAccent"
+          className={clsx(
+            'w-full rounded-[32px] border border-[rgba(102,102,102,0.22)] bg-transparent pl-[16px] pr-[18px] font-openSans outline-none transition-border duration-primary focus:border focus:border-secondaryAccent',
+            isAdmin ? 'py-[12px] text-[14x]' : 'py-[10px] text-[12px]'
+          )}
           // defaultValue={searchParams.get('title') ?? ''}
           onChange={e => setInputValue(e.target.value)}
           onInput={handleInputText}
         />
         {isEmptyValue ? (
           <SvgIcon
-            className="absolute bottom-[14px] right-[18px] fill-desc"
+            className={clsx(
+              'absolute right-[18px] fill-desc',
+              isAdmin ? 'bottom-[16px]' : 'bottom-[14px]'
+            )}
             iconId={IconId.Search}
-            size={{ width: 14, height: 14 }}
+            size={{ width: isAdmin ? 16 : 14, height: isAdmin ? 16 : 14 }}
           />
         ) : (
           <button

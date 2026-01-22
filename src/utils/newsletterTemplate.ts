@@ -123,7 +123,10 @@ export const productBlock = (product: IProduct) => `
 
 `;
 
-export const buildNewsletterHtml = (products: IProduct[]) => {
+export const buildNewsletterHtml = (
+  products: IProduct[],
+  dateRangeText: string
+) => {
   const productsHtml = products
     .slice(1)
     .map((product, index) => {
@@ -559,7 +562,7 @@ export const buildNewsletterHtml = (products: IProduct[]) => {
                                                                     style="Margin:0;padding-right:40px;padding-left:40px;padding-bottom:5px;padding-top:5px">
                                                                     <p class="cz bt"
                                                                         style="Margin:0;mso-line-height-rule:exactly;font-family:inter, sans-serif;line-height:25.5px;letter-spacing:0;color:#ffffff;font-size:17px">
-                                                                        3rd - 9th November 2025</p>
+                                                                        ${dateRangeText}</p>
                                                                 </td>
                                                             </tr>
                                                             <tr>

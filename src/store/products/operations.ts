@@ -51,6 +51,10 @@ export interface IUpdateProductData {
   shouldTranslateName: boolean;
 }
 
+export interface IGenerateDescData {
+  description: string;
+}
+
 export interface IFetchProductsResponse {
   products: IProduct[];
   total: number;
@@ -186,6 +190,19 @@ export const updateProduct = createAsyncThunk<
     return response.data;
   } catch (e) {
     console.log(e);
+    return thunkAPI.rejectWithValue((e as Error).message);
+  }
+});
+
+export const generateDescWithAi = createAsyncThunk<
+  string,
+  IGenerateDescData,
+  { rejectValue: string }
+>('products/description/ai', async (descData, thunkAPI) => {
+  try {
+    const response = await axios.post('products/description/ai', descData);
+    return response.data;
+  } catch (e) {
     return thunkAPI.rejectWithValue((e as Error).message);
   }
 });

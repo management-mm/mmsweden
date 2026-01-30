@@ -8,6 +8,7 @@ import {
   deleteProduct,
   fetchProductById,
   fetchProducts,
+  generateDescWithAi,
   updateProduct,
 } from './operations';
 
@@ -20,9 +21,11 @@ const deleteProductFromList = (products: IProduct[], productId: string) => {
 
 interface IProductsState {
   items: IProduct[];
+  descWithAi: string;
   total: number;
   productDetails: IProduct | null;
   itemsForQuote: IProduct[];
+  isAiGenerating: boolean;
   isLoading: boolean;
   error: string | null;
 }
@@ -68,6 +71,21 @@ const handleAddProductFulfilled = (
   state.productDetails = action.payload;
 };
 
+const handleGenerateDescWithAiPending = (
+  state: IProductsState & { isAiGenerating: boolean }
+) => {
+  state.isAiGenerating = true;
+};
+
+const handleGenerateDescWithAiFulfilled = (
+  state: IProductsState,
+  action: PayloadAction<string>
+) => {
+  state.isAiGenerating = false;
+  state.error = null;
+  state.descWithAi = action.payload;
+};
+
 const handleDeleteProductFulfilled = (
   state: IProductsState,
   action: PayloadAction<IProduct>
@@ -91,10 +109,12 @@ const productsSlice = createSlice({
   name: 'products',
   initialState: {
     items: [],
+    descWithAi: '',
     productDetails: null,
     total: 0,
     itemsForQuote: [],
     isLoading: false,
+    isAiGenerating: false,
     error: null,
   } as IProductsState,
   reducers: {
@@ -118,7 +138,10 @@ const productsSlice = createSlice({
       .addCase(deleteProduct.rejected, handleRejected)
       .addCase(updateProduct.pending, handlePending)
       .addCase(updateProduct.fulfilled, handleUpdateProductFulfilled)
-      .addCase(updateProduct.rejected, handleRejected),
+      .addCase(updateProduct.rejected, handleRejected)
+      .addCase(generateDescWithAi.pending, handleGenerateDescWithAiPending)
+      .addCase(generateDescWithAi.fulfilled, handleGenerateDescWithAiFulfilled)
+      .addCase(generateDescWithAi.rejected, handleRejected),
 });
 
 export const { clearProduct } = productsSlice.actions;

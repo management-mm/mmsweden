@@ -8,8 +8,13 @@ import InputFieldWithCheck from './InputFieldWithCheck';
 
 import AddNewField from '../AddNewField';
 import DescSelector from '../DescSelector';
+import AiGenerateButton from '../common/AiGenerateButton';
 
 import LabelTitle from '@components/common/LabelTitle';
+
+import { selectDescWithAi } from '@store/selectors';
+
+import { useAppSelector } from '@hooks/useAppSelector';
 
 import { LanguageKeys } from '@enums/languageKeys';
 
@@ -18,11 +23,14 @@ interface IDescriptionProductProps {
 }
 
 const DescriptionProduct: FC<IDescriptionProductProps> = ({ description }) => {
+  const descWithAi = useAppSelector(selectDescWithAi);
+
   const [isClick, setIsClick] = useState(false);
   const [isNewDescriptionEntered, setIsNewDescriptionEntered] = useState(false);
   const [previousDescriptionObject, setPreviousDescriptionObject] = useState(
     description ?? {}
   );
+
   const [language, setLanguage] = useState<LanguageKeys>(LanguageKeys.EN);
   const { values, setFieldValue, handleChange } =
     useFormikContext<FormikValues>();
@@ -40,6 +48,13 @@ const DescriptionProduct: FC<IDescriptionProductProps> = ({ description }) => {
     }
     handleChange(e);
   };
+
+  useEffect(() => {
+    if (descWithAi) {
+      console.log(descWithAi);
+      setFieldValue('description', descWithAi, false);
+    }
+  }, [descWithAi, setFieldValue]);
 
   useEffect(() => {
     if (
@@ -63,7 +78,7 @@ const DescriptionProduct: FC<IDescriptionProductProps> = ({ description }) => {
 
   return (
     <>
-      <div>
+      <div className="relative">
         <label className="flex flex-col gap-[2px]">
           <LabelTitle title="Description" />
           <div className="relative">
@@ -73,17 +88,24 @@ const DescriptionProduct: FC<IDescriptionProductProps> = ({ description }) => {
               disabled={isNewDescriptionEntered}
               name="description"
               placeholder="Enter product description"
-              value={values.description ? values.description[language] : ''}
+              value={
+                typeof description === 'object'
+                  ? description[language] || ''
+                  : values.description || ''
+              }
               onChange={handleChangeDescription}
               className={clsx(
                 'h-fit w-full rounded-[22px] border border-neutral px-[22px] py-[14px] pr-[56px] text-[14px] outline-none transition-border duration-primary focus:border focus:border-secondaryAccent md:h-full',
                 isNewDescriptionEntered ? 'text-gray-400' : ''
               )}
             />
+            {(!description && values.description) && (
+              <AiGenerateButton description={values.description} />
+            )}
             {description && <DescSelector setLanguage={setLanguage} />}
           </div>
           {isClick ? (
-            <>
+            <div>
               <InputFieldWithCheck
                 name="description"
                 required={false}
@@ -92,7 +114,7 @@ const DescriptionProduct: FC<IDescriptionProductProps> = ({ description }) => {
                 handleRemoveField={handleRemoveField}
                 setPreviousValueObject={setPreviousDescriptionObject}
               />
-            </>
+            </div>
           ) : (
             typeof description === 'object' && (
               <AddNewField

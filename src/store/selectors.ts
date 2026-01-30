@@ -56,3 +56,8 @@ export const selectIsRefreshing = (state: RootState) => state.auth.isRefreshing;
 
 export const selectSelectedProducts = (state: RootState) =>
   state.selectedProducts.items;
+
+export const selectDescWithAi = (state: RootState) => state.products.descWithAi;
+
+export const selectIsAiGenerating = (state: RootState) =>
+  state.products.isAiGenerating;

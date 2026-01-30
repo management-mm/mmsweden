@@ -96,6 +96,16 @@ export default {
         line: 'rgba(0, 32, 59, 0.2)',
         footerLine: 'rgba(246, 246, 246, 0.2)',
       },
+      keyframes: {
+        rainbow: {
+          '0%': { backgroundPosition: '0%' },
+          '50%': { backgroundPosition: '100%' },
+          '100%': { backgroundPosition: '200%' },
+        },
+      },
+      animation: {
+        rainbow: 'rainbow 3s linear infinite',
+      },
     },
   },
   plugins: [tailwindScrollbar, tailwindcssRetina],

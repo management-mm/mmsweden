@@ -12,7 +12,7 @@ import LabelTitle from '@components/common/LabelTitle';
 import Loader from '@components/common/loaders/Loader';
 import Company from '@components/formsLabels/Company';
 import Email from '@components/formsLabels/Email';
-import Message from '@components/formsLabels/Message';
+
 import Name from '@components/formsLabels/Name';
 import Country from '@components/formsLabels/countryAndPhone/Country';
 import Phone from '@components/formsLabels/countryAndPhone/Phone';

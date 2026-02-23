@@ -1,7 +1,12 @@
 import { type ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Field, type FormikValues, useFormikContext } from 'formik';
+import {
+  ErrorMessage,
+  Field,
+  type FormikValues,
+  useFormikContext,
+} from 'formik';
 
 import SvgIcon from '@components/common/SvgIcon';
 
@@ -74,6 +79,9 @@ const AttachPhotos = () => {
                 size={{ width: 40, height: 40 }}
                 className="fill-primary"
               />
+              <ErrorMessage name="photos">
+                {msg => <div className="mt-1 text-sm text-red-500">{msg}</div>}
+              </ErrorMessage>
             </label>
           </div>
         </div>

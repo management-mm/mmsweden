@@ -74,7 +74,10 @@ const Country = () => {
   return (
     <>
       <label className="flex flex-col gap-[2px]">
-        <LabelTitle title={Label.Country} />
+        <div className="flex items-center gap-[2px]">
+          <LabelTitle title={Label.Country} />
+          <span className="text-red-700">*</span>
+        </div>
         <div className="w-full">
           <Field name="country">
             {({

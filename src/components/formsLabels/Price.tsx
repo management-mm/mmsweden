@@ -1,3 +1,5 @@
+import { ErrorMessage } from 'formik';
+
 import InputField from '@components/common/InputField';
 import LabelTitle from '@components/common/LabelTitle';
 
@@ -6,8 +8,14 @@ import { Label } from '@enums/i18nConstants';
 const Price = () => {
   return (
     <label className="flex flex-col gap-[2px]">
-      <LabelTitle title={Label.Price} />
-      <InputField placeholder={Label.Price} name="price" />
+      <div className="flex items-center gap-[2px]">
+        <LabelTitle title={Label.Price} />
+        <span className="text-red-700">*</span>
+      </div>
+      <InputField placeholder={Label.Price} required={true} name="price" />
+      <ErrorMessage name="price">
+        {msg => <div className="mt-1 text-sm text-red-500">{msg}</div>}
+      </ErrorMessage>
     </label>
   );
 };

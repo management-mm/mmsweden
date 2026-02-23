@@ -99,7 +99,7 @@ const DescriptionProduct: FC<IDescriptionProductProps> = ({ description }) => {
                 isNewDescriptionEntered ? 'text-gray-400' : ''
               )}
             />
-            {(!description && values.description) && (
+            {!description && values.description && (
               <AiGenerateButton description={values.description} />
             )}
             {description && <DescSelector setLanguage={setLanguage} />}

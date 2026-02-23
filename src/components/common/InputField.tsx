@@ -20,9 +20,9 @@ const InputField: FC<IInputField> = ({
   type = 'text',
   placeholder,
   name,
-  required = true,
+  required = false,
   className = '',
-  pattern = '*.',
+  pattern = '.*',
   title = '',
   as = 'input',
 }) => {

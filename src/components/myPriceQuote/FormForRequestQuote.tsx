@@ -4,13 +4,15 @@ import { useTranslation } from 'react-i18next';
 import { requestQuote } from '@api/mailerService';
 import { schema } from '@schemas/formForRequestQuote';
 import axios from 'axios';
-import { Form, Formik } from 'formik';
+import { ErrorMessage, Form, Formik } from 'formik';
 
 import { LanguageContext } from '@components/SharedLayout';
+import InputField from '@components/common/InputField';
+import LabelTitle from '@components/common/LabelTitle';
 import Loader from '@components/common/loaders/Loader';
 import Company from '@components/formsLabels/Company';
 import Email from '@components/formsLabels/Email';
-import Message from '@components/formsLabels/Message';
+
 import Name from '@components/formsLabels/Name';
 import Country from '@components/formsLabels/countryAndPhone/Country';
 import Phone from '@components/formsLabels/countryAndPhone/Phone';
@@ -22,7 +24,7 @@ import { useNotify } from '@hooks/useNotify';
 
 import getProductName from '@utils/getProductName';
 
-import { Button } from '@enums/i18nConstants';
+import { Button, Label, Placeholder } from '@enums/i18nConstants';
 import { LanguageKeys } from '@enums/languageKeys';
 
 const FormForRequestQuote = () => {
@@ -97,7 +99,21 @@ const FormForRequestQuote = () => {
               <Phone />
               <Country />
               <Company />
-              <Message />
+              <label className="flex flex-col gap-[2px]">
+                <LabelTitle title={Label.Message} />
+
+                <InputField
+                  name="message"
+                  as="textarea"
+                  placeholder={Placeholder.Message}
+                  className="h-[180px] rounded-[22px]"
+                />
+                <ErrorMessage name="message">
+                  {msg => (
+                    <div className="mt-1 text-sm text-red-500">{msg}</div>
+                  )}
+                </ErrorMessage>
+              </label>
             </div>
 
             <button

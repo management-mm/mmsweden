@@ -1,5 +1,7 @@
 import type { FC } from 'react';
 
+import { ErrorMessage } from 'formik';
+
 import InputField from '@components/common/InputField';
 import LabelTitle from '@components/common/LabelTitle';
 
@@ -14,7 +16,10 @@ interface IEmailProps {
 const Email: FC<IEmailProps> = ({ className }) => {
   return (
     <label className={cn('flex flex-col gap-[2px]', className)}>
-      <LabelTitle title={Label.Email} />
+      <div className="flex items-center gap-[2px]">
+        <LabelTitle title={Label.Email} />
+        <span className="text-red-700">*</span>
+      </div>
       <InputField
         placeholder={Placeholder.Email}
         type="email"
@@ -23,6 +28,9 @@ const Email: FC<IEmailProps> = ({ className }) => {
         title="Please enter a valid email address."
         required={true}
       />
+      <ErrorMessage name="email">
+        {msg => <div className="mt-1 text-sm text-red-500">{msg}</div>}
+      </ErrorMessage>
     </label>
   );
 };

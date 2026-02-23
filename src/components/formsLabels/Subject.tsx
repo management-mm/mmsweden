@@ -1,5 +1,7 @@
 import type { FC } from 'react';
 
+import { ErrorMessage } from 'formik';
+
 import InputField from '@components/common/InputField';
 import LabelTitle from '@components/common/LabelTitle';
 
@@ -15,11 +17,10 @@ const Subject: FC<ISubjectProps> = ({ className }) => {
   return (
     <label className={cn('flex flex-col gap-[2px]', className)}>
       <LabelTitle title={Label.Subject} />
-      <InputField
-        name="subject"
-        required={false}
-        placeholder={Placeholder.Subject}
-      />
+      <InputField name="subject" placeholder={Placeholder.Subject} />
+      <ErrorMessage name="message">
+        {msg => <div className="mt-1 text-sm text-red-500">{msg}</div>}
+      </ErrorMessage>
     </label>
   );
 };

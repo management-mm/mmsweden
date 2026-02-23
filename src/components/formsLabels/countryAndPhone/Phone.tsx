@@ -1,13 +1,13 @@
 import { type ChangeEvent, type FC, useContext, useState } from 'react';
-import InputMask from 'react-input-mask';
+import { useMemo } from 'react';
 
 import type { ICountryOption } from '@interfaces/ICountryOption';
-import clsx from 'clsx';
-import { Field, type FieldProps, useFormikContext } from 'formik';
+import { ErrorMessage, Field, useFormikContext } from 'formik';
 import * as _ from 'lodash';
 
 import Menu from './Menu';
 import PhoneCodeOption from './PhoneCodeOption';
+import PhoneMaskedField from './PhoneMaskedField';
 import Selector from './Selector';
 
 import { LanguageContext } from '@components/SharedLayout';
@@ -21,6 +21,13 @@ import { cn } from '@utils/cn';
 import { Label } from '@enums/i18nConstants';
 
 import countriesList from '@constants/countriesList';
+
+type CallingCodeEntry = {
+  callingCode: string;
+  countryValue: string;
+  flag: string;
+  phoneFormat: string | string[];
+};
 
 interface IPhoneProps {
   className?: string;
@@ -60,6 +67,73 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
     };
   });
 
+  const stripCountryPrefix = (format: string, callingCode: string) => {
+    const escaped = callingCode.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return format.replace(new RegExp(`^\\s*${escaped}\\s*`), '').trim();
+  };
+
+  const callingCodeIndex = useMemo(() => {
+    const map = new Map<string, CallingCodeEntry[]>();
+
+    for (const country of countriesList) {
+      const { callingCode, translations, flag, phoneFormat } = country;
+
+      const entry: CallingCodeEntry = {
+        callingCode,
+        countryValue: translations[language],
+        flag,
+        phoneFormat,
+      };
+
+      const arr = map.get(callingCode) ?? [];
+      arr.push(entry);
+      map.set(callingCode, arr);
+    }
+
+    return map;
+  }, [language]);
+  const detectByCallingCode = (rawValue: string) => {
+    const digits = rawValue.slice(1).replace(/\D/g, '');
+    if (digits.length === 0) return null;
+
+    const maxLen = Math.min(4, digits.length);
+
+    for (let len = maxLen; len >= 1; len--) {
+      const code = `+${digits.slice(0, len)}`;
+      if (callingCodeIndex.has(code)) {
+        return { callingCode: code };
+      }
+    }
+
+    return null;
+  };
+
+  const applyDetectedCallingCode = (code: string) => {
+    const candidates = callingCodeIndex.get(code);
+    if (!candidates?.length) return;
+
+    const chosen = candidates[0];
+
+    const rawFormat = Array.isArray(chosen.phoneFormat)
+      ? chosen.phoneFormat[0]
+      : chosen.phoneFormat;
+
+    const localFormat = stripCountryPrefix(rawFormat, code);
+
+    setCallingCode(code);
+    setPhoneFormat(localFormat);
+    setPlaceholder(localFormat.replace(/#/g, '0'));
+
+    setFieldValue('callingCode', code, false);
+    setFieldValue('countryPhone', chosen.countryValue, false);
+
+    const opt = options.find(
+      o =>
+        o?.label?.props?.callingCode === code && o.value === chosen.countryValue
+    );
+    if (opt) setSelectedOption(opt);
+  };
+
   const [filteredOptions, setFilteredOptions] = useState(options);
 
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
@@ -96,29 +170,33 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
   });
   const handleOptionClick = (option: ICountryOption) => {
     setSelectedOption(option);
+
     const { phoneFormat, formatIndex } = option.label.props;
-    setFieldValue('callingCode', option?.label?.props.callingCode, false);
+    const code = option.label.props.callingCode as string;
+
+    const rawFormat = Array.isArray(phoneFormat)
+      ? phoneFormat[formatIndex]
+      : phoneFormat;
+
+    const localFormat = stripCountryPrefix(rawFormat, code);
+
+    setFieldValue('callingCode', code, false);
     setFieldValue('countryPhone', option.value, false);
 
-    setCallingCode(option?.label?.props.callingCode);
-    setPhoneFormat(
-      Array.isArray(phoneFormat) ? phoneFormat[formatIndex] : phoneFormat
-    );
-    setPlaceholder(
-      Array.isArray(phoneFormat)
-        ? phoneFormat[formatIndex].replace(/#/g, '0')
-        : phoneFormat.replace(/#/g, '0')
-    );
-    // setIsOpen(false);
-    if (windowWidth < 1178) {
-      toggleMobileMenu();
-    }
+    setCallingCode(code);
+    setPhoneFormat(localFormat);
+    setPlaceholder(localFormat.replace(/#/g, '0'));
+
+    if (windowWidth < 1178) toggleMobileMenu();
   };
 
   return (
     <>
       <label className={cn('flex flex-col gap-[2px]', className)}>
-        <LabelTitle title={Label.Phone} />
+        <div className="flex items-center gap-[2px]">
+          <LabelTitle title={Label.Phone} />
+          <span className="text-red-700">*</span>
+        </div>
         <div className="z-2 relative w-full">
           <Selector
             hasClickedOutside={hasClickedOutside}
@@ -132,29 +210,28 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
             filteredOptions={filteredOptions}
             toggleMobileMenu={toggleMobileMenu}
           />
-          <Field type="hidden" name="callingCode" value={callingCode} />
-          <Field name="phone">
-            {({ field }: FieldProps) => (
-              <InputMask
-                {...field}
-                mask={phoneFormat}
-                placeholder={placeholder}
-                maskChar={'0'}
-                formatChars={{
-                  '#': '[0-9]',
-                }}
-                className={clsx(
-                  'w-full shrink-0 rounded-[32px] border border-neutral py-[14px] font-openSans text-[14px] text-desc outline-none transition-border duration-primary focus:border focus:border-secondaryAccent',
-                  callingCodeSize.length === 0 && 'pl-[65px]',
-                  callingCodeSize.length === 1 && 'pl-[77px]',
-                  callingCodeSize.length === 2 && 'pl-[85px]',
-                  callingCodeSize.length === 3 && 'pl-[93px]',
-                  callingCodeSize.length === 4 && 'pl-[101px]'
-                )}
-              />
-            )}
-          </Field>
+          <Field
+            type="hidden"
+            required={false}
+            name="callingCode"
+            value={callingCode}
+          />
+          <PhoneMaskedField
+            phoneFormat={phoneFormat}
+            placeholder={placeholder}
+            callingCodeSize={callingCodeSize.length}
+            detectByCallingCode={detectByCallingCode}
+            onDetectCountry={({ callingCode }) =>
+              applyDetectedCallingCode(callingCode)
+            }
+            onDetectedAndNormalize={normalized =>
+              setFieldValue('phone', normalized, false)
+            }
+          />
         </div>
+        <ErrorMessage name="Phone">
+          {msg => <div className="mt-1 text-sm text-red-500">{msg}</div>}
+        </ErrorMessage>
       </label>
       <MobileMenu
         isOpen={isOpenMobileMenu}

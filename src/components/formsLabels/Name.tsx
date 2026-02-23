@@ -21,7 +21,7 @@ const Name: FC<INameProps> = ({ className }) => {
         <span className="text-red-700">*</span>
       </div>
       <InputField placeholder={Placeholder.Name} name="name" required={true} />
-      <ErrorMessage name="email">
+      <ErrorMessage name="Name">
         {msg => <div className="mt-1 text-sm text-red-500">{msg}</div>}
       </ErrorMessage>
     </label>

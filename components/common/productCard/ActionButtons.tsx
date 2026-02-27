@@ -3,14 +3,15 @@
 import { type FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import Skeleton from 'react-loading-skeleton';
-
-import type { IProduct } from '@interfaces/IProduct';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
+import slugify from 'slugify';
 
+import type { IProduct } from '@interfaces/IProduct';
 import useUpdateRequestedProducts from '@hooks/useUpdateRequestedProducts';
-
 import { Button } from '@enums/i18nConstants';
+import getProductName from '@utils/getProductName';
+import { LanguageKeys } from '@enums/languageKeys';
 
 interface IActionsButtonsProps {
   isLoading: boolean;
@@ -25,7 +26,14 @@ const ActionsButtons: FC<IActionsButtonsProps> = ({ isLoading, product }) => {
     useUpdateRequestedProducts(product);
 
   const goToDetails = () => {
-    router.push(`/all-products/${product._id}`);
+    const rawName = getProductName(product.name, LanguageKeys.EN)
+
+    const slug = `${product.condition}-${slugify(rawName, {
+      lower: true,
+      strict: true,
+    })}-${product._id}`;
+
+    router.push(`all-products/${slug}`);
   };
 
   return (
@@ -33,7 +41,7 @@ const ActionsButtons: FC<IActionsButtonsProps> = ({ isLoading, product }) => {
       {!isLoading ? (
         <>
           <button
-            className="border-primary font-inter text-primary hover:bg-primary hover:text-secondary h-[40px] w-[100%] rounded-[32px] border bg-transparent py-0 text-center text-[12px] leading-tight font-semibold transition-colors duration-500 md:w-[calc((100%-16px)/2)] lg:w-full"
+            className="border-primary font-inter text-primary hover:bg-primary hover:text-secondary h-[40px] w-full rounded-[32px] border bg-transparent text-[12px] font-semibold transition-colors duration-500"
             onClick={goToDetails}
             type="button"
           >
@@ -43,7 +51,7 @@ const ActionsButtons: FC<IActionsButtonsProps> = ({ isLoading, product }) => {
           {!product.deletionDate && (
             <button
               className={clsx(
-                'text-primary h-[40px] shrink-0 rounded-[32px] px-[15px] text-[12px] font-semibold md:w-[calc((100%-16px)/2)] lg:w-auto',
+                'text-primary h-[40px] shrink-0 rounded-[32px] px-[15px] text-[12px] font-semibold',
                 isRequested ? 'bg-secondary-accent text-secondary' : 'bg-accent'
               )}
               onClick={() => handleToggleFavorites(product)}

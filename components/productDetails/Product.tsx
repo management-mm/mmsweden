@@ -42,8 +42,9 @@ const Product = () => {
 
   const windowWidth = useWindowWidth();
 
-  const params = useParams<{ id: string }>();
-  const productId = params?.id;
+  const params = useParams<{ slug: string }>();
+const slug = params?.slug;
+const productId = slug?.split('-').pop();
 
   const { name, photos, video } = product || {};
 

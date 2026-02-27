@@ -1,6 +1,6 @@
 'use client';
 
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import type { IProduct } from '@interfaces/IProduct';
@@ -16,41 +16,49 @@ import { useAppSelector } from '@hooks/useAppSelector';
 
 import { Title } from '@enums/i18nConstants';
 
+type GroupedProducts = Record<string, IProduct[]>;
+
 const LatestArrivals = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const products: IProduct[] = useAppSelector(selectProducts);
-
-  const [groupedProducts, setGroupedProducts] = useState<
-    Record<string, IProduct[]>
-  >({});
-
+  const allProducts = useAppSelector(selectProducts);
   const { language } = useContext(LanguageContext);
 
+  const products = useMemo(() => {
+    const filtered = (allProducts ?? []).filter(p => !p.deletionDate);
+
+    return filtered.slice(0, 60);
+  }, [allProducts]);
+
   useEffect(() => {
-    dispatch(fetchProducts({ sort: 'latest' }));
+    dispatch(
+      fetchProducts({
+        sort: 'latest',
+   
+      } as any)
+    );
   }, [dispatch]);
 
-  useEffect(() => {
-    const grouped = products.reduce(
-      (acc, product) => {
-        const dateKey = product.createdAt.toString().split('T')[0];
-        if (!acc[dateKey]) {
-          acc[dateKey] = [];
-        }
-        acc[dateKey].push(product);
-        return acc;
-      },
-      {} as Record<string, IProduct[]>
-    );
+  const groupedProducts: GroupedProducts = useMemo(() => {
+    const grouped: GroupedProducts = {};
 
-    setGroupedProducts(grouped);
+    for (const product of products) {
+
+      const dateKey = new Date(product.createdAt).toISOString().slice(0, 10);
+      (grouped[dateKey] ??= []).push(product);
+    }
+
+    return grouped;
   }, [products]);
+
+  const groupedEntries = useMemo(() => {
+    return Object.entries(groupedProducts).sort(([a], [b]) => b.localeCompare(a));
+  }, [groupedProducts]);
 
   return (
     <section className="pt-[22px] pb-[96px]">
       <div className="container">
-        {Object.entries(groupedProducts).map(([date, products]) => (
+        {groupedEntries.map(([date, items]) => (
           <div key={date} className="mb-8">
             <p className="text-title mb-4 text-center text-[18px] font-semibold md:text-[24px]">
               <span>{t(Title.DateAdded)}</span>
@@ -58,16 +66,15 @@ const LatestArrivals = () => {
               <span className="hidden md:inline">&nbsp;-&nbsp;</span>
               {new Date(date).toLocaleString(language, { dateStyle: 'long' })}
             </p>
+
             <div className="flex flex-wrap justify-center gap-4 md:justify-start">
-              {products.map(product =>
-                !product.deletionDate ? (
-                  <ProductCard
-                    key={product._id}
-                    product={product}
-                    className="w-[296px] md:w-[264px]"
-                  />
-                ) : null
-              )}
+              {items.map(product => (
+                <ProductCard
+                  key={product._id}
+                  product={product}
+                  className="w-[296px] md:w-[264px]"
+                />
+              ))}
             </div>
           </div>
         ))}

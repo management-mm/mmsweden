@@ -60,5 +60,16 @@ export const selectSelectedProducts = (state: RootState) =>
 
 export const selectDescWithAi = (state: RootState) => state.products.descWithAi;
 
-export const selectIsAiGenerating = (state: RootState) =>
-  state.products.isAiGenerating;
+export const selectIsAiGenerating = (state:RootState) => state.products.isAiGenerating
+
+export const selectProductsCacheByKey =
+  (key: string) => (state: RootState) => state.products.cache[key]?.items ?? [];
+
+export const selectProductsLastFetchedAtByKey =
+  (key: string) => (state: RootState) => state.products.cache[key]?.lastFetchedAt ?? null;
+
+export const selectProductsStatusByKey =
+  (key: string) => (state: RootState) => state.products.statusByKey[key] ?? 'idle';
+
+export const selectTotalByKey = (key: string) => (state: RootState) =>
+  state.products.cache[key]?.total ?? 0;

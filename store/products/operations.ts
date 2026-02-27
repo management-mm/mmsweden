@@ -18,6 +18,7 @@ export interface IFetchProductsParams {
   industry?: string[];
   manufacturer?: string;
   mode?: 'replace' | 'append';
+  cacheKey?: string;
 }
 
 export interface IAddProductData {
@@ -64,11 +65,15 @@ export const fetchProducts = createAsyncThunk<
   IFetchProductsResponse,
   IFetchProductsParams,
   { rejectValue: string }
->('products/fetchAll', async (params, thunkAPI) => {
+>('products/fetchAll', async (args, thunkAPI) => {
   try {
+
+    const { cacheKey, mode, ...queryParams } = args;
+
     const response = await axios.get<IFetchProductsResponse>('products/', {
-      params,
+      params: queryParams,
     });
+
     return response.data;
   } catch (e) {
     return thunkAPI.rejectWithValue((e as Error).message);

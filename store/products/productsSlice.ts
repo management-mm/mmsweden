@@ -16,7 +16,13 @@ import { handlePending, handleRejected } from '@store/handlers';
 
 const deleteProductFromList = (products: IProduct[], productId: string) => {
   const index = products.findIndex(product => product._id === productId);
-  products.splice(index, 1);
+  if (index !== -1) products.splice(index, 1);
+};
+
+type ProductsCacheEntry = {
+  items: IProduct[];
+  total: number;
+  lastFetchedAt: number | null;
 };
 
 interface IProductsState {
@@ -28,8 +34,38 @@ interface IProductsState {
   isAiGenerating: boolean;
   isLoading: boolean;
   error: string | null;
+  cache: Record<string, ProductsCacheEntry>;
+  statusByKey: Record<string, 'idle' | 'loading' | 'succeeded' | 'failed'>;
+  errorByKey: Record<string, string | null>;
 }
 
+const handleFetchProductsPending = (
+  state: IProductsState,
+  action: PayloadAction<unknown, string, { arg: IFetchProductsParams }>
+) => {
+  state.isLoading = true;
+  state.error = null;
+
+  const cacheKey = action.meta.arg.cacheKey;
+  if (cacheKey) {
+    state.statusByKey[cacheKey] = 'loading';
+    state.errorByKey[cacheKey] = null;
+  }
+};
+
+const handleFetchProductsRejected = (
+  state: IProductsState,
+  action: PayloadAction<unknown, string, { arg: IFetchProductsParams }>
+) => {
+  state.isLoading = false;
+  state.error = 'Request failed';
+
+  const cacheKey = action.meta.arg.cacheKey;
+  if (cacheKey) {
+    state.statusByKey[cacheKey] = 'failed';
+    state.errorByKey[cacheKey] = 'Request failed';
+  }
+};
 const handleFetchProductsFulfilled = (
   state: IProductsState,
   action: PayloadAction<
@@ -50,6 +86,17 @@ const handleFetchProductsFulfilled = (
   }
 
   state.total = action.payload.total;
+
+  const cacheKey = action.meta.arg.cacheKey;
+  if (cacheKey) {
+    state.cache[cacheKey] = {
+      items: action.payload.products,
+      total: action.payload.total,
+      lastFetchedAt: Date.now(),
+    };
+    state.statusByKey[cacheKey] = 'succeeded';
+    state.errorByKey[cacheKey] = null;
+  }
 };
 
 const handleFetchProductByIdFulfilled = (
@@ -71,9 +118,7 @@ const handleAddProductFulfilled = (
   state.productDetails = action.payload;
 };
 
-const handleGenerateDescWithAiPending = (
-  state: IProductsState & { isAiGenerating: boolean }
-) => {
+const handleGenerateDescWithAiPending = (state: IProductsState) => {
   state.isAiGenerating = true;
 };
 
@@ -105,18 +150,23 @@ const handleUpdateProductFulfilled = (
   state.productDetails = action.payload;
 };
 
+const initialState: IProductsState = {
+  items: [],
+  descWithAi: '',
+  total: 0,
+  productDetails: null,
+  itemsForQuote: [],
+  isAiGenerating: false,
+  isLoading: false,
+  error: null,
+  cache: {},
+  statusByKey: {},
+  errorByKey: {},
+};
+
 const productsSlice = createSlice({
   name: 'products',
-  initialState: {
-    items: [],
-    descWithAi: '',
-    productDetails: null,
-    total: 0,
-    itemsForQuote: [],
-    isLoading: false,
-    isAiGenerating: false,
-    error: null,
-  } as IProductsState,
+  initialState,
   reducers: {
     clearProduct: state => {
       state.productDetails = null;
@@ -124,9 +174,9 @@ const productsSlice = createSlice({
   },
   extraReducers: builder =>
     builder
-      .addCase(fetchProducts.pending, handlePending)
+      .addCase(fetchProducts.pending, handleFetchProductsPending)
       .addCase(fetchProducts.fulfilled, handleFetchProductsFulfilled)
-      .addCase(fetchProducts.rejected, handleRejected)
+      .addCase(fetchProducts.rejected, handleFetchProductsRejected)
       .addCase(fetchProductById.pending, handlePending)
       .addCase(fetchProductById.fulfilled, handleFetchProductByIdFulfilled)
       .addCase(fetchProductById.rejected, handleRejected)

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -12,7 +12,11 @@ import SvgIcon from '@components/common/SvgIcon';
 import ProductCard from '@components/common/productCard/ProductCard';
 
 import { fetchProducts } from '@store/products/operations';
-import { selectProducts } from '@store/selectors';
+import {
+  selectProductsCacheByKey,
+  selectProductsLastFetchedAtByKey,
+  selectProductsStatusByKey,
+} from '@store/selectors';
 
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
@@ -20,18 +24,44 @@ import useSwiperNavigation from '@hooks/useSwiperNavigation';
 
 import { Title } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
+import { CACHE_KEY, TTL } from '@constants/cacheProducts';
+
+
+const PER_PAGE = 10;       
+const MAX_RENDER = 20;      
 
 const LatestArrivals = () => {
   const { t } = useTranslation();
-
   const { handlePrev, handleNext, onSwiperInit } = useSwiperNavigation();
   const dispatch = useAppDispatch();
 
-  const products: IProduct[] = useAppSelector(selectProducts);
+  const cachedProducts = useAppSelector(selectProductsCacheByKey(CACHE_KEY));
+  const lastFetchedAt = useAppSelector(selectProductsLastFetchedAtByKey(CACHE_KEY));
+  const status = useAppSelector(selectProductsStatusByKey(CACHE_KEY));
+
+  const products: IProduct[] = useMemo(() => {
+    return (cachedProducts ?? [])
+      .filter(p => !p.deletionDate)
+      .slice(0, MAX_RENDER);
+  }, [cachedProducts]);
 
   useEffect(() => {
-    dispatch(fetchProducts({ sort: 'latest' }));
-  }, [dispatch]);
+    if (status === 'loading') return;
+
+    const isFresh = lastFetchedAt !== null && Date.now() - lastFetchedAt < TTL;
+
+    if (cachedProducts.length >= PER_PAGE && isFresh) return;
+
+    dispatch(
+      fetchProducts({
+        sort: 'latest',
+        perPage: PER_PAGE,
+        page: 1,
+        cacheKey: CACHE_KEY,
+        mode: 'replace',
+      })
+    );
+  }, [dispatch, status, lastFetchedAt, cachedProducts.length]);
 
   return (
     <section className="text-primary pt-[48px] pb-[96px]">
@@ -69,7 +99,7 @@ const LatestArrivals = () => {
           onSwiper={onSwiperInit}
           style={{ width: 'calc(49% + 50vw)' }}
           slidesPerView={'auto'}
-          spaceBetween={'10px'}
+          spaceBetween={10}
           className="slider"
           breakpoints={{
             768: {
@@ -77,18 +107,14 @@ const LatestArrivals = () => {
             },
           }}
         >
-          {products.map(product => {
-            if (product.deletionDate) return null;
-
-            return (
-              <SwiperSlide key={product._id}>
-                <ProductCard
-                  product={product}
-                  className="w-[296px] md:w-[264px] lg:w-[264px]"
-                />
-              </SwiperSlide>
-            );
-          })}
+          {products.map(product => (
+            <SwiperSlide key={product._id}>
+              <ProductCard
+                product={product}
+                className="w-[296px] md:w-[264px] lg:w-[264px]"
+              />
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     </section>

@@ -35,10 +35,10 @@ async function getProductsPage(page: number) {
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: Promise<{ page: string }> }
+  context: { params: Promise<{}> } // ✅ must be broad enough for Next
 ) {
-  const { page: pageParam } = await params;
-  const page = Math.max(1, Number(pageParam || 1));
+  const params = (await context.params) as { page?: string }; // ✅ cast inside
+  const page = Math.max(1, Number(params.page ?? '1'));
 
   const products = await getProductsPage(page);
 

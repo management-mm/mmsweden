@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
 import slugify from 'slugify';
+import { NextRequest } from 'next/server';
 
 const BASE_URL = 'https://www.mmsweden.se';
 const PAGE_SIZE = 5000;
@@ -20,7 +20,6 @@ function getNameEn(name: any): string | null {
 }
 
 async function getProductsPage(page: number) {
-
   const skip = (page - 1) * PAGE_SIZE;
 
   const res = await fetch(
@@ -35,10 +34,12 @@ async function getProductsPage(page: number) {
 }
 
 export async function GET(
-  _req: Request,
-  { params }: { params: { page: string } }
+  _request: NextRequest,
+  { params }: { params: Promise<{ page: string }> }
 ) {
-  const page = Math.max(1, Number(params.page || 1));
+  const { page: pageParam } = await params;
+  const page = Math.max(1, Number(pageParam || 1));
+
   const products = await getProductsPage(page);
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>
@@ -49,18 +50,17 @@ ${products
     const slug = slugify(rawName, { lower: true, strict: true });
 
     const loc = `${BASE_URL}/all-products/${slug}-${p._id}`;
-    const lastmod = (p.updatedAt || p.createdAt || new Date()).toString();
-    const lastmodIso = new Date(lastmod).toISOString();
+    const lastmod = new Date(p.updatedAt || p.createdAt || Date.now()).toISOString();
 
     return `  <url>
     <loc>${xmlEscape(loc)}</loc>
-    <lastmod>${lastmodIso}</lastmod>
+    <lastmod>${lastmod}</lastmod>
   </url>`;
   })
   .join('\n')}
 </urlset>`;
 
-  return new NextResponse(body, {
+  return new Response(body, {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
       'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',

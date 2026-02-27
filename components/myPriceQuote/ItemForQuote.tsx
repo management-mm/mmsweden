@@ -1,0 +1,68 @@
+'use client';
+
+import { type FC, useContext } from 'react';
+
+import type { IProduct } from 'interfaces/IProduct';
+import { useRouter } from 'next/navigation';
+
+import { LanguageContextAdmin } from '@components/LanguageAdminProvider';
+import SvgIcon from '@components/common/SvgIcon';
+
+import useUpdateRequestedProducts from '@hooks/useUpdateRequestedProducts';
+
+import getProductName from '@utils/getProductName';
+
+import { IconId } from '@enums/iconsSpriteId';
+
+interface IItemsForQuoteProps {
+  product: IProduct;
+}
+
+const ItemForQuote: FC<IItemsForQuoteProps> = ({
+  product,
+  product: { _id, photos, name, idNumber },
+}) => {
+  const router = useRouter();
+  const { language } = useContext(LanguageContextAdmin);
+  const { handleToggleFavorites } = useUpdateRequestedProducts(product);
+
+  const goToDetails = () => {
+    router.push(`/all-products/${_id}`);
+  };
+
+  return (
+    <li className="relative flex px-[14px] py-[24px]">
+      <button type="button" className="mr-[14px]" onClick={goToDetails}>
+        <img
+          className="rounded-[4px]"
+          src={photos[0]}
+          alt={getProductName(name, language)}
+          width={97}
+        />
+      </button>
+
+      <div>
+        <h3 className="text-[16px] font-semibold">
+          {getProductName(name, language)}
+        </h3>
+        <p className="text-primary text-[14px] font-medium">
+          ID NR #<span>{idNumber}</span>
+        </p>
+      </div>
+
+      <button
+        className="absolute right-[14px] bottom-[14px]"
+        type="button"
+        onClick={() => handleToggleFavorites(product)}
+      >
+        <SvgIcon
+          className="fill-primary"
+          iconId={IconId.Trash}
+          size={{ width: 22, height: 22 }}
+        />
+      </button>
+    </li>
+  );
+};
+
+export default ItemForQuote;

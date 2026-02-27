@@ -1,16 +1,22 @@
-import { NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
+
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 const BASE_URL = 'https://www.mmsweden.se';
-const PAGE_SIZE = 5000; 
+const API_URL = process.env.API_URL;
+
+const PAGE_SIZE = 5000;
 
 async function getProductsCount(): Promise<number> {
+  if (!API_URL) return 0;
 
-  const res = await fetch(`${process.env.API_URL}/products/count`, {
- 
-    next: { revalidate: 3600 },
+  const res = await fetch(`${API_URL}/products/count`, {
+    cache: 'no-store',
   });
 
   if (!res.ok) return 0;
+
   const data = await res.json();
   return Number(data.count ?? 0);
 }
@@ -24,10 +30,9 @@ function xmlEscape(s: string) {
     .replaceAll("'", '&apos;');
 }
 
-export async function GET() {
+export async function GET(_req: NextRequest) {
   const count = await getProductsCount();
   const pages = Math.max(1, Math.ceil(count / PAGE_SIZE));
-
   const now = new Date().toISOString();
 
   const sitemaps = [
@@ -47,7 +52,7 @@ ${sitemaps
   .join('\n')}
 </sitemapindex>`;
 
-  return new NextResponse(body, {
+  return new Response(body, {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
       'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',

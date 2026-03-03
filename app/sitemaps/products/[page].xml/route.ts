@@ -30,18 +30,13 @@ async function getProductsPage(page: number) {
   const data = await res.json();
 
   if (Array.isArray(data)) return data;
-  if (Array.isArray((data as any)?.products)) return (data as any).products;
-  if (Array.isArray((data as any)?.items)) return (data as any).items;
+
 
   return [];
 }
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: Promise<{}> } // ✅ exactly what Next expects
-) {
-  const { page: pageParam } = (await params) as { page?: string };
-  const page = Math.max(1, Number(pageParam ?? '1'));
 
   const products = await getProductsPage(page);
 
@@ -52,7 +47,7 @@ ${products
     if (!p?.slug) return '';
 
     const loc = `${BASE_URL}/all-products/${p.slug}`;
-    const lastmod = new Date(p.updatedAt || p.createdAt || Date.now()).toISOString();
+
 
     return `  <url>
     <loc>${xmlEscape(loc)}</loc>

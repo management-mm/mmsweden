@@ -6,8 +6,12 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
+        disallow: [
+          '/admin',
+        ],
       },
     ],
+    host: 'https://www.mmsweden.se',
     sitemap: 'https://www.mmsweden.se/sitemap.xml',
   };
 }

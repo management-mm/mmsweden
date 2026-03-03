@@ -22,7 +22,7 @@ import Loader from '@components/common/loaders/Loader';
 
 import {
   deleteProduct,
-  fetchProductById,
+  fetchProductBySlug,
   updateProduct,
 } from '@store/products/operations';
 import { selectIsLoading, selectProductDetails } from '@store/selectors';
@@ -45,8 +45,9 @@ const ChangeProduct = () => {
   );
   const dispatch = useAppDispatch();
 
-  const params = useParams<{ id: string }>();
-  const productId = params?.id;
+ const params = useParams<{ slug: string }>();
+const slug = params?.slug;
+const productId = slug?.split('-').pop();
 
   const product = useAppSelector(selectProductDetails);
   const isLoading = useAppSelector(selectIsLoading);
@@ -67,8 +68,9 @@ const ChangeProduct = () => {
     useMessageDelOrSold(isProductUpdated);
 
   useEffect(() => {
-    if (!productId) return;
-    dispatch(fetchProductById({ productId }));
+     if (!productId) return;
+    if (!slug) return;
+    dispatch(fetchProductBySlug({ slug }));
   }, [dispatch, productId]);
 
   if (!product && isDelete) {

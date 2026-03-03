@@ -6,7 +6,7 @@ import {
   type IFetchProductsResponse,
   addProduct,
   deleteProduct,
-  fetchProductById,
+  fetchProductBySlug,
   fetchProducts,
   generateDescWithAi,
   updateProduct,
@@ -99,7 +99,7 @@ const handleFetchProductsFulfilled = (
   }
 };
 
-const handleFetchProductByIdFulfilled = (
+const handleFetchProductBySlugFulfilled = (
   state: IProductsState,
   action: PayloadAction<IProduct>
 ) => {
@@ -177,9 +177,9 @@ const productsSlice = createSlice({
       .addCase(fetchProducts.pending, handleFetchProductsPending)
       .addCase(fetchProducts.fulfilled, handleFetchProductsFulfilled)
       .addCase(fetchProducts.rejected, handleFetchProductsRejected)
-      .addCase(fetchProductById.pending, handlePending)
-      .addCase(fetchProductById.fulfilled, handleFetchProductByIdFulfilled)
-      .addCase(fetchProductById.rejected, handleRejected)
+      .addCase(fetchProductBySlug.pending, handlePending)
+      .addCase(fetchProductBySlug.fulfilled, handleFetchProductBySlugFulfilled)
+      .addCase(fetchProductBySlug.rejected, handleRejected)
       .addCase(addProduct.pending, handlePending)
       .addCase(addProduct.fulfilled, handleAddProductFulfilled)
       .addCase(addProduct.rejected, handleRejected)

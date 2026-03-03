@@ -89,7 +89,7 @@ export const fetchProductBySlug = createAsyncThunk<
     if (!slug) return thunkAPI.rejectWithValue('Slug is required');
 
     const response = await axios.get(`products/by-slug/${slug}`);
-    return response.data;
+    return response.data; 
   } catch (e) {
     return thunkAPI.rejectWithValue((e as Error).message);
   }

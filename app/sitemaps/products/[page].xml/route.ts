@@ -1,11 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const BASE_URL = 'https://www.mmsweden.se';
 const API_URL = process.env.API_URL;
-
 const PAGE_SIZE = 5000;
 
 function xmlEscape(s: string) {
@@ -30,14 +29,18 @@ async function getProductsPage(page: number) {
   const data = await res.json();
 
   if (Array.isArray(data)) return data;
-
+  if (Array.isArray(data?.products)) return data.products;
+  if (Array.isArray(data?.items)) return data.items;
 
   return [];
 }
 
 export async function GET(
-  _request: NextRequest,
-
+  request: Request,
+  context: any
+) {
+  const pageParam = context?.params?.page ?? '1';
+  const page = Math.max(1, Number(pageParam));
 
   const products = await getProductsPage(page);
 
@@ -48,7 +51,9 @@ ${products
     if (!p?.slug) return '';
 
     const loc = `${BASE_URL}/all-products/${p.slug}`;
-
+    const lastmod = new Date(
+      p.updatedAt || p.createdAt || Date.now()
+    ).toISOString();
 
     return `  <url>
     <loc>${xmlEscape(loc)}</loc>

@@ -29,6 +29,7 @@ async function getProductsPage(page: number) {
 
   const data = await res.json();
 
+  // поддержка разных форматов ответа
   if (Array.isArray(data)) return data;
   if (Array.isArray((data as any)?.products)) return (data as any).products;
   if (Array.isArray((data as any)?.items)) return (data as any).items;
@@ -52,9 +53,7 @@ ${products
     if (!p?.slug) return '';
 
     const loc = `${BASE_URL}/all-products/${p.slug}`;
-    const lastmod = new Date(
-      p.updatedAt || p.createdAt || Date.now()
-    ).toISOString();
+    const lastmod = new Date(p.updatedAt || p.createdAt || Date.now()).toISOString();
 
     return `  <url>
     <loc>${xmlEscape(loc)}</loc>

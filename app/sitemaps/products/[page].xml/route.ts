@@ -28,8 +28,7 @@ async function getProductsPage(page: number) {
   if (!res.ok) return [];
 
   const data = await res.json();
-
-  // поддержка разных форматов ответа
+  
   if (Array.isArray(data)) return data;
   if (Array.isArray((data as any)?.products)) return (data as any).products;
   if (Array.isArray((data as any)?.items)) return (data as any).items;

@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -38,7 +38,7 @@ async function getProductsPage(page: number) {
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: Promise<{}> } // ✅ exactly what Next expects
+  { params }: { params: Promise<{}> }
 ) {
   const { page: pageParam } = (await params) as { page?: string };
   const page = Math.max(1, Number(pageParam ?? '1'));
@@ -52,7 +52,9 @@ ${products
     if (!p?.slug) return '';
 
     const loc = `${BASE_URL}/all-products/${p.slug}`;
-    const lastmod = new Date(p.updatedAt || p.createdAt || Date.now()).toISOString();
+    const lastmod = new Date(
+      p.updatedAt || p.createdAt || Date.now()
+    ).toISOString();
 
     return `  <url>
     <loc>${xmlEscape(loc)}</loc>
@@ -63,7 +65,7 @@ ${products
   .join('\n')}
 </urlset>`;
 
-  return new Response(body, {
+  return new NextResponse(body, {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
       'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',

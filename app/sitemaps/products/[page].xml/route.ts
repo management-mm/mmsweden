@@ -35,9 +35,15 @@ async function getProductsPage(page: number) {
 
 export async function GET(
   _request: NextRequest,
+<<<<<<< Updated upstream
   context: { params: Promise<{}> } // ✅ must be broad enough for Next
 ) {
   const params = (await context.params) as { page?: string }; // ✅ cast inside
+=======
+  context: { params: Promise<{}> } 
+) {
+  const params = (await context.params) as { page?: string };
+>>>>>>> Stashed changes
   const page = Math.max(1, Number(params.page ?? '1'));
 
   const products = await getProductsPage(page);

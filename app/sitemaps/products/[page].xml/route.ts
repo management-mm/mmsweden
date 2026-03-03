@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -28,7 +28,7 @@ async function getProductsPage(page: number) {
   if (!res.ok) return [];
 
   const data = await res.json();
-
+  
   if (Array.isArray(data)) return data;
 
 
@@ -37,6 +37,7 @@ async function getProductsPage(page: number) {
 
 export async function GET(
   _request: NextRequest,
+
 
   const products = await getProductsPage(page);
 
@@ -58,7 +59,7 @@ ${products
   .join('\n')}
 </urlset>`;
 
-  return new Response(body, {
+  return new NextResponse(body, {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
       'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',

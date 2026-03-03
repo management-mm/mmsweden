@@ -14,7 +14,7 @@ import Breadcrumb from '@components/common/Breadcrumb';
 import DecorativeLine from '@components/common/DecorativeLine';
 import VideoPlayer from '@components/common/VideoPlayer';
 
-import { fetchProductById } from '@store/products/operations';
+import { fetchProductBySlug } from '@store/products/operations';
 import { clearProduct } from '@store/products/productsSlice';
 import { selectIsLoading, selectProductDetails } from '@store/selectors';
 
@@ -50,9 +50,10 @@ const productId = slug?.split('-').pop();
 
   useEffect(() => {
     if (!productId) return;
+    if (!slug) return;
 
-    dispatch(clearProduct());
-    dispatch(fetchProductById({ productId }));
+  dispatch(clearProduct());
+  dispatch(fetchProductBySlug({ slug }));
   }, [dispatch, productId]);
 
   return (

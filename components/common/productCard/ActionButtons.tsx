@@ -12,6 +12,7 @@ import useUpdateRequestedProducts from '@hooks/useUpdateRequestedProducts';
 import { Button } from '@enums/i18nConstants';
 import getProductName from '@utils/getProductName';
 import { LanguageKeys } from '@enums/languageKeys';
+import { generateProductSlug } from '@utils/generateProductSlug';
 
 interface IActionsButtonsProps {
   isLoading: boolean;
@@ -26,12 +27,7 @@ const ActionsButtons: FC<IActionsButtonsProps> = ({ isLoading, product }) => {
     useUpdateRequestedProducts(product);
 
   const goToDetails = () => {
-    const rawName = getProductName(product.name, LanguageKeys.EN)
-
-    const slug = `${product.condition}-${slugify(rawName, {
-      lower: true,
-      strict: true,
-    })}-${product._id}`;
+    const slug = generateProductSlug(product)
 
     router.push(`all-products/${slug}`);
   };

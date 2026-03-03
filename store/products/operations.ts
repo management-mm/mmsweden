@@ -80,14 +80,16 @@ export const fetchProducts = createAsyncThunk<
   }
 });
 
-export const fetchProductById = createAsyncThunk<
+export const fetchProductBySlug = createAsyncThunk<
   IProduct,
-  { productId: string | undefined },
+  { slug: string | undefined },
   { rejectValue: string }
->('fetchProductById', async ({ productId }, thunkAPI) => {
+>('product/fetchBySlug', async ({ slug }, thunkAPI) => {
   try {
-    const response = await axios.get(`products/${productId}`);
-    return response.data;
+    if (!slug) return thunkAPI.rejectWithValue('Slug is required');
+
+    const response = await axios.get(`products/by-slug/${slug}`);
+    return response.data; 
   } catch (e) {
     return thunkAPI.rejectWithValue((e as Error).message);
   }

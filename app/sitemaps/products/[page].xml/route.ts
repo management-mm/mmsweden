@@ -28,7 +28,7 @@ async function getProductsPage(page: number) {
   if (!res.ok) return [];
 
   const data = await res.json();
-  
+
   if (Array.isArray(data)) return data;
 
 

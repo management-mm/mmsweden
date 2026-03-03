@@ -20,7 +20,9 @@ export async function GET() {
     `${BASE_URL}/all-products`,
     `${BASE_URL}/sell-to-us`,
     `${BASE_URL}/contact-us`,
+    `${BASE_URL}/about-us`,
     `${BASE_URL}/new-arrivals`,
+    `${BASE_URL}/my-price-quote`,
   ];
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>

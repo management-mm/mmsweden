@@ -7,7 +7,7 @@ import { LanguageContext } from 'app/providers';
 import clsx from 'clsx';
 import i18next from 'i18next';
 
-import { LanguageContextAdmin } from '@components/LanguageAdminProvider';
+import { LanguageContextAdmin } from '@components/AdminProvider';
 import DropdownIndicator from '@components/header/DropdownIndicator';
 import LanguageOption from '@components/header/LanguageOption';
 

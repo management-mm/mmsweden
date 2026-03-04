@@ -20,7 +20,7 @@ function normalizeLng(stored: string | null): LanguageKeys {
   return short as LanguageKeys;
 }
 
-export default function LanguageAdminProvider({
+export default function AdminProvider({
   children,
 }: {
   children: React.ReactNode;

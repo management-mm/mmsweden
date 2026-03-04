@@ -1,20 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-
 import type { RootState } from '@store/store';
-
-// http://localhost:3000/
-// https://mmsweden-server.onrender.com/
-
-axios.defaults.baseURL = 'https://mmsweden-server.onrender.com/';
-
-const setAuthHeader = (token: string) => {
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-};
-
-const clearAuthHeader = () => {
-  axios.defaults.headers.common.Authorization = '';
-};
+import { api } from '@store/api';
 
 interface LogInCredentials {
   email: string;
@@ -32,9 +18,12 @@ export const logIn = createAsyncThunk<
   { rejectValue: string }
 >('auth/login', async (credentials, thunkAPI) => {
   try {
-    console.log(credentials);
-    const response = await axios.post('auth/login', credentials);
-    setAuthHeader(response.data.token);
+    const response = await api.post('auth/login', credentials);
+
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('token', response.data.token);
+    }
+
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue((error as Error).message);
@@ -45,8 +34,10 @@ export const logOut = createAsyncThunk<void, void, { rejectValue: string }>(
   'auth/logout',
   async (_, thunkAPI) => {
     try {
-      await axios.post('auth/logout');
-      clearAuthHeader();
+      await api.post('auth/logout');
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('token');
+      }
     } catch (error) {
       return thunkAPI.rejectWithValue((error as Error).message);
     }
@@ -66,8 +57,8 @@ export const refreshUser = createAsyncThunk<
   }
 
   try {
-    setAuthHeader(persistedToken);
-    const response = await axios.get('auth/current');
+    // api сам подставит Authorization из persist:auth
+    const response = await api.get('auth/current');
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue((error as Error).message);

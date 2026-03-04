@@ -17,7 +17,7 @@ import ProductImage from './ProductImage';
 
 import SvgIcon from '../SvgIcon';
 
-import { LanguageContextAdmin } from '@components/LanguageAdminProvider';
+import { LanguageContextAdmin } from '@components/AdminProvider';
 
 import { clearProduct } from '@store/products/productsSlice';
 import { selectIsLoading } from '@store/selectors';
@@ -26,6 +26,7 @@ import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
 
 import { IconId } from '@enums/iconsSpriteId';
+import { generateProductSlug } from '@utils/generateProductSlug';
 
 export interface IProductCardProps {
   product: IProduct;
@@ -58,6 +59,8 @@ const ProductCard: FC<IProductCardProps> = ({
   const handleClear = () => {
     dispatch(clearProduct());
   };
+  const slug = generateProductSlug(product)
+  
 
   return (
     <SkeletonTheme baseColor="#E1E1E1" highlightColor="#F2F2F2">
@@ -101,7 +104,7 @@ const ProductCard: FC<IProductCardProps> = ({
 
           {isAdmin ? (
             <Link
-              href={`/admin/all-products/edit-product/${product._id}`}
+              href={`/admin/all-products/edit-product/${slug}`}
               onClick={handleClear}
               className="border-primary text-primary flex w-full items-center justify-center gap-[8px] rounded-[32px] border py-[10px] text-[12px] font-semibold"
             >

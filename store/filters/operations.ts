@@ -1,6 +1,6 @@
 import type { MultiLanguageString } from '@interfaces/IProduct';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { api } from '@store/api';
 import type { ICategory } from 'interfaces/ICategory';
 import type { IIndustry } from 'interfaces/IIndustry';
 import type { IManufacturer } from 'interfaces/IManufacturer';
@@ -9,7 +9,7 @@ import type { LanguageKeys } from '@enums/languageKeys';
 
 // 'https://mmsweden-server.onrender.com/'
 
-axios.defaults.baseURL = 'https://mmsweden-server.onrender.com/';
+
 
 export interface IFetchCategoriesOrIndustriesParams {
   lang: LanguageKeys;
@@ -31,7 +31,7 @@ export const fetchCategories = createAsyncThunk<
   { rejectValue: string }
 >('categories/fetchCategories', async (params, thunkAPI) => {
   try {
-    const response = await axios.get<ICategory[]>('categories/', {
+    const response = await api.get<ICategory[]>('categories/', {
       params,
     });
     return response.data;
@@ -46,7 +46,7 @@ export const fetchManufacturers = createAsyncThunk<
   { rejectValue: string }
 >('manufacturers/fetchManufacturers', async (params, thunkAPI) => {
   try {
-    const response = await axios.get<IManufacturer[]>('manufacturers/', {
+    const response = await api.get<IManufacturer[]>('manufacturers/', {
       params,
     });
     return response.data;
@@ -61,7 +61,7 @@ export const fetchIndustries = createAsyncThunk<
   { rejectValue: string }
 >('industries/fetchIndustries', async (params, thunkAPI) => {
   try {
-    const response = await axios.get<IIndustry[]>('industries/', {
+    const response = await api.get<IIndustry[]>('industries/', {
       params,
     });
     return response.data;
@@ -76,7 +76,7 @@ export const updateCategory = createAsyncThunk<
   { rejectValue: string }
 >('categories/updateCategory', async (updatedCategory, thunkAPI) => {
   try {
-    const response = await axios.put(`categories/${updatedCategory.id}`, {
+    const response = await api.put(`categories/${updatedCategory.id}`, {
       name: updatedCategory.name,
     });
     return response.data;
@@ -92,7 +92,7 @@ export const updateManufacturer = createAsyncThunk<
   { rejectValue: string }
 >('manufacturers/updateManufacturer', async (updatedManufacturer, thunkAPI) => {
   try {
-    const response = await axios.put(
+    const response = await api.put(
       `manufacturers/${updatedManufacturer.id}`,
       { name: updatedManufacturer.name }
     );
@@ -109,7 +109,7 @@ export const updateIndustry = createAsyncThunk<
   { rejectValue: string }
 >('industries/updateIndustry', async (updatedIndustry, thunkAPI) => {
   try {
-    const response = await axios.put(`industries/${updatedIndustry.id}`, {
+    const response = await api.put(`industries/${updatedIndustry.id}`, {
       name: updatedIndustry.name,
     });
     return response.data;

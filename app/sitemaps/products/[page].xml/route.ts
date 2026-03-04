@@ -4,7 +4,7 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const BASE_URL = 'https://www.mmsweden.se';
-const API_URL = process.env.API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const PAGE_SIZE = 5000;
 
 function xmlEscape(s: string) {

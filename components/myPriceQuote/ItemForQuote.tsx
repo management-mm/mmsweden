@@ -5,7 +5,7 @@ import { type FC, useContext } from 'react';
 import type { IProduct } from 'interfaces/IProduct';
 import { useRouter } from 'next/navigation';
 
-import { LanguageContextAdmin } from '@components/LanguageAdminProvider';
+import { LanguageContextAdmin } from '@components/AdminProvider';
 import SvgIcon from '@components/common/SvgIcon';
 
 import useUpdateRequestedProducts from '@hooks/useUpdateRequestedProducts';

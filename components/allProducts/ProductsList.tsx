@@ -9,7 +9,7 @@ import type { IProduct } from 'interfaces/IProduct';
 
 import ResetFilters from './ResetFilters';
 
-import { LanguageContextAdmin } from '@components/LanguageAdminProvider';
+import { LanguageContextAdmin } from '@components/AdminProvider';
 import Pagination from '@components/common/Pagination';
 import ProductCard from '@components/common/productCard/ProductCard';
 

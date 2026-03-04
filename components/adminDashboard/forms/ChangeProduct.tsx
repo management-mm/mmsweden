@@ -1,6 +1,12 @@
 'use client';
 
-import { type Dispatch, type SetStateAction, useEffect, useState } from 'react';
+import {
+  type Dispatch,
+  type SetStateAction,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 import { schema } from '@schemas/editProduct';
 import clsx from 'clsx';
@@ -36,18 +42,15 @@ import { IconId } from '@enums/iconsSpriteId';
 import { LanguageKeys } from '@enums/languageKeys';
 
 const ChangeProduct = () => {
-  const emptyName = Object.values(LanguageKeys).reduce(
-    (acc, lang) => {
-      acc[lang] = '';
-      return acc;
-    },
-    {} as Record<LanguageKeys, string>
-  );
   const dispatch = useAppDispatch();
 
- const params = useParams<{ slug: string }>();
-const slug = params?.slug;
-const productId = slug?.split('-').pop();
+  const params = useParams<{ slug: string }>();
+  const slug = params?.slug;
+
+  const productId = useMemo(() => {
+    if (!slug) return undefined;
+    return slug.split('-').pop();
+  }, [slug]);
 
   const product = useAppSelector(selectProductDetails);
   const isLoading = useAppSelector(selectIsLoading);
@@ -55,23 +58,35 @@ const productId = slug?.split('-').pop();
   const [isDelete, setIsDelete] = useState(false);
   const windowWidth = useWindowWidth();
 
-  const [deletionDate, setDeletionDate] = useState<string | null>(
-    product?.deletionDate
-      ? new Date(product.deletionDate).toLocaleString('en', {
-          dateStyle: 'long',
-        })
-      : null
-  );
+  const emptyName = useMemo(() => {
+    return Object.values(LanguageKeys).reduce((acc, lang) => {
+      acc[lang] = '';
+      return acc;
+    }, {} as Record<LanguageKeys, string>);
+  }, []);
+
+  const [deletionDate, setDeletionDate] = useState<string | null>(null);
+
+  // ✅ синхронизируем deletionDate когда product загрузился/изменился
+  useEffect(() => {
+    if (product?.deletionDate) {
+      setDeletionDate(
+        new Date(product.deletionDate).toLocaleString('en', { dateStyle: 'long' })
+      );
+    } else {
+      setDeletionDate(null);
+    }
+  }, [product?.deletionDate]);
 
   const [isProductUpdated, setIsProductUpdated] = useState(false);
   const { isMessageOpen, handleToggleMenu } =
     useMessageDelOrSold(isProductUpdated);
 
+  // ✅ deps всегда одной длины и включают все используемые значения
   useEffect(() => {
-     if (!productId) return;
-    if (!slug) return;
+    if (!slug || !productId) return;
     dispatch(fetchProductBySlug({ slug }));
-  }, [dispatch, productId]);
+  }, [dispatch, slug, productId]);
 
   if (!product && isDelete) {
     return (
@@ -106,24 +121,37 @@ const productId = slug?.split('-').pop();
         <Formik
           enableReinitialize
           initialValues={{
-            id: product._id,
-            name:
-              typeof product.name === 'object' && product.name
+          id: product._id,
+
+          name:
+            typeof product.name === 'string'
+              ? product.name
+              : typeof product.name === 'object' && product.name
                 ? { ...emptyName, ...product.name }
-                : emptyName,
-            idNumber: product.idNumber || '',
-            description: product.description || {},
-            dimensions: product.dimensions || '',
-            category: product.category.en || '',
-            manufacturer: product.manufacturer || '',
-            industries: product.industries.map(industry => industry.en) || [],
-            condition: product.condition || 'used',
-            video: product.video || '',
-            photoQueue: product.photos as (string | File)[],
-            photos: [] as File[],
-            deletionDate: product.deletionDate || null,
-            shouldTranslateName: false,
-          }}
+                : '',
+
+          idNumber: product.idNumber || '',
+
+          // ⚠️ если схема требует en — лучше тоже так:
+          description:
+            typeof product.description === 'object' && product.description
+              ? { ...emptyName, ...product.description }
+              : product.description || {},
+
+          dimensions: product.dimensions || '',
+          category: product.category?.en || '',
+          manufacturer: product.manufacturer || '',
+          industries: product.industries?.map(ind => ind.en) || [],
+          condition: product.condition || 'used',
+          video: product.video || '',
+          photoQueue: product.photos as (string | File)[],
+          photos: [] as File[],
+
+          // IMPORTANT: это то, что реально уйдёт на сервер при Sold
+          deletionDate: product.deletionDate || null,
+
+          shouldTranslateName: false,
+        }}
           validationSchema={schema}
           onSubmit={async values => {
             try {

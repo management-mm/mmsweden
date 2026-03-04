@@ -13,7 +13,7 @@ import { useSearchParams } from 'next/navigation';
 
 import ProductMenuItem from './ProductMenuItem';
 
-import { LanguageContextAdmin } from '@components/LanguageAdminProvider';
+import { LanguageContextAdmin } from '@components/AdminProvider';
 import Loader from '@components/common/loaders/Loader';
 
 import {

@@ -11,7 +11,7 @@ import { LanguageContext } from 'app/providers';
 import Block from './Block';
 import ChangeFilter from './forms/ChangeFilter';
 
-import { LanguageContextAdmin } from '@components/LanguageAdminProvider';
+import { LanguageContextAdmin } from '@components/AdminProvider';
 
 import getFilterItemName from '@utils/getFilterItemName';
 

@@ -10,7 +10,7 @@ import {
   SlotItemMapContext,
 } from './EmailNewsLetterMain';
 
-import { LanguageContextAdmin } from '@components/LanguageAdminProvider';
+import { LanguageContextAdmin } from '@components/AdminProvider';
 import SvgIcon from '@components/common/SvgIcon';
 
 import { toggleSelectedProducts } from '@store/selectedProductsSlice';

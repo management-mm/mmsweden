@@ -1,12 +1,12 @@
+'use client';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 import type { IProduct, MultiLanguageString } from 'interfaces/IProduct';
 
 import type { LanguageKeys } from '@enums/languageKeys';
+import { api } from '@store/api';
 
 // 'https://mmsweden-server.onrender.com/'
 
-axios.defaults.baseURL = 'https://mmsweden-server.onrender.com/';
 
 export interface IFetchProductsParams {
   lang?: LanguageKeys;
@@ -70,7 +70,7 @@ export const fetchProducts = createAsyncThunk<
 
     const { cacheKey, mode, ...queryParams } = args;
 
-    const response = await axios.get<IFetchProductsResponse>('products/', {
+    const response = await api.get<IFetchProductsResponse>('products/', {
       params: queryParams,
     });
 
@@ -88,8 +88,8 @@ export const fetchProductBySlug = createAsyncThunk<
   try {
     if (!slug) return thunkAPI.rejectWithValue('Slug is required');
 
-    const response = await axios.get(`products/by-slug/${slug}`);
-    return response.data; 
+    const response = await api.get(`products/by-slug/${slug}`);
+    return response.data;
   } catch (e) {
     return thunkAPI.rejectWithValue((e as Error).message);
   }
@@ -101,7 +101,7 @@ export const fetchRecommendedProductsById = createAsyncThunk<
   { rejectValue: string }
 >('fetchRecommendedProductsById', async ({ productId }, thunkAPI) => {
   try {
-    const response = await axios.get(
+    const response = await api.get(
       `products/${productId}/recommended-products`
     );
     return response.data;
@@ -133,7 +133,7 @@ export const addProduct = createAsyncThunk<
         }
       }
     }
-    const response = await axios.post('products', data, {
+    const response = await api.post('products', data, {
       params: {
         shouldTranslateName: String(newProduct.shouldTranslateName),
       },
@@ -189,7 +189,7 @@ export const updateProduct = createAsyncThunk<
         }
       }
     }
-    const response = await axios.put(`products/${updatedProduct.id}`, data, {
+    const response = await api.put(`products/${updatedProduct.id}`, data, {
       params: {
         shouldTranslateName: String(updatedProduct.shouldTranslateName),
       },
@@ -207,7 +207,7 @@ export const generateDescWithAi = createAsyncThunk<
   { rejectValue: string }
 >('products/description/ai', async (descData, thunkAPI) => {
   try {
-    const response = await axios.post('products/description/ai', descData);
+    const response = await api.post('products/description/ai', descData);
     return response.data;
   } catch (e) {
     return thunkAPI.rejectWithValue((e as Error).message);
@@ -220,7 +220,7 @@ export const deleteProduct = createAsyncThunk<
   { rejectValue: string }
 >('products/deleteProduct', async ({ productId }, thunkAPI) => {
   try {
-    const response = await axios.delete(`products/${productId}`);
+    const response = await api.delete(`products/${productId}`);
     return response.data;
   } catch (e) {
     return thunkAPI.rejectWithValue((e as Error).message);

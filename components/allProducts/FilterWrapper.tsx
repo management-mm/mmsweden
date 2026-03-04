@@ -18,7 +18,7 @@ import { LanguageContext } from 'app/providers';
 import clsx from 'clsx';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-import { LanguageContextAdmin } from '@components/LanguageAdminProvider';
+import { LanguageContextAdmin } from '@components/AdminProvider';
 import SearchFilter from '@components/common/SearchFilter';
 import SvgIcon from '@components/common/SvgIcon';
 

@@ -160,16 +160,11 @@ export const updateProduct = createAsyncThunk<
         if (key === 'id') continue;
         if (key === 'shouldTranslateName') continue;
         if (key === 'deletionDate' && !updatedProduct[key]) continue;
-
-        if (key === 'name' && typeof updatedProduct[key] === 'object') {
-          const nameJson = JSON.stringify(updatedProduct[key]);
-          data.append('name', nameJson);
-        } else if (
-          key === 'description' &&
+        else if (
+          (key === 'name' || key === 'description' || key === 'category') &&
           typeof updatedProduct[key] === 'object'
         ) {
-          const descriptionJson = JSON.stringify(updatedProduct[key]);
-          data.append('description', descriptionJson);
+          data.append(key, JSON.stringify(updatedProduct[key]));
         } else if (key === 'industries') {
           data.append('industries', updatedProduct[key].join(','));
         } else if (key === 'photoQueue') {

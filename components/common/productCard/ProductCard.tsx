@@ -47,7 +47,6 @@ const ProductCard: FC<IProductCardProps> = ({
   },
   className,
 }) => {
-  
   const pathname = usePathname();
   const isAdmin = pathname.includes('/admin');
 

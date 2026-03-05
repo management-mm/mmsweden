@@ -18,20 +18,16 @@ import timeframeList from '@constants/timeframeList';
 type Timeframe = 'day' | 'week' | 'month';
 
 interface IDeleteOrSoldProps {
- 
   isDelete: boolean;
-  formDeletionDate: string | null | Date; 
+  formDeletionDate: string | null | Date;
 
- 
   onOpenDeleteModal: () => void;
   onOpenSoldModal: () => void;
-
 
   setPendingSold: (payload: { iso: string; label: string }) => void;
 
   onClearSold: () => void;
 
- 
   setIsDelete: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -71,7 +67,6 @@ const DeleteOrSold: FC<IDeleteOrSoldProps> = ({
 
   return (
     <div>
- 
       <button
         type="button"
         onClick={() => onOpenDeleteModal()}
@@ -86,12 +81,10 @@ const DeleteOrSold: FC<IDeleteOrSoldProps> = ({
       </button>
 
       <div className="flex justify-between gap-[12px]">
- 
         <button
           type="button"
           onClick={() => {
             if (formDeletionDate) {
-   
               onClearSold();
               return;
             }

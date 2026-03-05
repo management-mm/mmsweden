@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { schema } from '@schemas/addProduct';
 import { Form, Formik } from 'formik';
@@ -45,6 +45,13 @@ const AddProduct = () => {
     }
     handleToggleMenu();
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product]);
+
+  const editHref = useMemo(() => {
+    const slug = (product as any)?.slug; // если тип не содержит slug — можно убрать any после правки типов
+    return slug
+      ? `/admin/all-products/edit-product/${slug}`
+      : '/admin/all-products';
   }, [product]);
 
   if (!product && isLoading && !isSubmit) {
@@ -122,9 +129,7 @@ const AddProduct = () => {
       </Formik>
 
       {isLoading && (
-        <StatusModal
-          title={'Please wait, the product is being added to the website.'}
-        >
+        <StatusModal title={'Please wait, the product is being added to the website.'}>
           <Loader />
         </StatusModal>
       )}
@@ -137,11 +142,7 @@ const AddProduct = () => {
           <div className="flex w-full gap-[10px]">
             <Link
               className="border-primary text-primary w-[calc((100%-10px)/2)] rounded-[32px] border py-[10px] text-center font-semibold"
-              href={
-                product?._id
-                  ? `/admin/all-products/edit-product/${product._id}`
-                  : '/admin/all-products'
-              }
+              href={editHref}
             >
               Go to added product
             </Link>

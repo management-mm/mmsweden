@@ -21,18 +21,15 @@ const TimeSelector: FC<ITimeSelectorProps> = ({
   };
   const menuStyles = 'bg-main rounded-[4px] pb-[7px] text-center shadow-xl';
   const singleValueStyles = 'mr-[6px]';
- 
+
   return (
     <div className="">
       <Select<{ value: string | number; label: string | number }>
         menuPortalTarget={document.body}
         defaultValue={defaultValue}
-  
         options={options}
         isSearchable={false}
- 
         closeMenuOnSelect={true}
-  
         onChange={selectedOption => setValue(selectedOption?.value)}
         unstyled
         styles={{

@@ -32,8 +32,8 @@ const LightBox: FC<ILightBoxProps> = ({
 }) => {
   const { handlePrev, handleNext, onSwiperInit } = useSwiperNavigation();
   const slideRefs = useRef<React.RefObject<ReactZoomPanPinchContentRef>[]>(
-  photos.map(() => createRef<ReactZoomPanPinchContentRef>())
-);
+    photos.map(() => createRef<ReactZoomPanPinchContentRef>())
+  );
 
   const handleZoomIn = (index: number) => {
     slideRefs.current[index]?.current?.zoomIn();

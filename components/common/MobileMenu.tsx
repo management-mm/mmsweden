@@ -46,14 +46,16 @@ const MobileMenu: FC<IMobileMenuProps> = ({
         direction === 'right' &&
           'top-0 h-[100vh] w-[250px] overflow-y-auto duration-1000',
         direction === 'bottom' &&
-          'overflow-hidden right-0 left-0 h-[80vh] w-full rounded-t-[22px] px-[20px] pt-[25px] duration-500',
+          'right-0 left-0 h-[80vh] w-full overflow-hidden rounded-t-[22px] px-[20px] pt-[25px] duration-500',
         isOpen &&
           direction === 'right' &&
           'shadow-open-mobile-menu-shadow right-0',
         !isOpen &&
           direction === 'right' &&
           'shadow-close-mobile-menu-shadow right-[-250px]',
-        isOpen && direction === 'left' && 'shadow-open-mobile-menu-shadow left-0',
+        isOpen &&
+          direction === 'left' &&
+          'shadow-open-mobile-menu-shadow left-0',
         !isOpen &&
           direction === 'left' &&
           'shadow-close-mobile-menu-shadow left-[-300px]',

@@ -43,8 +43,8 @@ const Product = () => {
   const windowWidth = useWindowWidth();
 
   const params = useParams<{ slug: string }>();
-const slug = params?.slug;
-const productId = slug?.split('-').pop();
+  const slug = params?.slug;
+  const productId = slug?.split('-').pop();
 
   const { name, photos, video } = product || {};
 
@@ -52,8 +52,8 @@ const productId = slug?.split('-').pop();
     if (!productId) return;
     if (!slug) return;
 
-  dispatch(clearProduct());
-  dispatch(fetchProductBySlug({ slug }));
+    dispatch(clearProduct());
+    dispatch(fetchProductBySlug({ slug }));
   }, [dispatch, productId]);
 
   return (

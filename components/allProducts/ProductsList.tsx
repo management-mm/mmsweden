@@ -2,10 +2,10 @@
 
 import { useContext, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { usePathname, useSearchParams } from 'next/navigation';
 
 import { LanguageContext } from 'app/providers';
 import type { IProduct } from 'interfaces/IProduct';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 import ResetFilters from './ResetFilters';
 
@@ -13,7 +13,10 @@ import { LanguageContextAdmin } from '@components/AdminProvider';
 import Pagination from '@components/common/Pagination';
 import ProductCard from '@components/common/productCard/ProductCard';
 
-import { type IFetchProductsParams, fetchProducts } from '@store/products/operations';
+import {
+  type IFetchProductsParams,
+  fetchProducts,
+} from '@store/products/operations';
 import {
   selectProductsCacheByKey,
   selectProductsLastFetchedAtByKey,
@@ -27,6 +30,7 @@ import useWindowWidth from '@hooks/useWindowWidth';
 
 import { filters } from '@enums/filters';
 import { Title } from '@enums/i18nConstants';
+
 import { TTL } from '@constants/cacheProducts';
 
 const buildCacheKey = (base: Record<string, unknown>) => {
@@ -51,7 +55,9 @@ const ProductsList = () => {
   const searchParams = useSearchParams();
   const searchKey = searchParams.toString();
 
-  const { language } = useContext(isAdmin ? LanguageContextAdmin : LanguageContext);
+  const { language } = useContext(
+    isAdmin ? LanguageContextAdmin : LanguageContext
+  );
 
   const windowWidth = useWindowWidth();
   const perPage = windowWidth >= 1178 ? 9 : 8;
@@ -61,8 +67,14 @@ const ProductsList = () => {
   const condition = searchParams.get('condition');
   const page = searchParams.get('page') || '1';
 
-  const categories = useMemo(() => searchParams.getAll('category'), [searchKey]);
-  const industries = useMemo(() => searchParams.getAll('industry'), [searchKey]);
+  const categories = useMemo(
+    () => searchParams.getAll('category'),
+    [searchKey]
+  );
+  const industries = useMemo(
+    () => searchParams.getAll('industry'),
+    [searchKey]
+  );
 
   const paramsForFetch: IFetchProductsParams = useMemo(
     () => ({
@@ -76,7 +88,16 @@ const ProductsList = () => {
       lang: language,
       mode: 'replace',
     }),
-    [title, page, categories, industries, manufacturer, condition, perPage, language]
+    [
+      title,
+      page,
+      categories,
+      industries,
+      manufacturer,
+      condition,
+      perPage,
+      language,
+    ]
   );
 
   const cacheKey = useMemo(() => {
@@ -84,9 +105,13 @@ const ProductsList = () => {
     return buildCacheKey(base as Record<string, unknown>);
   }, [paramsForFetch]);
 
-  const products: IProduct[] = useAppSelector(selectProductsCacheByKey(cacheKey));
+  const products: IProduct[] = useAppSelector(
+    selectProductsCacheByKey(cacheKey)
+  );
   const total: number = useAppSelector(selectTotalByKey(cacheKey));
-  const lastFetchedAt = useAppSelector(selectProductsLastFetchedAtByKey(cacheKey));
+  const lastFetchedAt = useAppSelector(
+    selectProductsLastFetchedAtByKey(cacheKey)
+  );
   const status = useAppSelector(selectProductsStatusByKey(cacheKey));
 
   useEffect(() => {
@@ -97,7 +122,14 @@ const ProductsList = () => {
     if (products.length > 0 && isFresh) return;
 
     dispatch(fetchProducts({ ...paramsForFetch, cacheKey }));
-  }, [dispatch, cacheKey, paramsForFetch, products.length, lastFetchedAt, status]);
+  }, [
+    dispatch,
+    cacheKey,
+    paramsForFetch,
+    products.length,
+    lastFetchedAt,
+    status,
+  ]);
 
   const pageCount = Math.ceil(total / perPage);
 

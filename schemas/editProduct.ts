@@ -1,53 +1,41 @@
 import * as Yup from 'yup';
 
-export const MultiLanguageSchema = Yup.object({
-  en: Yup.string().trim().required('English is required'),
-  de: Yup.string().trim().notRequired(),
-  fr: Yup.string().trim().notRequired(),
-  sv: Yup.string().trim().notRequired(),
-  es: Yup.string().trim().notRequired(),
-  ru: Yup.string().trim().notRequired(),
-  uk: Yup.string().trim().notRequired(),
-})
+const safeString = () =>
+  Yup.mixed()
+    .transform(v => (typeof v === 'string' ? v.trim() : v))
+    .nullable()
+    .notRequired();
+
+const multiLangOrString = Yup.mixed()
+  .transform(v => {
+    // если строка — trim
+    if (typeof v === 'string') return v.trim();
+    // если объект — оставляем как есть
+    if (v && typeof v === 'object') return v;
+    return v;
+  })
   .nullable()
-  .default(null);
+  .notRequired();
 
 export const schema = Yup.object().shape({
-  id: Yup.string().notRequired(),
+  id: safeString(),
 
-  name: Yup.lazy(value =>
-    typeof value === 'string'
-      ? Yup.string().trim().required('Name is required')
-      : MultiLanguageSchema.required('Name is required')
-  ),
+  name: multiLangOrString,
+  description: multiLangOrString,
+  category: multiLangOrString, // ✅ теперь может быть и строка и объект
 
-  idNumber: Yup.string().trim().required('ID number is required'),
+  idNumber: safeString(),
+  dimensions: safeString(),
+  manufacturer: safeString(),
+  video: safeString(),
 
-  description: Yup.lazy(value =>
-    typeof value === 'string'
-      ? Yup.string().trim().required('Description is required')
-      : MultiLanguageSchema.required('Description is required')
-  ),
+  industries: Yup.array().nullable().notRequired(),
 
-  dimensions: Yup.string().nullable().notRequired(),
+  condition: Yup.mixed().nullable().notRequired(),
 
-  category: Yup.string().trim().required('Category is required'),
+  photoQueue: Yup.array().nullable().notRequired(),
+  photos: Yup.array().nullable().notRequired(),
 
-  manufacturer: Yup.string().trim().notRequired(),
-
-  industries: Yup.array().of(Yup.string().trim()).notRequired(),
-
-  condition: Yup.string()
-    .oneOf(['used', 'new'], "Condition must be either 'used' or 'new'")
-    .required('Condition is required'),
-
-  video: Yup.string().nullable().notRequired(),
-
-  photoQueue: Yup.array().of(Yup.mixed<File | string>()).notRequired(),
-
-  photos: Yup.array().of(Yup.mixed<File>()).notRequired(),
-
-  deletionDate: Yup.string().nullable().notRequired(),
-
-  shouldTranslateName: Yup.boolean().notRequired(),
+  deletionDate: safeString(),
+  shouldTranslateName: Yup.boolean().nullable().notRequired(),
 });

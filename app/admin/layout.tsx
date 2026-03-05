@@ -1,6 +1,5 @@
 import AdminProvider from '@components/AdminProvider';
 import AdminSharedLayout from '@components/AdminSharedLayout';
-
 import PrivateGate from '@components/routing/PrivateGate';
 
 export default function AdminLayout({

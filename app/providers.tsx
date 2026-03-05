@@ -16,12 +16,12 @@ import 'swiper/css/thumbs';
 
 import ScrollToTop from '@components/ScrollToTop';
 import SvgIcon from '@components/common/SvgIcon';
+import Loader from '@components/common/loaders/Loader';
 
 import { persistor, store } from '@store/store';
 
 import { IconId } from '@enums/iconsSpriteId';
 import { LanguageKeys } from '@enums/languageKeys';
-import Loader from '@components/common/loaders/Loader';
 
 interface LanguageContextType {
   language: LanguageKeys;

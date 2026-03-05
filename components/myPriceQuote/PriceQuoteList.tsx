@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import ItemForQuote from './ItemForQuote';
@@ -12,7 +13,6 @@ import { selectRequestedProducts } from '@store/selectors';
 import { useAppSelector } from '@hooks/useAppSelector';
 
 import { Button, Title } from '@enums/i18nConstants';
-import React from 'react';
 
 const PriceQuoteList = () => {
   const { t } = useTranslation();
@@ -29,13 +29,13 @@ const PriceQuoteList = () => {
           </div>
           <div className="border-pagination rounded-b-[22px] border-r border-b border-l border-[#e5e7eb] pb-[28px] lg:w-[425px]">
             <ul className="mb-[24px]">
-  {requestedProducts.map(requested => (
-    <React.Fragment key={requested._id}>
-      <ItemForQuote product={requested} />
-      <DecorativeLine intent="myPriceQuote" />
-    </React.Fragment>
-  ))}
-</ul>
+              {requestedProducts.map(requested => (
+                <React.Fragment key={requested._id}>
+                  <ItemForQuote product={requested} />
+                  <DecorativeLine intent="myPriceQuote" />
+                </React.Fragment>
+              ))}
+            </ul>
             <div className="text-center">
               <NavLinkBtn className="" intent="addMore" href="/all-products">
                 {t(Button.AddMoreItems)}

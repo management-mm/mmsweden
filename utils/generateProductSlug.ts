@@ -1,7 +1,9 @@
-import slugify from 'slugify';
-import { LanguageKeys } from '@enums/languageKeys';
-import getProductName from './getProductName';
 import { IProduct } from '@interfaces/IProduct';
+import slugify from 'slugify';
+
+import getProductName from './getProductName';
+
+import { LanguageKeys } from '@enums/languageKeys';
 
 export function generateProductSlug(product: IProduct): string {
   const rawName = getProductName(product.name, LanguageKeys.EN);

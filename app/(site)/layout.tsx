@@ -1,4 +1,4 @@
-import ClientSharedLayout from "@components/ClientSharedLayout";
+import ClientSharedLayout from '@components/ClientSharedLayout';
 
 export default function SiteLayout({
   children,

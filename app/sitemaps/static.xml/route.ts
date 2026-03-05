@@ -29,7 +29,7 @@ export async function GET() {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls
   .map(
-    (loc) => `  <url>
+    loc => `  <url>
     <loc>${xmlEscape(loc)}</loc>
     <lastmod>${now}</lastmod>
   </url>`

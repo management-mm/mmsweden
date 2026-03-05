@@ -35,10 +35,7 @@ async function getProductsPage(page: number) {
   return [];
 }
 
-export async function GET(
-  request: Request,
-  context: any
-) {
+export async function GET(request: Request, context: any) {
   const pageParam = context?.params?.page ?? '1';
   const page = Math.max(1, Number(pageParam));
 

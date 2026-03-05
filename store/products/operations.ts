@@ -1,12 +1,13 @@
 'use client';
+
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { IProduct, MultiLanguageString } from 'interfaces/IProduct';
 
-import type { LanguageKeys } from '@enums/languageKeys';
 import { api } from '@store/api';
 
-// 'https://mmsweden-server.onrender.com/'
+import type { LanguageKeys } from '@enums/languageKeys';
 
+// 'https://mmsweden-server.onrender.com/'
 
 export interface IFetchProductsParams {
   lang?: LanguageKeys;
@@ -39,12 +40,12 @@ export interface IUpdateProductData {
   id: string;
   name: string | MultiLanguageString;
   idNumber: string;
-  description: MultiLanguageString;
+  description: string | MultiLanguageString;
   dimensions: string;
   photoQueue: (string | File)[];
   photos: File[];
   video: string;
-  category: string;
+  category: string | MultiLanguageString;
   manufacturer: string;
   industries: string[];
   condition: 'used' | 'new';
@@ -67,7 +68,6 @@ export const fetchProducts = createAsyncThunk<
   { rejectValue: string }
 >('products/fetchAll', async (args, thunkAPI) => {
   try {
-
     const { cacheKey, mode, ...queryParams } = args;
 
     const response = await api.get<IFetchProductsResponse>('products/', {
@@ -185,7 +185,12 @@ export const updateProduct = createAsyncThunk<
             data.append('photos', photo);
           });
         } else {
-          data.append(key, updatedProduct[key] as string);
+          const v = updatedProduct[key];
+
+          if (typeof v === 'string' && v.trim() === '') continue;
+          if (v === null || v === undefined) continue;
+
+          data.append(key, v as string);
         }
       }
     }
@@ -196,7 +201,6 @@ export const updateProduct = createAsyncThunk<
     });
     return response.data;
   } catch (e) {
-    console.log(e);
     return thunkAPI.rejectWithValue((e as Error).message);
   }
 });

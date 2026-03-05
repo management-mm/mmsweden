@@ -83,7 +83,9 @@ const Menu: FC<IMenuProps> = ({
 
   const pageSize = intent === 'mobile' ? 20 : 10;
 
-  const [visibleCountries, setVisibleCountries] = useState<ICountryOption[]>([]);
+  const [visibleCountries, setVisibleCountries] = useState<ICountryOption[]>(
+    []
+  );
   const [hasMore, setHasMore] = useState(false);
 
   useEffect(() => {
@@ -122,7 +124,6 @@ const Menu: FC<IMenuProps> = ({
         type="text"
         className={cn(inputVariants({ intent }))}
         placeholder="Search by Name or Code"
- 
         onChange={handleInputText}
       />
 

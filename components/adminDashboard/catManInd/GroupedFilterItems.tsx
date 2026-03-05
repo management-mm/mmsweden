@@ -89,7 +89,6 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
     setGroupedFilters(sortedGrouped);
   }, [items, itemName]);
 
-
   return (
     <div className="mb-[14px] flex h-[350px] flex-col gap-[16px] overflow-y-scroll">
       {Object.entries(groupedFilters).map(([character, items]) => (

@@ -21,7 +21,7 @@ const CheckedItemsList: FC<ICheckedItemsListProps> = ({
     {Array.isArray(checkedValue) ? (
       checkedValue.map(value => (
         <CheckedCatManIndItem
-        key={typeof value === 'string' ? value : value.en}
+          key={typeof value === 'string' ? value : value.en}
           checkedValue={value}
           checkedValuesArray={checkedValue}
           setCheckedValue={setCheckedValue}

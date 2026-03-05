@@ -18,28 +18,27 @@ export default function ClientSharedLayout({
   return (
     <div className="bg-main font-inter">
       <ScrollToTop />
-        <Header />
-        <main>
-          {children}
-          <ToastContainer
-            closeButton={
-              <SvgIcon
-                iconId={IconId.Close}
-                size={{ width: 36, height: 36 }}
-                className="fill-white"
-              />
-            }
-            icon={
-              <SvgIcon
-                iconId={IconId.Check}
-                className="fill-white"
-                size={{ width: 20, height: 20 }}
-              />
-            }
-          />
-        </main>
-        <Footer />
-
+      <Header />
+      <main>
+        {children}
+        <ToastContainer
+          closeButton={
+            <SvgIcon
+              iconId={IconId.Close}
+              size={{ width: 36, height: 36 }}
+              className="fill-white"
+            />
+          }
+          icon={
+            <SvgIcon
+              iconId={IconId.Check}
+              className="fill-white"
+              size={{ width: 20, height: 20 }}
+            />
+          }
+        />
+      </main>
+      <Footer />
     </div>
   );
 }

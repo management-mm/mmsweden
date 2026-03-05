@@ -3,16 +3,19 @@
 import { type FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import Skeleton from 'react-loading-skeleton';
+
+import type { IProduct } from '@interfaces/IProduct';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import slugify from 'slugify';
 
-import type { IProduct } from '@interfaces/IProduct';
 import useUpdateRequestedProducts from '@hooks/useUpdateRequestedProducts';
-import { Button } from '@enums/i18nConstants';
-import getProductName from '@utils/getProductName';
-import { LanguageKeys } from '@enums/languageKeys';
+
 import { generateProductSlug } from '@utils/generateProductSlug';
+import getProductName from '@utils/getProductName';
+
+import { Button } from '@enums/i18nConstants';
+import { LanguageKeys } from '@enums/languageKeys';
 
 interface IActionsButtonsProps {
   isLoading: boolean;
@@ -27,7 +30,7 @@ const ActionsButtons: FC<IActionsButtonsProps> = ({ isLoading, product }) => {
     useUpdateRequestedProducts(product);
 
   const goToDetails = () => {
-    const slug = generateProductSlug(product)
+    const slug = generateProductSlug(product);
 
     router.push(`all-products/${slug}`);
   };

@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { RootState } from '@store/store';
+
 import { api } from '@store/api';
+import type { RootState } from '@store/store';
 
 interface LogInCredentials {
   email: string;

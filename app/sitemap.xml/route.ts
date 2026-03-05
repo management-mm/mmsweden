@@ -37,14 +37,17 @@ export async function GET(_req: NextRequest) {
 
   const sitemaps = [
     `${BASE_URL}/sitemaps/static.xml`,
-    ...Array.from({ length: pages }, (_, i) => `${BASE_URL}/sitemaps/products/${i + 1}.xml`),
+    ...Array.from(
+      { length: pages },
+      (_, i) => `${BASE_URL}/sitemaps/products/${i + 1}.xml`
+    ),
   ];
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${sitemaps
   .map(
-    (loc) => `  <sitemap>
+    loc => `  <sitemap>
     <loc>${xmlEscape(loc)}</loc>
     <lastmod>${now}</lastmod>
   </sitemap>`

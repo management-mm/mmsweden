@@ -1,15 +1,14 @@
 import type { MultiLanguageString } from '@interfaces/IProduct';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { api } from '@store/api';
 import type { ICategory } from 'interfaces/ICategory';
 import type { IIndustry } from 'interfaces/IIndustry';
 import type { IManufacturer } from 'interfaces/IManufacturer';
 
+import { api } from '@store/api';
+
 import type { LanguageKeys } from '@enums/languageKeys';
 
 // 'https://mmsweden-server.onrender.com/'
-
-
 
 export interface IFetchCategoriesOrIndustriesParams {
   lang: LanguageKeys;
@@ -92,10 +91,9 @@ export const updateManufacturer = createAsyncThunk<
   { rejectValue: string }
 >('manufacturers/updateManufacturer', async (updatedManufacturer, thunkAPI) => {
   try {
-    const response = await api.put(
-      `manufacturers/${updatedManufacturer.id}`,
-      { name: updatedManufacturer.name }
-    );
+    const response = await api.put(`manufacturers/${updatedManufacturer.id}`, {
+      name: updatedManufacturer.name,
+    });
     return response.data;
   } catch (e) {
     console.log(e);

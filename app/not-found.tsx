@@ -31,21 +31,19 @@ export default function NotFound() {
                   →
                 </span>
               </NavLinkBtn>
-              <div className='flex items-center gap-[16px]'>
-                 <button
-                onClick={() => window.history.back()}
-                className="inline-flex w-full bg-transparent items-center justify-center rounded-2xl border border-slate-200 px-5 py-3 md:py-[16px] text-sm font-medium text-slate-900 transition hover:bg-slate-50 hover:shadow-sm focus:ring-2 focus:ring-slate-300 focus:outline-none md:w-fit"
-              >
-                Go back
-              </button>
+              <div className="flex items-center gap-[16px]">
+                <button
+                  onClick={() => window.history.back()}
+                  className="inline-flex w-full items-center justify-center rounded-2xl border border-slate-200 bg-transparent px-5 py-3 text-sm font-medium text-slate-900 transition hover:bg-slate-50 hover:shadow-sm focus:ring-2 focus:ring-slate-300 focus:outline-none md:w-fit md:py-[16px]"
+                >
+                  Go back
+                </button>
 
-              <NavLinkBtn href="/contact-us" intent="notFound">
-                Contact us
-              </NavLinkBtn>
-            </div>
+                <NavLinkBtn href="/contact-us" intent="notFound">
+                  Contact us
+                </NavLinkBtn>
               </div>
-
-             
+            </div>
 
             <p className="mt-10 text-xs text-slate-500">
               Error code: <span className="font-mono text-slate-700">404</span>

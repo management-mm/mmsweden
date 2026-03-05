@@ -9,12 +9,18 @@ import { LanguageContext } from 'app/providers';
 import ProductCard from '@components/common/productCard/ProductCard';
 
 import { fetchProducts } from '@store/products/operations';
-import { selectProducts, selectProductsCacheByKey, selectProductsLastFetchedAtByKey, selectProductsStatusByKey } from '@store/selectors';
+import {
+  selectProducts,
+  selectProductsCacheByKey,
+  selectProductsLastFetchedAtByKey,
+  selectProductsStatusByKey,
+} from '@store/selectors';
 
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
 
 import { Title } from '@enums/i18nConstants';
+
 import { CACHE_KEY, TTL } from '@constants/cacheProducts';
 
 type GroupedProducts = Record<string, IProduct[]>;
@@ -23,9 +29,11 @@ const LatestArrivals = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
-const allProducts = useAppSelector(selectProductsCacheByKey(CACHE_KEY));
-const lastFetchedAt = useAppSelector(selectProductsLastFetchedAtByKey(CACHE_KEY));
-const status = useAppSelector(selectProductsStatusByKey(CACHE_KEY));
+  const allProducts = useAppSelector(selectProductsCacheByKey(CACHE_KEY));
+  const lastFetchedAt = useAppSelector(
+    selectProductsLastFetchedAtByKey(CACHE_KEY)
+  );
+  const status = useAppSelector(selectProductsStatusByKey(CACHE_KEY));
   const { language } = useContext(LanguageContext);
 
   const products = useMemo(() => {
@@ -35,21 +43,19 @@ const status = useAppSelector(selectProductsStatusByKey(CACHE_KEY));
   }, [allProducts]);
 
   useEffect(() => {
-  if (status === 'loading') return;
+    if (status === 'loading') return;
 
-  const isFresh =
-    lastFetchedAt !== null && Date.now() - lastFetchedAt < TTL;
+    const isFresh = lastFetchedAt !== null && Date.now() - lastFetchedAt < TTL;
 
-  if (products.length >= 10 && isFresh) return;
+    if (products.length >= 10 && isFresh) return;
 
-  dispatch(fetchProducts({ sort: 'latest', cacheKey: CACHE_KEY }));
-}, [dispatch, products.length, lastFetchedAt, status]);
+    dispatch(fetchProducts({ sort: 'latest', cacheKey: CACHE_KEY }));
+  }, [dispatch, products.length, lastFetchedAt, status]);
 
   const groupedProducts: GroupedProducts = useMemo(() => {
     const grouped: GroupedProducts = {};
 
     for (const product of products) {
-
       const dateKey = new Date(product.createdAt).toISOString().slice(0, 10);
       (grouped[dateKey] ??= []).push(product);
     }
@@ -58,7 +64,9 @@ const status = useAppSelector(selectProductsStatusByKey(CACHE_KEY));
   }, [products]);
 
   const groupedEntries = useMemo(() => {
-    return Object.entries(groupedProducts).sort(([a], [b]) => b.localeCompare(a));
+    return Object.entries(groupedProducts).sort(([a], [b]) =>
+      b.localeCompare(a)
+    );
   }, [groupedProducts]);
 
   return (

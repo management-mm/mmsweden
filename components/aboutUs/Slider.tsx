@@ -1,8 +1,8 @@
 'use client';
 
-import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import Image from 'next/image';
 import 'swiper/css';
 import 'swiper/css/scrollbar';
 import { Autoplay, Scrollbar } from 'swiper/modules';
@@ -31,16 +31,10 @@ const Slider = () => {
       centeredSlides
     >
       {photosAboutUsList.map((photo, index) => {
-        const {
-          mobile,
-          tablet,
-          desktop,
-          alt,
-        } = photo;
+        const { mobile, tablet, desktop, alt } = photo;
 
         return (
           <SwiperSlide key={`${alt}-${index}`}>
-   
             <div className="md:hidden">
               <Image
                 src={mobile}

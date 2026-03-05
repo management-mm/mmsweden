@@ -1,7 +1,8 @@
 'use client';
 
-import type { ChangeEvent, FC } from 'react';
 import { InputMask, format } from '@react-input/mask';
+import type { ChangeEvent, FC } from 'react';
+
 import clsx from 'clsx';
 import { Field, type FieldProps } from 'formik';
 
@@ -49,7 +50,7 @@ const PhoneMaskedField: FC<PhoneMaskedFieldProps> = ({
               {...field}
               type="tel"
               inputMode="tel"
-              placeholder='+000 (00) 000 0000'
+              placeholder="+000 (00) 000 0000"
               value={(field.value as string) ?? ''}
               onChange={(e: ChangeEvent<HTMLInputElement>) => {
                 const value = e.target.value ?? '';

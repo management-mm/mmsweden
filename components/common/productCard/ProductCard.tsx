@@ -25,8 +25,9 @@ import { selectIsLoading } from '@store/selectors';
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
 
-import { IconId } from '@enums/iconsSpriteId';
 import { generateProductSlug } from '@utils/generateProductSlug';
+
+import { IconId } from '@enums/iconsSpriteId';
 
 export interface IProductCardProps {
   product: IProduct;
@@ -46,6 +47,7 @@ const ProductCard: FC<IProductCardProps> = ({
   },
   className,
 }) => {
+  
   const pathname = usePathname();
   const isAdmin = pathname.includes('/admin');
 
@@ -59,8 +61,7 @@ const ProductCard: FC<IProductCardProps> = ({
   const handleClear = () => {
     dispatch(clearProduct());
   };
-  const slug = generateProductSlug(product)
-  
+  const slug = generateProductSlug(product);
 
   return (
     <SkeletonTheme baseColor="#E1E1E1" highlightColor="#F2F2F2">

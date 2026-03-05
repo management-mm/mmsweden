@@ -24,11 +24,11 @@ import useSwiperNavigation from '@hooks/useSwiperNavigation';
 
 import { Title } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
+
 import { CACHE_KEY, TTL } from '@constants/cacheProducts';
 
-
-const PER_PAGE = 10;       
-const MAX_RENDER = 20;      
+const PER_PAGE = 10;
+const MAX_RENDER = 20;
 
 const LatestArrivals = () => {
   const { t } = useTranslation();
@@ -36,7 +36,9 @@ const LatestArrivals = () => {
   const dispatch = useAppDispatch();
 
   const cachedProducts = useAppSelector(selectProductsCacheByKey(CACHE_KEY));
-  const lastFetchedAt = useAppSelector(selectProductsLastFetchedAtByKey(CACHE_KEY));
+  const lastFetchedAt = useAppSelector(
+    selectProductsLastFetchedAtByKey(CACHE_KEY)
+  );
   const status = useAppSelector(selectProductsStatusByKey(CACHE_KEY));
 
   const products: IProduct[] = useMemo(() => {

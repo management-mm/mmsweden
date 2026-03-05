@@ -11,7 +11,8 @@ const lineVariants = cva('border-[1.5px] rounded-[12px] w-[calc(100%-28px)]', {
       sellToUs:
         'border-0 border-b-[1px] border-dashed border-primary w-[calc(100%-38px)]',
       footer: 'w-full border-footer-line',
-      myPriceQuote: 'border-pagination w-full rounded-none border-[1px] border-[#e5e7eb]',
+      myPriceQuote:
+        'border-pagination w-full rounded-none border-[1px] border-[#e5e7eb]',
       sellToUsSecondary: 'absolute bottom-[14px] border-[rgba(48,252,192,0.2)]',
       latestArrivals:
         'hidden md:block border-y-[0.5px] border-x-0 border-dashed border-line w-[calc(100%-265px)]',

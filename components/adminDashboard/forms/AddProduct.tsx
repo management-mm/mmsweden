@@ -129,7 +129,9 @@ const AddProduct = () => {
       </Formik>
 
       {isLoading && (
-        <StatusModal title={'Please wait, the product is being added to the website.'}>
+        <StatusModal
+          title={'Please wait, the product is being added to the website.'}
+        >
           <Loader />
         </StatusModal>
       )}

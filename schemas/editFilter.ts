@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
-import { MultiLanguageSchema } from './multiLanguageSchema';
 
+import { MultiLanguageSchema } from './multiLanguageSchema';
 
 export const schema = Yup.object().shape({
   id: Yup.string().required(),

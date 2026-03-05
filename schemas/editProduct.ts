@@ -2,15 +2,13 @@ import * as Yup from 'yup';
 
 const safeString = () =>
   Yup.mixed()
-    .transform(v => (typeof v === 'string' ? v.trim() : v))
+    .transform((v: unknown) => (typeof v === 'string' ? v.trim() : v))
     .nullable()
     .notRequired();
 
 const multiLangOrString = Yup.mixed()
-  .transform(v => {
-    // если строка — trim
+  .transform((v: unknown) => {
     if (typeof v === 'string') return v.trim();
-    // если объект — оставляем как есть
     if (v && typeof v === 'object') return v;
     return v;
   })
@@ -22,7 +20,7 @@ export const schema = Yup.object().shape({
 
   name: multiLangOrString,
   description: multiLangOrString,
-  category: multiLangOrString, // ✅ теперь может быть и строка и объект
+  category: multiLangOrString,
 
   idNumber: safeString(),
   dimensions: safeString(),

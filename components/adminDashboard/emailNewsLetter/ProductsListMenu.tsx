@@ -2,7 +2,6 @@
 
 import {
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -13,7 +12,6 @@ import { useSearchParams } from 'next/navigation';
 
 import ProductMenuItem from './ProductMenuItem';
 
-import { LanguageContextAdmin } from '@components/AdminProvider';
 import Loader from '@components/common/loaders/Loader';
 
 import {
@@ -24,6 +22,7 @@ import { selectIsLoading, selectProducts } from '@store/selectors';
 
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 const PER_PAGE = 10;
 
@@ -37,7 +36,7 @@ const ProductsListMenu = () => {
   const listRef = useRef<HTMLUListElement | null>(null);
 
   const searchParams = useSearchParams();
-  const { language } = useContext(LanguageContextAdmin);
+  const language = useCurrentLocale();
 
   const title = useMemo(() => searchParams.get('title'), [searchParams]);
 

@@ -1,17 +1,16 @@
 'use client';
 
-import { type FC, useContext, useEffect, useState } from 'react';
+import { type FC, useEffect, useState } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
 import type { ICategory } from '@interfaces/ICategory';
 import type { IIndustry } from '@interfaces/IIndustry';
 import type { IManufacturer } from '@interfaces/IManufacturer';
-import { LanguageContext } from 'app/providers';
 
 import Block from './Block';
 import ChangeFilter from './forms/ChangeFilter';
 
-import { LanguageContextAdmin } from '@components/AdminProvider';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 import getFilterItemName from '@utils/getFilterItemName';
 
@@ -30,10 +29,8 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
   itemName,
   isLoading,
 }) => {
-  const isAdmin = window.location.pathname.includes('admin');
-  const { language } = useContext(
-    isAdmin ? LanguageContextAdmin : LanguageContext
-  );
+  const language = useCurrentLocale();
+
   const [groupedFilters, setGroupedFilters] = useState<
     Record<string, FilterItem[]>
   >({});
@@ -43,9 +40,11 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
       const characterKey = getFilterItemName(itemName, item, language)
         .charAt(0)
         .toUpperCase();
+
       if (!acc[characterKey]) {
         acc[characterKey] = [];
       }
+
       acc[characterKey].push(item);
       return acc;
     }, {});
@@ -72,6 +71,7 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
           <p className="text-desc mb-4 text-[12px] font-semibold">
             {character?.toUpperCase()}
           </p>
+
           <div className="flex flex-col gap-[12px]">
             {items.map(item => (
               <SkeletonTheme
@@ -83,7 +83,7 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
                   {!isLoading ? (
                     <Block
                       title={getFilterItemName(itemName, item, language)}
-                      intent={'filter'}
+                      intent="filter"
                     >
                       <ChangeFilter filterName={itemName} filterValue={item} />
                     </Block>

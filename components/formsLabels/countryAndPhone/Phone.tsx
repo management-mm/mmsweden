@@ -1,10 +1,9 @@
 'use client';
 
-import { type ChangeEvent, type FC, useContext, useState } from 'react';
-import { useMemo } from 'react';
+import { type ChangeEvent, type FC, useMemo, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 import type { ICountryOption } from '@interfaces/ICountryOption';
-import { LanguageContext } from 'app/providers';
 import { ErrorMessage, Field, useFormikContext } from 'formik';
 import * as _ from 'lodash';
 
@@ -23,6 +22,7 @@ import { cn } from '@utils/cn';
 import { Label } from '@enums/i18nConstants';
 
 import countriesList from '@constants/countriesList';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 type CallingCodeEntry = {
   callingCode: string;
@@ -35,8 +35,9 @@ interface IPhoneProps {
   className?: string;
 }
 
+
 const Phone: FC<IPhoneProps> = ({ className }) => {
-  const { language } = useContext(LanguageContext);
+ const language = useCurrentLocale();
 
   const options = countriesList.flatMap(country => {
     const { phoneFormat, callingCode, translations, flag } = country;
@@ -94,6 +95,7 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
 
     return map;
   }, [language]);
+
   const detectByCallingCode = (rawValue: string) => {
     const digits = rawValue.slice(1).replace(/\D/g, '');
     if (digits.length === 0) return null;
@@ -109,6 +111,8 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
 
     return null;
   };
+
+  const { setFieldValue } = useFormikContext();
 
   const applyDetectedCallingCode = (code: string) => {
     const candidates = callingCodeIndex.get(code);
@@ -132,24 +136,23 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
       o =>
         o?.label?.props?.callingCode === code && o.value === chosen.countryValue
     );
+
     if (opt) setSelectedOption(opt);
   };
 
   const [filteredOptions, setFilteredOptions] = useState(options);
-
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
-  const [hasClickedOutside, setHasClickedOutside] = useState<boolean>(false);
-  const windowWidth = useWindowWidth();
-
+  const [hasClickedOutside, setHasClickedOutside] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const { setFieldValue } = useFormikContext();
   const [selectedOption, setSelectedOption] = useState<ICountryOption | null>(
     null
   );
+  const [callingCode, setCallingCode] = useState('');
+  const [phoneFormat, setPhoneFormat] = useState('');
 
-  const [callingCode, setCallingCode] = useState<string>('');
-  const [phoneFormat, setPhoneFormat] = useState<string>('');
+  const windowWidth = useWindowWidth();
   const callingCodeSize = callingCode.split('').slice(1);
+
   const toggleMobileMenu = () => {
     setIsOpenMobileMenu(!isOpenMobileMenu);
   };
@@ -168,6 +171,7 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
       })
     );
   });
+
   const handleOptionClick = (option: ICountryOption) => {
     setSelectedOption(option);
 
@@ -196,6 +200,7 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
           <LabelTitle title={Label.Phone} />
           <span className="text-red-700">*</span>
         </div>
+
         <div className="relative z-2 w-full">
           <Selector
             hasClickedOutside={hasClickedOutside}
@@ -209,12 +214,14 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
             filteredOptions={filteredOptions}
             toggleMobileMenu={toggleMobileMenu}
           />
+
           <Field
             type="hidden"
             required={false}
             name="callingCode"
             value={callingCode}
           />
+
           <PhoneMaskedField
             phoneFormat={phoneFormat}
             callingCodeSize={callingCodeSize.length}
@@ -227,10 +234,12 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
             }
           />
         </div>
+
         <ErrorMessage name="Phone">
           {msg => <div className="mt-1 text-sm text-red-500">{msg}</div>}
         </ErrorMessage>
       </label>
+
       <MobileMenu
         isOpen={isOpenMobileMenu}
         direction="bottom"
@@ -241,7 +250,7 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
           handleInputText={handleInputText}
           options={filteredOptions}
           handleOptionClick={handleOptionClick}
-          intent={'mobile'}
+          intent="mobile"
         />
       </MobileMenu>
     </>

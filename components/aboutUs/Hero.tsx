@@ -1,13 +1,11 @@
-'use client';
-
-import { useTranslation } from 'react-i18next';
-
-import Slider from './Slider';
+import { useTranslations } from 'next-intl';
 
 import { Description, NavBar } from '@enums/i18nConstants';
 
+import Slider from './Slider';
+
 const Hero = () => {
-  const { t } = useTranslation();
+  const  t  = useTranslations();
 
   return (
     <section className="py-[32px] md:pt-[22px] md:pb-[64px]">

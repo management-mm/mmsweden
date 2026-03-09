@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { fetchRecommendedProductsById } from '@api/productsService';
@@ -18,7 +18,7 @@ import useSwiperNavigation from '@hooks/useSwiperNavigation';
 import { Title } from '@enums/i18nConstants';
 
 const RecommendedProducts = () => {
-  const { t } = useTranslation();
+  const  t  = useTranslations();
   const [recommendedProducts, setRecommendedProducts] = useState<IProduct[]>(
     []
   );

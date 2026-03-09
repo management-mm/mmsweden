@@ -3,22 +3,19 @@
 import {
   type ChangeEvent,
   type FC,
-  useContext,
   useEffect,
   useMemo,
   useState,
 } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
 import type { ICategory } from '@interfaces/ICategory';
 import type { IIndustry } from '@interfaces/IIndustry';
 import type { IManufacturer } from '@interfaces/IManufacturer';
-import { LanguageContext } from 'app/providers';
 import clsx from 'clsx';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-import { LanguageContextAdmin } from '@components/AdminProvider';
 import SearchFilter from '@components/common/SearchFilter';
 import SvgIcon from '@components/common/SvgIcon';
 
@@ -28,7 +25,8 @@ import subtractSearchParam from '@utils/subtractSearchParam';
 import { filters } from '@enums/filters';
 import { Filter } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
-import { LanguageKeys } from '@enums/languageKeys';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
+import { DEFAULT_LOCALE } from '@i18n/config';
 
 interface IFilterWrapperProps {
   filterName: string;
@@ -49,11 +47,7 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const isAdmin = pathname.startsWith('/admin');
-
-  const { language } = useContext(
-    isAdmin ? LanguageContextAdmin : LanguageContext
-  );
+  const language = useCurrentLocale();
 
   const [groupedFilters, setGroupedFilters] = useState<
     Record<string, (ICategory | IManufacturer | IIndustry)[]>
@@ -61,7 +55,7 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
 
   const [isOpen, setIsOpen] = useState(filterName === filters.Category);
 
-  const { t } = useTranslation();
+  const t = useTranslations();
 
   const selectedValues = useMemo(() => {
     return searchParams.getAll(filterName);
@@ -86,6 +80,7 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
         subtractSearchParam(params, value, filterName);
         return;
       }
+
       params.append(filterName, value);
     });
   };
@@ -160,7 +155,7 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
                   const valueEn = getFilterItemName(
                     filterName,
                     item,
-                    LanguageKeys.EN
+                    DEFAULT_LOCALE
                   );
 
                   return (

@@ -1,6 +1,4 @@
-'use client';
-
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import IndustryItem from './IndustryItem';
 
@@ -11,7 +9,7 @@ import { Button, Description, Title } from '@enums/i18nConstants';
 import industriesList from '@constants/industriesList';
 
 const Industries = () => {
-  const { t } = useTranslation();
+  const t  = useTranslations();
   return (
     <section className="pb-[96px] text-center">
       <div className="container">

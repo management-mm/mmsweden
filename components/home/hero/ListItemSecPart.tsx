@@ -1,7 +1,5 @@
-'use client';
-
 import type { FC } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
 
@@ -15,7 +13,7 @@ interface IListItemSecPartProps {
 }
 
 const ListItemSecPart: FC<IListItemSecPartProps> = ({ item, index }) => {
-  const { t } = useTranslation();
+  const  t  = useTranslations();
   return (
     <li
       className={clsx(

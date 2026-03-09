@@ -1,7 +1,7 @@
 'use client';
 
 import { type FC, useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 import ReactPaginate from 'react-paginate';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -13,7 +13,7 @@ import { cn } from '@utils/cn';
 import { IconId } from '@enums/iconsSpriteId';
 
 const Next = () => {
-  const { t } = useTranslation();
+  const  t  = useTranslations();
   return (
     <>
       <span className="mr-[8px] hidden md:block">{t('Pagination.Next')}</span>
@@ -23,7 +23,7 @@ const Next = () => {
 };
 
 const Previous = () => {
-  const { t } = useTranslation();
+  const  t  = useTranslations();
   return (
     <>
       <SvgIcon

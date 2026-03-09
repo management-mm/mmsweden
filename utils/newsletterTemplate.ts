@@ -2,7 +2,7 @@ import type { IProduct } from '@interfaces/IProduct';
 
 import getProductName from './getProductName';
 
-import { LanguageKeys } from '@enums/languageKeys';
+import { DEFAULT_LOCALE } from '@i18n/config';
 
 export const mainProductBlock = (product: IProduct) => `
 <table width="100%" cellpadding="0" cellspacing="0"
@@ -26,7 +26,7 @@ export const mainProductBlock = (product: IProduct) => `
                                                                     style="Margin:0;padding-right:40px;padding-left:40px;padding-bottom:5px;padding-top:15px">
                                                                     <h3 class="cz br"
                                                                         style="Margin:0;font-family:montserrat, helvetica, arial, sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:16px;font-style:normal;font-weight:normal;line-height:16px;color:#000000">
-                                                                        <strong>${getProductName(product.name, LanguageKeys.EN)}</strong></h3>
+                                                                        <strong>${getProductName(product.name, DEFAULT_LOCALE)}</strong></h3>
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -84,7 +84,7 @@ export const productBlock = (product: IProduct) => `
                         style="Margin:0;padding-right:40px;padding-left:40px;padding-bottom:5px;padding-top:15px">
                         <h3 class="cz br"
                             style="Margin:0;font-family:montserrat, helvetica, arial, sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:16px;font-style:normal;font-weight:normal;line-height:16px;color:#000000">
-                            <strong>${getProductName(product.name, LanguageKeys.EN)}</strong></h3>
+                            <strong>${getProductName(product.name, DEFAULT_LOCALE)}</strong></h3>
                     </td>
                 </tr>
                 <tr>

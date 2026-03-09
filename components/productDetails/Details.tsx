@@ -1,7 +1,8 @@
-import { type FC, useContext } from 'react';
-import { useTranslation } from 'react-i18next';
+'use client';
 
-import { LanguageContext } from 'app/providers';
+import { type FC } from 'react';
+import { useTranslations } from 'next-intl';
+
 import clsx from 'clsx';
 import type { IProduct } from 'interfaces/IProduct';
 
@@ -12,6 +13,8 @@ import useUpdateRequestedProducts from '@hooks/useUpdateRequestedProducts';
 
 import { Button, Filter, Product } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
+
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 interface IDetailsProps {
   product: IProduct;
@@ -29,14 +32,8 @@ const Details: FC<IDetailsProps> = ({
     dimensions,
   },
 }) => {
-  const { t } = useTranslation();
-  const context = useContext(LanguageContext);
-
-  if (!context) {
-    throw new Error('LanguageContext must be used within a LanguageProvider');
-  }
-
-  const { language } = context;
+  const t = useTranslations();
+  const language = useCurrentLocale();
 
   const { isRequested, handleToggleFavorites } =
     useUpdateRequestedProducts(product);
@@ -46,15 +43,19 @@ const Details: FC<IDetailsProps> = ({
       <h3 className="text-primary mb-[14px] text-[18px] font-semibold uppercase md:mb-[22px]">
         Id nr # <span>{idNumber}</span>
       </h3>
+
       <DecorativeLine intent="product" />
+
       <div className="font-openSans mb-[12px] flex gap-[8px] text-[14px]">
         <h4 className="text-desc">{t(Product.Dimensions)}:</h4>
         <p className="text-title">{dimensions}</p>
       </div>
+
       <div className="font-openSans mb-[12px] flex gap-[8px] text-[14px]">
         <h4 className="text-desc">{t(Filter.Category)}:</h4>
         <p className="text-title">{category[language]}</p>
       </div>
+
       {manufacturer && (
         <div className="font-openSans mb-[12px] flex gap-[8px] text-[14px]">
           <h4 className="text-desc">{t(Filter.Manufacturer)}:</h4>
@@ -85,9 +86,11 @@ const Details: FC<IDetailsProps> = ({
       <h4 className="font-openSans text-desc mb-[8px] text-[14px]">
         {t(Product.Description)}:
       </h4>
+
       <p className="font-openSans text-title mb-auto pb-[32px] text-[14px]">
         {description[language]}
       </p>
+
       {product.deletionDate ? (
         <span className="text-secondary flex w-full items-center justify-center rounded-[32px] bg-red-900 py-[14px] text-[12px] font-semibold">
           Sold
@@ -111,7 +114,7 @@ const Details: FC<IDetailsProps> = ({
             iconId={IconId.Cart}
             size={{ width: 16, height: 16 }}
           />
-          {isRequested ? t(Button.AddedToQuote) : t(Button.RequestQuote)}
+          {isRequested ? t(Button.AddedToQuote) : t(Button.RequestPricing)}
         </button>
       )}
     </div>

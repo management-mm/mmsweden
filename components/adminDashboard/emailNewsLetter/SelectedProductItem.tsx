@@ -9,7 +9,6 @@ import {
   SlotItemMapContext,
 } from './EmailNewsLetterMain';
 
-import { LanguageContextAdmin } from '@components/AdminProvider';
 import SvgIcon from '@components/common/SvgIcon';
 
 import { toggleSelectedProducts } from '@store/selectedProductsSlice';
@@ -20,6 +19,7 @@ import getProductName from '@utils/getProductName';
 import initSlotItemMap from '@utils/initSlotItemMap';
 
 import { IconId } from '@enums/iconsSpriteId';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 interface ISelectedProductItemProps {
   itemId: string;
@@ -31,14 +31,12 @@ const SelectedProductItem: FC<ISelectedProductItemProps> = ({
   item,
 }) => {
   const { name, description, idNumber, photos } = item;
-  const context = useContext(LanguageContextAdmin);
+  
   const { setItems } = useContext(SelectedItemsContext);
   const { setSlotItemMap } = useContext(SlotItemMapContext);
-  if (!context) {
-    throw new Error('LanguageContext must be used within a LanguageProvider');
-  }
 
-  const { language } = context;
+
+  const language = useCurrentLocale();
   const dispatch = useAppDispatch();
   const handleRemove = () => {
     dispatch(toggleSelectedProducts(item));

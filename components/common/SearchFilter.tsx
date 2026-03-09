@@ -1,7 +1,7 @@
 'use client';
 
 import { type FC, useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import debounce from 'lodash/debounce';
 
@@ -16,7 +16,7 @@ interface ISearchFilterProps {
 }
 
 const SearchFilter: FC<ISearchFilterProps> = ({ keyword, setKeyword }) => {
-  const { t } = useTranslation();
+  const  t  = useTranslations();
   const [isEmptyValue, setIsEmptyValue] = useState(true);
 
   const [inputValue, setInputValue] = useState(keyword);

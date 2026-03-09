@@ -12,6 +12,7 @@ import Desc from '../common/Desc';
 import LabelTitle from '@components/common/LabelTitle';
 
 import initSlotItemMap from '@utils/initSlotItemMap';
+import { Label } from '@enums/i18nConstants';
 
 export type Item = {
   id: string;
@@ -89,7 +90,7 @@ const PhotosAndVideo: FC<IPhotoAndVideoProps> = ({
   return (
     <div>
       <div className="mb-[20px]">
-        <LabelTitle title="Photos" />
+        <LabelTitle title={Label.AttachPhotos} />
         <Desc
           text="The first photo will be on the cover of the ad. Drag to change the
           order of the photos."

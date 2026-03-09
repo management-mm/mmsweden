@@ -13,7 +13,8 @@ import Desc from '../common/Desc';
 
 import LabelTitle from '@components/common/LabelTitle';
 
-import { LanguageKeys } from '@enums/languageKeys';
+import { AppLocale, SUPPORTED_LOCALES } from '@i18n/config';
+import { Label } from '@enums/i18nConstants';
 
 interface IProductNameProps {
   initialValue?: string | MultiLanguageString;
@@ -31,7 +32,7 @@ const ProductName: FC<IProductNameProps> = ({ initialValue }) => {
 
   const handleChangeName = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
-    lang: LanguageKeys
+    lang: AppLocale
   ) => {
     const newValue = e.target.value;
     if (typeof values.name === 'object') {
@@ -86,7 +87,7 @@ const ProductName: FC<IProductNameProps> = ({ initialValue }) => {
       {!initialValue || typeof initialValue === 'string' ? (
         <>
           <label className={'flex flex-col gap-[2px]'}>
-            <LabelTitle title="Name" />
+            <LabelTitle title={Label.ProductName} />
             <InputFieldWithCheck
               initialValue={initialValue}
               name="name"
@@ -103,7 +104,7 @@ const ProductName: FC<IProductNameProps> = ({ initialValue }) => {
       ) : (
         <label className="flex flex-col gap-[12px]">
           <LabelTitle title="Name" />
-          {Object.values(LanguageKeys).map(lang => (
+          {Object.values(SUPPORTED_LOCALES).map(lang => (
             <div key={lang} className="relative">
               <label
                 className={clsx(

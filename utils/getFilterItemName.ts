@@ -5,12 +5,12 @@ import type { IManufacturer } from '@interfaces/IManufacturer';
 import getProductName from './getProductName';
 
 import { filters } from '@enums/filters';
-import type { LanguageKeys } from '@enums/languageKeys';
+import { AppLocale } from '@i18n/config';
 
 const getFilterItemName = (
   filterName: string,
   item: ICategory | IManufacturer | IIndustry,
-  language: LanguageKeys
+  language: AppLocale
 ): string => {
   return filterName === filters.Manufacturer
     ? String(item.name)

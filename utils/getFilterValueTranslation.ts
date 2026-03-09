@@ -3,7 +3,7 @@ import type { IIndustry } from '@interfaces/IIndustry';
 
 import findTranslation from './findTranslation';
 
-import type { LanguageKeys } from '@enums/languageKeys';
+import { AppLocale } from '@i18n/config';
 
 const getFilterValueTranslation = (
   filter: {
@@ -12,7 +12,7 @@ const getFilterValueTranslation = (
   },
   categories: ICategory[],
   industries: IIndustry[],
-  language: LanguageKeys
+  language: AppLocale
 ) => {
   const { filterName, value } = filter;
 

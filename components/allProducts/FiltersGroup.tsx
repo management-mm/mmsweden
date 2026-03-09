@@ -1,6 +1,7 @@
-import { type FC, useContext, useEffect, useState } from 'react';
+'use client';
 
-import { LanguageContext } from 'app/providers';
+import { type FC, useEffect, useState } from 'react';
+
 import type { ICategory } from 'interfaces/ICategory';
 import type { IIndustry } from 'interfaces/IIndustry';
 import type { IManufacturer } from 'interfaces/IManufacturer';
@@ -13,6 +14,7 @@ import {
   fetchIndustries,
   fetchManufacturers,
 } from '@store/filters/operations';
+
 import {
   selectCategories,
   selectCategoriesIsLoading,
@@ -26,60 +28,38 @@ import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
 
 import { filters } from '@enums/filters';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 interface IFiltersGroupProps {
   className: string;
 }
-
 const FiltersGroup: FC<IFiltersGroupProps> = ({ className }) => {
   const dispatch = useAppDispatch();
+
   const [categoryKeyword, setCategoryKeyword] = useState('');
   const [manufacturerKeyword, setManufacturerKeyword] = useState('');
   const [industryKeyword, setIndustryKeyword] = useState('');
-  const context = useContext(LanguageContext);
 
-  if (!context) {
-    throw new Error('LanguageContext must be used within a LanguageProvider');
-  }
+  const language = useCurrentLocale();
 
-  const { language } = context;
   const categories: ICategory[] = useAppSelector(selectCategories);
   const manufacturers: IManufacturer[] = useAppSelector(selectManufacturers);
   const industries: IIndustry[] = useAppSelector(selectIndustries);
+
   const categoriesIsLoading = useAppSelector(selectCategoriesIsLoading);
   const manufacturersIsLoading = useAppSelector(selectManufacturersIsLoading);
   const industriesIsLoading = useAppSelector(selectIndustriesIsLoading);
 
   useEffect(() => {
-    const fetchingCategories = async () => {
-      try {
-        dispatch(fetchCategories({ keyword: categoryKeyword, lang: language }));
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchingCategories();
+    dispatch(fetchCategories({ keyword: categoryKeyword, lang: language }));
   }, [dispatch, categoryKeyword, language]);
 
   useEffect(() => {
-    const fetchingManufacturers = async () => {
-      try {
-        dispatch(fetchManufacturers({ keyword: manufacturerKeyword }));
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchingManufacturers();
-  }, [dispatch, manufacturerKeyword, language]);
+    dispatch(fetchManufacturers({ keyword: manufacturerKeyword }));
+  }, [dispatch, manufacturerKeyword]);
+
   useEffect(() => {
-    const fetchingIndustries = async () => {
-      try {
-        dispatch(fetchIndustries({ keyword: industryKeyword, lang: language }));
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchingIndustries();
+    dispatch(fetchIndustries({ keyword: industryKeyword, lang: language }));
   }, [dispatch, industryKeyword, language]);
 
   return (
@@ -91,6 +71,7 @@ const FiltersGroup: FC<IFiltersGroupProps> = ({ className }) => {
         keyword={categoryKeyword}
         setKeyword={setCategoryKeyword}
       />
+
       <FilterWrapper
         filterName={filters.Manufacturer}
         items={manufacturers}
@@ -98,6 +79,7 @@ const FiltersGroup: FC<IFiltersGroupProps> = ({ className }) => {
         keyword={manufacturerKeyword}
         setKeyword={setManufacturerKeyword}
       />
+
       <FilterWrapper
         filterName={filters.Industry}
         items={industries}
@@ -105,6 +87,7 @@ const FiltersGroup: FC<IFiltersGroupProps> = ({ className }) => {
         keyword={industryKeyword}
         setKeyword={setIndustryKeyword}
       />
+
       <Condition />
     </div>
   );

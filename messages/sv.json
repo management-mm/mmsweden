@@ -1,0 +1,175 @@
+{
+  "NavBar": {
+    "Home": "Hem",
+    "AllProducts": "Alla produkter",
+    "SellToUs": "Sälj till oss",
+    "AboutUs": "Om oss",
+    "ContactUs": "Kontakta oss"
+  },
+  "Button": {
+    "MyPriceQuote": "Min prisoffert",
+    "AllMachines": "Alla maskiner",
+    "NewArrivals": "Nyinkommet",
+    "WatchOnYoutube": "Titta på YouTube",
+    "ShopNow": "Handla nu",
+    "ShowMore": "Visa mer",
+    "ViewDetails": "Visa detaljer",
+    "AddedToQuote": "Tillagd till offert",
+    "RequestPricing": "Begär pris",
+    "SubmitRequest": "Skicka förfrågan",
+    "AddMoreItems": "Lägg till fler artiklar",
+    "GoToProducts": "Gå till produkter"
+  },
+  "Title": {
+    "Industries": "Industri",
+    "LatestArrivals": "Senaste ankomster",
+    "WriteToUs": "Skriv till oss",
+    "Instructions": "Instruktioner",
+    "Step": "Steg {number}",
+    "FormForSale": "Formulär för försäljning",
+    "VideoOverview": "Videoöversikt",
+    "YouMayAlsoBeInterestedIn": "Du kanske också är intresserad av",
+    "ItemsForQuote": "Artiklar för prisförfrågan",
+    "RequestAQuote": "Begär en prisoffert",
+    "DateAdded": "Datum tillagt",
+    "EmptyCart": "Din kundvagn är tom",
+    "NoResults": "Inga resultat hittades för din förfrågan. Vänligen försök justera filtren.",
+    "Format": "format {number}"
+  },
+  "Description": {
+    "Industries": "Våra produkter används inom följande branscher:",
+    "Hero": "Begagnade maskiner - Nya produkter",
+    "YearsMarket": "år på marknaden",
+    "ProductsCatalogue": "produkter i katalogen",
+    "SuccessfulDeals": "framgångsrika affärer",
+    "AboutUsPage": "Välkommen till Meat Machines, din pålitliga partner inom högkvalitativ begagnad livsmedelsbearbetnings- och förpackningsutrustning. Grundat 2003 har vi varit dedikerade till att erbjuda exceptionell service och utrustning av högsta klass till våra kunder världen över.",
+    "AboutUsShort": "Vår historia",
+    "AboutUsLong": "<p1>Sedan 2003 har Meat Machines varit din pålitliga källa för högkvalitativ begagnad livsmedelsbearbetnings- och förpackningsutrustning. Med nästan 2 000 maskiner i våra fyra lager i södra Sverige erbjuder vi utrustning från de bästa tillverkarna.</p1> <p2>Vårt team på över 10 kvalificerade yrkesmän, inklusive erfarna elektriker och mekaniker, underhåller varje enhet noggrant. Tusentals nöjda kunder över hela världen litar på oss för vår pålitlighet, kvalitet och konkurrenskraftiga priser.</p2> <p3>Låt oss hjälpa ditt företag att blomstra med pålitlig utrustning!</p3>",
+    "SellToUs": "Sluta lagra tusentals dollar i dina lager när värdet på din inaktiva utrustning minskar varje år.<br /> Vad väntar du på?",
+    "WriteToUs": "Har du några frågor? Vårt team kommer att kontakta dig omedelbart!",
+    "ContactUs": "Hej, vi svarar gärna på alla frågor du kan ha under våra öppettider.",
+    "Instructions": "3 enkla steg för hur man säljer",
+    "EmptyPriceQuoteList": "Din prisoffertlista är för närvarande tom. Lägg till produkter för att begära ett pris!"
+  },
+  "SellToUs": {
+    "FairTitle": "Rättvisa och Konkurrenskraftiga Erbjudanden",
+    "FairDesc": "Vi erbjuder rättvisa och konkurrenskraftiga erbjudanden för din stillastående utrustning, vilket säkerställer att du får bästa värde för maskiner som inte längre är i bruk.",
+    "QuickTitle": "Snabba och Enkla Transaktioner",
+    "QuickDesc": "Dra nytta av den enklaste och snabbaste metoden för att sälja utrustning, med förskottsbetalning och leverans inkluderad. Transaktioner är snabba och enkla, vilket sparar värdefull tid och ansträngning.",
+    "SustainableTitle": "Hållbar och Ansvarsfull Återvinning",
+    "SustainableDesc": "Bidra till en mer hållbar och ansvarsfull återvinningsprocess genom att ge maskiner ett andra liv och minska avfall."
+  },
+  "Industry": {
+    "MeatTitle": "Kött",
+    "MeatDesc": "Köttkvarnar, Blandare, Vakuumfyllare, Förpackningsmaskiner, Separatorer, etc.",
+    "FishTitle": "Fisk",
+    "FishDesc": "Fileteringsmaskiner, Separatorer, Skivmaskiner, Benborttagare, Termoformare, etc.",
+    "BakeryTitle": "Bakverk",
+    "BakeryDesc": "Blandare, Transportband, Metalldetektorer, Deponatorer, Knådningsmaskiner, etc.",
+    "DairyTitle": "Mejeri",
+    "DairyDesc": "Homogenisatorer, Fyllmaskiner, Roterande fyllare, Tankar, Kylanläggningar, Blandare, Skärmaskiner, etc.",
+    "VegetablesTitle": "Frukt / Grönsaker",
+    "VegetablesDesc": "Skivmaskiner, Tvättmaskiner, Vågar, Förpackningsmaskiner, Metalldetektorer, etc.",
+    "MedicinesTitle": "Mediciner",
+    "MedicinesDesc": "Tablettpressar, Förpackningsmaskiner, Flowpack, Termoformare, Robotlinjer, Pumpar, Blandare, etc."
+  },
+  "Instructions": {
+    "Step1Title": "Ge oss information",
+    "Step1Desc": "Du fyller i formuläret och anger dina kontaktuppgifter, en fullständig beskrivning av den utrustning du vill sälja, inklusive pris, video/bilder.",
+    "Step2Title": "Snabb bedömning",
+    "Step2Desc": "Våra erfarna specialister bedömer din utrustning och kontaktar dig angående vårt beslut.",
+    "Step3Title": "Affär!",
+    "Step3Desc": "Vi kommer överens med dig om betalningsmetoder, villkor och frakt. Vi brukar ta hand om frakten, så du behöver inte oroa dig för det."
+  },
+  "AboutUs": {
+    "WhoWeAreTitle": "Vilka vi är",
+    "WhoWeAreDesc": "Med över två decenniers erfarenhet i branschen har Meat Machines vuxit till att bli en ledare på marknaden. Vårt team består av mer än 10 högkvalificerade yrkespersoner som är passionerade för sitt arbete. Vi driver fyra stora lager i södra Sverige, som rymmer ett imponerande lager på nästan 2 000 maskiner.",
+    "WhatWeDoTitle": "Vad vi gör",
+    "WhatWeDoDesc": "Vi är specialiserade på att köpa och sälja begagnade livsmedelsbearbetnings- och förpackningsmaskiner. Vårt omfattande lager säkerställer att vi kan möta våra kunders olika behov, oavsett deras specifika krav. Varje utrustning hämtas från de bästa leverantörerna och hålls i utmärkt skick tack vare våra starka relationer med olika nordiska livsmedelsproduktionsföretag.",
+    "OurCommitmentTitle": "Vårt åtagande till kvalitet",
+    "OurCommitmentDesc": "Kvalitet är kärnan i allt vi gör. Din framtida maskin har tur att hamna i våra skickliga och engagerade händer. Vårt team av erfarna elektriker och mekaniker inspekterar och underhåller noggrant varje maskin som kommer genom våra dörrar. Med tusentals enheter som har passerat genom deras skickliga händer säkerställer vårt team att du får utrustning som är pålitlig, effektiv och redo att prestera på bästa sätt.",
+    "OurCustomersTitle": "Våra kunder",
+    "OurCustomersDesc": "Vår engagemang för excellens har gett oss tusentals nöjda kunder på alla kontinenter. Vi är stolta över vår förmåga att uppfylla och överträffa våra kunders förväntningar genom att erbjuda dem den bästa utrustningen och servicen på marknaden.",
+    "ContinuousTitle": "Kontinuerlig förbättring",
+    "ContinuousDesc": "På Meat Machines tror vi att det alltid finns utrymme för förbättringar. Trots vår omfattande erfarenhet fortsätter vi att lära oss och utvecklas för att betjäna dig bättre. Vi förfinar kontinuerligt våra sökmetoder, förbättrar våra underhållsprotokoll och strömlinjeformar våra fraktprocesser för att säkerställa snabbare svar och mer konkurrenskraftiga priser. Vårt mål är att ge dig den bästa utrustningen och den bästa servicen varje gång.",
+    "ThankYou": "Tack för att du överväger Meat Machines för dina behov av livsmedelsbearbetnings- och förpackningsmaskiner. Vi ser fram emot att arbeta med dig och hjälpa ditt företag att blomstra.",
+    "FeelFree": "Tveka inte att kontakta oss för frågor eller för att lära dig mer om vårt omfattande lager."
+  },
+  "WhyChooseUs": {
+    "YearsDesc": "års erfarenhet",
+    "TheBestTitle": "Det bästa",
+    "TheBestDesc": "Utrustningen på marknaden",
+    "ThousandsTitle": "Tusentals",
+    "ThousandsDesc": "nöjda kunder runt om i världen"
+  },
+  "Employee": {
+    "Hampus": "Hampus Wahlgren",
+    "HampusDesc": "FÖRSÄLJNING Sverige & utomlands",
+    "Hakan": "Håkan Wahlgren",
+    "HakanDesc": "VD / INKÖP",
+    "Erika": "Erika Walgreen",
+    "ErikaDesc": "ADMINISTRATION. FÖRVALTARE & FASTIGHETER",
+    "Eva": "Eva Andersson",
+    "EvaDesc": "EKONOMI",
+    "Catharine": "Catharine Wahlgren",
+    "CatharineDesc": "EKONOMI",
+    "Artem": "Artem Bortnik",
+    "ArtemDesc": "FÖRSÄLJNINGSASSISTENT"
+  },
+  "ContactUs": {
+    "Info1": "Om du har frågor angående våra <bold>produkter eller frakt</bold>, vänligen kontakta <bold>Hampus Wahlgren</bold> (eller hans assistent <bold>Artem Bortnik</bold>)",
+    "Info2": "Om du har frågor angående <bold>betalning</bold>, vänligen kontakta <bold>Eva Andersson</bold>",
+    "ViewOnMap": "Visa på karta",
+    "WorkingHours": "Arbetstider",
+    "MonFri": "Mån-fre"
+  },
+  "Label": {
+    "Name": "Ditt namn",
+    "Email": "Din e-post",
+    "Phone": "Ditt telefonnummer",
+    "ProductName": "Produktens namn",
+    "Company": "Företagsnamn",
+    "AttachPhotos": "Bifoga foton",
+    "Country": "Välj ditt land",
+    "Description": "Fullständig beskrivning",
+    "Message": "Meddelande",
+    "Price": "Erbjudet pris",
+    "Subject": "Ämne",
+    "IDNumber": "ID-nummer",
+    "Condition": "Skick",
+    "Dimensions": "Mått (L × B × H)",
+    "Video": "Video"
+  },
+  "Placeholder": {
+    "Name": "Erik Johansson",
+    "Email": "erik.johansson@example.com",
+    "Price": "Ange ditt erbjudna pris",
+    "Company": "Ange ditt företagsnamn",
+    "Description": "Beskriv din produkt",
+    "Message": "Skriv ditt meddelande till oss",
+    "ProductName": "Vad säljer du?",
+    "SearchProduct": "Ange produktnamn eller ID-nummer",
+    "Search": "Sök...",
+    "Subject": "Ämnet för ditt meddelande",
+    "SelectCountry": "Välj ditt land"
+  },
+  "Filter": {
+    "Category": "Kategori",
+    "Manufacturer": "Tillverkare",
+    "Industry": "Industri",
+    "Condition": "Skick",
+    "Found": "Hittade {number} produkter",
+    "Filters": "Filter",
+    "New": "Ny",
+    "Used": "Begagnad",
+    "Reset": "Återställ filter"
+  },
+  "Product": {
+    "Dimensions": "Dimensioner",
+    "Description": "Beskrivning"
+  },
+  "Pagination": {
+    "Next": "Nästa",
+    "Previous": "Föregående"
+  }
+}

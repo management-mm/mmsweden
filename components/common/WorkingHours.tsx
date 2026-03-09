@@ -1,7 +1,5 @@
-'use client';
-
 import type { FC } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import SvgIcon from './SvgIcon';
 
@@ -19,7 +17,7 @@ const WorkingHours: FC<IWorkingHoursProps> = ({
   containerClassName,
   iconClassName,
 }) => {
-  const { t } = useTranslation();
+  const  t  = useTranslations();
 
   return (
     <div className={cn('mb-[22px] flex', containerClassName)}>

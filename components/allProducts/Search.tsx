@@ -1,7 +1,7 @@
 'use client';
 
 import { type ChangeEvent, type FC, useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
 import debounce from 'lodash/debounce';
@@ -19,7 +19,7 @@ interface ISearchProps {
 }
 
 const Search: FC<ISearchProps> = ({ className }) => {
-  const { t } = useTranslation();
+  const  t  = useTranslations();
 
   const router = useRouter();
   const pathname = usePathname();

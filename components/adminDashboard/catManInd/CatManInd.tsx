@@ -28,7 +28,7 @@ import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
 
 import { filters } from '@enums/filters';
-import { LanguageKeys } from '@enums/languageKeys';
+import { DEFAULT_LOCALE } from '@i18n/config';
 
 interface ICatManIndProps {
   initialCategory?: string | MultiLanguageString;
@@ -57,7 +57,7 @@ const CatManInd: FC<ICatManIndProps> = ({
     const fetchingCategories = async () => {
       try {
         dispatch(
-          fetchCategories({ keyword: categoryKeyword, lang: LanguageKeys.EN })
+          fetchCategories({ keyword: categoryKeyword, lang: DEFAULT_LOCALE })
         );
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -81,7 +81,7 @@ const CatManInd: FC<ICatManIndProps> = ({
     const fetchingIndustries = async () => {
       try {
         dispatch(
-          fetchIndustries({ keyword: industryKeyword, lang: LanguageKeys.EN })
+          fetchIndustries({ keyword: industryKeyword, lang: DEFAULT_LOCALE })
         );
       } catch (error) {
         console.error('Error fetching data:', error);

@@ -6,12 +6,10 @@ import type { IManufacturer } from 'interfaces/IManufacturer';
 
 import { api } from '@store/api';
 
-import type { LanguageKeys } from '@enums/languageKeys';
-
-// 'https://mmsweden-server.onrender.com/'
+import { AppLocale } from '@i18n/config';
 
 export interface IFetchCategoriesOrIndustriesParams {
-  lang: LanguageKeys;
+  lang: AppLocale;
   keyword?: string;
 }
 

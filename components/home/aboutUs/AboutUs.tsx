@@ -1,13 +1,11 @@
-'use client';
-
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import NavLinkBtn from '@components/common/NavLinkBtn';
 
 import { Button, Description, NavBar } from '@enums/i18nConstants';
 
 const AboutUs = () => {
-  const { t } = useTranslation();
+  const t = useTranslations();
 
   return (
     <section className="pb-[48px] md:pb-[84px]">
@@ -23,17 +21,17 @@ const AboutUs = () => {
         <div className="text-center lg:flex lg:justify-between lg:gap-[32px] lg:text-start">
           <picture>
             <source
-              srcSet={`/images/home/desktop-home-about-us.webp 1x, /images/home/desktop-home-about-us@2x.webp 2x, /images/home/desktop-home-about-us@3x.webp 3x`}
+              srcSet="/images/home/desktop-home-about-us.webp 1x, /images/home/desktop-home-about-us@2x.webp 2x, /images/home/desktop-home-about-us@3x.webp 3x"
               media="(min-width: 1178px)"
               type="image/webp"
             />
             <source
-              srcSet={`/images/home/tablet-home-about-us.webp 1x, /images/home/tablet-home-about-us@2x.webp 2x, /images/home/tablet-home-about-us@3x.webp 3x`}
+              srcSet="/images/home/tablet-home-about-us.webp 1x, /images/home/tablet-home-about-us@2x.webp 2x, /images/home/tablet-home-about-us@3x.webp 3x"
               media="(min-width: 768px)"
               type="image/webp"
             />
             <source
-              srcSet={`/images/home/mobile-home-about-us.webp 1x, /images/home/mobile-home-about-us@2x.webp 2x, /images/home/mobile-home-about-us@3x.webp 3x`}
+              srcSet="/images/home/mobile-home-about-us.webp 1x, /images/home/mobile-home-about-us@2x.webp 2x, /images/home/mobile-home-about-us@3x.webp 3x"
               media="(max-width: 767px)"
               type="image/webp"
             />
@@ -47,13 +45,17 @@ const AboutUs = () => {
           </picture>
 
           <div className="about-us-text-btn-wrapper lg:w-[392px]">
-            <p className="font-openSans text-longDesc mb-[10px] text-[14px] font-normal md:text-[16px]">
-              <Trans i18nKey={Description.AboutUsLong}>
-                <span className="mb-[22px] inline-block">...</span>
-                <span className="mb-[22px] inline-block">...</span>
-                <span>...</span>
-              </Trans>
-            </p>
+            <div className="font-openSans text-longDesc mb-[10px] text-[14px] font-normal md:text-[16px]">
+              {t.rich(Description.AboutUsLong, {
+                p1: chunks => (
+                  <span className="mb-[22px] inline-block">{chunks}</span>
+                ),
+                p2: chunks => (
+                  <span className="mb-[22px] inline-block">{chunks}</span>
+                ),
+                p3: chunks => <span>{chunks}</span>,
+              })}
+            </div>
 
             <NavLinkBtn intent="showMore" href="/about-us">
               {t(Button.ShowMore)}

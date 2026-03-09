@@ -1,10 +1,10 @@
 import type { MultiLanguageString } from '@interfaces/IProduct';
 
-import type { LanguageKeys } from '@enums/languageKeys';
+import { AppLocale } from '@i18n/config';
 
 const getProductName = (
   name: MultiLanguageString | string,
-  language: LanguageKeys
+  language: AppLocale
 ) => (typeof name === 'object' ? name?.[language] : name);
 
 export default getProductName;

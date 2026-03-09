@@ -1,9 +1,7 @@
 'use client';
 
-import { useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-
-import { LanguageContext } from 'app/providers';
+import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import SvgIcon from '@components/common/SvgIcon';
@@ -17,11 +15,12 @@ import subtractSearchParam from '@utils/subtractSearchParam';
 
 import { Filter } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 type FilterName = 'category' | 'industry' | 'manufacturer' | 'condition';
 
 const ResetFilters = () => {
-  const { t } = useTranslation();
+  const t = useTranslations();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -30,11 +29,7 @@ const ResetFilters = () => {
   const categories = useAppSelector(selectCategories);
   const industries = useAppSelector(selectIndustries);
 
-  const context = useContext(LanguageContext);
-  if (!context) {
-    throw new Error('LanguageContext must be used within a LanguageProvider');
-  }
-  const { language } = context;
+  const language = useCurrentLocale();
 
   const [filtersToReset, setFiltersToReset] = useState<
     { value: string; filterName: FilterName }[]
@@ -62,7 +57,10 @@ const ResetFilters = () => {
       string,
       { value: string; filterName: FilterName }
     >();
-    for (const f of merged) uniqMap.set(`${f.filterName}:${f.value}`, f);
+
+    for (const f of merged) {
+      uniqMap.set(`${f.filterName}:${f.value}`, f);
+    }
 
     setFiltersToReset([...uniqMap.values()]);
   }, [searchKey, searchParams]);

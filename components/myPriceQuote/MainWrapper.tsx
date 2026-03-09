@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import FormForRequestQuote from './FormForRequestQuote';
 import PriceQuoteList from './PriceQuoteList';
@@ -16,7 +16,7 @@ import { Button, Description, Title } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
 const MainWrapper = () => {
-  const { t } = useTranslation();
+  const  t  = useTranslations();
   const requestedProducts = useAppSelector(selectRequestedProducts);
 
   return (

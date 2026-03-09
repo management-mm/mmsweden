@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
 
@@ -13,7 +13,7 @@ import { IconId } from '@enums/iconsSpriteId';
 
 const PriceQuoteBtn = () => {
   const requestedProducts = useAppSelector(selectRequestedProducts);
-  const { t } = useTranslation();
+  const t  = useTranslations();
 
   return (
     <NavLinkBtn

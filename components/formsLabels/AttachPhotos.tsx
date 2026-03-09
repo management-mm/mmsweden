@@ -1,7 +1,5 @@
-'use client';
-
 import { type ChangeEvent, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import {
   ErrorMessage,
@@ -16,7 +14,7 @@ import { Label } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
 const AttachPhotos = () => {
-  const { t } = useTranslation();
+  const  t  = useTranslations();
   const [editedAvatars, setEditedAvatars] = useState<string[]>([]);
   const [fileAvatars, setFileAvatars] = useState<File[]>([]);
   const { setFieldValue } = useFormikContext<FormikValues>();

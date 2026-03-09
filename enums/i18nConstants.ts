@@ -145,6 +145,10 @@ export enum Label {
   Country = 'Label.Country',
   Company = 'Label.Company',
   Subject = 'Label.Subject',
+  IDNumber = 'Label.IDNumber',
+  Condition = 'Label.Condition',
+  Dimensions = 'Label.Dimensions',
+  Video = 'Label.Video',
 }
 
 export enum Placeholder {

@@ -1,68 +1,83 @@
 'use client';
 
-import { useContext, useState } from 'react';
+import { useMemo, useState } from 'react';
 import Select from 'react-select';
-
-import { LanguageContext } from 'app/providers';
 import clsx from 'clsx';
-import i18next from 'i18next';
+import { usePathname, useRouter } from 'next/navigation';
 
-import { LanguageContextAdmin } from '@components/AdminProvider';
 import DropdownIndicator from '@components/header/DropdownIndicator';
 import LanguageOption from '@components/header/LanguageOption';
 
-import type { LanguageKeys } from '@enums/languageKeys';
-
 import languageOptions from '@constants/languageOptions';
+import {
+  DEFAULT_LOCALE,
+  SUPPORTED_LOCALES,
+  isAppLocale,
+  type AppLocale,
+} from '@i18n/config';
 
 const optionStyles = {
   base: 'hover:cursor-pointer w-[95px] py-[7px]',
   focus: 'lg:bg-gray-100 lg:active:bg-gray-200',
   selected: '',
 };
+
 const menuStyles = 'bg-main rounded-[4px] pb-[7px]';
 const singleValueStyles = 'mr-[6px]';
 
 const LanguageSelect = () => {
-  const [isMenuOpen, SetIsMenuOpen] = useState(false);
-  const isAdmin = window.location.pathname.includes('admin');
-  const context = useContext(isAdmin ? LanguageContextAdmin : LanguageContext);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  if (!context) {
-    throw new Error('LanguageContext must be used within a LanguageProvider');
-  }
+  const router = useRouter();
+  const pathname = usePathname();
 
-  const { setLanguage } = context;
+  const currentLocale = useMemo<AppLocale>(() => {
+    const firstSegment = pathname.split('/')[1];
+    return isAppLocale(firstSegment) ? firstSegment : DEFAULT_LOCALE;
+  }, [pathname]);
 
-  const options = languageOptions.map(option => {
-    return {
-      value: option.language,
+  const options = languageOptions
+    .filter(option => SUPPORTED_LOCALES.includes(option.language as AppLocale))
+    .map(option => ({
+      value: option.language as AppLocale,
       label: (
         <LanguageOption iconId={option.iconId} language={option.language} />
       ),
-    };
-  });
+    }));
+
+  const currentValue =
+    options.find(option => option.value === currentLocale) ?? options[0];
+
+  const handleChange = (selectedOption: { value: AppLocale } | null) => {
+    if (!selectedOption) return;
+
+    const newLocale = selectedOption.value;
+
+    if (newLocale === currentLocale) return;
+
+    const segments = pathname.split('/');
+
+    segments[1] = newLocale;
+
+    const newPath = segments.join('/') || `/${newLocale}`;
+
+    router.push(newPath);
+  };
 
   return (
     <Select
-      defaultValue={options.find(
-        option => option.value === i18next.language.split('-')[0]
-      )}
-      onMenuOpen={() => SetIsMenuOpen(true)}
-      onMenuClose={() => SetIsMenuOpen(false)}
+      value={currentValue}
+      onMenuOpen={() => setIsMenuOpen(true)}
+      onMenuClose={() => setIsMenuOpen(false)}
       options={options}
-      // defaultMenuIsOpen={true}
       isSearchable={false}
       components={{
         DropdownIndicator: props => (
           <DropdownIndicator {...props} isMenuOpen={isMenuOpen} />
         ),
       }}
-      closeMenuOnSelect={true}
-      onChange={selectedOption => {
-        setLanguage(selectedOption?.value as LanguageKeys);
-        return i18next.changeLanguage(selectedOption?.value);
-      }}
+      closeMenuOnSelect
+      onChange={handleChange}
       unstyled
       styles={{
         menu: base => ({

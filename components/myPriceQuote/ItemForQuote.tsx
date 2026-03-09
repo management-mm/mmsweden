@@ -1,11 +1,10 @@
 'use client';
 
-import { type FC, useContext } from 'react';
+import { type FC } from 'react';
 
 import type { IProduct } from 'interfaces/IProduct';
 import { useRouter } from 'next/navigation';
 
-import { LanguageContextAdmin } from '@components/AdminProvider';
 import SvgIcon from '@components/common/SvgIcon';
 
 import useUpdateRequestedProducts from '@hooks/useUpdateRequestedProducts';
@@ -13,6 +12,7 @@ import useUpdateRequestedProducts from '@hooks/useUpdateRequestedProducts';
 import getProductName from '@utils/getProductName';
 
 import { IconId } from '@enums/iconsSpriteId';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 interface IItemsForQuoteProps {
   product: IProduct;
@@ -23,7 +23,7 @@ const ItemForQuote: FC<IItemsForQuoteProps> = ({
   product: { _id, photos, name, idNumber },
 }) => {
   const router = useRouter();
-  const { language } = useContext(LanguageContextAdmin);
+  const language = useCurrentLocale();
   const { handleToggleFavorites } = useUpdateRequestedProducts(product);
 
   const goToDetails = () => {

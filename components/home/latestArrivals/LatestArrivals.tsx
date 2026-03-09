@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { type IProduct } from '@interfaces/IProduct';
@@ -31,7 +31,7 @@ const PER_PAGE = 10;
 const MAX_RENDER = 20;
 
 const LatestArrivals = () => {
-  const { t } = useTranslation();
+  const  t  = useTranslations();
   const { handlePrev, handleNext, onSwiperInit } = useSwiperNavigation();
   const dispatch = useAppDispatch();
 

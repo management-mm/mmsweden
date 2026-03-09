@@ -1,11 +1,11 @@
 'use client';
 
-import { useContext, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { usePathname } from 'next/navigation';
 
 import { requestQuote } from '@api/mailerService';
 import { schema } from '@schemas/formForRequestQuote';
-import { LanguageContext } from 'app/providers';
 import axios from 'axios';
 import { ErrorMessage, Form, Formik } from 'formik';
 
@@ -26,19 +26,22 @@ import { useNotify } from '@hooks/useNotify';
 import getProductName from '@utils/getProductName';
 
 import { Button, Label, Placeholder } from '@enums/i18nConstants';
-import { LanguageKeys } from '@enums/languageKeys';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
+import { DEFAULT_LOCALE } from '@i18n/config';
 
 const FormForRequestQuote = () => {
-  const { t } = useTranslation();
+  const t = useTranslations();
   const [loading, setLoading] = useState(false);
-  const requestedProducts = useAppSelector(selectRequestedProducts);
 
-  const { language } = useContext(LanguageContext);
+  const requestedProducts = useAppSelector(selectRequestedProducts);
   const { notifySuccess, notifyError } = useNotify();
+
+  const language = useCurrentLocale();
 
   return (
     <>
       {loading && <Loader />}
+
       <section className="w-full pb-[96px]">
         <Formik
           initialValues={{
@@ -56,18 +59,21 @@ const FormForRequestQuote = () => {
           onSubmit={async (values, actions) => {
             try {
               setLoading(true);
+
               const products = requestedProducts.map(
                 ({ name, idNumber, photos }) => ({
-                  name: getProductName(name, LanguageKeys.EN),
+                  name: getProductName(name, DEFAULT_LOCALE),
                   idNumber,
                   photo: photos[0],
                 })
               );
+
               const phone = values.callingCode + values.phone;
 
-              const { name, email, country, countryPhone, company } = values;
+              const { name, email, country, countryPhone, company } =
+                values;
 
-              const message = await requestQuote({
+              const response = await requestQuote({
                 name,
                 email,
                 phone,
@@ -77,7 +83,7 @@ const FormForRequestQuote = () => {
                 products,
               });
 
-              notifySuccess(message[language]);
+              notifySuccess(response[language]);
               actions.resetForm();
             } catch (error: unknown) {
               if (axios.isAxiosError(error)) {
@@ -100,6 +106,7 @@ const FormForRequestQuote = () => {
               <Phone />
               <Country />
               <Company />
+
               <label className="flex flex-col gap-[2px]">
                 <LabelTitle title={Label.Message} />
 
@@ -109,6 +116,7 @@ const FormForRequestQuote = () => {
                   placeholder={Placeholder.Message}
                   className="h-[180px] rounded-[22px]"
                 />
+
                 <ErrorMessage name="message">
                   {msg => (
                     <div className="mt-1 text-sm text-red-500">{msg}</div>

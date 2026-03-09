@@ -11,7 +11,7 @@ import type { MultiLanguageString } from '@interfaces/IProduct';
 import getFilterItemName from '@utils/getFilterItemName';
 
 import type { filters } from '@enums/filters';
-import { LanguageKeys } from '@enums/languageKeys';
+import { DEFAULT_LOCALE } from '@i18n/config';
 
 type FilterItem = ICategory | IManufacturer | IIndustry;
 
@@ -56,7 +56,7 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
 
   useEffect(() => {
     const grouped = items.reduce<Record<string, FilterItem[]>>((acc, item) => {
-      const characterKey = getFilterItemName(itemName, item, LanguageKeys.EN)
+      const characterKey = getFilterItemName(itemName, item, DEFAULT_LOCALE)
         .charAt(0)
         .toUpperCase();
       if (!acc[characterKey]) {
@@ -71,12 +71,12 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
         const nameA = getFilterItemName(
           itemName,
           a,
-          LanguageKeys.EN
+          DEFAULT_LOCALE
         ).toLowerCase();
         const nameB = getFilterItemName(
           itemName,
           b,
-          LanguageKeys.EN
+          DEFAULT_LOCALE
         ).toLowerCase();
         return nameA.localeCompare(nameB);
       });
@@ -109,12 +109,12 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
                       type="checkbox"
                       id={item._id}
                       checked={isItemSelected(
-                        getFilterItemName(itemName, item, LanguageKeys.EN)
+                        getFilterItemName(itemName, item, DEFAULT_LOCALE)
                       )}
                       name={itemName}
                       onChange={handleCheckedValue}
                       className="checked:after:bg-primary checked:after:bg-check-icon h-[16px] w-[16px] cursor-pointer appearance-none rounded-[4px] after:block after:h-[16px] after:w-[16px] after:rounded-[4px] after:border after:border-[rgba(0,32,52,.12)] checked:after:bg-center checked:after:bg-no-repeat"
-                      value={getFilterItemName(itemName, item, LanguageKeys.EN)}
+                      value={getFilterItemName(itemName, item, DEFAULT_LOCALE)}
                     />
                   ) : (
                     <Skeleton width={16} />
@@ -123,7 +123,7 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
                     className="font-openSans text-[14px] capitalize"
                     htmlFor={item._id}
                   >
-                    {getFilterItemName(itemName, item, LanguageKeys.EN)}
+                    {getFilterItemName(itemName, item, DEFAULT_LOCALE)}
                   </label>
                 </div>
               </SkeletonTheme>

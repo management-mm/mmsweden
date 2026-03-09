@@ -1,37 +1,37 @@
 import { IconId } from '@enums/iconsSpriteId';
-import { LanguageKeys } from '@enums/languageKeys';
+import { AppLocale } from '@i18n/config';
 
 export interface ILanguageOption {
-  language: LanguageKeys;
+  language: AppLocale;
   iconId: IconId;
 }
 const languageOptions: ILanguageOption[] = [
   {
-    language: LanguageKeys.EN,
+    language: 'en',
     iconId: IconId.English,
   },
   {
-    language: LanguageKeys.SV,
+    language: 'sv',
     iconId: IconId.Sweden,
   },
   {
-    language: LanguageKeys.DE,
+    language: 'de',
     iconId: IconId.Germany,
   },
   {
-    language: LanguageKeys.ES,
+    language: 'es',
     iconId: IconId.Spain,
   },
   {
-    language: LanguageKeys.FR,
+    language: 'fr',
     iconId: IconId.France,
   },
   {
-    language: LanguageKeys.RU,
+    language: 'ru',
     iconId: IconId.Russia,
   },
   {
-    language: LanguageKeys.UK,
+    language: 'uk',
     iconId: IconId.Ukraine,
   },
 ];

@@ -1,7 +1,7 @@
-import type { LanguageKeys } from '@enums/languageKeys';
+import { AppLocale } from '@i18n/config';
 
 export type MultiLanguageString = {
-  [key in LanguageKeys]: string;
+  [key in AppLocale]: string;
 };
 
 export interface IProduct {

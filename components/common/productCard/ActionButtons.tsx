@@ -1,21 +1,16 @@
-'use client';
-
 import { type FC } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 import Skeleton from 'react-loading-skeleton';
 
 import type { IProduct } from '@interfaces/IProduct';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
-import slugify from 'slugify';
 
 import useUpdateRequestedProducts from '@hooks/useUpdateRequestedProducts';
 
 import { generateProductSlug } from '@utils/generateProductSlug';
-import getProductName from '@utils/getProductName';
 
 import { Button } from '@enums/i18nConstants';
-import { LanguageKeys } from '@enums/languageKeys';
 
 interface IActionsButtonsProps {
   isLoading: boolean;
@@ -23,7 +18,7 @@ interface IActionsButtonsProps {
 }
 
 const ActionsButtons: FC<IActionsButtonsProps> = ({ isLoading, product }) => {
-  const { t } = useTranslation();
+  const  t  = useTranslations();
   const router = useRouter();
 
   const { isRequested, handleToggleFavorites } =

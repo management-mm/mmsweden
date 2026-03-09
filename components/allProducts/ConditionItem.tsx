@@ -1,7 +1,5 @@
-'use client';
-
 import { type ChangeEvent, type FC } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
@@ -15,7 +13,7 @@ const ConditionItem: FC<IConditionItemProps> = ({ condition }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { t } = useTranslation();
+  const  t  = useTranslations();
 
   const isItemSelected = (item: string) =>
     searchParams.getAll('condition').includes(item);

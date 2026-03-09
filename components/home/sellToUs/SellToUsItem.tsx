@@ -1,7 +1,5 @@
-'use client';
-
 import type { FC } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import DecorativeLine from '@components/common/DecorativeLine';
 import SvgIcon from '@components/common/SvgIcon';
@@ -20,7 +18,7 @@ const SellToUsItem: FC<ISellToUsItem> = ({
   desc,
   className,
 }) => {
-  const { t } = useTranslation();
+  const  t  = useTranslations();
 
   return (
     <li

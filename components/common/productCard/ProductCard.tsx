@@ -1,10 +1,9 @@
 'use client';
 
-import { type FC, useContext } from 'react';
+import { type FC } from 'react';
 import { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-import { LanguageContext } from 'app/providers';
 import clsx from 'clsx';
 import type { IProduct } from 'interfaces/IProduct';
 import Link from 'next/link';
@@ -17,8 +16,6 @@ import ProductImage from './ProductImage';
 
 import SvgIcon from '../SvgIcon';
 
-import { LanguageContextAdmin } from '@components/AdminProvider';
-
 import { clearProduct } from '@store/products/productsSlice';
 import { selectIsLoading } from '@store/selectors';
 
@@ -28,6 +25,7 @@ import { useAppSelector } from '@hooks/useAppSelector';
 import { generateProductSlug } from '@utils/generateProductSlug';
 
 import { IconId } from '@enums/iconsSpriteId';
+import { AppLocale, DEFAULT_LOCALE, SUPPORTED_LOCALES } from '@i18n/config';
 
 export interface IProductCardProps {
   product: IProduct;
@@ -50,9 +48,12 @@ const ProductCard: FC<IProductCardProps> = ({
   const pathname = usePathname();
   const isAdmin = pathname.includes('/admin');
 
-  const { language } = useContext(
-    isAdmin ? LanguageContextAdmin : LanguageContext
-  );
+  const segments = pathname.split('/');
+  const firstSegment = segments[1];
+
+  const language = SUPPORTED_LOCALES.includes(firstSegment as AppLocale)
+    ? (firstSegment as AppLocale)
+    : DEFAULT_LOCALE;
 
   const isLoading = useAppSelector(selectIsLoading);
   const dispatch = useAppDispatch();
@@ -60,6 +61,7 @@ const ProductCard: FC<IProductCardProps> = ({
   const handleClear = () => {
     dispatch(clearProduct());
   };
+
   const slug = generateProductSlug(product);
 
   return (
@@ -104,7 +106,7 @@ const ProductCard: FC<IProductCardProps> = ({
 
           {isAdmin ? (
             <Link
-              href={`/admin/all-products/edit-product/${slug}`}
+              href={`/${language}/admin/all-products/edit-product/${slug}`}
               onClick={handleClear}
               className="border-primary text-primary flex w-full items-center justify-center gap-[8px] rounded-[32px] border py-[10px] text-[12px] font-semibold"
             >

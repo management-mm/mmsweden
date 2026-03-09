@@ -1,6 +1,4 @@
-'use client';
-
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import { type VariantProps, cva } from 'class-variance-authority';
 import Link from 'next/link';
@@ -61,7 +59,7 @@ type NavbarProps = VariantProps<typeof navVariants> &
   VariantProps<typeof ulVariants>;
 
 const Navbar = ({ intent }: NavbarProps) => {
-  const { t } = useTranslation();
+  const  t  = useTranslations();
   const pathname = usePathname();
 
   const links = [

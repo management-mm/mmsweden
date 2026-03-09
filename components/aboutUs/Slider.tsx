@@ -1,10 +1,7 @@
 'use client';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-
 import Image from 'next/image';
-import 'swiper/css';
-import 'swiper/css/scrollbar';
 import { Autoplay, Scrollbar } from 'swiper/modules';
 
 import photosAboutUsList from '@constants/photosAboutUsList';
@@ -24,9 +21,7 @@ const Slider = () => {
         disableOnInteraction: true,
       }}
       breakpoints={{
-        768: {
-          spaceBetween: 30,
-        },
+        768: { spaceBetween: 30 },
       }}
       centeredSlides
     >
@@ -42,7 +37,6 @@ const Slider = () => {
                 width={330}
                 height={200}
                 className="block h-[200px] w-[330px] rounded-[4px] bg-slate-500 object-cover"
-                priority={index === 0}
               />
             </div>
 
@@ -53,7 +47,6 @@ const Slider = () => {
                 width={580}
                 height={362}
                 className="block h-[362px] w-[580px] rounded-[4px] bg-slate-500 object-cover"
-                priority={index === 0}
               />
             </div>
 
@@ -64,7 +57,6 @@ const Slider = () => {
                 width={754}
                 height={480}
                 className="block h-[480px] w-[754px] rounded-[4px] bg-slate-500 object-cover"
-                priority={index === 0}
               />
             </div>
           </SwiperSlide>

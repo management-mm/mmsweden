@@ -32,7 +32,7 @@ import { useAppSelector } from '@hooks/useAppSelector';
 import useWindowWidth from '@hooks/useWindowWidth';
 
 import { IconId } from '@enums/iconsSpriteId';
-import { LanguageKeys } from '@enums/languageKeys';
+import { AppLocale, SUPPORTED_LOCALES } from '@i18n/config';
 
 const ChangeProduct = () => {
   const dispatch = useAppDispatch();
@@ -60,12 +60,12 @@ const ChangeProduct = () => {
   const [isProductUpdated, setIsProductUpdated] = useState(false);
 
   const emptyName = useMemo(() => {
-    return Object.values(LanguageKeys).reduce(
+    return Object.values(SUPPORTED_LOCALES).reduce(
       (acc, lang) => {
         acc[lang] = '';
         return acc;
       },
-      {} as Record<LanguageKeys, string>
+      {} as Record<AppLocale, string>
     );
   }, []);
 

@@ -1,16 +1,15 @@
 'use client';
 
-import { useContext, useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useEffect, useMemo } from 'react';
+import { useTranslations } from 'next-intl';
+import { usePathname } from 'next/navigation';
 
 import type { IProduct } from '@interfaces/IProduct';
-import { LanguageContext } from 'app/providers';
 
 import ProductCard from '@components/common/productCard/ProductCard';
 
 import { fetchProducts } from '@store/products/operations';
 import {
-  selectProducts,
   selectProductsCacheByKey,
   selectProductsLastFetchedAtByKey,
   selectProductsStatusByKey,
@@ -22,11 +21,12 @@ import { useAppSelector } from '@hooks/useAppSelector';
 import { Title } from '@enums/i18nConstants';
 
 import { CACHE_KEY, TTL } from '@constants/cacheProducts';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 type GroupedProducts = Record<string, IProduct[]>;
 
 const LatestArrivals = () => {
-  const { t } = useTranslation();
+  const t = useTranslations();
   const dispatch = useAppDispatch();
 
   const allProducts = useAppSelector(selectProductsCacheByKey(CACHE_KEY));
@@ -34,11 +34,11 @@ const LatestArrivals = () => {
     selectProductsLastFetchedAtByKey(CACHE_KEY)
   );
   const status = useAppSelector(selectProductsStatusByKey(CACHE_KEY));
-  const { language } = useContext(LanguageContext);
+
+  const language = useCurrentLocale();
 
   const products = useMemo(() => {
     const filtered = (allProducts ?? []).filter(p => !p.deletionDate);
-
     return filtered.slice(0, 60);
   }, [allProducts]);
 

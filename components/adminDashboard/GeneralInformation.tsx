@@ -11,6 +11,7 @@ import DescriptionProduct from './formsFields/DescriptionProduct';
 import ProductName from './formsFields/ProductName';
 
 import LabelTitle from '@components/common/LabelTitle';
+import { Label } from '@enums/i18nConstants';
 
 interface IGeneralInformationProps {
   product?: IProduct;
@@ -45,7 +46,7 @@ const GeneralInformation: FC<IGeneralInformationProps> = ({ product }) => {
       <ProductName initialValue={product?.name} />
 
       <label className="flex flex-col gap-[2px]">
-        <LabelTitle title="ID Number" />
+        <LabelTitle title={Label.IDNumber} />
         <Field
           placeholder="Enter ID number"
           name="idNumber"
@@ -59,7 +60,7 @@ const GeneralInformation: FC<IGeneralInformationProps> = ({ product }) => {
       <DescriptionProduct description={product?.description} />
 
       <label className="flex flex-col gap-[2px]">
-        <LabelTitle title="Dimensions" />
+        <LabelTitle title={Label.Dimensions} />
         <Field
           placeholder="Enter product size"
           name="dimensions"

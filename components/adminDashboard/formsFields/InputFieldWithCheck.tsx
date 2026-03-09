@@ -1,7 +1,4 @@
-'use client';
-
 import { type ChangeEvent, type FC, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import type { MultiLanguageString } from '@interfaces/IProduct';
 import clsx from 'clsx';
@@ -44,7 +41,6 @@ const InputFieldWithCheck: FC<IInputField> = ({
   handleRemoveField,
   setPreviousValueObject,
 }) => {
-  const { t } = useTranslation();
   const [inputValue, setInputValue] = useState(initialValue);
   const [isClick, setIsClick] = useState(
     name === 'video' && initialValue ? true : false
@@ -58,7 +54,7 @@ const InputFieldWithCheck: FC<IInputField> = ({
           type={type}
           value={inputValue}
           pattern={pattern}
-          placeholder={t(placeholder)}
+          placeholder={placeholder}
           name={name}
           title={title}
           as={as}

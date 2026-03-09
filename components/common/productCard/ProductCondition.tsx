@@ -1,7 +1,5 @@
-'use client';
-
 import type { FC } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
 
@@ -12,7 +10,7 @@ interface IProductConditionProps {
 }
 
 const ProductCondition: FC<IProductConditionProps> = ({ condition }) => {
-  const { t } = useTranslation();
+  const  t  = useTranslations();
   return (
     <span
       className={clsx(

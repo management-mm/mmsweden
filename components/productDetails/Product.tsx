@@ -1,10 +1,9 @@
 'use client';
 
-import { useContext, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
-import { LanguageContext } from 'app/providers';
 import { useParams } from 'next/navigation';
 
 import Details from './Details';
@@ -27,14 +26,11 @@ import getProductName from '@utils/getProductName';
 
 import { Title } from '@enums/i18nConstants';
 
-const Product = () => {
-  const context = useContext(LanguageContext);
-  if (!context) {
-    throw new Error('LanguageContext must be used within a LanguageProvider');
-  }
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
-  const { language } = context;
-  const { t } = useTranslation();
+
+const Product = () => {
+  const t = useTranslations();
 
   const dispatch = useAppDispatch();
   const product = useAppSelector(selectProductDetails);
@@ -42,8 +38,10 @@ const Product = () => {
 
   const windowWidth = useWindowWidth();
 
-  const params = useParams<{ slug: string }>();
+  const params = useParams<{ locale: string; slug: string }>();
   const slug = params?.slug;
+  const language = useCurrentLocale();
+
   const productId = slug?.split('-').pop();
 
   const { name, photos, video } = product || {};
@@ -54,7 +52,7 @@ const Product = () => {
 
     dispatch(clearProduct());
     dispatch(fetchProductBySlug({ slug }));
-  }, [dispatch, productId]);
+  }, [dispatch, productId, slug]);
 
   return (
     <div className={cn('container', 'pt-[12px] md:pt-[22px]')}>
@@ -86,7 +84,7 @@ const Product = () => {
                     className="rounded-[4px]"
                     src={photos[0]}
                     alt={name ? getProductName(name, language) : ''}
-                    width={'100%'}
+                    width="100%"
                   />
                 )
               )}

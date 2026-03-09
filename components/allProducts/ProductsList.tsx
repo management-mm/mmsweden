@@ -1,15 +1,13 @@
 'use client';
 
-import { useContext, useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useEffect, useMemo } from 'react';
+import { useTranslations } from 'next-intl';
 
-import { LanguageContext } from 'app/providers';
 import type { IProduct } from 'interfaces/IProduct';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 import ResetFilters from './ResetFilters';
 
-import { LanguageContextAdmin } from '@components/AdminProvider';
 import Pagination from '@components/common/Pagination';
 import ProductCard from '@components/common/productCard/ProductCard';
 
@@ -32,6 +30,8 @@ import { filters } from '@enums/filters';
 import { Title } from '@enums/i18nConstants';
 
 import { TTL } from '@constants/cacheProducts';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
+
 
 const buildCacheKey = (base: Record<string, unknown>) => {
   const sortedKeys = Object.keys(base).sort();
@@ -46,18 +46,13 @@ const buildCacheKey = (base: Record<string, unknown>) => {
 };
 
 const ProductsList = () => {
-  const { t } = useTranslation();
+  const t = useTranslations();
   const dispatch = useAppDispatch();
-
-  const pathname = usePathname();
-  const isAdmin = pathname.includes('/admin');
 
   const searchParams = useSearchParams();
   const searchKey = searchParams.toString();
 
-  const { language } = useContext(
-    isAdmin ? LanguageContextAdmin : LanguageContext
-  );
+  const language = useCurrentLocale();
 
   const windowWidth = useWindowWidth();
   const perPage = windowWidth >= 1178 ? 9 : 8;

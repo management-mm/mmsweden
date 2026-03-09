@@ -1,6 +1,6 @@
-import type { LanguageKeys } from '@enums/languageKeys';
+import { AppLocale } from '@i18n/config';
 
 export interface ILanguageOption {
-  value: LanguageKeys;
+  value: AppLocale;
   label: JSX.Element;
 }

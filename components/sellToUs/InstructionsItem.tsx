@@ -1,7 +1,5 @@
-'use client';
-
 import type { FC } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
 
@@ -22,7 +20,7 @@ const InstructionsItem: FC<IInstructionsItemProps> = ({
   instructions: { iconId, iconSize, title, desc },
   step,
 }) => {
-  const { t } = useTranslation();
+  const  t  = useTranslations();
 
   return (
     <li className="shadow-card flex flex-col items-center rounded-[4px] px-[14px] pt-[16px] pb-[8px] lg:w-[calc((100%-2*30px)/3)]">

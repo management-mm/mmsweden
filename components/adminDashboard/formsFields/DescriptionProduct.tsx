@@ -18,7 +18,8 @@ import { selectDescWithAi } from '@store/selectors';
 
 import { useAppSelector } from '@hooks/useAppSelector';
 
-import { LanguageKeys } from '@enums/languageKeys';
+import { AppLocale, DEFAULT_LOCALE } from '@i18n/config';
+import { Label } from '@enums/i18nConstants';
 
 interface IDescriptionProductProps {
   description?: MultiLanguageString;
@@ -33,7 +34,7 @@ const DescriptionProduct: FC<IDescriptionProductProps> = ({ description }) => {
     description ?? {}
   );
 
-  const [language, setLanguage] = useState<LanguageKeys>(LanguageKeys.EN);
+  const [language, setLanguage] = useState<AppLocale>(DEFAULT_LOCALE);
   const { values, setFieldValue, handleChange } =
     useFormikContext<FormikValues>();
 
@@ -88,7 +89,7 @@ const DescriptionProduct: FC<IDescriptionProductProps> = ({ description }) => {
     <>
       <div className="relative">
         <label className="flex flex-col gap-[2px]">
-          <LabelTitle title="Description" />
+          <LabelTitle title={Label.Description} />
           <div className="relative">
             <Field
               as="textarea"

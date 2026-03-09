@@ -1,6 +1,4 @@
-'use client';
-
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
 
@@ -11,7 +9,7 @@ import { AboutUs } from '@enums/i18nConstants';
 import aboutUsList from '@constants/aboutUsList';
 
 const DetailedAboutUs = () => {
-  const { t } = useTranslation();
+  const t = useTranslations();
   return (
     <section className="pb-[105px] lg:pb-[126px]">
       <h2 className="sr-only">About Us | Detailed Overview</h2>

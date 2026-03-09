@@ -1,6 +1,5 @@
-'use client';
-
-import { useTranslation } from 'react-i18next';
+'use client'
+import { useTranslations } from 'next-intl';
 
 import NavLinkBtn from '@components/common/NavLinkBtn';
 import SvgIcon from '@components/common/SvgIcon';
@@ -11,7 +10,7 @@ import { Button, Description } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
 const FirstHeroPart = () => {
-  const { t } = useTranslation();
+  const  t  = useTranslations();
 
   return (
     <div

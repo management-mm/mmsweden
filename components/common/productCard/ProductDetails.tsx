@@ -5,12 +5,12 @@ import type { MultiLanguageString } from '@interfaces/IProduct';
 
 import getProductName from '@utils/getProductName';
 
-import type { LanguageKeys } from '@enums/languageKeys';
+import { AppLocale } from '@i18n/config';
 
 interface IProductDetailsProps {
   isLoading: boolean;
   name: string | MultiLanguageString;
-  language: LanguageKeys;
+  language: AppLocale;
   idNumber: string;
   description: MultiLanguageString;
   dimensions: string;

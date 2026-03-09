@@ -1,9 +1,8 @@
 'use client';
 
-import { type ChangeEvent, useContext, useState } from 'react';
+import { type ChangeEvent, useEffect, useState } from 'react';
 
 import type { ICountryOption } from '@interfaces/ICountryOption';
-import { LanguageContext } from 'app/providers';
 import { Field, useFormikContext } from 'formik';
 import * as _ from 'lodash';
 
@@ -14,6 +13,7 @@ import Selector from './Selector';
 import LabelTitle from '@components/common/LabelTitle';
 import MobileMenu from '@components/common/MobileMenu';
 
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 import useWindowWidth from '@hooks/useWindowWidth';
 
 import { Label } from '@enums/i18nConstants';
@@ -21,7 +21,8 @@ import { Label } from '@enums/i18nConstants';
 import countriesList from '@constants/countriesList';
 
 const Country = () => {
-  const { language } = useContext(LanguageContext);
+  const language = useCurrentLocale();
+
   const options: ICountryOption[] = countriesList.map(country => ({
     value: country.translations[language],
     label: (
@@ -34,20 +35,26 @@ const Country = () => {
 
   const { setFieldValue } = useFormikContext<{ country: string }>();
   const windowWidth = useWindowWidth();
+
   const [selectedOption, setSelectedOption] = useState<ICountryOption | null>(
     null
   );
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [filteredOptions, setFilteredOptions] =
     useState<ICountryOption[]>(options);
-  const [isOpenMobileMenu, setIsOpenMobileMenu] = useState<boolean>(false);
-  const [hasClickedOutside, setHasClickedOutside] = useState<boolean>(false);
+  const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
+  const [hasClickedOutside, setHasClickedOutside] = useState(false);
+
+  useEffect(() => {
+    setFilteredOptions(options);
+  }, [language]);
 
   const handleOptionClick = (option: ICountryOption) => {
     setSelectedOption(option);
     setFieldValue('country', option.value, false);
 
     setIsOpen(false);
+
     if (windowWidth < 1178) {
       toggleMobileMenu();
     }
@@ -61,6 +68,7 @@ const Country = () => {
     e.preventDefault();
 
     const searchTerm = e.target.value.trim().toLowerCase();
+
     setFilteredOptions(
       options.filter((option: ICountryOption) => {
         const name = option.label as React.ReactElement;
@@ -80,6 +88,7 @@ const Country = () => {
           <LabelTitle title={Label.Country} />
           <span className="text-red-700">*</span>
         </div>
+
         <div className="w-full">
           <Field name="country">
             {({
@@ -109,6 +118,7 @@ const Country = () => {
           </Field>
         </div>
       </label>
+
       <MobileMenu
         isOpen={isOpenMobileMenu}
         direction="bottom"
@@ -119,7 +129,7 @@ const Country = () => {
           handleInputText={handleInputText}
           options={filteredOptions}
           handleOptionClick={handleOptionClick}
-          intent={'mobile'}
+          intent="mobile"
         />
       </MobileMenu>
     </>

@@ -1,11 +1,10 @@
 'use client';
 
-import { useContext, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { sellToUs } from '@api/mailerService';
 import { schema } from '@schemas/formForSale';
-import { LanguageContext } from 'app/providers';
 import axios from 'axios';
 import { Form, Formik } from 'formik';
 
@@ -21,21 +20,25 @@ import Phone from '@components/formsLabels/countryAndPhone/Phone';
 import { useNotify } from '@hooks/useNotify';
 
 import { Button, Title } from '@enums/i18nConstants';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 const FormForSale = () => {
-  const { t } = useTranslation();
+  const t = useTranslations(); 
   const [loading, setLoading] = useState(false);
-  const { language } = useContext(LanguageContext);
   const { notifySuccess, notifyError } = useNotify();
+
+  const language = useCurrentLocale();
 
   return (
     <>
       {loading && <Loader />}
+
       <section className="pb-[104px] md:pb-[140px]">
         <div className="container">
           <h2 className="text-title mb-[22px] text-center text-[32px] font-bold lg:mb-[48px]">
             {t(Title.FormForSale)}
           </h2>
+
           <Formik
             initialValues={{
               name: '',
@@ -110,6 +113,7 @@ const FormForSale = () => {
               </div>
 
               <AttachPhotos />
+
               <button
                 className="bg-accent text-primary shadow-accent mx-auto block w-full rounded-[32px] px-[32px] py-[16px] font-semibold md:w-auto"
                 type="submit"

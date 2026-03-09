@@ -10,7 +10,6 @@ import {
   SlotItemMapContext,
 } from './EmailNewsLetterMain';
 
-import { LanguageContextAdmin } from '@components/AdminProvider';
 import SvgIcon from '@components/common/SvgIcon';
 
 import { toggleSelectedProducts } from '@store/selectedProductsSlice';
@@ -23,12 +22,13 @@ import getProductName from '@utils/getProductName';
 import initSlotItemMap from '@utils/initSlotItemMap';
 
 import { IconId } from '@enums/iconsSpriteId';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 interface IProductMenuItemProps {
   product: IProduct;
 }
 const ProductMenuItem: FC<IProductMenuItemProps> = ({ product }) => {
-  const { language } = useContext(LanguageContextAdmin);
+  const language = useCurrentLocale();
   const { setItems } = useContext(SelectedItemsContext);
   const { setSlotItemMap } = useContext(SlotItemMapContext);
   const { name, description, idNumber, photos } = product || {};

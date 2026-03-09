@@ -3,10 +3,10 @@ import slugify from 'slugify';
 
 import getProductName from './getProductName';
 
-import { LanguageKeys } from '@enums/languageKeys';
+import { DEFAULT_LOCALE } from '@i18n/config';
 
 export function generateProductSlug(product: IProduct): string {
-  const rawName = getProductName(product.name, LanguageKeys.EN);
+  const rawName = getProductName(product.name, DEFAULT_LOCALE);
 
   return slugify(rawName, {
     lower: true,

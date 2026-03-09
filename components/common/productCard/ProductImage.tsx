@@ -15,13 +15,13 @@ import useSwiperNavigation from '@hooks/useSwiperNavigation';
 import { cn } from '@utils/cn';
 import getProductName from '@utils/getProductName';
 
-import type { LanguageKeys } from '@enums/languageKeys';
+import { AppLocale } from '@i18n/config';
 
 interface IProductImageProps {
   isLoading: boolean;
   photos: string[];
   name: MultiLanguageString | string;
-  language: LanguageKeys;
+  language: AppLocale;
 }
 
 const ProductImage: FC<IProductImageProps> = ({

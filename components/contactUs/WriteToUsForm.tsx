@@ -1,11 +1,10 @@
 'use client';
 
-import { useContext, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { contactUs } from '@api/mailerService';
 import { schema } from '@schemas/writeToUs';
-import { LanguageContext } from 'app/providers';
 import axios from 'axios';
 import { Form, Formik } from 'formik';
 
@@ -19,24 +18,30 @@ import Phone from '@components/formsLabels/countryAndPhone/Phone';
 import { useNotify } from '@hooks/useNotify';
 
 import { Button, Description, Title } from '@enums/i18nConstants';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
+
 
 const WriteToUsForm = () => {
-  const { t } = useTranslation();
+  const t = useTranslations();
   const [loading, setLoading] = useState(false);
-  const { language } = useContext(LanguageContext);
   const { notifySuccess, notifyError } = useNotify();
+
+  const language = useCurrentLocale();
 
   return (
     <>
       {loading && <Loader />}
+
       <section className="pb-[104px] md:pb-[140px]">
         <div className="container">
           <h2 className="mb-[6px] text-center text-[32px] font-bold md:text-[48px]">
             {t(Title.WriteToUs)}
           </h2>
+
           <p className="text-desc mb-[22px] text-center text-[14px] font-medium md:mb-[48px]">
             {t(Description.WriteToUs)}
           </p>
+
           <Formik
             initialValues={{
               name: '',
@@ -88,6 +93,7 @@ const WriteToUsForm = () => {
                   <Phone className="md:w-[calc((100%-30px)/2)]" />
                   <Subject className="md:w-[calc((100%-30px)/2)]" />
                 </div>
+
                 <Message />
               </div>
 

@@ -5,12 +5,10 @@ import type { IProduct, MultiLanguageString } from 'interfaces/IProduct';
 
 import { api } from '@store/api';
 
-import type { LanguageKeys } from '@enums/languageKeys';
-
-// 'https://mmsweden-server.onrender.com/'
+import { AppLocale } from '@i18n/config';
 
 export interface IFetchProductsParams {
-  lang?: LanguageKeys;
+  lang?: AppLocale;
   sort?: string;
   perPage?: number;
   page?: number;

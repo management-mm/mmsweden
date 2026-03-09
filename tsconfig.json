@@ -28,6 +28,7 @@
       "@i18n/*": ["i18n/*"],
       "@utils/*": ["utils/*"],
       "@constants/*": ["constants/*"],
+      "@messages/*": ["messages/*"],
       "@schemas/*": ["schemas/*"],
       "@interfaces/*": ["interfaces/*"]
     }

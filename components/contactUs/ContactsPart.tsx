@@ -1,6 +1,4 @@
-'use client';
-
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import Address from '@components/common/Address';
 import MainContacts from '@components/common/MainContacts';
@@ -13,7 +11,7 @@ import { IconId } from '@enums/iconsSpriteId';
 import socialMediaList from '@constants/socialMediaList';
 
 const ContactsPart = () => {
-  const { t } = useTranslation();
+  const  t  = useTranslations();
 
   return (
     <div className="flex-wrap md:mb-[94px] lg:flex lg:justify-around">

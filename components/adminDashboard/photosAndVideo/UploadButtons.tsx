@@ -11,6 +11,7 @@ import SvgIcon from '@components/common/SvgIcon';
 import VideoPlayer from '@components/common/VideoPlayer';
 
 import { IconId } from '@enums/iconsSpriteId';
+import { Label } from '@enums/i18nConstants';
 
 interface IUploadButtonsProps {
   editedAvatars: string[];
@@ -52,7 +53,7 @@ const UploadButtons: FC<IUploadButtonsProps> = ({
       )}
       <div className="flex flex-col gap-[20px]">
         <label>
-          <LabelTitle title="Video" />
+          <LabelTitle title={Label.Video} />
           <InputFieldWithCheck
             required={false}
             initialValue={initialVideo}

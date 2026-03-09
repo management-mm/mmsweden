@@ -1,6 +1,4 @@
-'use client';
-
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import InstructionsItem from './InstructionsItem';
 
@@ -9,7 +7,7 @@ import { Description, Title } from '@enums/i18nConstants';
 import instructionsList from '@constants/instructionsList';
 
 const Instructions = () => {
-  const { t } = useTranslation();
+  const  t  = useTranslations();
 
   return (
     <section className="text-title py-[32px] text-center">

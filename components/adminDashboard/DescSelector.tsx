@@ -2,16 +2,20 @@
 
 import { type FC, useState } from 'react';
 import Select from 'react-select';
-
 import clsx from 'clsx';
 
 import DropdownIndicator from '@components/header/DropdownIndicator';
 
-import { LanguageKeys } from '@enums/languageKeys';
+import { SUPPORTED_LOCALES, type AppLocale } from '@i18n/config';
 
 interface IDescSelectorProps {
-  setLanguage: (value: LanguageKeys) => void;
+  setLanguage: (value: AppLocale) => void;
 }
+
+type LanguageOption = {
+  value: AppLocale;
+  label: JSX.Element;
+};
 
 const DescSelector: FC<IDescSelectorProps> = ({ setLanguage }) => {
   const optionStyles = {
@@ -19,22 +23,24 @@ const DescSelector: FC<IDescSelectorProps> = ({ setLanguage }) => {
     focus: 'lg:bg-gray-100 lg:active:bg-gray-200',
     selected: '',
   };
+
   const menuStyles = 'bg-main rounded-[4px] pb-[7px]';
   const singleValueStyles = 'mr-[6px]';
-  const [isMenuOpen, SetIsMenuOpen] = useState(false);
-  const options = Object.values(LanguageKeys).map(option => {
-    return {
-      value: option,
-      label: <p>{option.toUpperCase()}</p>,
-    };
-  });
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const options: LanguageOption[] = SUPPORTED_LOCALES.map(option => ({
+    value: option,
+    label: <p>{option.toUpperCase()}</p>,
+  }));
+
   return (
     <div className="absolute top-[8px] right-[20px] z-50">
-      <Select
+      <Select<LanguageOption, false>
         menuPortalTarget={document.body}
         defaultValue={options[0]}
-        onMenuOpen={() => SetIsMenuOpen(true)}
-        onMenuClose={() => SetIsMenuOpen(false)}
+        onMenuOpen={() => setIsMenuOpen(true)}
+        onMenuClose={() => setIsMenuOpen(false)}
         options={options}
         isSearchable={false}
         components={{
@@ -42,9 +48,10 @@ const DescSelector: FC<IDescSelectorProps> = ({ setLanguage }) => {
             <DropdownIndicator {...props} isMenuOpen={isMenuOpen} />
           ),
         }}
-        closeMenuOnSelect={true}
+        closeMenuOnSelect
         onChange={selectedOption => {
-          setLanguage(selectedOption?.value as LanguageKeys);
+          if (!selectedOption) return;
+          setLanguage(selectedOption.value);
         }}
         unstyled
         styles={{

@@ -15,7 +15,7 @@ import {
 import { useAppDispatch } from '@hooks/useAppDispatch';
 
 import { filters } from '@enums/filters';
-import { LanguageKeys } from '@enums/languageKeys';
+import { SUPPORTED_LOCALES } from '@i18n/config';
 
 interface IChangeFilterProps {
   filterName: filters.Category | filters.Manufacturer | 'industries';
@@ -55,7 +55,7 @@ const ChangeFilter: FC<IChangeFilterProps> = ({ filterValue, filterName }) => {
         <Form>
           {(filterName === filters.Category || filterName === 'industries') && (
             <label className="mb-[22px] flex flex-col gap-[12px]">
-              {Object.values(LanguageKeys).map(lang => (
+              {Object.values(SUPPORTED_LOCALES).map(lang => (
                 <div key={lang} className="relative">
                   <label
                     className={'absolute top-1/2 left-[20px] -translate-y-1/2'}

@@ -31,7 +31,7 @@ import { useAppSelector } from '@hooks/useAppSelector';
 import { cn } from '@utils/cn';
 
 import { filters } from '@enums/filters';
-import { LanguageKeys } from '@enums/languageKeys';
+import { DEFAULT_LOCALE } from '@i18n/config';
 
 const FiltersSettingsMain = () => {
   const dispatch = useAppDispatch();
@@ -51,7 +51,7 @@ const FiltersSettingsMain = () => {
     const fetchingCategories = async () => {
       try {
         dispatch(
-          fetchCategories({ keyword: categoryKeyword, lang: LanguageKeys.EN })
+          fetchCategories({ keyword: categoryKeyword, lang: DEFAULT_LOCALE })
         );
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -75,7 +75,7 @@ const FiltersSettingsMain = () => {
     const fetchingIndustries = async () => {
       try {
         dispatch(
-          fetchIndustries({ keyword: industryKeyword, lang: LanguageKeys.EN })
+          fetchIndustries({ keyword: industryKeyword, lang: DEFAULT_LOCALE })
         );
       } catch (error) {
         console.error('Error fetching data:', error);

@@ -1,4 +1,3 @@
-import AdminProvider from '@components/AdminProvider';
 import AdminSharedLayout from '@components/AdminSharedLayout';
 import PrivateGate from '@components/routing/PrivateGate';
 
@@ -9,9 +8,7 @@ export default function AdminLayout({
 }) {
   return (
     <PrivateGate redirectTo="/login">
-      <AdminProvider>
-        <AdminSharedLayout>{children}</AdminSharedLayout>
-      </AdminProvider>
+      <AdminSharedLayout>{children}</AdminSharedLayout>
     </PrivateGate>
   );
 }

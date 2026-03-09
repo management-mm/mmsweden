@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { fetchRecommendedProductsById } from '@api/productsService';
+import { fetchRecommendedProductsBySlug } from '@api/productsService';
 import clsx from 'clsx';
 import type { IProduct } from 'interfaces/IProduct';
 import { useParams } from 'next/navigation';
@@ -18,23 +18,21 @@ import useSwiperNavigation from '@hooks/useSwiperNavigation';
 import { Title } from '@enums/i18nConstants';
 
 const RecommendedProducts = () => {
-  const  t  = useTranslations();
-  const [recommendedProducts, setRecommendedProducts] = useState<IProduct[]>(
-    []
-  );
+  const t = useTranslations();
+  const [recommendedProducts, setRecommendedProducts] = useState<IProduct[]>([]);
 
-  const params = useParams<{ id: string }>();
-  const productId = params?.id;
+  const params = useParams<{ slug: string }>();
+  const slug = params?.slug;
 
   const { handlePrev, handleNext, onSwiperInit } = useSwiperNavigation();
 
   useEffect(() => {
-    if (!productId) return;
+    if (!slug) return;
 
     async function fetchingRecommendedProducts() {
       try {
         const fetchedRecommendedProducts =
-          await fetchRecommendedProductsById(productId);
+          await fetchRecommendedProductsBySlug(slug);
         setRecommendedProducts(fetchedRecommendedProducts);
       } catch (error) {
         console.log(error);
@@ -42,7 +40,7 @@ const RecommendedProducts = () => {
     }
 
     fetchingRecommendedProducts();
-  }, [productId]);
+  }, [slug]);
 
   return (
     <section>
@@ -63,8 +61,8 @@ const RecommendedProducts = () => {
         <Swiper
           onSwiper={onSwiperInit}
           style={{ width: 'calc(49% + 50vw)' }}
-          slidesPerView={'auto'}
-          spaceBetween={'10px'}
+          slidesPerView="auto"
+          spaceBetween={10}
           className="slider"
           breakpoints={{
             768: { spaceBetween: 30 },

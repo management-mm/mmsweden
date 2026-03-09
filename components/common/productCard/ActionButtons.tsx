@@ -27,7 +27,7 @@ const ActionsButtons: FC<IActionsButtonsProps> = ({ isLoading, product }) => {
   const goToDetails = () => {
     const slug = generateProductSlug(product);
 
-    router.push(`all-products/${slug}`);
+    router.push(`/all-products/${slug}`);
   };
 
   return (

@@ -3,11 +3,11 @@ import type { IProduct } from 'interfaces/IProduct';
 
 axios.defaults.baseURL = 'https://mmsweden-server.onrender.com/';
 
-export const fetchRecommendedProductsById = async (
-  productId: string | undefined
+export const fetchRecommendedProductsBySlug = async (
+  slug: string | undefined
 ): Promise<IProduct[]> => {
   const response = await axios.get(
-    `products/${productId}/recommended-products`
+    `products/${slug}/recommended-products`
   );
   return response.data;
 };

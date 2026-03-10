@@ -1,8 +1,8 @@
 import { type ChangeEvent, type FC } from 'react';
-import { useTranslations } from 'next-intl';
 
 import type { ICountryOption } from '@interfaces/ICountryOption';
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 
 import Menu from './Menu';
 import SelectedOption from './SelectedOption';
@@ -39,7 +39,7 @@ const Selector: FC<ISelectorProps> = ({
   filteredOptions,
   toggleMobileMenu,
 }) => {
-  const  t  = useTranslations();
+  const t = useTranslations();
 
   const windowWidth = useWindowWidth();
 

@@ -1,6 +1,8 @@
-import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+'use client';
 
+import { useState } from 'react';
+
+import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 
 import FiltersGroup from './FiltersGroup';
@@ -16,7 +18,7 @@ import { Filter } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
 const Filters = () => {
-  const  t  = useTranslations();
+  const t = useTranslations();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const searchParams = useSearchParams();

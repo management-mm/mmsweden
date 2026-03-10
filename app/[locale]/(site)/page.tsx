@@ -6,8 +6,8 @@ import Industries from '@components/home/industries/Industries';
 import LatestArrivals from '@components/home/latestArrivals/LatestArrivals';
 import SellToUs from '@components/home/sellToUs/SellToUs';
 
-import { createPageMetadata } from '@i18n/seo';
 import type { AppLocale } from '@i18n/config';
+import { createPageMetadata } from '@i18n/seo';
 
 type Props = {
   params: Promise<{ locale: AppLocale }>;

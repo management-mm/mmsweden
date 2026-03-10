@@ -14,7 +14,6 @@ import {
   fetchIndustries,
   fetchManufacturers,
 } from '@store/filters/operations';
-
 import {
   selectCategories,
   selectCategoriesIsLoading,
@@ -26,9 +25,9 @@ import {
 
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 import { filters } from '@enums/filters';
-import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 interface IFiltersGroupProps {
   className: string;

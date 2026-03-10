@@ -1,5 +1,3 @@
-'use client';
-
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { IProduct, MultiLanguageString } from 'interfaces/IProduct';
 

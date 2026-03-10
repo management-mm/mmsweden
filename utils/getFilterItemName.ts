@@ -5,6 +5,7 @@ import type { IManufacturer } from '@interfaces/IManufacturer';
 import getProductName from './getProductName';
 
 import { filters } from '@enums/filters';
+
 import { AppLocale } from '@i18n/config';
 
 const getFilterItemName = (

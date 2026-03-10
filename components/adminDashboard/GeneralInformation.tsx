@@ -11,6 +11,7 @@ import DescriptionProduct from './formsFields/DescriptionProduct';
 import ProductName from './formsFields/ProductName';
 
 import LabelTitle from '@components/common/LabelTitle';
+
 import { Label } from '@enums/i18nConstants';
 
 interface IGeneralInformationProps {

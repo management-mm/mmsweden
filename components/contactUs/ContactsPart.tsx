@@ -11,7 +11,7 @@ import { IconId } from '@enums/iconsSpriteId';
 import socialMediaList from '@constants/socialMediaList';
 
 const ContactsPart = () => {
-  const  t  = useTranslations();
+  const t = useTranslations();
 
   return (
     <div className="flex-wrap md:mb-[94px] lg:flex lg:justify-around">

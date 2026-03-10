@@ -28,6 +28,7 @@ import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
 
 import { filters } from '@enums/filters';
+
 import { DEFAULT_LOCALE } from '@i18n/config';
 
 interface ICatManIndProps {

@@ -1,4 +1,5 @@
-'use client'
+'use client';
+
 import { useTranslations } from 'next-intl';
 
 import NavLinkBtn from '@components/common/NavLinkBtn';
@@ -10,7 +11,7 @@ import { Button, Description } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
 const FirstHeroPart = () => {
-  const  t  = useTranslations();
+  const t = useTranslations();
 
   return (
     <div

@@ -1,4 +1,5 @@
 import type { FC } from 'react';
+
 import { useTranslations } from 'next-intl';
 
 import DecorativeLine from '@components/common/DecorativeLine';
@@ -15,7 +16,7 @@ interface IEmployeeItemProps {
 const EmployeeItem: FC<IEmployeeItemProps> = ({
   employee: { title, desc, phone, phoneHref, additionalInfo, email },
 }) => {
-  const  t  = useTranslations();
+  const t = useTranslations();
 
   return (
     <li className="shadow-card relative flex h-[252px] w-full flex-col items-center pt-[26px] md:w-[calc((100%-30px)/2)] lg:w-[calc((100%-2*30px)/3)]">

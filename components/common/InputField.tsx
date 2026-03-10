@@ -1,7 +1,7 @@
 import type { FC } from 'react';
-import { useTranslations } from 'next-intl';
 
 import { Field } from 'formik';
+import { useTranslations } from 'next-intl';
 
 import { cn } from '@utils/cn';
 
@@ -26,7 +26,7 @@ const InputField: FC<IInputField> = ({
   title = '',
   as = 'input',
 }) => {
-  const  t  = useTranslations();
+  const t = useTranslations();
 
   return (
     <Field

@@ -7,7 +7,7 @@ import { Description, Title } from '@enums/i18nConstants';
 import instructionsList from '@constants/instructionsList';
 
 const Instructions = () => {
-  const  t  = useTranslations();
+  const t = useTranslations();
 
   return (
     <section className="text-title py-[32px] text-center">

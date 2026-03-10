@@ -1,10 +1,6 @@
 import { getRequestConfig } from 'next-intl/server';
-import {
-  DEFAULT_LOCALE,
-  isAppLocale,
-  type AppLocale
-} from './config';
 
+import { type AppLocale, DEFAULT_LOCALE, isAppLocale } from './config';
 import { messagesMap } from './messages';
 
 export default getRequestConfig(async ({ requestLocale }) => {
@@ -15,6 +11,6 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
   return {
     locale: resolvedLocale,
-    messages: (await messagesMap[resolvedLocale]()).default
+    messages: (await messagesMap[resolvedLocale]()).default,
   };
 });

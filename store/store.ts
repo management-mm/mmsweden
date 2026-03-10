@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import {
   FLUSH,
   PAUSE,
@@ -7,9 +7,8 @@ import {
   REGISTER,
   REHYDRATE,
   persistReducer,
-  persistStore,
 } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 
 import { type AuthState, authReducer } from './auth/slice';
 import { categoriesReducer } from './filters/categoriesSlice';
@@ -19,32 +18,52 @@ import { productsReducer } from './products/productsSlice';
 import { requestedProductsReducer } from './requestedProducts/requestedProductsSlice';
 import { selectedProductsReducer } from './selectedProductsSlice';
 
+const createNoopStorage = () => {
+  return {
+    getItem() {
+      return Promise.resolve(null);
+    },
+    setItem(_key: string, value: unknown) {
+      return Promise.resolve(value);
+    },
+    removeItem() {
+      return Promise.resolve();
+    },
+  };
+};
+
+const storage =
+  typeof window !== 'undefined'
+    ? createWebStorage('local')
+    : createNoopStorage();
+
 const authPersistConfig = {
   key: 'auth',
   storage,
   whitelist: ['token'],
 };
 
-export const store = configureStore({
-  reducer: {
-    auth: persistReducer<AuthState>(authPersistConfig, authReducer),
-    selectedProducts: selectedProductsReducer,
-    products: productsReducer,
-    requestedProducts: requestedProductsReducer,
-    manufacturers: manufacturersReducer,
-    categories: categoriesReducer,
-    industries: industriesReducer,
-  },
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
+export const rootReducer = combineReducers({
+  auth: persistReducer<AuthState>(authPersistConfig, authReducer),
+  selectedProducts: selectedProductsReducer,
+  products: productsReducer,
+  requestedProducts: requestedProductsReducer,
+  manufacturers: manufacturersReducer,
+  categories: categoriesReducer,
+  industries: industriesReducer,
 });
 
-export const persistor = persistStore(store);
-export type AppStore = typeof store;
+export const makeStore = () =>
+  configureStore({
+    reducer: rootReducer,
+    middleware: getDefaultMiddleware =>
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }),
+  });
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppStore = ReturnType<typeof makeStore>;
+export type AppDispatch = AppStore['dispatch'];

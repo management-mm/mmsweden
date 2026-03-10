@@ -31,6 +31,7 @@ import { useAppSelector } from '@hooks/useAppSelector';
 import { cn } from '@utils/cn';
 
 import { filters } from '@enums/filters';
+
 import { DEFAULT_LOCALE } from '@i18n/config';
 
 const FiltersSettingsMain = () => {

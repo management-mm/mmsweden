@@ -1,7 +1,7 @@
 import type { FC } from 'react';
-import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 
 import { Filter } from '@enums/i18nConstants';
 
@@ -10,7 +10,7 @@ interface IProductConditionProps {
 }
 
 const ProductCondition: FC<IProductConditionProps> = ({ condition }) => {
-  const  t  = useTranslations();
+  const t = useTranslations();
   return (
     <span
       className={clsx(

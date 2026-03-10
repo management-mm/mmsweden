@@ -12,6 +12,7 @@ import Desc from '../common/Desc';
 import LabelTitle from '@components/common/LabelTitle';
 
 import initSlotItemMap from '@utils/initSlotItemMap';
+
 import { Label } from '@enums/i18nConstants';
 
 export type Item = {

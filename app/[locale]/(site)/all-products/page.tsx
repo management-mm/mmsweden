@@ -2,11 +2,26 @@ import type { Metadata } from 'next';
 
 import AllProductsView from '@components/allProducts/AllProductsView';
 
-import { createPageMetadata } from '@i18n/seo';
 import type { AppLocale } from '@i18n/config';
+import { createPageMetadata } from '@i18n/seo';
+
+type SearchParams = {
+  title?: string;
+  manufacturer?: string;
+  condition?: string;
+  page?: string;
+  category?: string | string[];
+  industry?: string | string[];
+};
 
 type Props = {
   params: Promise<{ locale: AppLocale }>;
+  searchParams: Promise<SearchParams>;
+};
+
+const normalizeArray = (value?: string | string[]) => {
+  if (!value) return [];
+  return Array.isArray(value) ? value : [value];
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -20,6 +35,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
-export default function AllProductsPage() {
-  return <AllProductsView mode="public" />;
+export default async function AllProductsPage({ params, searchParams }: Props) {
+  const { locale } = await params;
+  const resolvedSearchParams = await searchParams;
+
+  return (
+    <AllProductsView
+      mode="public"
+      locale={locale}
+      query={{
+        title: resolvedSearchParams.title,
+        manufacturer: resolvedSearchParams.manufacturer,
+        condition: resolvedSearchParams.condition,
+        page: resolvedSearchParams.page,
+        category: normalizeArray(resolvedSearchParams.category),
+        industry: normalizeArray(resolvedSearchParams.industry),
+      }}
+    />
+  );
 }

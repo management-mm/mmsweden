@@ -1,10 +1,11 @@
-import { useTranslations } from 'next-intl';
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 
 import DecorativeLine from '@components/common/DecorativeLine';
 import SvgIcon from '@components/common/SvgIcon';
 
 import { cn } from '@utils/cn';
+
 import { IconId } from '@enums/iconsSpriteId';
 
 import whyChooseUsList, {

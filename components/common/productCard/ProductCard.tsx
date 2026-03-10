@@ -25,6 +25,7 @@ import { useAppSelector } from '@hooks/useAppSelector';
 import { generateProductSlug } from '@utils/generateProductSlug';
 
 import { IconId } from '@enums/iconsSpriteId';
+
 import { AppLocale, DEFAULT_LOCALE, SUPPORTED_LOCALES } from '@i18n/config';
 
 export interface IProductCardProps {

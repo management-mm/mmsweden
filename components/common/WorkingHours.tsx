@@ -1,4 +1,5 @@
 import type { FC } from 'react';
+
 import { useTranslations } from 'next-intl';
 
 import SvgIcon from './SvgIcon';
@@ -17,7 +18,7 @@ const WorkingHours: FC<IWorkingHoursProps> = ({
   containerClassName,
   iconClassName,
 }) => {
-  const  t  = useTranslations();
+  const t = useTranslations();
 
   return (
     <div className={cn('mb-[22px] flex', containerClassName)}>

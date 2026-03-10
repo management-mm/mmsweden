@@ -1,6 +1,7 @@
-import ClientSharedLayout from '@components/ClientSharedLayout';
 import 'swiper/css';
 import 'swiper/css/scrollbar';
+
+import ClientSharedLayout from '@components/ClientSharedLayout';
 
 export default function SiteLayout({
   children,

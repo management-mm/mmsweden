@@ -1,7 +1,7 @@
 import type { FC } from 'react';
-import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 
 import DecorativeLine from '@components/common/DecorativeLine';
 
@@ -13,7 +13,7 @@ interface IListItemSecPartProps {
 }
 
 const ListItemSecPart: FC<IListItemSecPartProps> = ({ item, index }) => {
-  const  t  = useTranslations();
+  const t = useTranslations();
   return (
     <li
       className={clsx(

@@ -9,7 +9,7 @@ import { Button, Description, Title } from '@enums/i18nConstants';
 import industriesList from '@constants/industriesList';
 
 const Industries = () => {
-  const t  = useTranslations();
+  const t = useTranslations();
   return (
     <section className="pb-[96px] text-center">
       <div className="container">

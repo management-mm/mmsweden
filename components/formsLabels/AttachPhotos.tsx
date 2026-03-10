@@ -1,5 +1,4 @@
 import { type ChangeEvent, useState } from 'react';
-import { useTranslations } from 'next-intl';
 
 import {
   ErrorMessage,
@@ -7,6 +6,7 @@ import {
   type FormikValues,
   useFormikContext,
 } from 'formik';
+import { useTranslations } from 'next-intl';
 
 import SvgIcon from '@components/common/SvgIcon';
 
@@ -14,7 +14,7 @@ import { Label } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
 const AttachPhotos = () => {
-  const  t  = useTranslations();
+  const t = useTranslations();
   const [editedAvatars, setEditedAvatars] = useState<string[]>([]);
   const [fileAvatars, setFileAvatars] = useState<File[]>([]);
   const { setFieldValue } = useFormikContext<FormikValues>();

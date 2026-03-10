@@ -1,23 +1,19 @@
 'use client';
 
-import {
-  type ChangeEvent,
-  type FC,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import { useTranslations } from 'next-intl';
+import { type ChangeEvent, type FC, useEffect, useMemo, useState } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
 import type { ICategory } from '@interfaces/ICategory';
 import type { IIndustry } from '@interfaces/IIndustry';
 import type { IManufacturer } from '@interfaces/IManufacturer';
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import SearchFilter from '@components/common/SearchFilter';
 import SvgIcon from '@components/common/SvgIcon';
+
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 import getFilterItemName from '@utils/getFilterItemName';
 import subtractSearchParam from '@utils/subtractSearchParam';
@@ -25,7 +21,7 @@ import subtractSearchParam from '@utils/subtractSearchParam';
 import { filters } from '@enums/filters';
 import { Filter } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
-import { useCurrentLocale } from '@hooks/useCurrentLocale';
+
 import { DEFAULT_LOCALE } from '@i18n/config';
 
 interface IFilterWrapperProps {

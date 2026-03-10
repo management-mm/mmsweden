@@ -1,11 +1,11 @@
 import { useTranslations } from 'next-intl';
 
-import { Description, NavBar } from '@enums/i18nConstants';
-
 import Slider from './Slider';
 
+import { Description, NavBar } from '@enums/i18nConstants';
+
 const Hero = () => {
-  const  t  = useTranslations();
+  const t = useTranslations();
 
   return (
     <section className="py-[32px] md:pt-[22px] md:pb-[64px]">

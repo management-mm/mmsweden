@@ -1,46 +1,63 @@
-import { NextResponse } from 'next/server';
+import type { MetadataRoute } from 'next';
 
-const BASE_URL = 'https://www.mmsweden.se';
+import { type AppLocale, SUPPORTED_LOCALES } from '@i18n/config';
 
-function xmlEscape(s: string) {
-  return s
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&apos;');
+type ProductSitemapItem = {
+  slug: string;
+  updatedAt?: string;
+};
+
+const STATIC_PAGES = [
+  '',
+  '/about-us',
+  '/all-products',
+  '/sell-to-us',
+  '/contact-us',
+] as const;
+
+async function getProductsForSitemap(): Promise<ProductSitemapItem[]> {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL!;
+
+  const res = await fetch(`${apiUrl}/products/sitemap`, {
+    next: { revalidate: 3600 },
+  });
+
+  if (!res.ok) {
+    return [];
+  }
+
+  return res.json();
 }
 
-export async function GET() {
-  const now = new Date().toISOString();
+function buildLocalizedUrl(locale: AppLocale, path: string) {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL!;
+  return `${siteUrl}/${locale}${path}`;
+}
 
-  const urls = [
-    `${BASE_URL}/`,
-    `${BASE_URL}/about-us`,
-    `${BASE_URL}/all-products`,
-    `${BASE_URL}/sell-to-us`,
-    `${BASE_URL}/contact-us`,
-    `${BASE_URL}/about-us`,
-    `${BASE_URL}/new-arrivals`,
-    `${BASE_URL}/my-price-quote`,
-  ];
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const staticEntries: MetadataRoute.Sitemap = SUPPORTED_LOCALES.flatMap(
+    locale =>
+      STATIC_PAGES.map(path => ({
+        url: buildLocalizedUrl(locale, path),
+        lastModified: new Date(),
+        changeFrequency: path === '' ? 'weekly' : 'monthly',
+        priority: path === '' ? 1 : 0.8,
+      }))
+  );
 
-  const body = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls
-  .map(
-    loc => `  <url>
-    <loc>${xmlEscape(loc)}</loc>
-    <lastmod>${now}</lastmod>
-  </url>`
-  )
-  .join('\n')}
-</urlset>`;
+  const products = await getProductsForSitemap();
 
-  return new NextResponse(body, {
-    headers: {
-      'Content-Type': 'application/xml; charset=utf-8',
-      'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
-    },
-  });
+  const productEntries: MetadataRoute.Sitemap = SUPPORTED_LOCALES.flatMap(
+    locale =>
+      products.map(product => ({
+        url: buildLocalizedUrl(locale, `/all-products/${product.slug}`),
+        lastModified: product.updatedAt
+          ? new Date(product.updatedAt)
+          : new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.7,
+      }))
+  );
+
+  return [...staticEntries, ...productEntries];
 }

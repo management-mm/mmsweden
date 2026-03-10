@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { fetchRecommendedProductsBySlug } from '@api/productsService';
 import clsx from 'clsx';
 import type { IProduct } from 'interfaces/IProduct';
+import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 
 import DecorativeLine from '@components/common/DecorativeLine';
@@ -19,7 +19,9 @@ import { Title } from '@enums/i18nConstants';
 
 const RecommendedProducts = () => {
   const t = useTranslations();
-  const [recommendedProducts, setRecommendedProducts] = useState<IProduct[]>([]);
+  const [recommendedProducts, setRecommendedProducts] = useState<IProduct[]>(
+    []
+  );
 
   const params = useParams<{ slug: string }>();
   const slug = params?.slug;

@@ -1,9 +1,9 @@
 'use client';
 
 import type { FC } from 'react';
-import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -15,7 +15,7 @@ interface IBreadcrumbProps {
 }
 
 const Breadcrumb: FC<IBreadcrumbProps> = ({ productId, name }) => {
-  const  t  = useTranslations();
+  const t = useTranslations();
   const pathname = usePathname();
 
   const isAllProducts = pathname.includes('/all-products');

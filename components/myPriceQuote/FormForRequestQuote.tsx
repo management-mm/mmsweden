@@ -1,13 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
-import { usePathname } from 'next/navigation';
 
 import { requestQuote } from '@api/mailerService';
 import { schema } from '@schemas/formForRequestQuote';
 import axios from 'axios';
 import { ErrorMessage, Form, Formik } from 'formik';
+import { useTranslations } from 'next-intl';
+import { usePathname } from 'next/navigation';
 
 import InputField from '@components/common/InputField';
 import LabelTitle from '@components/common/LabelTitle';
@@ -21,12 +21,13 @@ import Phone from '@components/formsLabels/countryAndPhone/Phone';
 import { selectRequestedProducts } from '@store/selectors';
 
 import { useAppSelector } from '@hooks/useAppSelector';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 import { useNotify } from '@hooks/useNotify';
 
 import getProductName from '@utils/getProductName';
 
 import { Button, Label, Placeholder } from '@enums/i18nConstants';
-import { useCurrentLocale } from '@hooks/useCurrentLocale';
+
 import { DEFAULT_LOCALE } from '@i18n/config';
 
 const FormForRequestQuote = () => {
@@ -70,8 +71,7 @@ const FormForRequestQuote = () => {
 
               const phone = values.callingCode + values.phone;
 
-              const { name, email, country, countryPhone, company } =
-                values;
+              const { name, email, country, countryPhone, company } = values;
 
               const response = await requestQuote({
                 name,

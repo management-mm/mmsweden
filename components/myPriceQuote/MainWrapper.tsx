@@ -16,7 +16,7 @@ import { Button, Description, Title } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
 const MainWrapper = () => {
-  const  t  = useTranslations();
+  const t = useTranslations();
   const requestedProducts = useAppSelector(selectRequestedProducts);
 
   return (

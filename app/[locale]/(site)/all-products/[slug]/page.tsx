@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import Product from '@components/productDetails/Product';
 import RecommendedProducts from '@components/productDetails/RecommendedProducts';
 
-import { SUPPORTED_LOCALES, type AppLocale } from '@i18n/config';
+import { type AppLocale, SUPPORTED_LOCALES } from '@i18n/config';
 
 type Props = {
   params: Promise<{ locale: AppLocale; slug: string }>;
@@ -23,7 +23,7 @@ async function getProductForMetadata(
 ): Promise<ProductResponse | null> {
   const baseUrl = process.env.NEXT_PUBLIC_API_URL!;
   const res = await fetch(`${baseUrl}/products/${slug}`, {
-    cache: 'no-store'
+    cache: 'no-store',
   });
 
   if (!res.ok) return null;
@@ -38,17 +38,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = await getProductForMetadata(slug);
 
   const languages = Object.fromEntries([
-  ...SUPPORTED_LOCALES.map(l => [l, `${siteUrl}/${l}/all-products/${slug}`]),
-  ['x-default', `${siteUrl}/en/all-products/${slug}`]
-]);
+    ...SUPPORTED_LOCALES.map(l => [l, `${siteUrl}/${l}/all-products/${slug}`]),
+    ['x-default', `${siteUrl}/en/all-products/${slug}`],
+  ]);
 
   if (!product) {
     return {
       title: 'Product Details | Meat Machines',
       alternates: {
         canonical: `${siteUrl}/${locale}/all-products/${slug}`,
-        languages
-      }
+        languages,
+      },
     };
   }
 
@@ -68,14 +68,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: shortDescription,
     alternates: {
       canonical: `${siteUrl}/${locale}/all-products/${slug}`,
-      languages
+      languages,
     },
     openGraph: {
       title: `${localizedName} | Meat Machines`,
       description: shortDescription,
       url: `${siteUrl}/${locale}/all-products/${slug}`,
-      images: product.photos?.[0] ? [product.photos[0]] : []
-    }
+      images: product.photos?.[0] ? [product.photos[0]] : [],
+    },
   };
 }
 

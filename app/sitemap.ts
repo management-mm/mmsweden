@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 
-import { type AppLocale, SUPPORTED_LOCALES } from '@i18n/config';
+import { SUPPORTED_LOCALES, type AppLocale } from '@i18n/config';
 
 type ProductSitemapItem = {
   slug: string;
@@ -16,7 +16,9 @@ const STATIC_PAGES = [
 ] as const;
 
 async function getProductsForSitemap(): Promise<ProductSitemapItem[]> {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL!;
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+  if (!apiUrl) return [];
 
   const res = await fetch(`${apiUrl}/products/sitemap`, {
     next: { revalidate: 3600 },
@@ -30,30 +32,34 @@ async function getProductsForSitemap(): Promise<ProductSitemapItem[]> {
 }
 
 function buildLocalizedUrl(locale: AppLocale, path: string) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL!;
-  return `${siteUrl}/${locale}${path}`;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
+  if (!siteUrl) {
+    throw new Error('NEXT_PUBLIC_SITE_URL is not defined');
+  }
+
+  return `${siteUrl.replace(/\/$/, '')}/${locale}${path}`;
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const products = await getProductsForSitemap();
+  const now = new Date();
+
   const staticEntries: MetadataRoute.Sitemap = SUPPORTED_LOCALES.flatMap(
     locale =>
       STATIC_PAGES.map(path => ({
         url: buildLocalizedUrl(locale, path),
-        lastModified: new Date(),
+        lastModified: now,
         changeFrequency: path === '' ? 'weekly' : 'monthly',
         priority: path === '' ? 1 : 0.8,
       }))
   );
 
-  const products = await getProductsForSitemap();
-
   const productEntries: MetadataRoute.Sitemap = SUPPORTED_LOCALES.flatMap(
     locale =>
       products.map(product => ({
         url: buildLocalizedUrl(locale, `/all-products/${product.slug}`),
-        lastModified: product.updatedAt
-          ? new Date(product.updatedAt)
-          : new Date(),
+        lastModified: product.updatedAt ? new Date(product.updatedAt) : now,
         changeFrequency: 'weekly',
         priority: 0.7,
       }))

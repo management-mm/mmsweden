@@ -11,7 +11,7 @@ import { cn } from '@utils/cn';
 import { isAppLocale } from '@i18n/config';
 import { messagesMap } from '@i18n/messages';
 
-export const inter = localFont({
+const inter = localFont({
   src: [
     {
       path: '../../public/fonts/inter/Inter-Regular.woff2',

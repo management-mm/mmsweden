@@ -1,5 +1,3 @@
-'use client';
-
 import { ToastContainer } from 'react-toastify';
 
 import ScrollToTop from './ScrollToTop';

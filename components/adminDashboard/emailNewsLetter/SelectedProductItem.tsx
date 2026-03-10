@@ -14,12 +14,12 @@ import SvgIcon from '@components/common/SvgIcon';
 import { toggleSelectedProducts } from '@store/selectedProductsSlice';
 
 import { useAppDispatch } from '@hooks/useAppDispatch';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 import getProductName from '@utils/getProductName';
 import initSlotItemMap from '@utils/initSlotItemMap';
 
 import { IconId } from '@enums/iconsSpriteId';
-import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 interface ISelectedProductItemProps {
   itemId: string;
@@ -31,10 +31,9 @@ const SelectedProductItem: FC<ISelectedProductItemProps> = ({
   item,
 }) => {
   const { name, description, idNumber, photos } = item;
-  
+
   const { setItems } = useContext(SelectedItemsContext);
   const { setSlotItemMap } = useContext(SlotItemMapContext);
-
 
   const language = useCurrentLocale();
   const dispatch = useAppDispatch();

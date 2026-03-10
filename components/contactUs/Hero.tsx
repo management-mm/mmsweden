@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl';
 import { Description, NavBar } from '@enums/i18nConstants';
 
 const Hero = () => {
-  const  t  = useTranslations();
+  const t = useTranslations();
 
   return (
     <section className="text-center">

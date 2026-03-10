@@ -3,8 +3,8 @@ import type { Metadata } from 'next';
 import FormForSale from '@components/sellToUs/FormForSale';
 import Instructions from '@components/sellToUs/Instructions';
 
-import { createPageMetadata } from '@i18n/seo';
 import type { AppLocale } from '@i18n/config';
+import { createPageMetadata } from '@i18n/seo';
 
 type Props = {
   params: Promise<{ locale: AppLocale }>;

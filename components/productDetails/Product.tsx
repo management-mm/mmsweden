@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useTranslations } from 'next-intl';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
+import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 
 import Details from './Details';
@@ -19,15 +19,13 @@ import { selectIsLoading, selectProductDetails } from '@store/selectors';
 
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 import useWindowWidth from '@hooks/useWindowWidth';
 
 import { cn } from '@utils/cn';
 import getProductName from '@utils/getProductName';
 
 import { Title } from '@enums/i18nConstants';
-
-import { useCurrentLocale } from '@hooks/useCurrentLocale';
-
 
 const Product = () => {
   const t = useTranslations();

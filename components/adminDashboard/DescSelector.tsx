@@ -2,11 +2,12 @@
 
 import { type FC, useState } from 'react';
 import Select from 'react-select';
+
 import clsx from 'clsx';
 
 import DropdownIndicator from '@components/header/DropdownIndicator';
 
-import { SUPPORTED_LOCALES, type AppLocale } from '@i18n/config';
+import { type AppLocale, SUPPORTED_LOCALES } from '@i18n/config';
 
 interface IDescSelectorProps {
   setLanguage: (value: AppLocale) => void;

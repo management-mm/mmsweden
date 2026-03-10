@@ -1,5 +1,10 @@
 import type { Metadata } from 'next';
-import { DEFAULT_LOCALE, SUPPORTED_LOCALES, type AppLocale } from '@i18n/config';
+
+import {
+  type AppLocale,
+  DEFAULT_LOCALE,
+  SUPPORTED_LOCALES,
+} from '@i18n/config';
 
 type CreatePageMetadataParams = {
   locale: AppLocale;

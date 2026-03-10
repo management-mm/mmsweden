@@ -13,8 +13,9 @@ import Desc from '../common/Desc';
 
 import LabelTitle from '@components/common/LabelTitle';
 
-import { AppLocale, SUPPORTED_LOCALES } from '@i18n/config';
 import { Label } from '@enums/i18nConstants';
+
+import { AppLocale, SUPPORTED_LOCALES } from '@i18n/config';
 
 interface IProductNameProps {
   initialValue?: string | MultiLanguageString;

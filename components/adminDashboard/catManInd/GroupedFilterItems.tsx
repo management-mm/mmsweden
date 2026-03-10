@@ -11,6 +11,7 @@ import type { MultiLanguageString } from '@interfaces/IProduct';
 import getFilterItemName from '@utils/getFilterItemName';
 
 import type { filters } from '@enums/filters';
+
 import { DEFAULT_LOCALE } from '@i18n/config';
 
 type FilterItem = ICategory | IManufacturer | IIndustry;

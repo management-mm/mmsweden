@@ -1,9 +1,9 @@
 'use client';
 
 import { type FC, useEffect, useMemo, useState } from 'react';
-import { useTranslations } from 'next-intl';
 
 import debounce from 'lodash/debounce';
+import { useTranslations } from 'next-intl';
 
 import SvgIcon from '@components/common/SvgIcon';
 
@@ -16,7 +16,7 @@ interface ISearchFilterProps {
 }
 
 const SearchFilter: FC<ISearchFilterProps> = ({ keyword, setKeyword }) => {
-  const  t  = useTranslations();
+  const t = useTranslations();
   const [isEmptyValue, setIsEmptyValue] = useState(true);
 
   const [inputValue, setInputValue] = useState(keyword);

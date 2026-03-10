@@ -1,10 +1,10 @@
 'use client';
 
 import { type ChangeEvent, type FC, useEffect, useMemo, useState } from 'react';
-import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
 import debounce from 'lodash/debounce';
+import { useTranslations } from 'next-intl';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import SvgIcon from '@components/common/SvgIcon';
@@ -19,7 +19,7 @@ interface ISearchProps {
 }
 
 const Search: FC<ISearchProps> = ({ className }) => {
-  const  t  = useTranslations();
+  const t = useTranslations();
 
   const router = useRouter();
   const pathname = usePathname();

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+
 import { useTranslations } from 'next-intl';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
@@ -9,13 +10,13 @@ import SvgIcon from '@components/common/SvgIcon';
 import { selectCategories, selectIndustries } from '@store/selectors';
 
 import { useAppSelector } from '@hooks/useAppSelector';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 import getFilterValueTranslation from '@utils/getFilterValueTranslation';
 import subtractSearchParam from '@utils/subtractSearchParam';
 
 import { Filter } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
-import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 type FilterName = 'category' | 'industry' | 'manufacturer' | 'condition';
 

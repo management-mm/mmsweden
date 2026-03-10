@@ -4,8 +4,8 @@ import Contacts from '@components/contactUs/Contacts';
 import Hero from '@components/contactUs/Hero';
 import WriteToUsForm from '@components/contactUs/WriteToUsForm';
 
-import { createPageMetadata } from '@i18n/seo';
 import type { AppLocale } from '@i18n/config';
+import { createPageMetadata } from '@i18n/seo';
 
 type Props = {
   params: Promise<{ locale: AppLocale }>;

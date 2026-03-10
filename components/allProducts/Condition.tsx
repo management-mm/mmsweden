@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 
 import ConditionItem from './ConditionItem';
 
@@ -14,7 +14,7 @@ import { IconId } from '@enums/iconsSpriteId';
 
 const Condition = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const t  = useTranslations();
+  const t = useTranslations();
 
   return (
     <fieldset>

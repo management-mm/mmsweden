@@ -1,7 +1,7 @@
 import type { FC } from 'react';
-import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 
 import DecorativeLine from '@components/common/DecorativeLine';
 import SvgIcon from '@components/common/SvgIcon';
@@ -20,7 +20,7 @@ const InstructionsItem: FC<IInstructionsItemProps> = ({
   instructions: { iconId, iconSize, title, desc },
   step,
 }) => {
-  const  t  = useTranslations();
+  const t = useTranslations();
 
   return (
     <li className="shadow-card flex flex-col items-center rounded-[4px] px-[14px] pt-[16px] pb-[8px] lg:w-[calc((100%-2*30px)/3)]">

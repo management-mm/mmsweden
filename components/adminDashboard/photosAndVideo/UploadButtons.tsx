@@ -10,8 +10,8 @@ import LabelTitle from '@components/common/LabelTitle';
 import SvgIcon from '@components/common/SvgIcon';
 import VideoPlayer from '@components/common/VideoPlayer';
 
-import { IconId } from '@enums/iconsSpriteId';
 import { Label } from '@enums/i18nConstants';
+import { IconId } from '@enums/iconsSpriteId';
 
 interface IUploadButtonsProps {
   editedAvatars: string[];

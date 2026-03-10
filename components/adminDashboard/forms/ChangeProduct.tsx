@@ -32,6 +32,7 @@ import { useAppSelector } from '@hooks/useAppSelector';
 import useWindowWidth from '@hooks/useWindowWidth';
 
 import { IconId } from '@enums/iconsSpriteId';
+
 import { AppLocale, SUPPORTED_LOCALES } from '@i18n/config';
 
 const ChangeProduct = () => {

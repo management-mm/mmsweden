@@ -1,7 +1,7 @@
-'use client'
-import { useTranslations } from 'next-intl';
+'use client';
 
 import { type VariantProps, cva } from 'class-variance-authority';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -60,7 +60,7 @@ type NavbarProps = VariantProps<typeof navVariants> &
   VariantProps<typeof ulVariants>;
 
 const Navbar = ({ intent }: NavbarProps) => {
-  const  t  = useTranslations();
+  const t = useTranslations();
   const pathname = usePathname();
 
   const links = [

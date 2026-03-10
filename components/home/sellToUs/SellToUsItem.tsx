@@ -1,4 +1,5 @@
 import type { FC } from 'react';
+
 import { useTranslations } from 'next-intl';
 
 import DecorativeLine from '@components/common/DecorativeLine';
@@ -18,7 +19,7 @@ const SellToUsItem: FC<ISellToUsItem> = ({
   desc,
   className,
 }) => {
-  const  t  = useTranslations();
+  const t = useTranslations();
 
   return (
     <li

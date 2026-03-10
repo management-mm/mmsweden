@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
-import { useTranslations } from 'next-intl';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { type IProduct } from '@interfaces/IProduct';
+import { useTranslations } from 'next-intl';
 import 'swiper/css';
 
 import DecorativeLine from '@components/common/DecorativeLine';
@@ -31,7 +31,7 @@ const PER_PAGE = 10;
 const MAX_RENDER = 20;
 
 const LatestArrivals = () => {
-  const  t  = useTranslations();
+  const t = useTranslations();
   const { handlePrev, handleNext, onSwiperInit } = useSwiperNavigation();
   const dispatch = useAppDispatch();
 

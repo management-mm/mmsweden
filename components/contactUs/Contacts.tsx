@@ -19,17 +19,13 @@ const Contacts = () => {
         <div className="mb-[64px] lg:mb-[94px] lg:flex lg:gap-[30px]">
           <Info>
             {t.rich(ContactUs.Info1, {
-              bold: chunks => (
-                <span className="font-semibold">{chunks}</span>
-              )
+              bold: chunks => <span className="font-semibold">{chunks}</span>,
             })}
           </Info>
 
           <Info>
             {t.rich(ContactUs.Info2, {
-              bold: chunks => (
-                <span className="font-semibold">{chunks}</span>
-              )
+              bold: chunks => <span className="font-semibold">{chunks}</span>,
             })}
           </Info>
         </div>

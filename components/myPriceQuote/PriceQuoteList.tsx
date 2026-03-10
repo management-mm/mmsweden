@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+
 import { useTranslations } from 'next-intl';
 
 import ItemForQuote from './ItemForQuote';
@@ -15,7 +16,7 @@ import { useAppSelector } from '@hooks/useAppSelector';
 import { Button, Title } from '@enums/i18nConstants';
 
 const PriceQuoteList = () => {
-  const  t  = useTranslations();
+  const t = useTranslations();
   const requestedProducts = useAppSelector(selectRequestedProducts);
 
   return (

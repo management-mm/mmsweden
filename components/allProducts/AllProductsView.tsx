@@ -1,24 +1,26 @@
-'use client';
-
-import { Suspense, lazy } from 'react';
-
 import clsx from 'clsx';
 
 import FiltersAndSearch from '@components/allProducts/FiltersAndSearch';
+import ProductsList from '@components/allProducts/ProductsList';
 import Breadcrumb from '@components/common/Breadcrumb';
-import Loader from '@components/common/loaders/Loader';
 
-import useWindowWidth from '@hooks/useWindowWidth';
-
-const ProductsList = lazy(() => import('@components/allProducts/ProductsList'));
+import type { AppLocale } from '@i18n/config';
 
 type Props = {
   mode?: 'public' | 'admin';
+  locale: AppLocale;
+  query: {
+    title?: string;
+    manufacturer?: string;
+    condition?: string;
+    page?: string;
+    category: string[];
+    industry: string[];
+  };
 };
 
-const AllProductsView = ({ mode = 'public' }: Props) => {
+const AllProductsView = async ({ mode = 'public', locale, query }: Props) => {
   const isAdmin = mode === 'admin';
-  const windowWidth = useWindowWidth();
 
   return (
     <div
@@ -30,14 +32,20 @@ const AllProductsView = ({ mode = 'public' }: Props) => {
     >
       {!isAdmin && <Breadcrumb />}
 
-      <div className="flex flex-col justify-between lg:flex-row lg:justify-start lg:gap-[30px]">
-        {(!isAdmin || windowWidth < 1178) && <FiltersAndSearch />}
+      <div className="flex flex-col lg:flex-row lg:justify-start lg:gap-[30px]">
+        {!isAdmin && (
+          <div className="shrink-0">
+            <FiltersAndSearch />
+          </div>
+        )}
 
-        <Suspense fallback={<Loader />}>
-          <ProductsList />
-        </Suspense>
+        <ProductsList locale={locale} query={query} />
 
-        {isAdmin && windowWidth > 1178 && <FiltersAndSearch />}
+        {isAdmin && (
+          <div className="shrink-0">
+            <FiltersAndSearch />
+          </div>
+        )}
       </div>
     </div>
   );

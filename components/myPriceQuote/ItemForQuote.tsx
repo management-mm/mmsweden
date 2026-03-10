@@ -7,12 +7,12 @@ import { useRouter } from 'next/navigation';
 
 import SvgIcon from '@components/common/SvgIcon';
 
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 import useUpdateRequestedProducts from '@hooks/useUpdateRequestedProducts';
 
 import getProductName from '@utils/getProductName';
 
 import { IconId } from '@enums/iconsSpriteId';
-import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 interface IItemsForQuoteProps {
   product: IProduct;

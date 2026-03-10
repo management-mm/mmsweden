@@ -15,6 +15,7 @@ import {
 import { useAppDispatch } from '@hooks/useAppDispatch';
 
 import { filters } from '@enums/filters';
+
 import { SUPPORTED_LOCALES } from '@i18n/config';
 
 interface IChangeFilterProps {

@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
 
 import { sellToUs } from '@api/mailerService';
 import { schema } from '@schemas/formForSale';
 import axios from 'axios';
 import { Form, Formik } from 'formik';
+import { useTranslations } from 'next-intl';
 
 import Loader from '@components/common/loaders/Loader';
 import AttachPhotos from '@components/formsLabels/AttachPhotos';
@@ -17,13 +17,13 @@ import Price from '@components/formsLabels/Price';
 import ProductName from '@components/formsLabels/ProductName';
 import Phone from '@components/formsLabels/countryAndPhone/Phone';
 
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 import { useNotify } from '@hooks/useNotify';
 
 import { Button, Title } from '@enums/i18nConstants';
-import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 const FormForSale = () => {
-  const t = useTranslations(); 
+  const t = useTranslations();
   const [loading, setLoading] = useState(false);
   const { notifySuccess, notifyError } = useNotify();
 

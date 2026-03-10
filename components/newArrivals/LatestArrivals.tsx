@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
-import { useTranslations } from 'next-intl';
-import { usePathname } from 'next/navigation';
 
 import type { IProduct } from '@interfaces/IProduct';
+import { useTranslations } from 'next-intl';
+import { usePathname } from 'next/navigation';
 
 import ProductCard from '@components/common/productCard/ProductCard';
 
@@ -17,11 +17,11 @@ import {
 
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 import { Title } from '@enums/i18nConstants';
 
 import { CACHE_KEY, TTL } from '@constants/cacheProducts';
-import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 type GroupedProducts = Record<string, IProduct[]>;
 

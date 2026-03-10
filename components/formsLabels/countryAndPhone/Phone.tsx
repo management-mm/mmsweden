@@ -1,11 +1,11 @@
 'use client';
 
 import { type ChangeEvent, type FC, useMemo, useState } from 'react';
-import { usePathname } from 'next/navigation';
 
 import type { ICountryOption } from '@interfaces/ICountryOption';
 import { ErrorMessage, Field, useFormikContext } from 'formik';
 import * as _ from 'lodash';
+import { usePathname } from 'next/navigation';
 
 import Menu from './Menu';
 import PhoneCodeOption from './PhoneCodeOption';
@@ -15,6 +15,7 @@ import Selector from './Selector';
 import LabelTitle from '@components/common/LabelTitle';
 import MobileMenu from '@components/common/MobileMenu';
 
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 import useWindowWidth from '@hooks/useWindowWidth';
 
 import { cn } from '@utils/cn';
@@ -22,7 +23,6 @@ import { cn } from '@utils/cn';
 import { Label } from '@enums/i18nConstants';
 
 import countriesList from '@constants/countriesList';
-import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 type CallingCodeEntry = {
   callingCode: string;
@@ -35,9 +35,8 @@ interface IPhoneProps {
   className?: string;
 }
 
-
 const Phone: FC<IPhoneProps> = ({ className }) => {
- const language = useCurrentLocale();
+  const language = useCurrentLocale();
 
   const options = countriesList.flatMap(country => {
     const { phoneFormat, callingCode, translations, flag } = country;

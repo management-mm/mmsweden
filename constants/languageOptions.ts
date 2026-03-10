@@ -1,4 +1,5 @@
 import { IconId } from '@enums/iconsSpriteId';
+
 import { AppLocale } from '@i18n/config';
 
 export interface ILanguageOption {

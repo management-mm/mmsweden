@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
 
 import { contactUs } from '@api/mailerService';
 import { schema } from '@schemas/writeToUs';
 import axios from 'axios';
 import { Form, Formik } from 'formik';
+import { useTranslations } from 'next-intl';
 
 import Loader from '@components/common/loaders/Loader';
 import Email from '@components/formsLabels/Email';
@@ -15,11 +15,10 @@ import Name from '@components/formsLabels/Name';
 import Subject from '@components/formsLabels/Subject';
 import Phone from '@components/formsLabels/countryAndPhone/Phone';
 
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 import { useNotify } from '@hooks/useNotify';
 
 import { Button, Description, Title } from '@enums/i18nConstants';
-import { useCurrentLocale } from '@hooks/useCurrentLocale';
-
 
 const WriteToUsForm = () => {
   const t = useTranslations();

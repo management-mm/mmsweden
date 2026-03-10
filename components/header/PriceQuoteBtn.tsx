@@ -1,6 +1,5 @@
-import { useTranslations } from 'next-intl';
-
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 
 import NavLinkBtn from '@components/common/NavLinkBtn';
 import SvgIcon from '@components/common/SvgIcon';
@@ -13,7 +12,7 @@ import { IconId } from '@enums/iconsSpriteId';
 
 const PriceQuoteBtn = () => {
   const requestedProducts = useAppSelector(selectRequestedProducts);
-  const t  = useTranslations();
+  const t = useTranslations();
 
   return (
     <NavLinkBtn

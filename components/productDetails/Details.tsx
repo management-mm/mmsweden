@@ -1,20 +1,19 @@
 'use client';
 
 import { type FC } from 'react';
-import { useTranslations } from 'next-intl';
 
 import clsx from 'clsx';
 import type { IProduct } from 'interfaces/IProduct';
+import { useTranslations } from 'next-intl';
 
 import DecorativeLine from '@components/common/DecorativeLine';
 import SvgIcon from '@components/common/SvgIcon';
 
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 import useUpdateRequestedProducts from '@hooks/useUpdateRequestedProducts';
 
 import { Button, Filter, Product } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
-
-import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 interface IDetailsProps {
   product: IProduct;

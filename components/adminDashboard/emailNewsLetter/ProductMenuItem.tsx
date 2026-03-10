@@ -17,12 +17,12 @@ import { makeSelectIsProductSelected } from '@store/selectors';
 
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 import getProductName from '@utils/getProductName';
 import initSlotItemMap from '@utils/initSlotItemMap';
 
 import { IconId } from '@enums/iconsSpriteId';
-import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 interface IProductMenuItemProps {
   product: IProduct;

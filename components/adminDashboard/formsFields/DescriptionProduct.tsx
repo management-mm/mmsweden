@@ -18,8 +18,9 @@ import { selectDescWithAi } from '@store/selectors';
 
 import { useAppSelector } from '@hooks/useAppSelector';
 
-import { AppLocale, DEFAULT_LOCALE } from '@i18n/config';
 import { Label } from '@enums/i18nConstants';
+
+import { AppLocale, DEFAULT_LOCALE } from '@i18n/config';
 
 interface IDescriptionProductProps {
   description?: MultiLanguageString;

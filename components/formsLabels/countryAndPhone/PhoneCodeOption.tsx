@@ -1,4 +1,5 @@
 import { type FC } from 'react';
+
 import { useTranslations } from 'next-intl';
 
 import Flag from './Flag';
@@ -19,7 +20,7 @@ const PhoneCodeOption: FC<IPhoneCodeOptionProps> = ({
   phoneFormat,
   formatIndex = 0,
 }) => {
-  const t  = useTranslations();
+  const t = useTranslations();
 
   return (
     <div className="flex flex-wrap items-center">

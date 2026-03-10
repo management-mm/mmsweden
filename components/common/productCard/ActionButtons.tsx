@@ -1,9 +1,9 @@
 import { type FC } from 'react';
-import { useTranslations } from 'next-intl';
 import Skeleton from 'react-loading-skeleton';
 
 import type { IProduct } from '@interfaces/IProduct';
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 
 import useUpdateRequestedProducts from '@hooks/useUpdateRequestedProducts';
@@ -18,7 +18,7 @@ interface IActionsButtonsProps {
 }
 
 const ActionsButtons: FC<IActionsButtonsProps> = ({ isLoading, product }) => {
-  const  t  = useTranslations();
+  const t = useTranslations();
   const router = useRouter();
 
   const { isRequested, handleToggleFavorites } =

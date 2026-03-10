@@ -1,6 +1,7 @@
 'use client';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
+
 import Image from 'next/image';
 import { Autoplay, Scrollbar } from 'swiper/modules';
 

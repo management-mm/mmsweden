@@ -1,10 +1,5 @@
-'use client';
-
-import { useEffect, useMemo } from 'react';
-import { useTranslations } from 'next-intl';
-
 import type { IProduct } from 'interfaces/IProduct';
-import { useSearchParams } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 
 import ResetFilters from './ResetFilters';
 
@@ -15,124 +10,77 @@ import {
   type IFetchProductsParams,
   fetchProducts,
 } from '@store/products/operations';
-import {
-  selectProductsCacheByKey,
-  selectProductsLastFetchedAtByKey,
-  selectProductsStatusByKey,
-  selectTotalByKey,
-} from '@store/selectors';
+import { selectProductsCacheByKey, selectTotalByKey } from '@store/selectors';
+import { makeStore } from '@store/store';
 
-import { useAppDispatch } from '@hooks/useAppDispatch';
-import { useAppSelector } from '@hooks/useAppSelector';
-import useWindowWidth from '@hooks/useWindowWidth';
+import { buildCacheKey } from '@utils/buildCacheKey';
 
-import { filters } from '@enums/filters';
 import { Title } from '@enums/i18nConstants';
 
-import { TTL } from '@constants/cacheProducts';
-import { useCurrentLocale } from '@hooks/useCurrentLocale';
+import type { AppLocale } from '@i18n/config';
 
-
-const buildCacheKey = (base: Record<string, unknown>) => {
-  const sortedKeys = Object.keys(base).sort();
-  const normalized: Record<string, unknown> = {};
-
-  for (const k of sortedKeys) {
-    const v = (base as any)[k];
-    normalized[k] = Array.isArray(v) ? [...v].sort() : v;
-  }
-
-  return `products:${JSON.stringify(normalized)}`;
+type Props = {
+  locale: AppLocale;
+  query: {
+    title?: string;
+    manufacturer?: string;
+    condition?: string;
+    page?: string;
+    category: string[];
+    industry: string[];
+  };
 };
 
-const ProductsList = () => {
-  const t = useTranslations();
-  const dispatch = useAppDispatch();
+const PER_PAGE = 9;
 
-  const searchParams = useSearchParams();
-  const searchKey = searchParams.toString();
+const ProductsList = async ({ locale, query }: Props) => {
+  const t = await getTranslations();
 
-  const language = useCurrentLocale();
+  const page = Number(query.page || '1');
 
-  const windowWidth = useWindowWidth();
-  const perPage = windowWidth >= 1178 ? 9 : 8;
+  const paramsForFetch: IFetchProductsParams = {
+    ...(query.title ? { keyword: query.title } : {}),
+    page,
+    ...(query.category.length ? { category: query.category } : {}),
+    ...(query.industry.length ? { industry: query.industry } : {}),
+    ...(query.manufacturer ? { manufacturer: query.manufacturer } : {}),
+    ...(query.condition ? { condition: query.condition } : {}),
+    perPage: PER_PAGE,
+    lang: locale,
+    mode: 'replace',
+  };
 
-  const title = searchParams.get('title');
-  const manufacturer = searchParams.get('manufacturer');
-  const condition = searchParams.get('condition');
-  const page = searchParams.get('page') || '1';
+  const {
+    mode,
+    cacheKey: _cacheKey,
+    ...base
+  } = paramsForFetch as IFetchProductsParams & {
+    cacheKey?: string;
+  };
 
-  const categories = useMemo(
-    () => searchParams.getAll('category'),
-    [searchKey]
-  );
-  const industries = useMemo(
-    () => searchParams.getAll('industry'),
-    [searchKey]
-  );
+  const cacheKey = buildCacheKey(base as Record<string, unknown>);
 
-  const paramsForFetch: IFetchProductsParams = useMemo(
-    () => ({
-      ...(title ? { keyword: title } : {}),
-      page: Number(page),
-      ...(categories.length ? { category: categories } : {}),
-      ...(industries.length ? { industry: industries } : {}),
-      ...(manufacturer ? { manufacturer } : {}),
-      ...(condition ? { condition } : {}),
-      perPage,
-      lang: language,
-      mode: 'replace',
-    }),
-    [
-      title,
-      page,
-      categories,
-      industries,
-      manufacturer,
-      condition,
-      perPage,
-      language,
-    ]
+  const store = makeStore();
+
+  await store.dispatch(
+    fetchProducts({
+      ...paramsForFetch,
+      cacheKey,
+    })
   );
 
-  const cacheKey = useMemo(() => {
-    const { mode, cacheKey: _ck, ...base } = paramsForFetch;
-    return buildCacheKey(base as Record<string, unknown>);
-  }, [paramsForFetch]);
+  const state = store.getState();
 
-  const products: IProduct[] = useAppSelector(
-    selectProductsCacheByKey(cacheKey)
-  );
-  const total: number = useAppSelector(selectTotalByKey(cacheKey));
-  const lastFetchedAt = useAppSelector(
-    selectProductsLastFetchedAtByKey(cacheKey)
-  );
-  const status = useAppSelector(selectProductsStatusByKey(cacheKey));
+  const products = selectProductsCacheByKey(cacheKey)(state) as IProduct[];
+  const total = selectTotalByKey(cacheKey)(state) as number;
 
-  useEffect(() => {
-    if (status === 'loading') return;
-
-    const isFresh = lastFetchedAt !== null && Date.now() - lastFetchedAt < TTL;
-
-    if (products.length > 0 && isFresh) return;
-
-    dispatch(fetchProducts({ ...paramsForFetch, cacheKey }));
-  }, [
-    dispatch,
-    cacheKey,
-    paramsForFetch,
-    products.length,
-    lastFetchedAt,
-    status,
-  ]);
-
-  const pageCount = Math.ceil(total / perPage);
+  const pageCount = Math.ceil(total / PER_PAGE);
 
   const hasAnyFilters =
-    !!searchParams.get(filters.Category) ||
-    !!searchParams.get(filters.Manufacturer) ||
-    !!searchParams.get(filters.Industry) ||
-    !!searchParams.get(filters.Condition);
+    !!query.category.length ||
+    !!query.industry.length ||
+    !!query.manufacturer ||
+    !!query.condition;
 
   return (
     <section className="pb-[96px] lg:pb-[124px]">
@@ -157,7 +105,7 @@ const ProductsList = () => {
         </ul>
       )}
 
-      {pageCount !== 1 && <Pagination pageCount={pageCount} className="" />}
+      {pageCount > 1 && <Pagination pageCount={pageCount} className="" />}
     </section>
   );
 };

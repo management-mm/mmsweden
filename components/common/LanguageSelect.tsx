@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import Select from 'react-select';
+
 import clsx from 'clsx';
 import { usePathname, useRouter } from 'next/navigation';
 
@@ -9,11 +10,12 @@ import DropdownIndicator from '@components/header/DropdownIndicator';
 import LanguageOption from '@components/header/LanguageOption';
 
 import languageOptions from '@constants/languageOptions';
+
 import {
+  type AppLocale,
   DEFAULT_LOCALE,
   SUPPORTED_LOCALES,
   isAppLocale,
-  type AppLocale,
 } from '@i18n/config';
 
 const optionStyles = {

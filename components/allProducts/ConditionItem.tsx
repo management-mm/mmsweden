@@ -1,6 +1,6 @@
 import { type ChangeEvent, type FC } from 'react';
-import { useTranslations } from 'next-intl';
 
+import { useTranslations } from 'next-intl';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { Filter } from '@enums/i18nConstants';
@@ -13,7 +13,7 @@ const ConditionItem: FC<IConditionItemProps> = ({ condition }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const  t  = useTranslations();
+  const t = useTranslations();
 
   const isItemSelected = (item: string) =>
     searchParams.getAll('condition').includes(item);

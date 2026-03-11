@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 
-import { SUPPORTED_LOCALES, type AppLocale } from '@i18n/config';
+import { type AppLocale, SUPPORTED_LOCALES } from '@i18n/config';
 
 type ProductSitemapItem = {
   slug: string;

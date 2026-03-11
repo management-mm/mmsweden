@@ -17,6 +17,8 @@ import NaviArrowSlider from '@components/common/NaviArrowSlider';
 
 import useSwiperNavigation from '@hooks/useSwiperNavigation';
 
+import { optimizeCloudinaryImage } from '@utils/cloudinary';
+
 import { IconId } from '@enums/iconsSpriteId';
 
 interface ILightBoxProps {
@@ -118,7 +120,7 @@ const LightBox: FC<ILightBoxProps> = ({
             >
               <TransformComponent>
                 <img
-                  src={photo}
+                  src={optimizeCloudinaryImage(photo, 1200)}
                   alt={`Photo ${index + 1}`}
                   className="max-h-screen max-w-full object-contain lg:w-[1000px]"
                 />

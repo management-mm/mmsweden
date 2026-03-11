@@ -1,3 +1,5 @@
+import { Suspense } from 'react';
+
 import { NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import localFont from 'next/font/local';
@@ -61,9 +63,11 @@ export default async function LocaleLayout({
   const messages = (await messagesMap[locale]()).default;
 
   return (
-    <html lang={locale} className={inter.variable}>
+    <html lang={locale} className={inter.variable} suppressHydrationWarning>
       <body className={cn(inter.className, 'bg-main')}>
-        <Sprite />
+        <Suspense fallback={null}>
+          <Sprite />
+        </Suspense>
         <NextIntlClientProvider
           key={locale}
           locale={locale}

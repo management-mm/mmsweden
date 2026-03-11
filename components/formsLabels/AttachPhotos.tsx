@@ -7,6 +7,7 @@ import {
   useFormikContext,
 } from 'formik';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 
 import SvgIcon from '@components/common/SvgIcon';
 
@@ -55,15 +56,19 @@ const AttachPhotos = () => {
             <div key={index} className="relative">
               <button className="rounded-full"></button>
 
-              <img
-                src={avatar}
-                alt={`photo-${index}`}
-                className="h-[80px] w-full rounded-[4px] object-cover"
-              />
+              <div className="relative h-[80px] w-[80px] overflow-hidden rounded-[4px]">
+                <Image
+                  src={avatar}
+                  alt={`photo-${index}`}
+                  fill
+                  className="object-cover"
+                  sizes="80px"
+                />
+              </div>
             </div>
           ))}
 
-          <div className="">
+          <div>
             <label className="flex cursor-pointer items-center gap-[12px]">
               <Field
                 type="file"

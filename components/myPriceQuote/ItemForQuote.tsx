@@ -3,6 +3,7 @@
 import { type FC } from 'react';
 
 import type { IProduct } from 'interfaces/IProduct';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import SvgIcon from '@components/common/SvgIcon';
@@ -33,11 +34,13 @@ const ItemForQuote: FC<IItemsForQuoteProps> = ({
   return (
     <li className="relative flex px-[14px] py-[24px]">
       <button type="button" className="mr-[14px]" onClick={goToDetails}>
-        <img
-          className="rounded-[4px]"
+        <Image
           src={photos[0]}
           alt={getProductName(name, language)}
           width={97}
+          height={73}
+          className="rounded-[4px] object-cover"
+          sizes="97px"
         />
       </button>
 

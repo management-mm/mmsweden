@@ -19,7 +19,7 @@ const Header = () => {
   };
 
   return (
-    <header className="py-[8px] md:py-[14px]">
+    <header className="relative z-20 py-[8px] md:py-[14px]">
       <div className="container flex items-center justify-between">
         <Logo />
         <Navbar intent="header" />

@@ -3,6 +3,17 @@ import withNextIntl from 'next-intl/plugin';
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
+    ],
+  },
+  experimental: {
+    optimizePackageImports: ['swiper', 'lodash'],
+  },
 };
 
 export default withNextIntl('./i18n/request.ts')(nextConfig);

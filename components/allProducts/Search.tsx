@@ -1,9 +1,8 @@
 'use client';
 
-import { type ChangeEvent, type FC, useEffect, useMemo, useState } from 'react';
+import { type FC, useEffect, useState } from 'react';
 
 import clsx from 'clsx';
-import debounce from 'lodash/debounce';
 import { useTranslations } from 'next-intl';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
@@ -24,58 +23,50 @@ const Search: FC<ISearchProps> = ({ className }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
   const searchKey = searchParams.toString();
+  const titleFromUrl = searchParams.get('title') ?? '';
 
   const isAdmin = pathname.includes('/admin/email-newsletter');
 
-  const [inputValue, setInputValue] = useState(searchParams.get('title') ?? '');
-  const [isEmptyValue, setIsEmptyValue] = useState<boolean>(
-    searchParams.get('title') ? false : true
-  );
+  const [inputValue, setInputValue] = useState(titleFromUrl);
 
   useEffect(() => {
-    const title = searchParams.get('title') ?? '';
-    setInputValue(title);
-    setIsEmptyValue(title.length === 0);
-  }, [searchKey, searchParams]);
+    setInputValue(titleFromUrl);
+  }, [titleFromUrl]);
 
-  const pushTitleToUrl = (raw: string) => {
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      const params = new URLSearchParams(searchKey);
+
+      if (!inputValue.trim()) {
+        params.delete('title');
+      } else {
+        params.set('title', inputValue.trim());
+        params.delete('page');
+      }
+
+      const qs = params.toString();
+      const nextUrl = qs ? `${pathname}?${qs}` : pathname;
+
+      router.push(nextUrl, { scroll: false });
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, [inputValue, pathname, router, searchKey]);
+
+  const isEmptyValue = inputValue.trim().length === 0;
+
+  const handleReset = () => {
+    setInputValue('');
+
     const params = new URLSearchParams(searchKey);
-
-    if (!raw.trim()) {
-      params.delete('title');
-    } else {
-      params.set('title', raw.trim());
-
-      params.delete('page');
-    }
+    params.delete('title');
+    params.delete('page');
 
     const qs = params.toString();
     router.push(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
   };
-
-  const handleInputText = useMemo(
-    () =>
-      debounce((e: ChangeEvent<HTMLInputElement>) => {
-        const val = e.target.value;
-
-        pushTitleToUrl(val);
-
-        if (val) {
-          setIsEmptyValue(false);
-        } else {
-          setIsEmptyValue(true);
-        }
-      }, 300),
-
-    [pathname, searchKey]
-  );
-
-  useEffect(() => {
-    return () => {
-      handleInputText.cancel();
-    };
-  }, [handleInputText]);
 
   return (
     <label className={cn('mb-[22px] block w-full md:w-[264px]', className)}>
@@ -86,10 +77,9 @@ const Search: FC<ISearchProps> = ({ className }) => {
           value={inputValue}
           className={clsx(
             'font-openSans transition-border duration-primary focus:border-secondary-accent w-full rounded-[32px] border border-[rgba(102,102,102,0.22)] bg-transparent pr-[18px] pl-[16px] outline-none focus:border',
-            isAdmin ? 'py-[12px] text-[14x]' : 'py-[10px] text-[12px]'
+            isAdmin ? 'py-[12px] text-[14px]' : 'py-[10px] text-[12px]'
           )}
           onChange={e => setInputValue(e.target.value)}
-          onInput={handleInputText}
         />
 
         {isEmptyValue ? (
@@ -102,14 +92,7 @@ const Search: FC<ISearchProps> = ({ className }) => {
             size={{ width: isAdmin ? 16 : 14, height: isAdmin ? 16 : 14 }}
           />
         ) : (
-          <button
-            type="button"
-            onClick={() => {
-              setIsEmptyValue(true);
-              setInputValue('');
-              pushTitleToUrl('');
-            }}
-          >
+          <button type="button" onClick={handleReset}>
             <SvgIcon
               className="fill-desc absolute right-[18px] bottom-[14px]"
               iconId={IconId.Reset}

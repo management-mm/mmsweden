@@ -1,8 +1,11 @@
 import { useTranslations } from 'next-intl';
 
-import Slider from './Slider';
-
 import { Description, NavBar } from '@enums/i18nConstants';
+import dynamic from 'next/dynamic';
+import Loader from '@components/common/loaders/Loader';
+
+const Slider = dynamic(() => import('./Slider'), 
+{ loading: () => ( <Loader /> ), });
 
 const Hero = () => {
   const t = useTranslations();

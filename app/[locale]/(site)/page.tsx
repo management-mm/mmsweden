@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 
-import AboutUs from '@components/home/aboutUs/AboutUs';
 import Hero from '@components/home/hero/Hero';
 import Industries from '@components/home/industries/Industries';
-import LatestArrivals from '@components/home/latestArrivals/LatestArrivals';
+import AboutUs from '@components/home/aboutUs/AboutUs';
 import SellToUs from '@components/home/sellToUs/SellToUs';
+import LatestArrivals from '@components/home/latestArrivals/LatestArrivals';
 
 import type { AppLocale } from '@i18n/config';
 import { createPageMetadata } from '@i18n/seo';
@@ -33,7 +34,9 @@ const HomePage = () => {
       <Industries />
       <AboutUs />
       <SellToUs />
-      <LatestArrivals />
+      <Suspense fallback={null}>
+        <LatestArrivals />
+      </Suspense>
     </>
   );
 };

@@ -1,36 +1,23 @@
-'use client';
-
 import { type FC } from 'react';
-import { SkeletonTheme } from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
-
 import clsx from 'clsx';
 import type { IProduct } from 'interfaces/IProduct';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 import ActionsButtons from './ActionButtons';
 import ProductCondition from './ProductCondition';
 import ProductDetails from './ProductDetails';
 import ProductImage from './ProductImage';
-
-import SvgIcon from '../SvgIcon';
-
-import { clearProduct } from '@store/products/productsSlice';
-import { selectIsLoading } from '@store/selectors';
-
-import { useAppDispatch } from '@hooks/useAppDispatch';
-import { useAppSelector } from '@hooks/useAppSelector';
+import AdminEditProductButton from './AdminEditProductButton';
 
 import { generateProductSlug } from '@utils/generateProductSlug';
 
-import { IconId } from '@enums/iconsSpriteId';
-
-import { AppLocale, DEFAULT_LOCALE, SUPPORTED_LOCALES } from '@i18n/config';
+import { AppLocale } from '@i18n/config';
 
 export interface IProductCardProps {
   product: IProduct;
   className?: string;
+  language: AppLocale;
+  isAdmin?: boolean;
+  isLoading?: boolean;
 }
 
 const ProductCard: FC<IProductCardProps> = ({
@@ -45,85 +32,63 @@ const ProductCard: FC<IProductCardProps> = ({
     deletionDate,
   },
   className,
+  language,
+  isAdmin = false,
+  isLoading = false,
 }) => {
-  const pathname = usePathname();
-  const isAdmin = pathname.includes('/admin');
-
-  const segments = pathname.split('/');
-  const firstSegment = segments[1];
-
-  const language = SUPPORTED_LOCALES.includes(firstSegment as AppLocale)
-    ? (firstSegment as AppLocale)
-    : DEFAULT_LOCALE;
-
-  const isLoading = useAppSelector(selectIsLoading);
-  const dispatch = useAppDispatch();
-
-  const handleClear = () => {
-    dispatch(clearProduct());
-  };
-
   const slug = generateProductSlug(product);
 
   return (
-    <SkeletonTheme baseColor="#E1E1E1" highlightColor="#F2F2F2">
-      <article
+    <article
+      className={clsx(
+        'border-secondary flex h-[504px] flex-col rounded-[4px] border pb-[20px]',
+        className,
+        deletionDate && 'opacity-70'
+      )}
+    >
+      <div className="relative mb-[8px]">
+        <ProductImage
+          isLoading={isLoading}
+          photos={photos}
+          name={name}
+          language={language}
+        />
+
+        <ProductCondition condition={condition} />
+
+        {deletionDate && (
+          <span className="text-secondary absolute top-[8px] right-[8px] z-[11] inline-block rounded-[32px] bg-red-900 px-[6px] py-[3px] text-[12px] leading-tight font-medium uppercase">
+            Sold
+          </span>
+        )}
+      </div>
+
+      <div
         className={clsx(
-          'border-secondary flex h-[504px] flex-col rounded-[4px] border pb-[20px]',
-          className,
-          deletionDate && 'opacity-70'
+          'flex flex-grow flex-col',
+          isAdmin ? 'px-[6px]' : 'px-[14px]'
         )}
       >
-        <div className="relative mb-[8px]">
-          <ProductImage
-            isLoading={isLoading}
-            photos={photos}
-            name={name}
+        <ProductDetails
+          isLoading={isLoading}
+          name={name}
+          language={language}
+          idNumber={idNumber}
+          description={description}
+          dimensions={dimensions}
+        />
+
+        {isAdmin ? (
+          <AdminEditProductButton language={language} slug={slug} />
+        ) : (
+          <ActionsButtons
             language={language}
-          />
-          <ProductCondition condition={condition} />
-
-          {deletionDate && (
-            <span className="text-secondary absolute top-[8px] right-[8px] z-[11] inline-block rounded-[32px] bg-red-900 px-[6px] py-[3px] text-[12px] leading-tight font-medium uppercase">
-              Sold
-            </span>
-          )}
-        </div>
-
-        <div
-          className={clsx(
-            'flex flex-grow flex-col',
-            isAdmin ? 'px-[6px]' : 'px-[14px]'
-          )}
-        >
-          <ProductDetails
             isLoading={isLoading}
-            name={name}
-            language={language}
-            idNumber={idNumber}
-            description={description}
-            dimensions={dimensions}
+            product={product}
           />
-
-          {isAdmin ? (
-            <Link
-              href={`/${language}/admin/all-products/edit-product/${slug}`}
-              onClick={handleClear}
-              className="border-primary text-primary flex w-full items-center justify-center gap-[8px] rounded-[32px] border py-[10px] text-[12px] font-semibold"
-            >
-              <SvgIcon
-                className="fill-primary"
-                iconId={IconId.EditProduct}
-                size={{ width: 16, height: 16 }}
-              />
-              Edit Product
-            </Link>
-          ) : (
-            <ActionsButtons isLoading={isLoading} product={product} />
-          )}
-        </div>
-      </article>
-    </SkeletonTheme>
+        )}
+      </div>
+    </article>
   );
 };
 

@@ -1,7 +1,7 @@
 'use client';
 
-import { type ChangeEvent, type FC, useEffect, useMemo, useState } from 'react';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import { type ChangeEvent, type FC, useMemo, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 
 import type { ICategory } from '@interfaces/ICategory';
 import type { IIndustry } from '@interfaces/IIndustry';
@@ -42,22 +42,55 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
-
   const language = useCurrentLocale();
-
-  const [groupedFilters, setGroupedFilters] = useState<
-    Record<string, (ICategory | IManufacturer | IIndustry)[]>
-  >({});
+  const t = useTranslations();
 
   const [isOpen, setIsOpen] = useState(filterName === filters.Category);
-
-  const t = useTranslations();
 
   const selectedValues = useMemo(() => {
     return searchParams.getAll(filterName);
   }, [searchParams, filterName]);
 
-  const isItemSelected = (item: string) => selectedValues.includes(item);
+  const selectedValuesSet = useMemo(() => {
+    return new Set(selectedValues);
+  }, [selectedValues]);
+
+  const groupedFilters = useMemo(() => {
+    const grouped = items.reduce(
+      (acc, item) => {
+        const characterKey = getFilterItemName(filterName, item, language)
+          .charAt(0)
+          ?.toUpperCase();
+
+        if (!characterKey) return acc;
+
+        if (!acc[characterKey]) acc[characterKey] = [];
+        acc[characterKey].push(item);
+
+        return acc;
+      },
+      {} as Record<string, (ICategory | IManufacturer | IIndustry)[]>
+    );
+
+    Object.keys(grouped).forEach(key => {
+      grouped[key].sort((a, b) => {
+        const nameA = getFilterItemName(filterName, a, language).toLowerCase();
+        const nameB = getFilterItemName(filterName, b, language).toLowerCase();
+        return nameA.localeCompare(nameB);
+      });
+    });
+
+    return Object.fromEntries(
+      Object.entries(grouped).sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
+    );
+  }, [items, filterName, language]);
+
+  const title =
+    filterName === filters.Category
+      ? t(Filter.Category)
+      : filterName === filters.Manufacturer
+        ? t(Filter.Manufacturer)
+        : t(Filter.Industry);
 
   const updateSearchParams = (updater: (params: URLSearchParams) => void) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -81,55 +114,23 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
     });
   };
 
-  useEffect(() => {
-    const grouped = items.reduce(
-      (acc, item) => {
-        const characterKey = getFilterItemName(filterName, item, language)
-          .split('')[0]
-          ?.toUpperCase();
-
-        if (!characterKey) return acc;
-
-        if (!acc[characterKey]) acc[characterKey] = [];
-        acc[characterKey].push(item);
-
-        return acc;
-      },
-      {} as Record<string, (ICategory | IManufacturer | IIndustry)[]>
-    );
-
-    Object.keys(grouped).forEach(key => {
-      grouped[key].sort((a, b) => {
-        const nameA = getFilterItemName(filterName, a, language).toLowerCase();
-        const nameB = getFilterItemName(filterName, b, language).toLowerCase();
-        return nameA.localeCompare(nameB);
-      });
-    });
-
-    const sortedGrouped = Object.fromEntries(
-      Object.entries(grouped).sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
-    );
-
-    setGroupedFilters(sortedGrouped);
-  }, [items, filterName, language]);
-
   return (
     <fieldset className="mb-[10px]">
-      <div
-        className="flex cursor-pointer items-center justify-between py-[10px]"
+      <button
+        type="button"
+        className="flex w-full items-center justify-between py-[10px]"
         onClick={() => setIsOpen(v => !v)}
+        aria-expanded={isOpen}
       >
         <legend className="font-openSans text-title text-[14px] font-semibold">
-          {filterName === filters.Category && t(Filter.Category)}
-          {filterName === filters.Manufacturer && t(Filter.Manufacturer)}
-          {filterName === filters.Industry && t(Filter.Industry)}
+          {title}
         </legend>
 
         <SvgIcon
           iconId={isOpen ? IconId.ArrowTop : IconId.ArrowDown}
           size={{ width: 10, height: 10 }}
         />
-      </div>
+      </button>
 
       <div
         className={clsx(
@@ -143,7 +144,7 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
           {Object.entries(groupedFilters).map(([character, list]) => (
             <div key={character}>
               <p className="text-desc mb-4 text-[12px] font-semibold">
-                {character.toUpperCase()}
+                {character}
               </p>
 
               <div className="flex flex-col gap-[12px]">
@@ -155,38 +156,32 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
                   );
 
                   return (
-                    <SkeletonTheme
-                      key={item._id}
-                      baseColor="#E1E1E1"
-                      highlightColor="#F2F2F2"
-                    >
-                      <div className="flex gap-[6px]">
-                        {!isLoading ? (
-                          <input
-                            onChange={handleSelectedOption}
-                            type="checkbox"
-                            checked={isItemSelected(valueEn)}
-                            id={item._id}
-                            name={filterName}
-                            className="checked:after:bg-primary checked:after:bg-check-icon h-[16px] w-[16px] cursor-pointer appearance-none rounded-[4px] after:block after:h-[16px] after:w-[16px] after:rounded-[4px] after:border after:border-[rgba(0,32,52,.12)] checked:after:bg-center checked:after:bg-no-repeat"
-                            value={valueEn}
-                          />
-                        ) : (
-                          <Skeleton width={16} />
-                        )}
+                    <div key={item._id} className="flex gap-[6px]">
+                      {!isLoading ? (
+                        <input
+                          onChange={handleSelectedOption}
+                          type="checkbox"
+                          checked={selectedValuesSet.has(valueEn)}
+                          id={item._id}
+                          name={filterName}
+                          className="checked:after:bg-primary checked:after:bg-check-icon h-[16px] w-[16px] cursor-pointer appearance-none rounded-[4px] after:block after:h-[16px] after:w-[16px] after:rounded-[4px] after:border after:border-[rgba(0,32,52,.12)] checked:after:bg-center checked:after:bg-no-repeat"
+                          value={valueEn}
+                        />
+                      ) : (
+                        <Skeleton width={16} />
+                      )}
 
-                        {!isLoading ? (
-                          <label
-                            className="font-openSans text-[14px] capitalize"
-                            htmlFor={item._id}
-                          >
-                            {getFilterItemName(filterName, item, language)}
-                          </label>
-                        ) : (
-                          <Skeleton width={150} />
-                        )}
-                      </div>
-                    </SkeletonTheme>
+                      {!isLoading ? (
+                        <label
+                          className="font-openSans text-[14px] capitalize"
+                          htmlFor={item._id}
+                        >
+                          {getFilterItemName(filterName, item, language)}
+                        </label>
+                      ) : (
+                        <Skeleton width={150} />
+                      )}
+                    </div>
                   );
                 })}
               </div>

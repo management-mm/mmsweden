@@ -16,12 +16,15 @@ import ProductCard from '@components/common/productCard/ProductCard';
 import useSwiperNavigation from '@hooks/useSwiperNavigation';
 
 import { Title } from '@enums/i18nConstants';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 const RecommendedProducts = () => {
   const t = useTranslations();
   const [recommendedProducts, setRecommendedProducts] = useState<IProduct[]>(
     []
   );
+
+  const language = useCurrentLocale()
 
   const params = useParams<{ slug: string }>();
   const slug = params?.slug;
@@ -73,6 +76,7 @@ const RecommendedProducts = () => {
           {recommendedProducts.map(product => (
             <SwiperSlide key={product._id}>
               <ProductCard
+                language={language}
                 product={product}
                 className="w-[296px] md:w-[264px]"
               />

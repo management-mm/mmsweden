@@ -4,7 +4,6 @@ import { useEffect, useMemo } from 'react';
 
 import type { IProduct } from '@interfaces/IProduct';
 import { useTranslations } from 'next-intl';
-import { usePathname } from 'next/navigation';
 
 import ProductCard from '@components/common/productCard/ProductCard';
 
@@ -86,6 +85,7 @@ const LatestArrivals = () => {
                 <ProductCard
                   key={product._id}
                   product={product}
+                  language={language}
                   className="w-[296px] md:w-[264px]"
                 />
               ))}

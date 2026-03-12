@@ -1,5 +1,3 @@
-'use client';
-
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
@@ -11,8 +9,6 @@ import { cn } from '@utils/cn';
 import { Button, Description } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
-const heroMobile = '/images/heros/mobile-home-bg.webp';
-const heroTablet = '/images/heros/tablet-home-bg.webp';
 const heroDesktop = '/images/heros/desktop-home-bg.webp';
 
 const FirstHeroPart = () => {
@@ -23,38 +19,15 @@ const FirstHeroPart = () => {
       className={cn('min-h-fallback', 'bg-primary relative overflow-hidden')}
     >
       <div className="absolute inset-0 z-0">
-        <Image
-          src={heroMobile}
-          alt=""
-          fill
-          priority
-          fetchPriority="high"
-          quality={80}
-          sizes="100vw"
-          className="object-cover md:hidden"
-        />
-
-        <Image
-          src={heroTablet}
-          alt=""
-          fill
-          priority
-          fetchPriority="high"
-          quality={80}
-          sizes="100vw"
-          className="hidden object-cover md:block lg:hidden"
-        />
-
-        <Image
-          src={heroDesktop}
-          alt=""
-          fill
-          priority
-          fetchPriority="high"
-          quality={80}
-          sizes="100vw"
-          className="hidden object-cover lg:block"
-        />
+<Image
+  src={heroDesktop}
+  alt=""
+  fill
+  priority
+  fetchPriority="high"
+  sizes="100vw"
+  className="object-cover"
+/>
 
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,32,59,0.7)_0%,rgba(0,87,161,0.5)_100%)]" />
       </div>

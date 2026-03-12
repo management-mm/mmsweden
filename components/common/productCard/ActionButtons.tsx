@@ -1,51 +1,52 @@
-import { type FC } from 'react';
-import Skeleton from 'react-loading-skeleton';
+'use client';
 
-import type { IProduct } from '@interfaces/IProduct';
+import { type FC } from 'react';
+import Link from 'next/link';
+import Skeleton from 'react-loading-skeleton';
 import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
+
+import type { IProduct } from '@interfaces/IProduct';
 
 import useUpdateRequestedProducts from '@hooks/useUpdateRequestedProducts';
 
 import { generateProductSlug } from '@utils/generateProductSlug';
 
 import { Button } from '@enums/i18nConstants';
+import { AppLocale } from '@i18n/config';
 
 interface IActionsButtonsProps {
   isLoading: boolean;
   product: IProduct;
+  language: AppLocale;
 }
 
-const ActionsButtons: FC<IActionsButtonsProps> = ({ isLoading, product }) => {
+const ActionsButtons: FC<IActionsButtonsProps> = ({
+  isLoading,
+  product,
+  language,
+}) => {
   const t = useTranslations();
-  const router = useRouter();
-
   const { isRequested, handleToggleFavorites } =
     useUpdateRequestedProducts(product);
 
-  const goToDetails = () => {
-    const slug = generateProductSlug(product);
-
-    router.push(`/all-products/${slug}`);
-  };
+  const slug = generateProductSlug(product);
 
   return (
     <div className="mt-auto flex w-full gap-[8px] md:gap-[16px] lg:gap-[8px]">
       {!isLoading ? (
         <>
-          <button
-            className="border-primary font-inter text-primary hover:bg-primary hover:text-secondary h-[40px] w-full rounded-[32px] border bg-transparent text-[12px] font-semibold transition-colors duration-500"
-            onClick={goToDetails}
-            type="button"
+          <Link
+            href={`/${language}/all-products/${slug}`}
+            className="border-primary font-inter text-primary hover:bg-primary hover:text-secondary flex h-[40px] w-full items-center justify-center rounded-[32px] border bg-transparent text-[12px] font-semibold transition-colors duration-500"
           >
             {t(Button.ViewDetails)}
-          </button>
+          </Link>
 
           {!product.deletionDate && (
             <button
               className={clsx(
-                'text-primary h-[40px] shrink-0 rounded-[32px] px-[15px] text-[12px] font-semibold',
+                'h-[40px] shrink-0 rounded-[32px] px-[15px] text-[12px] font-semibold',
                 isRequested ? 'bg-secondary-accent text-secondary' : 'bg-accent'
               )}
               onClick={() => handleToggleFavorites(product)}
@@ -57,8 +58,8 @@ const ActionsButtons: FC<IActionsButtonsProps> = ({ isLoading, product }) => {
         </>
       ) : (
         <>
-          <Skeleton width={100} height={30} />
-          <Skeleton width={100} height={30} />
+          <Skeleton width={100} height={40} borderRadius={9999} />
+          <Skeleton width={100} height={40} borderRadius={9999} />
         </>
       )}
     </div>

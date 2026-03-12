@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 
@@ -11,24 +10,20 @@ import FoundProducts from './FoundProducts';
 import MobileMenu from '@components/common/MobileMenu';
 import SvgIcon from '@components/common/SvgIcon';
 
-import useWindowWidth from '@hooks/useWindowWidth';
-
 import { filters } from '@enums/filters';
 import { Filter } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
 const Filters = () => {
   const t = useTranslations();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
+  const [isOpen, setIsOpen] = useState(false);
   const searchParams = useSearchParams();
-  const windowWidth = useWindowWidth();
 
-  const handleToogleFilters = () => {
+  const handleToggleFilters = () => {
     setIsOpen(prev => !prev);
   };
 
-  const filtersCount = () =>
+  const activeFiltersCount =
     searchParams.getAll(filters.Category).length +
     searchParams.getAll(filters.Manufacturer).length +
     searchParams.getAll(filters.Industry).length +
@@ -38,14 +33,15 @@ const Filters = () => {
     <>
       <div className="mb-[22px] flex justify-between md:gap-[22px] lg:gap-0">
         <button
-          className="flex cursor-default items-center gap-[8px]"
-          onClick={windowWidth < 1178 ? handleToogleFilters : undefined}
+          type="button"
+          className="flex items-center gap-[8px]"
+          onClick={handleToggleFilters}
         >
           <SvgIcon iconId={IconId.Filter} size={{ width: 14, height: 14 }} />
 
-          <h2 className="font-openSans cursor-default text-[12px]">
+          <h2 className="font-openSans text-[12px]">
             {t(Filter.Filters)}
-            <span> ({filtersCount()})</span>
+            <span> ({activeFiltersCount})</span>
           </h2>
         </button>
 
@@ -55,9 +51,9 @@ const Filters = () => {
       <MobileMenu
         direction="left"
         isOpen={isOpen}
-        handleToggleMenu={handleToogleFilters}
+        handleToggleMenu={handleToggleFilters}
       >
-        <FiltersGroup className="px-[28px]" />
+        <FiltersGroup className="px-[28px] lg:px-0" />
       </MobileMenu>
 
       <FiltersGroup className="hidden lg:block" />

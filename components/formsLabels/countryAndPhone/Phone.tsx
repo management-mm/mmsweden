@@ -5,7 +5,6 @@ import { type ChangeEvent, type FC, useMemo, useState } from 'react';
 import type { ICountryOption } from '@interfaces/ICountryOption';
 import { ErrorMessage, Field, useFormikContext } from 'formik';
 import * as _ from 'lodash';
-import { usePathname } from 'next/navigation';
 
 import Menu from './Menu';
 import PhoneCodeOption from './PhoneCodeOption';

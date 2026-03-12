@@ -1,14 +1,18 @@
 import type { Metadata } from 'next';
 
-import FormForSale from '@components/sellToUs/FormForSale';
 import Instructions from '@components/sellToUs/Instructions';
 
 import type { AppLocale } from '@i18n/config';
 import { createPageMetadata } from '@i18n/seo';
+import dynamic from 'next/dynamic';
+import Loader from '@components/common/loaders/Loader';
 
 type Props = {
   params: Promise<{ locale: AppLocale }>;
 };
+
+const FormForSale = dynamic(() => import('@components/sellToUs/FormForSale'), 
+{ loading: () => ( <Loader /> ), });
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;

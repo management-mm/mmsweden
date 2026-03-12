@@ -1,6 +1,7 @@
 'use client';
 
 import { type FC } from 'react';
+import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
@@ -29,16 +30,21 @@ const ProductHoverSwiper: FC<Props> = ({ photos, alt, setCurrentIndex }) => {
         className="h-[218px]"
       >
         {photos.map((photo, index) => (
-          <SwiperSlide key={photo}>
-            <img
-              src={optimizeCloudinaryImage(photo, 600)}
-              alt={alt}
-              className="h-[218px] w-full rounded-[4px] object-cover"
-              loading="lazy"
-              decoding="async"
-              draggable={false}
+          <SwiperSlide key={`${photo}-${index}`} className="photo-slide">
+            <div
+              className="relative h-[218px] w-full overflow-hidden rounded-[4px]"
               onClick={() => setCurrentIndex(index)}
-            />
+            >
+              <Image
+                src={optimizeCloudinaryImage(photo, 320)}
+                alt={alt}
+                fill
+                className="object-cover"
+                sizes="320px"
+                priority={index === 0}
+                draggable={false}
+              />
+            </div>
           </SwiperSlide>
         ))}
 

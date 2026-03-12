@@ -1,7 +1,5 @@
 'use client';
 
-import Link from 'next/link';
-
 import NavLinkBtn from '@components/common/NavLinkBtn';
 
 export default function NotFound() {

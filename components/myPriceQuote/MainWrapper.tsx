@@ -2,9 +2,6 @@
 
 import { useTranslations } from 'next-intl';
 
-import FormForRequestQuote from './FormForRequestQuote';
-import PriceQuoteList from './PriceQuoteList';
-
 import NavLinkBtn from '@components/common/NavLinkBtn';
 import SvgIcon from '@components/common/SvgIcon';
 
@@ -14,6 +11,13 @@ import { useAppSelector } from '@hooks/useAppSelector';
 
 import { Button, Description, Title } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
+import dynamic from 'next/dynamic';
+import Loader from '@components/common/loaders/Loader';
+const FormForRequestQuote = dynamic(() => import('./FormForRequestQuote'), 
+{ loading: () => ( <Loader /> ), });
+
+const PriceQuoteList = dynamic(() => import('./PriceQuoteList'), 
+{ loading: () => ( <Loader /> ), });
 
 const MainWrapper = () => {
   const t = useTranslations();

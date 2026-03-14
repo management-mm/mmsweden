@@ -7,6 +7,7 @@ import {
   REGISTER,
   REHYDRATE,
   persistReducer,
+  persistStore,
 } from 'redux-persist';
 import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 
@@ -43,7 +44,7 @@ const authPersistConfig = {
   whitelist: ['token'],
 };
 
-export const rootReducer = combineReducers({
+const rootReducer = combineReducers({
   auth: persistReducer<AuthState>(authPersistConfig, authReducer),
   selectedProducts: selectedProductsReducer,
   products: productsReducer,
@@ -53,17 +54,18 @@ export const rootReducer = combineReducers({
   industries: industriesReducer,
 });
 
-export const makeStore = () =>
-  configureStore({
-    reducer: rootReducer,
-    middleware: getDefaultMiddleware =>
-      getDefaultMiddleware({
-        serializableCheck: {
-          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-        },
-      }),
-  });
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+});
 
-export type RootState = ReturnType<typeof rootReducer>;
-export type AppStore = ReturnType<typeof makeStore>;
-export type AppDispatch = AppStore['dispatch'];
+export const persistor = persistStore(store);
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export type AppStore = typeof store;

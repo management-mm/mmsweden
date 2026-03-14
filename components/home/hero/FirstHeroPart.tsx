@@ -19,15 +19,15 @@ const FirstHeroPart = () => {
       className={cn('min-h-fallback', 'bg-primary relative overflow-hidden')}
     >
       <div className="absolute inset-0 z-0">
-<Image
-  src={heroDesktop}
-  alt=""
-  fill
-  priority
-  fetchPriority="high"
-  sizes="100vw"
-  className="object-cover"
-/>
+        <Image
+          src={heroDesktop}
+          alt=""
+          fill
+          priority
+          fetchPriority="high"
+          sizes="100vw"
+          className="object-cover"
+        />
 
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,32,59,0.7)_0%,rgba(0,87,161,0.5)_100%)]" />
       </div>

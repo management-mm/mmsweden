@@ -2,13 +2,15 @@ import type { FC } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
 import type { IProduct } from '@interfaces/IProduct';
+import { useTranslations } from 'next-intl';
 
-import DecorativeLine from '@components/common/DecorativeLine';
 import RequestPricingButton from './RequestPricingButton';
 
+import DecorativeLine from '@components/common/DecorativeLine';
+
 import { Filter, Product } from '@enums/i18nConstants';
+
 import { AppLocale } from '@i18n/config';
-import { useTranslations } from 'next-intl';
 
 interface IDetailsProps {
   product: IProduct;
@@ -16,11 +18,7 @@ interface IDetailsProps {
   isLoading: boolean;
 }
 
-const Details: FC<IDetailsProps> = ({
-  product,
-  language,
-  isLoading,
-}) => {
+const Details: FC<IDetailsProps> = ({ product, language, isLoading }) => {
   const t = useTranslations();
 
   const {

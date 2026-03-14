@@ -1,9 +1,9 @@
 'use client';
 
 import { type FC } from 'react';
-import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import Image from 'next/image';
 import 'swiper/css';
 
 import NaviArrowSlider from '../NaviArrowSlider';

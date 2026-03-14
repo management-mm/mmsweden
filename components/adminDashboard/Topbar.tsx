@@ -7,7 +7,9 @@ import { usePathname } from 'next/navigation';
 
 import BackBtn from './BackBtn';
 import Nav from './Nav';
+import LogoutButton from './common/Logout';
 
+import LanguageSelect from '@components/common/LanguageSelect';
 import { Logo } from '@components/common/Logo';
 import MobileMenu from '@components/common/MobileMenu';
 import BurgerMenu from '@components/header/BurgerMenu';
@@ -57,6 +59,10 @@ const Topbar = () => {
       >
         <div className="px-[12px]">
           <Nav />
+          <div className="flex items-center justify-between pr-[16px]">
+            <LogoutButton />
+            <LanguageSelect />
+          </div>
         </div>
       </MobileMenu>
     </div>

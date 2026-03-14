@@ -2,9 +2,9 @@
 
 import { useEffect, useMemo } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { useTranslations } from 'next-intl';
 
 import type { IProduct } from '@interfaces/IProduct';
+import { useTranslations } from 'next-intl';
 
 import DecorativeLine from '@components/common/DecorativeLine';
 import SvgIcon from '@components/common/SvgIcon';
@@ -19,13 +19,13 @@ import {
 
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 import useSwiperNavigation from '@hooks/useSwiperNavigation';
 
 import { Title } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
 import { CACHE_KEY, TTL } from '@constants/cacheProducts';
-import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 const PER_PAGE = 10;
 const MAX_RENDER = 10;
@@ -40,7 +40,7 @@ const LatestArrivals = () => {
     selectProductsLastFetchedAtByKey(CACHE_KEY)
   );
   const status = useAppSelector(selectProductsStatusByKey(CACHE_KEY));
-  const language = useCurrentLocale()
+  const language = useCurrentLocale();
 
   const products: IProduct[] = useMemo(() => {
     return (cachedProducts ?? [])
@@ -121,7 +121,7 @@ const LatestArrivals = () => {
           {products.map(product => (
             <SwiperSlide key={product._id}>
               <ProductCard
-              language={language}
+                language={language}
                 product={product}
                 className="w-[296px] md:w-[264px] lg:w-[264px]"
               />

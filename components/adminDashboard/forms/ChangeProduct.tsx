@@ -15,6 +15,7 @@ import GeneralInformation from '../GeneralInformation';
 import CatManInd from '../catManInd/CatManInd';
 import MessageDeleteOrSold from '../common/MessageDeleteOrSold';
 import PhotosAndVideo from '../photosAndVideo/PhotosAndVideo';
+import SuccessModal from '../statusModals/SuccessModal';
 
 import StatusModal from '@components/common/StatusModal';
 import SvgIcon from '@components/common/SvgIcon';
@@ -29,6 +30,7 @@ import { selectIsLoading, selectProductDetails } from '@store/selectors';
 
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 import useWindowWidth from '@hooks/useWindowWidth';
 
 import { IconId } from '@enums/iconsSpriteId';
@@ -57,6 +59,13 @@ const ChangeProduct = () => {
     iso: string;
     label: string;
   } | null>(null);
+
+  const editHref = useMemo(() => {
+    const slug = (product as any)?.slug;
+    return slug
+      ? `/admin/all-products/edit-product/${slug}`
+      : '/admin/all-products';
+  }, [product]);
 
   const [isProductUpdated, setIsProductUpdated] = useState(false);
 
@@ -286,19 +295,12 @@ const ChangeProduct = () => {
       )}
 
       {isProductUpdated && !isLoading && (
-        <StatusModal
-          title="🎉🎉🎉Great! Your product is succesfully updated"
+        <SuccessModal
+          mainMessage={'🎉🎉🎉Great! Your product is succesfully updated'}
           handleToggleMenu={() => setIsProductUpdated(false)}
-        >
-          <div className="flex w-full gap-[10px]">
-            <Link
-              className="border-primary text-primary w-full rounded-[32px] border py-[10px] text-center font-semibold"
-              href="/admin/all-products"
-            >
-              Go to Product List
-            </Link>
-          </div>
-        </StatusModal>
+          statusProduct={'updated'}
+          linkProduct={editHref}
+        />
       )}
     </>
   );

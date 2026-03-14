@@ -13,10 +13,10 @@ import DecorativeLine from '@components/common/DecorativeLine';
 import NaviArrowSlider from '@components/common/NaviArrowSlider';
 import ProductCard from '@components/common/productCard/ProductCard';
 
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 import useSwiperNavigation from '@hooks/useSwiperNavigation';
 
 import { Title } from '@enums/i18nConstants';
-import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 const RecommendedProducts = () => {
   const t = useTranslations();
@@ -24,7 +24,7 @@ const RecommendedProducts = () => {
     []
   );
 
-  const language = useCurrentLocale()
+  const language = useCurrentLocale();
 
   const params = useParams<{ slug: string }>();
   const slug = params?.slug;

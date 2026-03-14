@@ -1,5 +1,6 @@
 import axios from 'axios';
 import type { IProduct } from 'interfaces/IProduct';
+
 import type { AppLocale } from '@i18n/config';
 
 export interface GetProductsParams {
@@ -44,7 +45,8 @@ export async function getProducts(
   if (params.perPage) searchParams.set('perPage', String(params.perPage));
   if (params.page) searchParams.set('page', String(params.page));
   if (params.keyword) searchParams.set('keyword', params.keyword);
-  if (params.manufacturer) searchParams.set('manufacturer', params.manufacturer);
+  if (params.manufacturer)
+    searchParams.set('manufacturer', params.manufacturer);
   if (params.condition) searchParams.set('condition', params.condition);
 
   params.category?.forEach(value => searchParams.append('category', value));

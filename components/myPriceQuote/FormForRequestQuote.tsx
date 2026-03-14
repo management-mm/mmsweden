@@ -7,6 +7,7 @@ import { schema } from '@schemas/formForRequestQuote';
 import axios from 'axios';
 import { ErrorMessage, Form, Formik } from 'formik';
 import { useTranslations } from 'next-intl';
+import dynamic from 'next/dynamic';
 
 import InputField from '@components/common/InputField';
 import LabelTitle from '@components/common/LabelTitle';
@@ -26,10 +27,13 @@ import getProductName from '@utils/getProductName';
 import { Button, Label, Placeholder } from '@enums/i18nConstants';
 
 import { DEFAULT_LOCALE } from '@i18n/config';
-import dynamic from 'next/dynamic';
 
-const Country = dynamic(() => import('@components/formsLabels/countryAndPhone/Country'));
-const Phone = dynamic(() => import('@components/formsLabels/countryAndPhone/Phone'));
+const Country = dynamic(
+  () => import('@components/formsLabels/countryAndPhone/Country')
+);
+const Phone = dynamic(
+  () => import('@components/formsLabels/countryAndPhone/Phone')
+);
 
 const FormForRequestQuote = () => {
   const t = useTranslations();

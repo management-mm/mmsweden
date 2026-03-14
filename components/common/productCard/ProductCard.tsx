@@ -1,12 +1,13 @@
 import { type FC } from 'react';
+
 import clsx from 'clsx';
 import type { IProduct } from 'interfaces/IProduct';
 
 import ActionsButtons from './ActionButtons';
+import AdminEditProductButton from './AdminEditProductButton';
 import ProductCondition from './ProductCondition';
 import ProductDetails from './ProductDetails';
 import ProductImage from './ProductImage';
-import AdminEditProductButton from './AdminEditProductButton';
 
 import { generateProductSlug } from '@utils/generateProductSlug';
 

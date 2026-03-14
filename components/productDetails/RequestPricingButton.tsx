@@ -1,10 +1,11 @@
 'use client';
 
+import type { IProduct } from '@interfaces/IProduct';
 import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
 
-import type { IProduct } from '@interfaces/IProduct';
 import SvgIcon from '@components/common/SvgIcon';
+
 import useUpdateRequestedProducts from '@hooks/useUpdateRequestedProducts';
 
 import { Button } from '@enums/i18nConstants';

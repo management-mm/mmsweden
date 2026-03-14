@@ -11,6 +11,7 @@ import Condition from '../Condition';
 import GeneralInformation from '../GeneralInformation';
 import CatManInd from '../catManInd/CatManInd';
 import PhotosAndVideo from '../photosAndVideo/PhotosAndVideo';
+import SuccessModal from '../statusModals/SuccessModal';
 
 import StatusModal from '@components/common/StatusModal';
 import Loader from '@components/common/loaders/Loader';
@@ -48,7 +49,7 @@ const AddProduct = () => {
   }, [product]);
 
   const editHref = useMemo(() => {
-    const slug = (product as any)?.slug; // если тип не содержит slug — можно убрать any после правки типов
+    const slug = (product as any)?.slug;
     return slug
       ? `/admin/all-products/edit-product/${slug}`
       : '/admin/all-products';
@@ -137,26 +138,12 @@ const AddProduct = () => {
       )}
 
       {isOpen && isSubmit && (
-        <StatusModal
-          title={'🎉🎉🎉Great! Your product is now live on the website.'}
+        <SuccessModal
+          mainMessage={'🎉🎉🎉Great! Your product is now live on the website.'}
           handleToggleMenu={handleToggleMenu}
-        >
-          <div className="flex w-full gap-[10px]">
-            <Link
-              className="border-primary text-primary w-[calc((100%-10px)/2)] rounded-[32px] border py-[10px] text-center font-semibold"
-              href={editHref}
-            >
-              Go to added product
-            </Link>
-
-            <Link
-              className="border-primary text-primary w-[calc((100%-10px)/2)] rounded-[32px] border py-[10px] text-center font-semibold"
-              href="/admin/all-products"
-            >
-              Go to Product List
-            </Link>
-          </div>
-        </StatusModal>
+          statusProduct={'added'}
+          linkProduct={editHref}
+        />
       )}
     </>
   );

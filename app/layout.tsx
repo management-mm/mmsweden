@@ -1,9 +1,10 @@
-import './globals.css';
 import { Suspense } from 'react';
 
 import localFont from 'next/font/local';
 
 import Sprite from './Sprite';
+import './globals.css';
+
 import { cn } from '@utils/cn';
 
 const inter = localFont({

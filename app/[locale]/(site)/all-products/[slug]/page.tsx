@@ -1,5 +1,6 @@
-import type { Metadata } from 'next';
 import { Suspense } from 'react';
+
+import type { Metadata } from 'next';
 
 import Product from '@components/productDetails/Product';
 import RecommendedProducts from '@components/productDetails/RecommendedProducts';
@@ -121,7 +122,8 @@ export default async function ProductDetails({ params }: Props) {
 
   const canonicalUrl = `${siteUrl}/${locale}/all-products/${slug}`;
 
-  const localizedName = product?.name?.[locale] || product?.name?.en || 'Product';
+  const localizedName =
+    product?.name?.[locale] || product?.name?.en || 'Product';
 
   const localizedDescription =
     product?.description?.[locale] ||

@@ -98,7 +98,13 @@ const Product = () => {
               )}
             </div>
 
-            {product && <Details isLoading={isLoading} language={language} product={product} />}
+            {product && (
+              <Details
+                isLoading={isLoading}
+                language={language}
+                product={product}
+              />
+            )}
           </div>
 
           {video && windowWidth < 768 && (

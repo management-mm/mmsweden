@@ -5,9 +5,11 @@ import Link from 'next/link';
 import SvgIcon from '../SvgIcon';
 
 import { clearProduct } from '@store/products/productsSlice';
+
 import { useAppDispatch } from '@hooks/useAppDispatch';
 
 import { IconId } from '@enums/iconsSpriteId';
+
 import { AppLocale } from '@i18n/config';
 
 interface Props {

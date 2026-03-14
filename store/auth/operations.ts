@@ -20,11 +20,6 @@ export const logIn = createAsyncThunk<
 >('auth/login', async (credentials, thunkAPI) => {
   try {
     const response = await api.post('auth/login', credentials);
-
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('token', response.data.token);
-    }
-
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue((error as Error).message);
@@ -36,9 +31,6 @@ export const logOut = createAsyncThunk<void, void, { rejectValue: string }>(
   async (_, thunkAPI) => {
     try {
       await api.post('auth/logout');
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem('token');
-      }
     } catch (error) {
       return thunkAPI.rejectWithValue((error as Error).message);
     }
@@ -58,7 +50,6 @@ export const refreshUser = createAsyncThunk<
   }
 
   try {
-    // api сам подставит Authorization из persist:auth
     const response = await api.get('auth/current');
     return response.data;
   } catch (error) {

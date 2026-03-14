@@ -1,3 +1,4 @@
+import { getProducts } from '@api/productsService';
 import type { IProduct } from 'interfaces/IProduct';
 import { getTranslations } from 'next-intl/server';
 
@@ -6,9 +7,8 @@ import ResetFilters from './ResetFilters';
 import Pagination from '@components/common/Pagination';
 import ProductCard from '@components/common/productCard/ProductCard';
 
-import { getProducts } from '@api/productsService';
-
 import { Title } from '@enums/i18nConstants';
+
 import type { AppLocale } from '@i18n/config';
 
 type Props = {

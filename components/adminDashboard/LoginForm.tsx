@@ -3,10 +3,11 @@
 import { type FormEvent } from 'react';
 import { MdEmail } from 'react-icons/md';
 import { RiLockPasswordFill } from 'react-icons/ri';
-import { useAppDispatch } from '@hooks/useAppDispatch';
 
 import { logIn } from '@store/auth/operations';
 import { type AppDispatch } from '@store/store';
+
+import { useAppDispatch } from '@hooks/useAppDispatch';
 
 const LoginForm = () => {
   const dispatch = useAppDispatch<AppDispatch>();

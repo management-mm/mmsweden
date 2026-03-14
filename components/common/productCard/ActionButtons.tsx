@@ -1,18 +1,19 @@
 'use client';
 
 import { type FC } from 'react';
-import Link from 'next/link';
 import Skeleton from 'react-loading-skeleton';
-import clsx from 'clsx';
-import { useTranslations } from 'next-intl';
 
 import type { IProduct } from '@interfaces/IProduct';
+import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 
 import useUpdateRequestedProducts from '@hooks/useUpdateRequestedProducts';
 
 import { generateProductSlug } from '@utils/generateProductSlug';
 
 import { Button } from '@enums/i18nConstants';
+
 import { AppLocale } from '@i18n/config';
 
 interface IActionsButtonsProps {

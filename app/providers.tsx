@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useRef } from 'react';
+import React, { createContext, useEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider as ReduxProvider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
@@ -9,13 +9,14 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { persistStore } from 'redux-persist';
 
 import ScrollToTop from '@components/ScrollToTop';
+import SessionExpiredModal from '@components/adminDashboard/statusModals/SessionExpiredModal';
 import SvgIcon from '@components/common/SvgIcon';
 import Loader from '@components/common/loaders/Loader';
 
-import { type AppStore, makeStore } from '@store/store';
+import { setupApiInterceptors } from '@store/api';
+import { persistor, store } from '@store/store';
 
 import { IconId } from '@enums/iconsSpriteId';
 
@@ -29,21 +30,18 @@ type Props = {
 export const LocaleContext = createContext<AppLocale>('en');
 
 export default function Providers({ children, locale }: Props) {
-  const storeRef = useRef<AppStore | null>(null);
-
-  if (!storeRef.current) {
-    storeRef.current = makeStore();
-  }
-
-  const persistor = persistStore(storeRef.current);
+  useEffect(() => {
+    setupApiInterceptors(store);
+  }, []);
 
   return (
     <LocaleContext.Provider value={locale}>
-      <ReduxProvider store={storeRef.current}>
+      <ReduxProvider store={store}>
         <PersistGate loading={<Loader />} persistor={persistor}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <HelmetProvider>
               <ScrollToTop />
+              <SessionExpiredModal />
 
               {children}
 

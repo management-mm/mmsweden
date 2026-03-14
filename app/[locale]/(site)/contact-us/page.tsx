@@ -1,19 +1,21 @@
 import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 
+import Loader from '@components/common/loaders/Loader';
 import Contacts from '@components/contactUs/Contacts';
 import Hero from '@components/contactUs/Hero';
 
 import type { AppLocale } from '@i18n/config';
 import { createPageMetadata } from '@i18n/seo';
-import dynamic from 'next/dynamic';
-import Loader from '@components/common/loaders/Loader';
 
 type Props = {
   params: Promise<{ locale: AppLocale }>;
 };
 
-const WriteToUsForm = dynamic(() => import('@components/contactUs/WriteToUsForm'), 
-{ loading: () => ( <Loader /> ), });
+const WriteToUsForm = dynamic(
+  () => import('@components/contactUs/WriteToUsForm'),
+  { loading: () => <Loader /> }
+);
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;

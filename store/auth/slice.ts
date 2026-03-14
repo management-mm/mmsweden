@@ -2,7 +2,7 @@ import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { logIn, logOut, refreshUser } from './operations';
 
-interface User {
+export interface User {
   email: string | null;
 }
 
@@ -11,13 +11,15 @@ export interface AuthState {
   token: string | null;
   isLoggedIn: boolean;
   isRefreshing: boolean;
+  error: string | null;
 }
 
-export const initialState: AuthState = {
+const initialState: AuthState = {
   user: { email: null },
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
+  error: null,
 };
 
 const handleLogInFulfilled = (
@@ -27,12 +29,16 @@ const handleLogInFulfilled = (
   state.user = action.payload.user;
   state.token = action.payload.token;
   state.isLoggedIn = true;
+  state.isRefreshing = false;
+  state.error = null;
 };
 
 const handleLogOutFulfilled = (state: AuthState) => {
   state.user = { email: null };
   state.token = null;
   state.isLoggedIn = false;
+  state.isRefreshing = false;
+  state.error = null;
 };
 
 const handleRefreshUserPending = (state: AuthState) => {
@@ -46,25 +52,43 @@ const handleRefreshUserFulfilled = (
   state.user = action.payload;
   state.isLoggedIn = true;
   state.isRefreshing = false;
+  state.error = null;
 };
 
 const handleRefreshUserRejected = (state: AuthState) => {
-  state.isRefreshing = false;
+  state.user = { email: null };
   state.token = null;
   state.isLoggedIn = false;
+  state.isRefreshing = false;
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
-  extraReducers: builder =>
+  reducers: {
+    resetAuthState: state => {
+      state.user = { email: null };
+      state.token = null;
+      state.isLoggedIn = false;
+      state.isRefreshing = false;
+    },
+    setAuthError: (state, action: PayloadAction<string | null>) => {
+      state.error = action.payload;
+    },
+    clearAuthError: state => {
+      state.error = null;
+    },
+  },
+  extraReducers: builder => {
     builder
       .addCase(logIn.fulfilled, handleLogInFulfilled)
       .addCase(logOut.fulfilled, handleLogOutFulfilled)
       .addCase(refreshUser.pending, handleRefreshUserPending)
       .addCase(refreshUser.fulfilled, handleRefreshUserFulfilled)
-      .addCase(refreshUser.rejected, handleRefreshUserRejected),
+      .addCase(refreshUser.rejected, handleRefreshUserRejected);
+  },
 });
 
+export const { resetAuthState, setAuthError, clearAuthError } =
+  authSlice.actions;
 export const authReducer = authSlice.reducer;

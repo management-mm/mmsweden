@@ -25,11 +25,7 @@ export default async function LocaleLayout({
   const messages = (await messagesMap[locale]()).default;
 
   return (
-    <NextIntlClientProvider
-      key={locale}
-      locale={locale}
-      messages={messages}
-    >
+    <NextIntlClientProvider key={locale} locale={locale} messages={messages}>
       <Providers locale={locale}>
         {children}
         <div id="modal-root" />

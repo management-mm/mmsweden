@@ -1,4 +1,5 @@
 import Nav from './Nav';
+import LogoutButton from './common/Logout';
 
 import LanguageSelect from '@components/common/LanguageSelect';
 import { Logo } from '@components/common/Logo';
@@ -8,7 +9,8 @@ const Sidebar = () => {
     <aside className="lg:h-100vh border-neutral hidden w-[280px] shrink-0 border-r-2 px-[18px] pt-[14px] blur-[130] lg:block">
       <Logo className="mb-[60px] flex justify-center" />
       <Nav />
-      <div className="flex justify-end pr-[16px]">
+      <div className="flex items-center justify-between pr-[16px]">
+        <LogoutButton />
         <LanguageSelect />
       </div>
     </aside>

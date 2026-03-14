@@ -44,9 +44,6 @@ const ProductsList = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
-  const pathname = usePathname();
-  const isAdmin = pathname.includes('/admin');
-
   const searchParams = useSearchParams();
   const searchKey = searchParams.toString();
 
@@ -96,15 +93,11 @@ const ProductsList = () => {
     if (products.length > 0 && isFresh) return;
 
     dispatch(fetchProducts({ ...paramsForFetch, cacheKey }));
-  }, [dispatch, cacheKey, paramsForFetch, products.length, lastFetchedAt, status]);
+  }, [dispatch, cacheKey, products.length, lastFetchedAt, status]);
 
   const pageCount = Math.ceil(total / perPage);
 
-  const hasAnyFilters =
-    !!searchParams.get(filters.Category) ||
-    !!searchParams.get(filters.Manufacturer) ||
-    !!searchParams.get(filters.Industry) ||
-    !!searchParams.get(filters.Condition);
+  const hasAnyFilters = searchParams.toString().length > 0;
 
   return (
     <section className="pb-[96px] lg:pb-[124px]">

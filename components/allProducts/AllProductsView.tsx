@@ -39,7 +39,7 @@ const AllProductsView = async ({ mode = 'public', locale, query }: Props) => {
           </div>
         )}
 
-        <ProductsList locale={locale} query={query} />
+        <ProductsList />
 
         {isAdmin && (
           <div className="shrink-0">

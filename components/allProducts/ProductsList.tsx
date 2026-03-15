@@ -1,8 +1,7 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { usePathname, useSearchParams } from 'next/navigation';
 
 import type { IProduct } from 'interfaces/IProduct';
 
@@ -11,93 +10,39 @@ import ResetFilters from './ResetFilters';
 import Pagination from '@components/common/Pagination';
 import ProductCard from '@components/common/productCard/ProductCard';
 
-import { type IFetchProductsParams, fetchProducts } from '@store/products/operations';
-import {
-  selectProductsCacheByKey,
-  selectProductsLastFetchedAtByKey,
-  selectProductsStatusByKey,
-  selectTotalByKey,
-} from '@store/selectors';
-
-import { useAppDispatch } from '@hooks/useAppDispatch';
-import { useAppSelector } from '@hooks/useAppSelector';
-import useWindowWidth from '@hooks/useWindowWidth';
-
-import { filters } from '@enums/filters';
 import { Title } from '@enums/i18nConstants';
-import { TTL } from '@constants/cacheProducts';
 import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
-const buildCacheKey = (base: Record<string, unknown>) => {
-  const sortedKeys = Object.keys(base).sort();
-  const normalized: Record<string, unknown> = {};
+import { useAppDispatch } from '@hooks/useAppDispatch';
+import { setInitialProducts } from '@store/products/productsSlice';
 
-  for (const k of sortedKeys) {
-    const v = (base as any)[k];
-    normalized[k] = Array.isArray(v) ? [...v].sort() : v;
-  }
-
-  return `products:${JSON.stringify(normalized)}`;
+type Props = {
+  initialProducts: IProduct[];
+  initialTotal: number;
 };
 
-const ProductsList = () => {
+const PER_PAGE = 9;
+
+const ProductsList = ({ initialProducts, initialTotal }: Props) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-
-  const searchParams = useSearchParams();
-  const searchKey = searchParams.toString();
-
   const language = useCurrentLocale();
 
-  const windowWidth = useWindowWidth();
-  const perPage = windowWidth >= 1178 ? 9 : 8;
-
-  const title = searchParams.get('title');
-  const manufacturer = searchParams.get('manufacturer');
-  const condition = searchParams.get('condition');
-  const page = searchParams.get('page') || '1';
-
-  const categories = useMemo(() => searchParams.getAll('category'), [searchKey]);
-  const industries = useMemo(() => searchParams.getAll('industry'), [searchKey]);
-
-  const paramsForFetch: IFetchProductsParams = useMemo(
-    () => ({
-      ...(title ? { keyword: title } : {}),
-      page: Number(page),
-      ...(categories.length ? { category: categories } : {}),
-      ...(industries.length ? { industry: industries } : {}),
-      ...(manufacturer ? { manufacturer } : {}),
-      ...(condition ? { condition } : {}),
-      perPage,
-      lang: language,
-      mode: 'replace',
-    }),
-    [title, page, categories, industries, manufacturer, condition, perPage, language]
-  );
-
-  const cacheKey = useMemo(() => {
-    const { mode, cacheKey: _ck, ...base } = paramsForFetch;
-    return buildCacheKey(base as Record<string, unknown>);
-  }, [paramsForFetch]);
-
-  const products: IProduct[] = useAppSelector(selectProductsCacheByKey(cacheKey));
-  const total: number = useAppSelector(selectTotalByKey(cacheKey));
-  const lastFetchedAt = useAppSelector(selectProductsLastFetchedAtByKey(cacheKey));
-  const status = useAppSelector(selectProductsStatusByKey(cacheKey));
+  const products = initialProducts;
+  const total = initialTotal;
 
   useEffect(() => {
-    if (status === 'loading') return;
+    dispatch(
+      setInitialProducts({
+        items: initialProducts,
+        total: initialTotal,
+      })
+    );
+  }, [dispatch, initialProducts, initialTotal]);
 
-    const isFresh = lastFetchedAt !== null && Date.now() - lastFetchedAt < TTL;
+  const pageCount = Math.ceil(total / PER_PAGE);
 
-    if (products.length > 0 && isFresh) return;
-
-    dispatch(fetchProducts({ ...paramsForFetch, cacheKey }));
-  }, [dispatch, cacheKey, products.length, lastFetchedAt, status]);
-
-  const pageCount = Math.ceil(total / perPage);
-
-  const hasAnyFilters = searchParams.toString().length > 0;
+  const hasAnyFilters = false;
 
   return (
     <section className="pb-[96px] lg:pb-[124px]">
@@ -122,7 +67,7 @@ const ProductsList = () => {
         </ul>
       )}
 
-      {pageCount !== 1 && <Pagination pageCount={pageCount} className="" />}
+      {pageCount !== 1 && <Pagination pageCount={pageCount} />}
     </section>
   );
 };

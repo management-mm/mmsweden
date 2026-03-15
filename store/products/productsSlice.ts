@@ -171,6 +171,24 @@ const productsSlice = createSlice({
     clearProduct: state => {
       state.productDetails = null;
     },
+    setInitialProducts: (state, action: PayloadAction<{ items: IProduct[]; total: number; cacheKey?: string }>) => {
+      const { items, total, cacheKey } = action.payload;
+
+      state.items = items;
+      state.total = total;
+      state.isLoading = false;
+
+      if (cacheKey) {
+        state.cache[cacheKey] = {
+          items,
+          total,
+          lastFetchedAt: Date.now(),
+        };
+
+        state.statusByKey[cacheKey] = 'succeeded';
+        state.errorByKey[cacheKey] = null;
+      }
+    },
   },
   extraReducers: builder =>
     builder
@@ -194,5 +212,5 @@ const productsSlice = createSlice({
       .addCase(generateDescWithAi.rejected, handleRejected),
 });
 
-export const { clearProduct } = productsSlice.actions;
+export const { clearProduct, setInitialProducts } = productsSlice.actions;
 export const productsReducer = productsSlice.reducer;

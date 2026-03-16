@@ -28,10 +28,10 @@ const AdminEditProductButton = ({ language, slug }: Props) => {
     <Link
       href={`/${language}/admin/all-products/edit-product/${slug}`}
       onClick={handleClear}
-      className="border-primary text-primary flex w-full items-center justify-center gap-[8px] rounded-[32px] border py-[10px] text-[12px] font-semibold"
+      className="group border-primary text-primary hover:bg-primary hover:text-secondary transition-boxShadow flex w-full items-center justify-center gap-[8px] rounded-[32px] border py-[10px] text-[12px] font-semibold duration-500"
     >
       <SvgIcon
-        className="fill-primary"
+        className="fill-primary group-hover:fill-secondary"
         iconId={IconId.EditProduct}
         size={{ width: 16, height: 16 }}
       />

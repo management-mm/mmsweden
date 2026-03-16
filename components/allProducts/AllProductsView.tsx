@@ -53,16 +53,22 @@ const AllProductsView = async ({ mode = 'public', locale, query }: Props) => {
               <FiltersAndSearch />
             </div>
           )}
+          {isAdmin && (
+            <div className={clsx(isAdmin && 'shrink-0 lg:hidden')}>
+              <FiltersAndSearch />
+            </div>
+          )}
 
           <ProductsList
             initialProducts={products}
             initialTotal={total}
             locale={locale}
+            isAdmin={isAdmin}
           />
 
           {isAdmin && (
             <div className="shrink-0">
-              <FiltersAndSearch />
+              <FiltersAndSearch isAdmin={isAdmin} />
             </div>
           )}
         </div>

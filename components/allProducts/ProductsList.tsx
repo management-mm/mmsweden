@@ -17,16 +17,21 @@ type Props = {
   initialProducts: IProduct[];
   initialTotal: number;
   locale: AppLocale;
+  isAdmin: boolean;
 };
 
 const PER_PAGE = 9;
 
-const ProductsList = ({ initialProducts, initialTotal, locale }: Props) => {
+const ProductsList = ({
+  initialProducts,
+  initialTotal,
+  locale,
+  isAdmin,
+}: Props) => {
   const { t } = useTranslation();
 
   const pageCount = Math.ceil(initialTotal / PER_PAGE);
   const hasAnyFilters = false;
-
   return (
     <section className="pb-[96px] lg:pb-[124px]">
       {hasAnyFilters && <ResetFilters />}
@@ -44,7 +49,11 @@ const ProductsList = ({ initialProducts, initialTotal, locale }: Props) => {
               key={product._id}
               className="w-[296px] md:w-[calc((100%-30px)/2)] lg:w-[calc((100%-2*30px)/3)]"
             >
-              <ProductCard language={locale} product={product} />
+              <ProductCard
+                language={locale}
+                product={product}
+                isAdmin={isAdmin}
+              />
             </li>
           ))}
         </ul>

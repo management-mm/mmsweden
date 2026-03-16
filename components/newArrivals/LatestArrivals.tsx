@@ -1,55 +1,53 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
+import { getProducts } from '@api/productsService';
 import type { IProduct } from '@interfaces/IProduct';
 import { useTranslations } from 'next-intl';
 
 import ProductCard from '@components/common/productCard/ProductCard';
 
-import { fetchProducts } from '@store/products/operations';
-import {
-  selectProductsCacheByKey,
-  selectProductsLastFetchedAtByKey,
-  selectProductsStatusByKey,
-} from '@store/selectors';
-
-import { useAppDispatch } from '@hooks/useAppDispatch';
-import { useAppSelector } from '@hooks/useAppSelector';
 import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 import { Title } from '@enums/i18nConstants';
-
-import { CACHE_KEY, TTL } from '@constants/cacheProducts';
 
 type GroupedProducts = Record<string, IProduct[]>;
 
 const LatestArrivals = () => {
   const t = useTranslations();
-  const dispatch = useAppDispatch();
-
-  const allProducts = useAppSelector(selectProductsCacheByKey(CACHE_KEY));
-  const lastFetchedAt = useAppSelector(
-    selectProductsLastFetchedAtByKey(CACHE_KEY)
-  );
-  const status = useAppSelector(selectProductsStatusByKey(CACHE_KEY));
-
   const language = useCurrentLocale();
 
-  const products = useMemo(() => {
-    const filtered = (allProducts ?? []).filter(p => !p.deletionDate);
-    return filtered.slice(0, 60);
-  }, [allProducts]);
+  const [productsRaw, setProductsRaw] = useState<IProduct[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (status === 'loading') return;
+    const loadProducts = async () => {
+      try {
+        setIsLoading(true);
 
-    const isFresh = lastFetchedAt !== null && Date.now() - lastFetchedAt < TTL;
+        const result = await getProducts({
+          sort: 'latest',
+          perPage: 60,
+          page: 1,
+          lang: language,
+        });
 
-    if (products.length >= 10 && isFresh) return;
+        setProductsRaw(result.products);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-    dispatch(fetchProducts({ sort: 'latest', cacheKey: CACHE_KEY }));
-  }, [dispatch, products.length, lastFetchedAt, status]);
+    loadProducts();
+  }, [language]);
+
+  const products = useMemo(() => {
+    const filtered = (productsRaw ?? []).filter(p => !p.deletionDate);
+    return filtered.slice(0, 60);
+  }, [productsRaw]);
 
   const groupedProducts: GroupedProducts = useMemo(() => {
     const grouped: GroupedProducts = {};

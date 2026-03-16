@@ -3,21 +3,6 @@ import type { IProduct, MultiLanguageString } from 'interfaces/IProduct';
 
 import { api } from '@store/api';
 
-import { AppLocale } from '@i18n/config';
-
-export interface IFetchProductsParams {
-  lang?: AppLocale;
-  sort?: string;
-  perPage?: number;
-  page?: number;
-  keyword?: string;
-  category?: string[];
-  industry?: string[];
-  manufacturer?: string;
-  mode?: 'replace' | 'append';
-  cacheKey?: string;
-}
-
 export interface IAddProductData {
   name: string;
   idNumber: string;
@@ -57,24 +42,6 @@ export interface IFetchProductsResponse {
   products: IProduct[];
   total: number;
 }
-
-export const fetchProducts = createAsyncThunk<
-  IFetchProductsResponse,
-  IFetchProductsParams,
-  { rejectValue: string }
->('products/fetchAll', async (args, thunkAPI) => {
-  try {
-    const { cacheKey, mode, ...queryParams } = args;
-
-    const response = await api.get<IFetchProductsResponse>('products/', {
-      params: queryParams,
-    });
-
-    return response.data;
-  } catch (e) {
-    return thunkAPI.rejectWithValue((e as Error).message);
-  }
-});
 
 export const fetchProductBySlug = createAsyncThunk<
   IProduct,

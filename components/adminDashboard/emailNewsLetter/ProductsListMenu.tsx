@@ -2,30 +2,23 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import { getProducts } from '@api/productsService';
+import type { IProduct } from 'interfaces/IProduct';
 import { useSearchParams } from 'next/navigation';
 
 import ProductMenuItem from './ProductMenuItem';
 
 import Loader from '@components/common/loaders/Loader';
 
-import {
-  type IFetchProductsParams,
-  fetchProducts,
-} from '@store/products/operations';
-import { selectIsLoading, selectProducts } from '@store/selectors';
-
-import { useAppDispatch } from '@hooks/useAppDispatch';
-import { useAppSelector } from '@hooks/useAppSelector';
 import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 const PER_PAGE = 10;
 
 const ProductsListMenu = () => {
-  const dispatch = useAppDispatch();
-  const isLoading = useAppSelector(selectIsLoading);
-  const products = useAppSelector(selectProducts);
-
+  const [products, setProducts] = useState<IProduct[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+
   const pageRef = useRef(1);
   const listRef = useRef<HTMLUListElement | null>(null);
 
@@ -38,23 +31,25 @@ const ProductsListMenu = () => {
     async (nextPage: number) => {
       if (!hasMore || isLoading) return;
 
-      const paramsForFetch: IFetchProductsParams = {
+      setIsLoading(true);
+
+      const result = await getProducts({
         ...(title ? { keyword: title } : {}),
         lang: language,
         page: nextPage,
         perPage: PER_PAGE,
-        mode: 'append',
-      };
-
-      const result = await dispatch(fetchProducts(paramsForFetch)).unwrap();
+      });
 
       if (!result.products || result.products.length < PER_PAGE) {
         setHasMore(false);
       }
 
+      setProducts(prev => [...prev, ...result.products]);
+
       pageRef.current = nextPage;
+      setIsLoading(false);
     },
-    [dispatch, hasMore, title, language, isLoading]
+    [hasMore, title, language, isLoading]
   );
 
   useEffect(() => {
@@ -75,23 +70,31 @@ const ProductsListMenu = () => {
   }, [loadPage]);
 
   useEffect(() => {
-    pageRef.current = 1;
-    setHasMore(true);
+    const loadInitial = async () => {
+      setIsLoading(true);
 
-    const paramsForFetch: IFetchProductsParams = {
-      ...(title ? { keyword: title } : {}),
-      lang: language,
-      page: 1,
-      perPage: PER_PAGE,
-      mode: 'replace',
+      pageRef.current = 1;
+      setHasMore(true);
+
+      const result = await getProducts({
+        ...(title ? { keyword: title } : {}),
+        lang: language,
+        page: 1,
+        perPage: PER_PAGE,
+      });
+
+      setProducts(result.products);
+      setHasMore(result.products.length === PER_PAGE);
+      setIsLoading(false);
     };
 
-    dispatch(fetchProducts(paramsForFetch));
-  }, [title, language, dispatch]);
+    loadInitial();
+  }, [title, language]);
 
   return (
     <>
       {isLoading && <Loader />}
+
       <div className="w-full lg:w-[600px]">
         <ul
           ref={listRef}

@@ -44,7 +44,7 @@ export default function LogoutButton({
       type="button"
       onClick={handleLogout}
       className={
-        'font-inter text-primary border+primary hover:shadow-accent text-primary transition-boxShadow inline-block h-[44px] rounded-[32px] border px-[32px] py-[12px] text-center text-[16px] leading-tight font-semibold shadow-none duration-500 md:h-[52px]'
+        'font-inter text-primary border-primary hover:bg-primary hover:text-secondary text-primary transition-boxShadow inline-block h-[44px] rounded-[32px] border px-[32px] py-[12px] text-center text-[16px] leading-tight font-semibold shadow-none duration-500 md:h-[52px]'
       }
     >
       {children}→

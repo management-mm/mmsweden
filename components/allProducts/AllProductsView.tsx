@@ -1,8 +1,12 @@
 import { getProducts } from '@api/productsService';
-import Breadcrumb from '@components/common/Breadcrumb';
-import FiltersAndSearch from './FiltersAndSearch';
-import  ProductsList  from './ProductsList';
 import clsx from 'clsx';
+
+import FiltersAndSearch from './FiltersAndSearch';
+import ProductsList from './ProductsList';
+import ProductsTotalProvider from './ProductsTotalProvider';
+
+import Breadcrumb from '@components/common/Breadcrumb';
+
 import type { AppLocale } from '@i18n/config';
 
 type Props = {
@@ -33,29 +37,38 @@ const AllProductsView = async ({ mode = 'public', locale, query }: Props) => {
   });
 
   return (
-    <div className={clsx('container', 'pt-[12px] md:pt-[22px]', isAdmin && 'lg:mx-0')}>
-      {!isAdmin && <Breadcrumb />}
-
-      <div className="flex flex-col lg:flex-row lg:justify-start lg:gap-[30px]">
-        {!isAdmin && (
-          <div className="shrink-0">
-            <FiltersAndSearch />
-          </div>
+    <ProductsTotalProvider total={total}>
+      <div
+        className={clsx(
+          'container',
+          'pt-[12px] md:pt-[22px]',
+          isAdmin && 'lg:mx-0'
         )}
+      >
+        {!isAdmin && <Breadcrumb />}
 
-        <ProductsList
-          initialProducts={products}
-          initialTotal={total}
-        />
+        <div className="flex flex-col lg:flex-row lg:justify-start lg:gap-[30px]">
+          {!isAdmin && (
+            <div className="shrink-0">
+              <FiltersAndSearch />
+            </div>
+          )}
 
-        {isAdmin && (
-          <div className="shrink-0">
-            <FiltersAndSearch />
-          </div>
-        )}
+          <ProductsList
+            initialProducts={products}
+            initialTotal={total}
+            locale={locale}
+          />
+
+          {isAdmin && (
+            <div className="shrink-0">
+              <FiltersAndSearch />
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </ProductsTotalProvider>
   );
 };
 
-export default AllProductsView
+export default AllProductsView;

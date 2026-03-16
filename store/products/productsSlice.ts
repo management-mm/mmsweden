@@ -2,12 +2,9 @@ import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 import type { IProduct } from 'interfaces/IProduct';
 
 import {
-  type IFetchProductsParams,
-  type IFetchProductsResponse,
   addProduct,
   deleteProduct,
   fetchProductBySlug,
-  fetchProducts,
   generateDescWithAi,
   updateProduct,
 } from './operations';
@@ -38,66 +35,6 @@ interface IProductsState {
   statusByKey: Record<string, 'idle' | 'loading' | 'succeeded' | 'failed'>;
   errorByKey: Record<string, string | null>;
 }
-
-const handleFetchProductsPending = (
-  state: IProductsState,
-  action: PayloadAction<unknown, string, { arg: IFetchProductsParams }>
-) => {
-  state.isLoading = true;
-  state.error = null;
-
-  const cacheKey = action.meta.arg.cacheKey;
-  if (cacheKey) {
-    state.statusByKey[cacheKey] = 'loading';
-    state.errorByKey[cacheKey] = null;
-  }
-};
-
-const handleFetchProductsRejected = (
-  state: IProductsState,
-  action: PayloadAction<unknown, string, { arg: IFetchProductsParams }>
-) => {
-  state.isLoading = false;
-  state.error = 'Request failed';
-
-  const cacheKey = action.meta.arg.cacheKey;
-  if (cacheKey) {
-    state.statusByKey[cacheKey] = 'failed';
-    state.errorByKey[cacheKey] = 'Request failed';
-  }
-};
-const handleFetchProductsFulfilled = (
-  state: IProductsState,
-  action: PayloadAction<
-    IFetchProductsResponse,
-    string,
-    { arg: IFetchProductsParams }
-  >
-) => {
-  state.isLoading = false;
-  state.error = null;
-
-  const mode = action.meta.arg.mode ?? 'replace';
-
-  if (mode === 'append') {
-    state.items = [...state.items, ...action.payload.products];
-  } else {
-    state.items = action.payload.products;
-  }
-
-  state.total = action.payload.total;
-
-  const cacheKey = action.meta.arg.cacheKey;
-  if (cacheKey) {
-    state.cache[cacheKey] = {
-      items: action.payload.products,
-      total: action.payload.total,
-      lastFetchedAt: Date.now(),
-    };
-    state.statusByKey[cacheKey] = 'succeeded';
-    state.errorByKey[cacheKey] = null;
-  }
-};
 
 const handleFetchProductBySlugFulfilled = (
   state: IProductsState,
@@ -171,7 +108,14 @@ const productsSlice = createSlice({
     clearProduct: state => {
       state.productDetails = null;
     },
-    setInitialProducts: (state, action: PayloadAction<{ items: IProduct[]; total: number; cacheKey?: string }>) => {
+    setInitialProducts: (
+      state,
+      action: PayloadAction<{
+        items: IProduct[];
+        total: number;
+        cacheKey?: string;
+      }>
+    ) => {
       const { items, total, cacheKey } = action.payload;
 
       state.items = items;
@@ -192,9 +136,6 @@ const productsSlice = createSlice({
   },
   extraReducers: builder =>
     builder
-      .addCase(fetchProducts.pending, handleFetchProductsPending)
-      .addCase(fetchProducts.fulfilled, handleFetchProductsFulfilled)
-      .addCase(fetchProducts.rejected, handleFetchProductsRejected)
       .addCase(fetchProductBySlug.pending, handlePending)
       .addCase(fetchProductBySlug.fulfilled, handleFetchProductBySlugFulfilled)
       .addCase(fetchProductBySlug.rejected, handleRejected)

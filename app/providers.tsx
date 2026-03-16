@@ -29,6 +29,36 @@ type Props = {
 
 export const LocaleContext = createContext<AppLocale>('en');
 
+function AppContent({ children }: { children: React.ReactNode }) {
+  return (
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <HelmetProvider>
+        <ScrollToTop />
+        <SessionExpiredModal />
+
+        {children}
+
+        <ToastContainer
+          closeButton={
+            <SvgIcon
+              iconId={IconId.Close}
+              size={{ width: 36, height: 36 }}
+              className="fill-white"
+            />
+          }
+          icon={
+            <SvgIcon
+              iconId={IconId.Check}
+              className="fill-white"
+              size={{ width: 20, height: 20 }}
+            />
+          }
+        />
+      </HelmetProvider>
+    </LocalizationProvider>
+  );
+}
+
 export default function Providers({ children, locale }: Props) {
   useEffect(() => {
     setupApiInterceptors(store);
@@ -37,33 +67,13 @@ export default function Providers({ children, locale }: Props) {
   return (
     <LocaleContext.Provider value={locale}>
       <ReduxProvider store={store}>
-        <PersistGate loading={<Loader />} persistor={persistor}>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <HelmetProvider>
-              <ScrollToTop />
-              <SessionExpiredModal />
-
-              {children}
-
-              <ToastContainer
-                closeButton={
-                  <SvgIcon
-                    iconId={IconId.Close}
-                    size={{ width: 36, height: 36 }}
-                    className="fill-white"
-                  />
-                }
-                icon={
-                  <SvgIcon
-                    iconId={IconId.Check}
-                    className="fill-white"
-                    size={{ width: 20, height: 20 }}
-                  />
-                }
-              />
-            </HelmetProvider>
-          </LocalizationProvider>
-        </PersistGate>
+        {persistor ? (
+          <PersistGate loading={<Loader />} persistor={persistor}>
+            <AppContent>{children}</AppContent>
+          </PersistGate>
+        ) : (
+          <AppContent>{children}</AppContent>
+        )}
       </ReduxProvider>
     </LocaleContext.Provider>
   );

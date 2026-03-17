@@ -43,8 +43,39 @@ const inter = localFont({
 const siteUrl =
   process.env.SITE_URL?.replace(/\/$/, '') ?? 'https://www.mmsweden.se';
 
+const defaultTitle = 'Meat Machines';
+const defaultDescription =
+  'Used food processing and packaging equipment from Meat Machines. Browse machinery for the food industry.';
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  title: {
+    default: defaultTitle,
+    template: '%s',
+  },
+  description: defaultDescription,
+  applicationName: 'Meat Machines',
+  robots: {
+    index: true,
+    follow: true,
+  },
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
+  openGraph: {
+    type: 'website',
+    siteName: 'Meat Machines',
+    title: defaultTitle,
+    description: defaultDescription,
+    url: siteUrl,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: defaultTitle,
+    description: defaultDescription,
+  },
 };
 
 export default function RootLayout({

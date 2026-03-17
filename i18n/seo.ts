@@ -12,7 +12,12 @@ type CreatePageMetadataParams = {
   title: string;
   description?: string;
   keywords?: string[];
+  noIndex?: boolean;
 };
+
+function getSiteUrl() {
+  return process.env.SITE_URL?.replace(/\/$/, '') ?? 'https://www.mmsweden.se';
+}
 
 export function createPageMetadata({
   locale,
@@ -20,15 +25,18 @@ export function createPageMetadata({
   title,
   description,
   keywords,
+  noIndex = false,
 }: CreatePageMetadataParams): Metadata {
+  const siteUrl = getSiteUrl();
+
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
   const pathname = normalizedPath === '/' ? '' : normalizedPath;
 
-  const localizedPath = `/${locale}${pathname}`;
+  const canonical = `${siteUrl}/${locale}${pathname}`;
 
   const languages = Object.fromEntries([
-    ...SUPPORTED_LOCALES.map(l => [l, `/${l}${pathname}`]),
-    ['x-default', `/${DEFAULT_LOCALE}${pathname}`],
+    ...SUPPORTED_LOCALES.map(l => [l, `${siteUrl}/${l}${pathname}`]),
+    ['x-default', `${siteUrl}/${DEFAULT_LOCALE}${pathname}`],
   ]);
 
   return {
@@ -36,8 +44,23 @@ export function createPageMetadata({
     description,
     keywords,
     alternates: {
-      canonical: localizedPath,
+      canonical,
       languages,
+    },
+    robots: {
+      index: !noIndex,
+      follow: true,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
     },
   };
 }

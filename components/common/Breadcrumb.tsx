@@ -10,17 +10,17 @@ import { usePathname } from 'next/navigation';
 import { NavBar } from '@enums/i18nConstants';
 
 interface IBreadcrumbProps {
-  productId?: string;
+  slug?: string;
   name?: string;
 }
 
-const Breadcrumb: FC<IBreadcrumbProps> = ({ productId, name }) => {
+const Breadcrumb: FC<IBreadcrumbProps> = ({ slug, name }) => {
   const t = useTranslations();
   const pathname = usePathname();
 
   const isAllProducts = pathname.includes('/all-products');
-  const isProductPage =
-    productId && pathname.includes(`/all-products/${productId}`);
+
+  const isProductPage = slug && pathname.includes(`/all-products/${slug}`);
 
   return (
     <div className="text-desc mb-[22px] flex flex-wrap items-center text-[14px] font-medium md:text-[16px]">
@@ -43,15 +43,10 @@ const Breadcrumb: FC<IBreadcrumbProps> = ({ productId, name }) => {
         </>
       )}
 
-      {isProductPage && (
+      {isProductPage && name && (
         <>
           <span className="mr-[12px]">/</span>
-          <Link
-            href={`/all-products/${productId}`}
-            className={clsx('text-title')}
-          >
-            {name}
-          </Link>
+          <span className="text-title">{name}</span>
         </>
       )}
     </div>

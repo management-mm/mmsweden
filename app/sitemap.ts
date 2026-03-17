@@ -15,6 +15,10 @@ const STATIC_PAGES = [
   '/contact-us',
 ] as const;
 
+function getSiteUrl() {
+  return process.env.SITE_URL?.replace(/\/$/, '') ?? 'https://www.mmsweden.se';
+}
+
 async function getProductsForSitemap(): Promise<ProductSitemapItem[]> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -31,39 +35,71 @@ async function getProductsForSitemap(): Promise<ProductSitemapItem[]> {
   return res.json();
 }
 
-function buildLocalizedUrl(locale: AppLocale, path: string) {
-  const siteUrl =
-    process.env.SITE_URL?.replace(/\/$/, '') ?? 'https://www.mmsweden.se';
+function buildLocalizedUrl(siteUrl: string, locale: AppLocale, path: string) {
+  return `${siteUrl}/${locale}${path}`;
+}
 
-  if (!siteUrl) {
-    throw new Error('SITE_URL is not defined');
-  }
+function buildAlternates(path: string) {
+  const siteUrl = getSiteUrl();
 
-  return `${siteUrl.replace(/\/$/, '')}/${locale}${path}`;
+  return {
+    languages: Object.fromEntries(
+      SUPPORTED_LOCALES.map(locale => [
+        locale,
+        buildLocalizedUrl(siteUrl, locale, path),
+      ])
+    ),
+  };
+}
+
+function getStaticPriority(path: string) {
+  if (path === '') return 1;
+  if (path === '/all-products') return 0.9;
+  return 0.7;
+}
+
+function getStaticChangeFrequency(
+  path: string
+): 'daily' | 'weekly' | 'monthly' | 'yearly' {
+  if (path === '') return 'weekly';
+  if (path === '/all-products') return 'weekly';
+  return 'monthly';
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const siteUrl = getSiteUrl();
   const products = await getProductsForSitemap();
   const now = new Date();
 
   const staticEntries: MetadataRoute.Sitemap = SUPPORTED_LOCALES.flatMap(
     locale =>
       STATIC_PAGES.map(path => ({
-        url: buildLocalizedUrl(locale, path),
+        url: buildLocalizedUrl(siteUrl, locale, path),
         lastModified: now,
-        changeFrequency: path === '' ? 'weekly' : 'monthly',
-        priority: path === '' ? 1 : 0.8,
+        changeFrequency: getStaticChangeFrequency(path),
+        priority: getStaticPriority(path),
+        alternates: buildAlternates(path),
       }))
+  );
+
+  const validProducts = products.filter(
+    product =>
+      typeof product.slug === 'string' && product.slug.trim().length > 0
   );
 
   const productEntries: MetadataRoute.Sitemap = SUPPORTED_LOCALES.flatMap(
     locale =>
-      products.map(product => ({
-        url: buildLocalizedUrl(locale, `/all-products/${product.slug}`),
-        lastModified: product.updatedAt ? new Date(product.updatedAt) : now,
-        changeFrequency: 'weekly',
-        priority: 0.7,
-      }))
+      validProducts.map(product => {
+        const productPath = `/all-products/${product.slug}`;
+
+        return {
+          url: buildLocalizedUrl(siteUrl, locale, productPath),
+          lastModified: product.updatedAt ? new Date(product.updatedAt) : now,
+          changeFrequency: 'weekly',
+          priority: 0.6,
+          alternates: buildAlternates(productPath),
+        };
+      })
   );
 
   return [...staticEntries, ...productEntries];

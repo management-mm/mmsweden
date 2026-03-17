@@ -24,14 +24,6 @@ const normalizeArray = (value?: string | string[]) => {
   return Array.isArray(value) ? value : [value];
 };
 
-const getCanonicalPath = (page?: string) => {
-  if (!page || page === '1') {
-    return '/all-products';
-  }
-
-  return `/all-products?page=${page}`;
-};
-
 export async function generateMetadata({
   params,
   searchParams,
@@ -39,11 +31,19 @@ export async function generateMetadata({
   const { locale } = await params;
   const resolvedSearchParams = await searchParams;
 
+  const hasFilters =
+    !!resolvedSearchParams.title ||
+    !!resolvedSearchParams.manufacturer ||
+    !!resolvedSearchParams.condition ||
+    normalizeArray(resolvedSearchParams.category).length > 0 ||
+    normalizeArray(resolvedSearchParams.industry).length > 0;
+
   return createPageMetadata({
     locale,
-    path: getCanonicalPath(resolvedSearchParams.page),
-    title: 'All Machines | Meat Machines',
+    path: '/all-products',
+    title: 'Used Food Processing Machines | Meat Machines',
     description: 'Browse our catalogue of used food processing machinery.',
+    noIndex: hasFilters,
   });
 }
 

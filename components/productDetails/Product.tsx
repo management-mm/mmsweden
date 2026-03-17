@@ -1,10 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-
+import { IProduct } from '@interfaces/IProduct';
 import { useTranslations } from 'next-intl';
-import { useParams } from 'next/navigation';
 
 import Details from './Details';
 import Slider from './Slider';
@@ -13,12 +10,6 @@ import Breadcrumb from '@components/common/Breadcrumb';
 import DecorativeLine from '@components/common/DecorativeLine';
 import VideoPlayer from '@components/common/VideoPlayer';
 
-import { fetchProductBySlug } from '@store/products/operations';
-import { clearProduct } from '@store/products/productsSlice';
-import { selectIsLoading, selectProductDetails } from '@store/selectors';
-
-import { useAppDispatch } from '@hooks/useAppDispatch';
-import { useAppSelector } from '@hooks/useAppSelector';
 import { useCurrentLocale } from '@hooks/useCurrentLocale';
 import useWindowWidth from '@hooks/useWindowWidth';
 
@@ -27,97 +18,77 @@ import getProductName from '@utils/getProductName';
 
 import { Title } from '@enums/i18nConstants';
 
-const Product = () => {
+import type { AppLocale } from '@i18n/config';
+
+type Props = {
+  product: IProduct;
+  locale: AppLocale;
+  slug: string;
+};
+
+const Product = ({ product, slug }: Props) => {
   const t = useTranslations();
-
-  const dispatch = useAppDispatch();
-  const product = useAppSelector(selectProductDetails);
-  const isLoading = useAppSelector(selectIsLoading);
-
+  const language = useCurrentLocale();
   const windowWidth = useWindowWidth();
 
-  const params = useParams<{ locale: string; slug: string }>();
-  const slug = params?.slug;
-  const language = useCurrentLocale();
+  const productSlug = slug?.split('-').pop();
 
-  const productId = slug?.split('-').pop();
-
-  const { name, photos, video } = product || {};
-
-  useEffect(() => {
-    if (!productId) return;
-    if (!slug) return;
-
-    dispatch(clearProduct());
-    dispatch(fetchProductBySlug({ slug }));
-  }, [dispatch, productId, slug]);
+  const { name, photos, video } = product;
 
   return (
     <div className={cn('container', 'pt-[12px] md:pt-[22px]')}>
       <Breadcrumb
-        productId={productId}
-        name={name && getProductName(name, language)}
+        slug={productSlug}
+        name={name ? getProductName(name, language) : ''}
       />
 
-      <SkeletonTheme baseColor="#E1E1E1" highlightColor="#F2F2F2">
-        <article className="pb-[48px]">
-          <h1 className="mb-[22px] text-center text-[22px] font-bold md:text-start">
-            {!isLoading && name ? (
-              getProductName(name, language)
-            ) : (
-              <Skeleton width={150} />
-            )}
-          </h1>
+      <article className="pb-[48px]">
+        <h1 className="mb-[22px] text-center text-[22px] font-bold md:text-start">
+          {name ? getProductName(name, language) : ''}
+        </h1>
 
-          <div className="gap-[30px] pb-[22px] md:flex md:items-start">
-            <div className="mb-[22px]">
-              {photos && photos.length > 1 ? (
-                <Slider
-                  alt={name ? getProductName(name, language) : ''}
-                  photos={photos}
-                />
-              ) : (
-                photos?.[0] && (
-                  <img
-                    className="rounded-[4px]"
-                    src={photos[0]}
-                    alt={name ? getProductName(name, language) : ''}
-                    width="100%"
-                  />
-                )
-              )}
-
-              {video && windowWidth >= 768 && (
-                <>
-                  <DecorativeLine intent="video" />
-                  <h2 className="text-primary mb-[22px] text-[18px] font-semibold">
-                    {t(Title.VideoOverview)}
-                  </h2>
-                  <VideoPlayer video={video} />
-                </>
-              )}
-            </div>
-
-            {product && (
-              <Details
-                isLoading={isLoading}
-                language={language}
-                product={product}
+        <div className="gap-[30px] pb-[22px] md:flex md:items-start">
+          <div className="mb-[22px]">
+            {photos && photos.length > 1 ? (
+              <Slider
+                alt={name ? getProductName(name, language) : ''}
+                photos={photos}
               />
+            ) : (
+              photos?.[0] && (
+                <img
+                  className="rounded-[4px]"
+                  src={photos[0]}
+                  alt={name ? getProductName(name, language) : ''}
+                  width="100%"
+                />
+              )
+            )}
+
+            {video && windowWidth >= 768 && (
+              <>
+                <DecorativeLine intent="video" />
+                <h2 className="text-primary mb-[22px] text-[18px] font-semibold">
+                  {t(Title.VideoOverview)}
+                </h2>
+                <VideoPlayer video={video} />
+              </>
             )}
           </div>
 
-          {video && windowWidth < 768 && (
-            <>
-              <DecorativeLine intent="video" />
-              <h2 className="text-primary mb-[22px] text-[18px] font-semibold">
-                {t(Title.VideoOverview)}
-              </h2>
-              <VideoPlayer video={video} />
-            </>
-          )}
-        </article>
-      </SkeletonTheme>
+          <Details isLoading={false} language={language} product={product} />
+        </div>
+
+        {video && windowWidth < 768 && (
+          <>
+            <DecorativeLine intent="video" />
+            <h2 className="text-primary mb-[22px] text-[18px] font-semibold">
+              {t(Title.VideoOverview)}
+            </h2>
+            <VideoPlayer video={video} />
+          </>
+        )}
+      </article>
     </div>
   );
 };

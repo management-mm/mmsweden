@@ -1,6 +1,8 @@
 import { Suspense } from 'react';
 
+import { IProduct } from '@interfaces/IProduct';
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 import Product from '@components/productDetails/Product';
 import RecommendedProducts from '@components/productDetails/RecommendedProducts';
@@ -10,21 +12,11 @@ import { type AppLocale, SUPPORTED_LOCALES } from '@i18n/config';
 type Props = {
   params: Promise<{ locale: AppLocale; slug: string }>;
 };
+function isMultiLang(value: unknown): value is Record<string, string> {
+  return typeof value === 'object' && value !== null;
+}
 
-type ProductResponse = {
-  _id: string;
-  idNumber: string;
-  slug?: string;
-  name: Record<AppLocale, string>;
-  description: Record<AppLocale, string>;
-  photos?: string[];
-  manufacturer?: string;
-  condition?: 'used' | 'new';
-};
-
-async function getProductForMetadata(
-  slug: string
-): Promise<ProductResponse | null> {
+async function getProduct(slug: string): Promise<IProduct | null> {
   const baseUrl = process.env.API_URL!;
 
   const res = await fetch(`${baseUrl}/products/${slug}`, {
@@ -44,19 +36,23 @@ function buildProductUrl(siteUrl: string, locale: AppLocale, slug: string) {
   return `${siteUrl}/${locale}/all-products/${slug}`;
 }
 
-function slugToTitle(slug: string) {
-  return slug
-    .split('-')
-    .filter(Boolean)
-    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(' ');
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
   const siteUrl = getSiteUrl();
+  let localizedName: string;
 
-  const product = await getProductForMetadata(slug);
+  const product = await getProduct(slug);
+
+  if (!product) {
+    return {
+      title: 'Product Not Found | Meat Machines',
+      description: 'The requested product could not be found.',
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
 
   const canonicalUrl = buildProductUrl(siteUrl, locale, slug);
 
@@ -65,36 +61,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ['x-default', buildProductUrl(siteUrl, 'en', slug)],
   ]);
 
-  const fallbackName = slugToTitle(slug);
-
-  if (!product) {
-    return {
-      title: `${fallbackName} | Meat Machines`,
-      description: 'Used food processing and packaging equipment.',
-      alternates: {
-        canonical: canonicalUrl,
-        languages,
-      },
-      robots: {
-        index: false,
-        follow: false,
-      },
-      openGraph: {
-        title: `${fallbackName} | Meat Machines`,
-        description: 'Used food processing and packaging equipment.',
-        url: canonicalUrl,
-        type: 'website',
-      },
-      twitter: {
-        card: 'summary_large_image',
-        title: `${fallbackName} | Meat Machines`,
-        description: 'Used food processing and packaging equipment.',
-      },
-    };
+  if (isMultiLang(product.name)) {
+    localizedName = product.name[locale] || product.name.en || slug;
+  } else {
+    localizedName = product.name || slug;
   }
-
-  const localizedName =
-    product.name?.[locale] || product.name?.en || fallbackName;
 
   const localizedDescription =
     product.description?.[locale] ||
@@ -144,60 +115,96 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function ProductDetails({ params }: Props) {
+export default async function ProductDetailsPage({ params }: Props) {
   const { locale, slug } = await params;
+  let localizedName: string;
   const siteUrl = getSiteUrl();
 
-  const product = await getProductForMetadata(slug);
+  const product = await getProduct(slug);
+
+  if (!product) {
+    notFound();
+  }
 
   const canonicalUrl = buildProductUrl(siteUrl, locale, slug);
 
-  const fallbackName = slugToTitle(slug);
-
-  const localizedName =
-    product?.name?.[locale] || product?.name?.en || fallbackName;
+  if (isMultiLang(product.name)) {
+    localizedName = product.name[locale] || product.name.en || slug;
+  } else {
+    localizedName = product.name || slug;
+  }
 
   const localizedDescription =
-    product?.description?.[locale] ||
-    product?.description?.en ||
+    product.description?.[locale] ||
+    product.description?.en ||
     'Used food processing and packaging equipment.';
 
-  const jsonLd =
-    product &&
-    ({
-      '@context': 'https://schema.org',
-      '@type': 'Product',
-      name: localizedName,
-      description: localizedDescription,
-      sku: product.idNumber,
-      image: product.photos ?? [],
-      brand: product.manufacturer
-        ? {
-            '@type': 'Brand',
-            name: product.manufacturer,
-          }
-        : undefined,
-      itemCondition:
-        product.condition === 'new'
-          ? 'https://schema.org/NewCondition'
-          : product.condition === 'used'
-            ? 'https://schema.org/UsedCondition'
-            : undefined,
-      url: canonicalUrl,
-    } satisfies Record<string, unknown>);
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: localizedName,
+    description: localizedDescription,
+    sku: product.idNumber,
+    productID: product.idNumber,
+    image: product.photos ?? [],
+    brand: product.manufacturer
+      ? {
+          '@type': 'Brand',
+          name: product.manufacturer,
+        }
+      : undefined,
+    itemCondition:
+      product.condition === 'new'
+        ? 'https://schema.org/NewCondition'
+        : product.condition === 'used'
+          ? 'https://schema.org/UsedCondition'
+          : undefined,
+    url: canonicalUrl,
+    inLanguage: locale,
+  } satisfies Record<string, unknown>;
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: `${siteUrl}/${locale}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'All Products',
+        item: `${siteUrl}/${locale}/all-products`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: localizedName,
+        item: canonicalUrl,
+      },
+    ],
+  };
 
   return (
     <>
-      {jsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(jsonLd),
-          }}
-        />
-      )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd),
+        }}
+      />
 
-      <Product />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd),
+        }}
+      />
+
+      <Product product={product} locale={locale} slug={slug} />
 
       <Suspense fallback={<div>Loading recommended products...</div>}>
         <RecommendedProducts />

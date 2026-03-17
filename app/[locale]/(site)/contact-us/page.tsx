@@ -9,7 +9,7 @@ import type { AppLocale } from '@i18n/config';
 import { createPageMetadata } from '@i18n/seo';
 
 type Props = {
-  params: Promise<{ locale: AppLocale }>;
+  params: { locale: AppLocale };
 };
 
 const WriteToUsForm = dynamic(

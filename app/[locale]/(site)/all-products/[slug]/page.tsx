@@ -8,7 +8,7 @@ import RecommendedProducts from '@components/productDetails/RecommendedProducts'
 import { type AppLocale, SUPPORTED_LOCALES } from '@i18n/config';
 
 type Props = {
-  params: Promise<{ locale: AppLocale; slug: string }>;
+  params: { locale: AppLocale; slug: string };
 };
 
 type ProductResponse = {
@@ -36,17 +36,25 @@ async function getProductForMetadata(
   return res.json();
 }
 
+function getSiteUrl() {
+  return process.env.SITE_URL?.replace(/\/$/, '') ?? 'https://www.mmsweden.se';
+}
+
+function buildProductUrl(siteUrl: string, locale: AppLocale, slug: string) {
+  return `${siteUrl}/${locale}/all-products/${slug}`;
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL!;
+  const siteUrl = getSiteUrl();
 
   const product = await getProductForMetadata(slug);
 
-  const canonicalUrl = `${siteUrl}/${locale}/all-products/${slug}`;
+  const canonicalUrl = buildProductUrl(siteUrl, locale, slug);
 
   const languages = Object.fromEntries([
-    ...SUPPORTED_LOCALES.map(l => [l, `${siteUrl}/${l}/all-products/${slug}`]),
-    ['x-default', `${siteUrl}/en/all-products/${slug}`],
+    ...SUPPORTED_LOCALES.map(l => [l, buildProductUrl(siteUrl, l, slug)]),
+    ['x-default', buildProductUrl(siteUrl, 'en', slug)],
   ]);
 
   if (!product) {
@@ -116,11 +124,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductDetails({ params }: Props) {
   const { locale, slug } = await params;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL!;
+  const siteUrl = getSiteUrl();
 
   const product = await getProductForMetadata(slug);
 
-  const canonicalUrl = `${siteUrl}/${locale}/all-products/${slug}`;
+  const canonicalUrl = buildProductUrl(siteUrl, locale, slug);
 
   const localizedName =
     product?.name?.[locale] || product?.name?.en || 'Product';

@@ -32,10 +32,11 @@ async function getProductsForSitemap(): Promise<ProductSitemapItem[]> {
 }
 
 function buildLocalizedUrl(locale: AppLocale, path: string) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  const siteUrl =
+    process.env.SITE_URL?.replace(/\/$/, '') ?? 'https://www.mmsweden.se';
 
   if (!siteUrl) {
-    throw new Error('NEXT_PUBLIC_SITE_URL is not defined');
+    throw new Error('SITE_URL is not defined');
   }
 
   return `${siteUrl.replace(/\/$/, '')}/${locale}${path}`;

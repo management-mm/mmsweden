@@ -21,19 +21,14 @@ export function createPageMetadata({
   description,
   keywords,
 }: CreatePageMetadataParams): Metadata {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL!;
-
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  const pathname = normalizedPath === '/' ? '' : normalizedPath;
+
+  const localizedPath = `/${locale}${pathname}`;
 
   const languages = Object.fromEntries([
-    ...SUPPORTED_LOCALES.map(l => [
-      l,
-      `${baseUrl}/${l}${normalizedPath === '/' ? '' : normalizedPath}`,
-    ]),
-    [
-      'x-default',
-      `${baseUrl}/${DEFAULT_LOCALE}${normalizedPath === '/' ? '' : normalizedPath}`,
-    ],
+    ...SUPPORTED_LOCALES.map(l => [l, `/${l}${pathname}`]),
+    ['x-default', `/${DEFAULT_LOCALE}${pathname}`],
   ]);
 
   return {
@@ -41,7 +36,7 @@ export function createPageMetadata({
     description,
     keywords,
     alternates: {
-      canonical: `${baseUrl}/${locale}${normalizedPath === '/' ? '' : normalizedPath}`,
+      canonical: localizedPath,
       languages,
     },
   };

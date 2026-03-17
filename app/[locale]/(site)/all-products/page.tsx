@@ -15,8 +15,8 @@ type SearchParams = {
 };
 
 type Props = {
-  params: Promise<{ locale: AppLocale }>;
-  searchParams: Promise<SearchParams>;
+  params: { locale: AppLocale };
+  searchParams: SearchParams;
 };
 
 const normalizeArray = (value?: string | string[]) => {
@@ -24,12 +24,38 @@ const normalizeArray = (value?: string | string[]) => {
   return Array.isArray(value) ? value : [value];
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+const getValidPage = (page?: string) => {
+  if (!page) return null;
+
+  const parsedPage = Number(page);
+
+  if (!Number.isInteger(parsedPage) || parsedPage < 2) {
+    return null;
+  }
+
+  return String(parsedPage);
+};
+
+const getCanonicalPath = (page?: string) => {
+  const validPage = getValidPage(page);
+
+  if (!validPage) {
+    return '/all-products';
+  }
+
+  return `/all-products?page=${validPage}`;
+};
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: Props): Promise<Metadata> {
   const { locale } = await params;
+  const resolvedSearchParams = await searchParams;
 
   return createPageMetadata({
     locale,
-    path: '/all-products',
+    path: getCanonicalPath(resolvedSearchParams.page),
     title: 'All Machines | Meat Machines',
     description: 'Browse our catalogue of used food processing machinery.',
   });

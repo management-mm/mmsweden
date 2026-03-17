@@ -7,7 +7,7 @@ import type { AppLocale } from '@i18n/config';
 import { createPageMetadata } from '@i18n/seo';
 
 type Props = {
-  params: Promise<{ locale: AppLocale }>;
+  params: { locale: AppLocale };
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -17,6 +17,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     locale,
     path: '/about-us',
     title: 'About Us | Meat Machines',
+    description:
+      'Learn more about Meat Machines and our experience in used food processing and packaging equipment.',
   });
 }
 

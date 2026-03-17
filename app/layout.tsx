@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 
+import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 
 import Sprite from './Sprite';
@@ -39,6 +40,13 @@ const inter = localFont({
   variable: '--font-inter',
 });
 
+const siteUrl =
+  process.env.SITE_URL?.replace(/\/$/, '') ?? 'https://www.mmsweden.se';
+
+export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -46,16 +54,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning className={inter.variable}>
-      <head>
-        <link rel="preconnect" href="https://res.cloudinary.com" />
-        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
-      </head>
-
       <body className={cn(inter.className, 'bg-main')}>
         <Suspense fallback={null}>
           <Sprite />
         </Suspense>
-
         {children}
       </body>
     </html>

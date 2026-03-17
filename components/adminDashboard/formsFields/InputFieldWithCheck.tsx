@@ -1,8 +1,9 @@
 import { type ChangeEvent, type FC, useState } from 'react';
 
 import type { MultiLanguageString } from '@interfaces/IProduct';
-import clsx from 'clsx';
 import { Field, type FormikValues, useFormikContext } from 'formik';
+
+import Checkbox from '../common/Checkbox';
 
 import SvgIcon from '@components/common/SvgIcon';
 
@@ -47,6 +48,16 @@ const InputFieldWithCheck: FC<IInputField> = ({
   );
   const { values, setFieldValue } = useFormikContext<FormikValues>();
 
+  const handleClicked = () => {
+    if (name === 'name') {
+      handleCheck?.(!isClick);
+    } else {
+      handleCheck?.(isClick ? '' : inputValue);
+    }
+
+    setIsClick(!isClick);
+  };
+
   return (
     <div className="flex w-full items-center gap-2">
       <div className="relative w-full">
@@ -72,28 +83,13 @@ const InputFieldWithCheck: FC<IInputField> = ({
           )}
         />
         {handleCheck && inputValue && (
-          <button
-            className={clsx(
-              'absolute top-1/2 right-[22px] flex h-[20px] w-[20px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full',
-              isClick ? 'bg-secondary-accent' : 'bg-desc'
-            )}
-            type="button"
-            onClick={() => {
-              if (name === 'name') {
-                handleCheck?.(!isClick);
-              } else {
-                handleCheck?.(isClick ? '' : inputValue);
-              }
-
-              setIsClick(!isClick);
-            }}
-          >
-            <SvgIcon
-              iconId={IconId.Check}
-              size={{ width: 10, height: 10 }}
-              className="fill-secondary"
-            />
-          </button>
+          <Checkbox
+            isClick={isClick}
+            onClicked={handleClicked}
+            className={
+              'absolute top-1/2 right-[22px] -translate-y-1/2 rounded-full'
+            }
+          />
         )}
       </div>
       {isNewValueEntered && (

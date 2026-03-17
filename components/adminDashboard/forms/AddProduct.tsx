@@ -2,9 +2,9 @@
 
 import { useEffect, useMemo, useState } from 'react';
 
+import { getNextProductId } from '@api/countersService';
 import { schema } from '@schemas/addProduct';
 import { Form, Formik } from 'formik';
-import Link from 'next/link';
 
 import Block from '../Block';
 import Condition from '../Condition';
@@ -32,6 +32,7 @@ const AddProduct = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
+  const [initialIdNumber, setInitialIdNumber] = useState<number | null>(null);
 
   const handleToggleMenu = () => setIsOpen(prev => !prev);
 
@@ -40,31 +41,47 @@ const AddProduct = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    const loadId = async () => {
+      try {
+        const id = await getNextProductId();
+        setInitialIdNumber(id);
+      } catch (error) {
+        console.error('Failed to fetch next product id', error);
+      }
+    };
+
+    loadId();
+  }, []);
+
+  useEffect(() => {
     if (!product) {
       setIsOpen(false);
       return;
     }
-    handleToggleMenu();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    setIsOpen(true);
   }, [product]);
 
   const editHref = useMemo(() => {
     const slug = (product as any)?.slug;
+
     return slug
       ? `/admin/all-products/edit-product/${slug}`
       : '/admin/all-products';
   }, [product]);
 
-  if (!product && isLoading && !isSubmit) {
+  if (initialIdNumber === null) {
     return <Loader />;
   }
 
   return (
     <>
       <Formik
+        enableReinitialize
         initialValues={{
           name: '',
-          idNumber: '',
+          idNumber: initialIdNumber.toString(),
+          autoGenerateId: false,
           description: '',
           dimensions: '',
           category: '',
@@ -81,7 +98,7 @@ const AddProduct = () => {
             setIsSubmit(true);
             dispatch(addProduct(values));
           } catch (error) {
-            console.log(error);
+            console.error(error);
           }
         }}
       >
@@ -130,18 +147,16 @@ const AddProduct = () => {
       </Formik>
 
       {isLoading && (
-        <StatusModal
-          title={'Please wait, the product is being added to the website.'}
-        >
+        <StatusModal title="Please wait, the product is being added to the website.">
           <Loader />
         </StatusModal>
       )}
 
       {isOpen && isSubmit && (
         <SuccessModal
-          mainMessage={'🎉🎉🎉Great! Your product is now live on the website.'}
+          mainMessage="🎉🎉🎉Great! Your product is now live on the website."
           handleToggleMenu={handleToggleMenu}
-          statusProduct={'added'}
+          statusProduct="added"
           linkProduct={editHref}
         />
       )}

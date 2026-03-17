@@ -8,8 +8,7 @@ type Props = {
   isClick: boolean;
   onClicked: () => void;
   className: string;
-
-}
+};
 
 export default function Checkbox({ isClick, onClicked, className }: Props) {
   return (

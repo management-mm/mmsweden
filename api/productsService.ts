@@ -3,7 +3,8 @@ import type { IProduct } from 'interfaces/IProduct';
 
 import type { AppLocale } from '@i18n/config';
 
-const baseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '');
+const baseUrl =
+  process.env.API_URL || process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '');
 
 export interface GetProductsParams {
   lang?: AppLocale;

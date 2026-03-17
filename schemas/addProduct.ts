@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 export const schema = Yup.object().shape({
   name: Yup.string(),
   idNumber: Yup.string(),
+  autoGenerateId: Yup.boolean().notRequired(),
   description: Yup.string(),
   dimensions: Yup.string(),
   category: Yup.string(),

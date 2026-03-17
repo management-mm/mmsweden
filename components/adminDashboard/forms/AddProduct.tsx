@@ -81,7 +81,7 @@ const AddProduct = () => {
         initialValues={{
           name: '',
           idNumber: initialIdNumber.toString(),
-          autoGenerateId: false,
+          autoGenerateId: true,
           description: '',
           dimensions: '',
           category: '',

@@ -61,13 +61,13 @@ const Product = () => {
 
       <SkeletonTheme baseColor="#E1E1E1" highlightColor="#F2F2F2">
         <article className="pb-[48px]">
-          <h2 className="mb-[22px] text-center text-[22px] font-bold md:text-start">
+          <h1 className="mb-[22px] text-center text-[22px] font-bold md:text-start">
             {!isLoading && name ? (
               getProductName(name, language)
             ) : (
               <Skeleton width={150} />
             )}
-          </h2>
+          </h1>
 
           <div className="gap-[30px] pb-[22px] md:flex md:items-start">
             <div className="mb-[22px]">
@@ -90,9 +90,9 @@ const Product = () => {
               {video && windowWidth >= 768 && (
                 <>
                   <DecorativeLine intent="video" />
-                  <h4 className="text-primary mb-[22px] text-[18px] font-semibold">
+                  <h2 className="text-primary mb-[22px] text-[18px] font-semibold">
                     {t(Title.VideoOverview)}
-                  </h4>
+                  </h2>
                   <VideoPlayer video={video} />
                 </>
               )}
@@ -110,9 +110,9 @@ const Product = () => {
           {video && windowWidth < 768 && (
             <>
               <DecorativeLine intent="video" />
-              <h4 className="text-primary mb-[22px] text-[18px] font-semibold">
+              <h2 className="text-primary mb-[22px] text-[18px] font-semibold">
                 {t(Title.VideoOverview)}
-              </h4>
+              </h2>
               <VideoPlayer video={video} />
             </>
           )}

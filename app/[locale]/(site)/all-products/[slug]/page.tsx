@@ -165,8 +165,6 @@ export default async function ProductDetails({ params }: Props) {
         />
       )}
 
-      <h1 className="sr-only">{localizedName}</h1>
-
       <Product />
 
       <Suspense fallback={<div>Loading recommended products...</div>}>

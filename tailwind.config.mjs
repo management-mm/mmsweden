@@ -1,3 +1,4 @@
+import daisyui from 'daisyui';
 import scrollbar from 'tailwind-scrollbar';
 import tailwindcssRetina from 'tailwindcss-retina';
 
@@ -11,5 +12,5 @@ export default {
       lg: '1178px',
     },
   },
-  plugins: [scrollbar, tailwindcssRetina],
+  plugins: [scrollbar, daisyui, tailwindcssRetina],
 };

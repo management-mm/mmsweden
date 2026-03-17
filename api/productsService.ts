@@ -3,6 +3,8 @@ import type { IProduct } from 'interfaces/IProduct';
 
 import type { AppLocale } from '@i18n/config';
 
+const baseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '');
+
 export interface GetProductsParams {
   lang?: AppLocale;
   sort?: string;
@@ -24,7 +26,7 @@ export const fetchRecommendedProductsBySlug = async (
   slug: string | undefined
 ): Promise<IProduct[]> => {
   const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/products/${slug}/recommended-products`
+    `${baseUrl}/products/${slug}/recommended-products`
   );
   return response.data;
 };
@@ -32,8 +34,6 @@ export const fetchRecommendedProductsBySlug = async (
 export async function getProducts(
   params: GetProductsParams
 ): Promise<GetProductsResponse> {
-  const baseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL;
-
   if (!baseUrl) {
     throw new Error('API_URL is not defined on the server');
   }
@@ -52,7 +52,7 @@ export async function getProducts(
   params.category?.forEach(value => searchParams.append('category', value));
   params.industry?.forEach(value => searchParams.append('industry', value));
 
-  const url = `${baseUrl}products?${searchParams.toString()}`;
+  const url = `${baseUrl}/products?${searchParams.toString()}`;
 
   const res = await fetch(url, {
     cache: 'no-store',

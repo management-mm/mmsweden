@@ -71,7 +71,7 @@
     "@types/react-input-mask": "^3.0.5",
     "@types/swiper": "^6.0.0",
     "autoprefixer": "^10.4.24",
-    "daisyui": "^5.3.10",
+    "daisyui": "^5.5.19",
     "eslint": "^9.9.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "globals": "^15.9.0",

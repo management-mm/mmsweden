@@ -1,12 +1,13 @@
 'use client';
 
 import type { ChangeEvent, FC } from 'react';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import type { IProduct } from '@interfaces/IProduct';
 import { Field, type FormikValues, useFormikContext } from 'formik';
 import * as _ from 'lodash';
 
+import Checkbox from './common/Checkbox';
 import DescriptionProduct from './formsFields/DescriptionProduct';
 import ProductName from './formsFields/ProductName';
 
@@ -20,6 +21,7 @@ interface IGeneralInformationProps {
 
 const GeneralInformation: FC<IGeneralInformationProps> = ({ product }) => {
   const { values, setFieldValue } = useFormikContext<FormikValues>();
+  const [isChecked, setIsChecked] = useState(false);
 
   const debouncedSetFieldValue = useMemo(
     () =>
@@ -52,11 +54,21 @@ const GeneralInformation: FC<IGeneralInformationProps> = ({ product }) => {
           placeholder="Enter ID number"
           name="idNumber"
           required
+          disabled={!isChecked}
           value={values.idNumber}
           onChange={handleChange('idNumber')}
-          className="border-neutral transition-border duration-primary focus:border-secondary-accent rounded-[32px] border px-[22px] py-[14px] text-[14px] outline-none focus:border"
+          className="border-neutral transition-border duration-primary focus:border-secondary-accent disabled:text-desc rounded-[32px] border px-[22px] py-[14px] text-[14px] outline-none focus:border"
         />
       </label>
+
+      <div className="flex items-center gap-2 pl-[22px]">
+        <Checkbox
+          isClick={isChecked}
+          onClicked={() => setIsChecked(!isChecked)}
+          className={'rounded-[6px]'}
+        />
+        <span className="text-[14px]">Enter ID Number manually</span>
+      </div>
 
       <DescriptionProduct description={product?.description} />
 

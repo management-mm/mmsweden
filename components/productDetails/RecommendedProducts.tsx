@@ -48,7 +48,7 @@ const RecommendedProducts = () => {
   }, [slug]);
 
   return (
-    <section>
+    <section aria-labelledby="recommended-products-heading">
       <div className="container">
         <div className="relative mb-[22px] flex flex-wrap items-end justify-between gap-[12px] md:flex-nowrap">
           <h2 className="shrink-0 text-[18px] font-semibold md:text-[24px] md:leading-[0.8]">

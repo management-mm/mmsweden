@@ -23,6 +23,7 @@ export const schema = Yup.object().shape({
   category: multiLangOrString,
 
   idNumber: safeString(),
+  autoGenerateId: Yup.boolean().notRequired(),
   dimensions: safeString(),
   manufacturer: safeString(),
   video: safeString(),

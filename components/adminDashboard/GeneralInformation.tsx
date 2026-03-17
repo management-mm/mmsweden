@@ -64,7 +64,11 @@ const GeneralInformation: FC<IGeneralInformationProps> = ({ product }) => {
       <div className="flex items-center gap-2 pl-[22px]">
         <Checkbox
           isClick={isChecked}
-          onClicked={() => setIsChecked(!isChecked)}
+          onClicked={() => {
+            const newValue = !isChecked;
+            setIsChecked(newValue);
+            setFieldValue('autoGenerateId', !newValue, false);
+          }}
           className={'rounded-[6px]'}
         />
         <span className="text-[14px]">Enter ID Number manually</span>

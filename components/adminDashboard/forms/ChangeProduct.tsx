@@ -135,7 +135,7 @@ const ChangeProduct = () => {
                   : '',
 
             idNumber: product.idNumber || '',
-
+            autoGenerateId: true,
             description:
               typeof product.description === 'string'
                 ? product.description

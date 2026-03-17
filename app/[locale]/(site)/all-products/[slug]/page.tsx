@@ -37,14 +37,19 @@ async function getProductForMetadata(
 }
 
 function getSiteUrl() {
-  return (
-    process.env.SITE_URL?.replace(/\/$/, '') ??
-    'https://www.mmsweden.se'
-  );
+  return process.env.SITE_URL?.replace(/\/$/, '') ?? 'https://www.mmsweden.se';
 }
 
 function buildProductUrl(siteUrl: string, locale: AppLocale, slug: string) {
   return `${siteUrl}/${locale}/all-products/${slug}`;
+}
+
+function slugToTitle(slug: string) {
+  return slug
+    .split('-')
+    .filter(Boolean)
+    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -60,9 +65,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ['x-default', buildProductUrl(siteUrl, 'en', slug)],
   ]);
 
+  const fallbackName = slugToTitle(slug);
+
   if (!product) {
     return {
-      title: 'Product Details | Meat Machines',
+      title: `${fallbackName} | Meat Machines`,
       description: 'Used food processing and packaging equipment.',
       alternates: {
         canonical: canonicalUrl,
@@ -72,10 +79,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         index: false,
         follow: false,
       },
+      openGraph: {
+        title: `${fallbackName} | Meat Machines`,
+        description: 'Used food processing and packaging equipment.',
+        url: canonicalUrl,
+        type: 'website',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${fallbackName} | Meat Machines`,
+        description: 'Used food processing and packaging equipment.',
+      },
     };
   }
 
-  const localizedName = product.name?.[locale] || product.name?.en || 'Product';
+  const localizedName =
+    product.name?.[locale] || product.name?.en || fallbackName;
 
   const localizedDescription =
     product.description?.[locale] ||
@@ -133,8 +152,10 @@ export default async function ProductDetails({ params }: Props) {
 
   const canonicalUrl = buildProductUrl(siteUrl, locale, slug);
 
+  const fallbackName = slugToTitle(slug);
+
   const localizedName =
-    product?.name?.[locale] || product?.name?.en || 'Product';
+    product?.name?.[locale] || product?.name?.en || fallbackName;
 
   const localizedDescription =
     product?.description?.[locale] ||

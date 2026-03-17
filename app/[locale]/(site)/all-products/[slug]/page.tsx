@@ -8,7 +8,7 @@ import RecommendedProducts from '@components/productDetails/RecommendedProducts'
 import { type AppLocale, SUPPORTED_LOCALES } from '@i18n/config';
 
 type Props = {
-  params: { locale: AppLocale; slug: string };
+  params: Promise<{ locale: AppLocale; slug: string }>;
 };
 
 type ProductResponse = {
@@ -37,7 +37,10 @@ async function getProductForMetadata(
 }
 
 function getSiteUrl() {
-  return process.env.SITE_URL?.replace(/\/$/, '') ?? 'https://www.mmsweden.se';
+  return (
+    process.env.SITE_URL?.replace(/\/$/, '') ??
+    'https://www.mmsweden.se'
+  );
 }
 
 function buildProductUrl(siteUrl: string, locale: AppLocale, slug: string) {

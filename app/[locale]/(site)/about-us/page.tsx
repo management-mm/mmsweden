@@ -7,19 +7,19 @@ import type { AppLocale } from '@i18n/config';
 import { createPageMetadata } from '@i18n/seo';
 
 type Props = {
-  params: { locale: AppLocale };
+  params: Promise<{ locale: AppLocale }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
 
   return createPageMetadata({
-    locale,
-    path: '/about-us',
-    title: 'About Us | Meat Machines',
-    description:
-      'Learn more about Meat Machines and our experience in used food processing and packaging equipment.',
-  });
+  locale,
+  path: '/about-us',
+  title: 'About Us | Meat Machines',
+  description:
+    'Learn more about Meat Machines and our experience in used food processing and packaging equipment.',
+});
 }
 
 const AboutUs = () => {

@@ -15,8 +15,8 @@ type SearchParams = {
 };
 
 type Props = {
-  params: { locale: AppLocale };
-  searchParams: SearchParams;
+  params: Promise<{ locale: AppLocale }>;
+  searchParams: Promise<SearchParams>;
 };
 
 const normalizeArray = (value?: string | string[]) => {
@@ -24,26 +24,12 @@ const normalizeArray = (value?: string | string[]) => {
   return Array.isArray(value) ? value : [value];
 };
 
-const getValidPage = (page?: string) => {
-  if (!page) return null;
-
-  const parsedPage = Number(page);
-
-  if (!Number.isInteger(parsedPage) || parsedPage < 2) {
-    return null;
-  }
-
-  return String(parsedPage);
-};
-
 const getCanonicalPath = (page?: string) => {
-  const validPage = getValidPage(page);
-
-  if (!validPage) {
+  if (!page || page === '1') {
     return '/all-products';
   }
 
-  return `/all-products?page=${validPage}`;
+  return `/all-products?page=${page}`;
 };
 
 export async function generateMetadata({

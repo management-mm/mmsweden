@@ -8,7 +8,7 @@ import type { AppLocale } from '@i18n/config';
 import { createPageMetadata } from '@i18n/seo';
 
 type Props = {
-  params: { locale: AppLocale };
+  params: Promise<{ locale: AppLocale }>;
 };
 
 const FormForSale = dynamic(() => import('@components/sellToUs/FormForSale'), {

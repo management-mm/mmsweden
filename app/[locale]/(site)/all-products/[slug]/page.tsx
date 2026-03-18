@@ -19,7 +19,7 @@ function isMultiLang(value: unknown): value is Record<string, string> {
 async function getProduct(slug: string): Promise<IProduct | null> {
   const baseUrl = process.env.API_URL!;
 
-  const res = await fetch(`${baseUrl}/products/${slug}`, {
+  const res = await fetch(`${baseUrl}/products/by-slug/${slug}`, {
     next: { revalidate: 300 },
   });
 
@@ -28,8 +28,11 @@ async function getProduct(slug: string): Promise<IProduct | null> {
   return res.json();
 }
 
-function getSiteUrl() {
-  return process.env.SITE_URL?.replace(/\/$/, '') ?? 'https://www.mmsweden.se';
+function getApiUrl() {
+  return (
+    process.env.API_URL?.replace(/\/$/, '') ??
+    'https://mmsweden-server.onrender.com'
+  );
 }
 
 function buildProductUrl(siteUrl: string, locale: AppLocale, slug: string) {
@@ -38,7 +41,7 @@ function buildProductUrl(siteUrl: string, locale: AppLocale, slug: string) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
-  const siteUrl = getSiteUrl();
+  const siteUrl = getApiUrl();
   let localizedName: string;
 
   const product = await getProduct(slug);
@@ -118,11 +121,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProductDetailsPage({ params }: Props) {
   const { locale, slug } = await params;
   let localizedName: string;
-  const siteUrl = getSiteUrl();
+  const siteUrl = getApiUrl();
 
   const product = await getProduct(slug);
 
   if (!product) {
+    console.log(slug);
+    console.log('url:', `${siteUrl}/products/${slug}`);
+    console.log('product: ', product);
+
     notFound();
   }
 

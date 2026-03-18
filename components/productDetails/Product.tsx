@@ -31,14 +31,12 @@ const Product = ({ product, slug }: Props) => {
   const language = useCurrentLocale();
   const windowWidth = useWindowWidth();
 
-  const productSlug = slug?.split('-').pop();
-
   const { name, photos, video } = product;
 
   return (
     <div className={cn('container', 'pt-[12px] md:pt-[22px]')}>
       <Breadcrumb
-        slug={productSlug}
+        slug={slug}
         name={name ? getProductName(name, language) : ''}
       />
 

@@ -67,12 +67,12 @@ const Slider: FC<ISliderProps> = ({ photos, alt }) => {
                 onSwiper={onSwiperInit}
                 slidesPerView={1}
                 spaceBetween={0}
-                centeredSlides={false}
-                thumbs={
-                  thumbsSwiper && !thumbsSwiper.destroyed
-                    ? { swiper: thumbsSwiper }
-                    : undefined
-                }
+                thumbs={{
+                  swiper:
+                    thumbsSwiper && !thumbsSwiper.destroyed
+                      ? thumbsSwiper
+                      : null,
+                }}
                 modules={[FreeMode, Thumbs, Keyboard]}
                 className="mySwiper2"
               >
@@ -114,13 +114,12 @@ const Slider: FC<ISliderProps> = ({ photos, alt }) => {
               </Swiper>
 
               <Swiper
-                onSwiper={swiper => {
-                  if (!swiper.destroyed) setThumbsSwiper(swiper);
-                }}
+                onSwiper={setThumbsSwiper}
                 spaceBetween={10}
                 slidesPerView={4}
-                freeMode={true}
-                watchSlidesProgress={true}
+                freeMode
+                watchSlidesProgress
+                slideToClickedSlide
                 modules={[FreeMode, Thumbs]}
                 className="mySwiper"
               >

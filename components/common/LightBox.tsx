@@ -9,7 +9,7 @@ import {
 } from 'react-zoom-pan-pinch';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import 'swiper/css';
+import { Keyboard } from 'swiper/modules';
 
 import SvgIcon from './SvgIcon';
 
@@ -101,6 +101,10 @@ const LightBox: FC<ILightBoxProps> = ({
       <Swiper
         className="lightbox-swiper"
         onSwiper={onSwiperInit}
+        keyboard={{
+          enabled: true,
+          onlyInViewport: false,
+        }}
         slidesPerView={1}
         centeredSlides={true}
         spaceBetween={0}
@@ -108,6 +112,7 @@ const LightBox: FC<ILightBoxProps> = ({
         onSlideChange={swiper => setCurrentIndex(swiper.activeIndex)}
         simulateTouch={false}
         touchStartPreventDefault={false}
+        modules={[Keyboard]}
       >
         {photos.map((photo, index) => (
           <SwiperSlide key={`photo-${index}`}>

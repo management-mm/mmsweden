@@ -58,4 +58,5 @@ export enum IconId {
   EditProduct = '#edit-product',
   Upload = '#upload',
   Settings = '#settings',
+  IdNumber = '#id-number',
 }

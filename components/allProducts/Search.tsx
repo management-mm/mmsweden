@@ -1,6 +1,6 @@
 'use client';
 
-import { type FC, useEffect, useState } from 'react';
+import { type FC, useEffect, useRef, useState } from 'react';
 
 import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
@@ -24,48 +24,54 @@ const Search: FC<ISearchProps> = ({ className }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const searchKey = searchParams.toString();
   const titleFromUrl = searchParams.get('title') ?? '';
-
   const isAdmin = pathname.includes('/admin/email-newsletter');
 
   const [inputValue, setInputValue] = useState(titleFromUrl);
 
+  // Храним последнее значение, которое сами отправили в URL,
+  // чтобы не затирать input при собственной навигации
+  const lastSubmittedValueRef = useRef(titleFromUrl);
+
   useEffect(() => {
-    setInputValue(titleFromUrl);
+    // Синхронизируем input только если URL изменился НЕ из нашего ввода
+    if (titleFromUrl !== lastSubmittedValueRef.current) {
+      setInputValue(titleFromUrl);
+    }
   }, [titleFromUrl]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      const params = new URLSearchParams(searchKey);
+      const trimmedValue = inputValue.trim();
 
-      if (!inputValue.trim()) {
-        params.delete('title');
+      // Если URL уже содержит это значение — ничего не делаем
+      if (trimmedValue === titleFromUrl) return;
+
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete('page');
+
+      if (trimmedValue) {
+        params.set('title', trimmedValue);
       } else {
-        params.set('title', inputValue.trim());
-        params.delete('page');
+        params.delete('title');
       }
+
+      lastSubmittedValueRef.current = trimmedValue;
 
       const qs = params.toString();
       const nextUrl = qs ? `${pathname}?${qs}` : pathname;
 
-      router.push(nextUrl, { scroll: false });
+      router.replace(nextUrl, { scroll: false });
     }, 300);
 
     return () => clearTimeout(timeout);
-  }, [inputValue, pathname, router, searchKey]);
+  }, [inputValue, pathname, router, searchParams, titleFromUrl]);
 
   const isEmptyValue = inputValue.trim().length === 0;
 
   const handleReset = () => {
+    lastSubmittedValueRef.current = '';
     setInputValue('');
-
-    const params = new URLSearchParams(searchKey);
-    params.delete('title');
-    params.delete('page');
-
-    const qs = params.toString();
-    router.push(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
   };
 
   return (
@@ -92,9 +98,17 @@ const Search: FC<ISearchProps> = ({ className }) => {
             size={{ width: isAdmin ? 16 : 14, height: isAdmin ? 16 : 14 }}
           />
         ) : (
-          <button type="button" onClick={handleReset}>
+          <button
+            type="button"
+            onClick={handleReset}
+            className={clsx(
+              'absolute right-[18px]',
+              isAdmin ? 'bottom-[16px]' : 'bottom-[14px]'
+            )}
+            aria-label="Reset search"
+          >
             <SvgIcon
-              className="fill-desc absolute right-[18px] bottom-[14px]"
+              className="fill-desc"
               iconId={IconId.Reset}
               size={{ width: 12, height: 12 }}
             />

@@ -1,6 +1,6 @@
 import { ToastContainer } from 'react-toastify';
 
-import ScrollToTop from './ScrollToTop';
+
 import Sidebar from './adminDashboard/Sidebar';
 import Topbar from './adminDashboard/Topbar';
 import SvgIcon from './common/SvgIcon';
@@ -14,7 +14,6 @@ export default function AdminSharedLayout({
 }) {
   return (
     <div className="bg-main font-inter">
-      <ScrollToTop />
 
       <main className="pb-[120px] lg:flex">
         <Sidebar />

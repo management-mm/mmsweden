@@ -1,7 +1,6 @@
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import ScrollToTop from '@components/ScrollToTop';
 import SvgIcon from '@components/common/SvgIcon';
 import Footer from '@components/footer/Footer';
 import Header from '@components/header/Header';
@@ -15,7 +14,6 @@ export default function ClientSharedLayout({
 }) {
   return (
     <div className="bg-main font-inter">
-      <ScrollToTop />
       <Header />
       <main>
         {children}

@@ -12,11 +12,14 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 import ScrollToTop from '@components/ScrollToTop';
 import SessionExpiredModal from '@components/adminDashboard/statusModals/SessionExpiredModal';
+import ScrollToTopButton from '@components/common/ScrollToTopButton';
 import SvgIcon from '@components/common/SvgIcon';
 import Loader from '@components/common/loaders/Loader';
 
 import { setupApiInterceptors } from '@store/api';
 import { persistor, store } from '@store/store';
+
+import { useScrollToTop } from '@hooks/useScrollToTop';
 
 import { IconId } from '@enums/iconsSpriteId';
 
@@ -30,12 +33,12 @@ type Props = {
 export const LocaleContext = createContext<AppLocale>('en');
 
 function AppContent({ children }: { children: React.ReactNode }) {
+  useScrollToTop();
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <HelmetProvider>
-        <ScrollToTop />
         <SessionExpiredModal />
-
+        <ScrollToTopButton />
         {children}
 
         <ToastContainer

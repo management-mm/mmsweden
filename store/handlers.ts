@@ -33,3 +33,25 @@ export const handleUpdateFulfilled = <T, U extends { _id: string }>(
     state.items[index] = action.payload;
   }
 };
+
+type ErrorPayload = {
+  message?: string | string[];
+};
+
+export const handleProductRejected = (
+  state: {
+    isLoading: boolean;
+    error: string | null;
+  },
+  action: PayloadAction<ErrorPayload | undefined>
+) => {
+  state.isLoading = false;
+
+  const message = action.payload?.message;
+
+  if (Array.isArray(message)) {
+    state.error = message.join(', ');
+  } else {
+    state.error = message ?? null;
+  }
+};

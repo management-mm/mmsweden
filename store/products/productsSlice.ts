@@ -9,7 +9,11 @@ import {
   updateProduct,
 } from './operations';
 
-import { handlePending, handleRejected } from '@store/handlers';
+import {
+  handlePending,
+  handleProductRejected,
+  handleRejected,
+} from '@store/handlers';
 
 const deleteProductFromList = (products: IProduct[], productId: string) => {
   const index = products.findIndex(product => product._id === productId);
@@ -141,16 +145,16 @@ const productsSlice = createSlice({
       .addCase(fetchProductBySlug.rejected, handleRejected)
       .addCase(addProduct.pending, handlePending)
       .addCase(addProduct.fulfilled, handleAddProductFulfilled)
-      .addCase(addProduct.rejected, handleRejected)
+      .addCase(addProduct.rejected, handleProductRejected)
       .addCase(deleteProduct.pending, handlePending)
       .addCase(deleteProduct.fulfilled, handleDeleteProductFulfilled)
-      .addCase(deleteProduct.rejected, handleRejected)
+      .addCase(deleteProduct.rejected, handleProductRejected)
       .addCase(updateProduct.pending, handlePending)
       .addCase(updateProduct.fulfilled, handleUpdateProductFulfilled)
-      .addCase(updateProduct.rejected, handleRejected)
+      .addCase(updateProduct.rejected, handleProductRejected)
       .addCase(generateDescWithAi.pending, handleGenerateDescWithAiPending)
       .addCase(generateDescWithAi.fulfilled, handleGenerateDescWithAiFulfilled)
-      .addCase(generateDescWithAi.rejected, handleRejected),
+      .addCase(generateDescWithAi.rejected, handleProductRejected),
 });
 
 export const { clearProduct, setInitialProducts } = productsSlice.actions;

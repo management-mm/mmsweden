@@ -21,31 +21,54 @@ const AttachPhotos = () => {
   const { setFieldValue } = useFormikContext<FormikValues>();
 
   const handleChangePhoto = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const filesArray = Array.from(e.target.files);
+    if (!e.target.files) return;
 
-      const newFileAvatars: File[] = [];
-      const newEditedAvatars: string[] = [];
+    const filesArray = Array.from(e.target.files);
 
-      filesArray.forEach(file => {
+    const newEditedAvatarsPromises = filesArray.map(file => {
+      return new Promise<string>((resolve, reject) => {
         const reader = new FileReader();
+
         reader.onload = event => {
           if (event.target?.result) {
-            newEditedAvatars.push(event.target.result as string);
-          }
-          if (newEditedAvatars.length === filesArray.length) {
-            setEditedAvatars(prev => [...prev, ...newEditedAvatars]);
+            resolve(event.target.result as string);
+          } else {
+            reject(new Error('Failed to read file'));
           }
         };
+
+        reader.onerror = () => reject(new Error('FileReader error'));
         reader.readAsDataURL(file);
-        newFileAvatars.push(file);
+      });
+    });
+
+    Promise.all(newEditedAvatarsPromises)
+      .then(newEditedAvatars => {
+        setEditedAvatars(prev => [...prev, ...newEditedAvatars]);
+
+        setFileAvatars(prev => {
+          const updatedFiles = [...prev, ...filesArray];
+          setFieldValue('photos', updatedFiles, false);
+          return updatedFiles;
+        });
+      })
+      .catch(error => {
+        console.error(error);
       });
 
-      setFileAvatars(prev => [...prev, ...newFileAvatars]);
-      setFieldValue('photos', [...fileAvatars, ...newFileAvatars], false);
+    e.target.value = '';
+  };
 
-      e.target.value = '';
-    }
+  const handleRemovePhoto = (indexToRemove: number) => {
+    setEditedAvatars(prev =>
+      prev.filter((_, index) => index !== indexToRemove)
+    );
+
+    setFileAvatars(prev => {
+      const updatedFiles = prev.filter((_, index) => index !== indexToRemove);
+      setFieldValue('photos', updatedFiles, false);
+      return updatedFiles;
+    });
   };
 
   return (
@@ -54,7 +77,18 @@ const AttachPhotos = () => {
         <div className="grid grid-cols-2 place-items-center gap-[10px] sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12">
           {editedAvatars.map((avatar, index) => (
             <div key={index} className="relative">
-              <button className="rounded-full"></button>
+              <button
+                type="button"
+                onClick={() => handleRemovePhoto(index)}
+                className="absolute top-[-6px] right-[-6px] z-10 flex h-[22px] w-[22px] cursor-pointer items-center justify-center rounded-full bg-white shadow-md"
+                aria-label={`Remove photo ${index + 1}`}
+              >
+                <SvgIcon
+                  iconId={IconId.Close}
+                  size={{ width: 10, height: 10 }}
+                  className="fill-primary"
+                />
+              </button>
 
               <div className="relative h-[80px] w-[80px] overflow-hidden rounded-[4px]">
                 <Image
@@ -77,11 +111,11 @@ const AttachPhotos = () => {
                 className="sr-only"
                 multiple
                 onChange={handleChangePhoto}
-                value={''}
+                value=""
               />
               <SvgIcon
                 iconId={IconId.Plus}
-                size={{ width: 40, height: 40 }}
+                size={{ width: 28, height: 28 }}
                 className="fill-primary"
               />
               <ErrorMessage name="photos">
@@ -99,7 +133,7 @@ const AttachPhotos = () => {
             className="sr-only"
             multiple
             onChange={handleChangePhoto}
-            value={''}
+            value=""
           />
           <SvgIcon
             iconId={IconId.Clip}

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { getNextProductId } from '@api/countersService';
 import { schema } from '@schemas/addProduct';
+import axios from 'axios';
 import { Form, Formik } from 'formik';
 
 import Block from '../Block';
@@ -22,6 +23,7 @@ import { selectIsLoading, selectProductDetails } from '@store/selectors';
 
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
+import { useNotify } from '@hooks/useNotify';
 
 import { cn } from '@utils/cn';
 
@@ -29,6 +31,7 @@ const AddProduct = () => {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsLoading);
   const product = useAppSelector(selectProductDetails);
+  const { notifyError } = useNotify();
 
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
@@ -96,9 +99,10 @@ const AddProduct = () => {
         onSubmit={async (values: IAddProductData) => {
           try {
             setIsSubmit(true);
-            dispatch(addProduct(values));
-          } catch (error) {
-            console.error(error);
+
+            await dispatch(addProduct(values)).unwrap();
+          } catch (error: any) {
+            notifyError(error?.message || 'Oops... Something went wrong');
           }
         }}
       >

@@ -244,6 +244,12 @@ input:-webkit-autofill:focus {
   border-radius: 15px;
 }
 
+.Toastify__toast.Toastify__toast--error {
+  color: white;
+  background-color: darkred;
+  border-radius: 15px;
+}
+
 .min-h-fallback {
   min-height: calc(100vh - 64px);
 }

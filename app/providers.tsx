@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useEffect } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider as ReduxProvider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
@@ -33,6 +33,7 @@ export const LocaleContext = createContext<AppLocale>('en');
 
 function AppContent({ children }: { children: React.ReactNode }) {
   useScrollToTop();
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <HelmetProvider>
@@ -68,19 +69,22 @@ function AppContent({ children }: { children: React.ReactNode }) {
 }
 
 export default function Providers({ children, locale }: Props) {
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
     setupApiInterceptors(store);
+    setMounted(true);
   }, []);
 
   return (
     <LocaleContext.Provider value={locale}>
       <ReduxProvider store={store}>
-        {persistor ? (
-          <PersistGate loading={<Loader />} persistor={persistor}>
+        {!mounted || !persistor ? (
+          <Loader />
+        ) : (
+          <PersistGate persistor={persistor}>
             <AppContent>{children}</AppContent>
           </PersistGate>
-        ) : (
-          <AppContent>{children}</AppContent>
         )}
       </ReduxProvider>
     </LocaleContext.Provider>

@@ -18,7 +18,9 @@
     "RequestPricing": "Begär pris",
     "SubmitRequest": "Skicka förfrågan",
     "AddMoreItems": "Lägg till fler artiklar",
-    "GoToProducts": "Gå till produkter"
+    "GoToProducts": "Gå till produkter",
+    "Reject": "Avvisa",
+    "Accept": "Acceptera"
   },
   "Title": {
     "Industries": "Industri",
@@ -34,7 +36,8 @@
     "DateAdded": "Datum tillagt",
     "EmptyCart": "Din kundvagn är tom",
     "NoResults": "Inga resultat hittades för din förfrågan. Vänligen försök justera filtren.",
-    "Format": "format {number}"
+    "Format": "format {number}",
+    "AnalyticsConsent": "Samtycke för analys"
   },
   "Description": {
     "Industries": "Våra produkter används inom följande branscher:",
@@ -49,7 +52,9 @@
     "WriteToUs": "Har du några frågor? Vårt team kommer att kontakta dig omedelbart!",
     "ContactUs": "Hej, vi svarar gärna på alla frågor du kan ha under våra öppettider.",
     "Instructions": "3 enkla steg för hur man säljer",
-    "EmptyPriceQuoteList": "Din prisoffertlista är för närvarande tom. Lägg till produkter för att begära ett pris!"
+    "EmptyPriceQuoteList": "Din prisoffertlista är för närvarande tom. Lägg till produkter för att begära ett pris!",
+    "AnalyticsConsent": "Vi använder analyscookies för att förbättra vår webbplats. Läs mer i vår",
+    "PrivacyPolicy": "Integritetspolicy"
   },
   "SellToUs": {
     "FairTitle": "Rättvisa och Konkurrenskraftiga Erbjudanden",

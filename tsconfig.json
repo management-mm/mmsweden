@@ -30,7 +30,8 @@
       "@constants/*": ["constants/*"],
       "@messages/*": ["messages/*"],
       "@schemas/*": ["schemas/*"],
-      "@interfaces/*": ["interfaces/*"]
+      "@interfaces/*": ["interfaces/*"],
+      "@lib/*": ["lib/*"]
     }
   },
   "include": [

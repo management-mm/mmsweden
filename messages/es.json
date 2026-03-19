@@ -18,7 +18,9 @@
     "RequestPricing": "Solicitar precio",
     "SubmitRequest": "Enviar solicitud",
     "AddMoreItems": "Agregar más artículos",
-    "GoToProducts": "Ir a productos"
+    "GoToProducts": "Ir a productos",
+    "Reject": "Rechazar",
+    "Accept": "Aceptar"
   },
   "Title": {
     "Industries": "Industrias",
@@ -34,7 +36,8 @@
     "DateAdded": "Fecha añadida",
     "EmptyCart": "Tu carrito está vacío",
     "NoResults": "No se encontraron resultados para su consulta. Intente ajustar los filtros.",
-    "Format": "formato {number}"
+    "Format": "formato {number}",
+    "AnalyticsConsent": "Consentimiento de análisis"
   },
   "Description": {
     "Industries": "Nuestros productos se utilizan en las siguientes industrias:",
@@ -49,7 +52,9 @@
     "WriteToUs": "¿Tienes alguna pregunta? ¡Nuestro equipo se pondrá en contacto contigo rápidamente!",
     "ContactUs": "Hola, estamos encantados de responder a cualquier pregunta que puedas tener durante nuestro horario laboral.",
     "Instructions": "3 sencillos pasos para vender",
-    "EmptyPriceQuoteList": "Su lista de solicitud de precios está actualmente vacía. ¡Agregue productos para solicitar un precio!"
+    "EmptyPriceQuoteList": "Su lista de solicitud de precios está actualmente vacía. ¡Agregue productos para solicitar un precio!",
+    "AnalyticsConsent": "Utilizamos cookies de análisis para mejorar nuestro sitio web. Lea más en nuestra",
+    "PrivacyPolicy": "Política de privacidad"
   },
   "SellToUs": {
     "FairTitle": "Ofertas Justas y Competitivas",

@@ -18,7 +18,9 @@
     "RequestPricing": "Request Pricing",
     "SubmitRequest": "Submit Request",
     "AddMoreItems": "Add More Items",
-    "GoToProducts": "Go to Products"
+    "GoToProducts": "Go to Products",
+    "Reject": "Reject",
+    "Accept": "Accept"
   },
   "Title": {
     "Industries": "Industries",
@@ -34,7 +36,8 @@
     "DateAdded": "Date Added",
     "EmptyCart": "Your cart is empty",
     "NoResults": "No results found for your query. Please try adjusting the filters.",
-    "Format": "format {number}"
+    "Format": "format {number}",
+    "AnalyticsConsent": "Analytics consent"
   },
   "Description": {
     "Industries": "Our products are used in such industries:",
@@ -49,7 +52,9 @@
     "WriteToUs": "Have any questions? Our team will reach out to you promptly!",
     "ContactUs": "Hello, we are happy to answer any questions you may have during our working hours",
     "Instructions": "3 easy steps how to sell",
-    "EmptyPriceQuoteList": "Your price quote list is currently empty. Add products to request a price!"
+    "EmptyPriceQuoteList": "Your price quote list is currently empty. Add products to request a price!",
+    "AnalyticsConsent": "We use analytics cookies to improve our website. Read more in our",
+    "PrivacyPolicy": "Privacy Policy"
   },
   "SellToUs": {
     "FairTitle": "Fair and Competitive Offers",

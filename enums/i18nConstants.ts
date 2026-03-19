@@ -34,6 +34,8 @@ export enum Button {
   SubmitRequest = 'Button.SubmitRequest',
   AddMoreItems = 'Button.AddMoreItems',
   GoToProducts = 'Button.GoToProducts',
+  Reject = 'Button.Reject',
+  Accept = 'Button.Accept',
 }
 
 export enum Title {
@@ -51,6 +53,7 @@ export enum Title {
   EmptyCart = 'Title.EmptyCart',
   NoResults = 'Title.NoResults',
   Format = 'Title.Format',
+  AnalyticsСonsent = 'Title.AnalyticsConsent',
 }
 
 export enum Description {
@@ -67,6 +70,8 @@ export enum Description {
   ContactUs = 'Description.ContactUs',
   Instructions = 'Description.Instructions',
   EmptyPriceQuoteList = 'Description.EmptyPriceQuoteList',
+  AnalyticsConsent = 'Description.AnalyticsConsent',
+  PrivacyPolicy = 'Description.PrivacyPolicy',
 }
 
 export enum SellToUs {

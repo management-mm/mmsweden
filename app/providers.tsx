@@ -10,6 +10,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
+import CookieConsent from '@components/CookieConsent';
 import SessionExpiredModal from '@components/adminDashboard/statusModals/SessionExpiredModal';
 import ScrollToTopButton from '@components/common/ScrollToTopButton';
 import SvgIcon from '@components/common/SvgIcon';
@@ -38,6 +39,7 @@ function AppContent({ children }: { children: React.ReactNode }) {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <HelmetProvider>
         <SessionExpiredModal />
+        <CookieConsent />
         <ScrollToTopButton />
         {children}
 

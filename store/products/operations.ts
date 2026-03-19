@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 import type { IProduct, MultiLanguageString } from 'interfaces/IProduct';
 
 import { api } from '@store/api';
@@ -76,14 +77,15 @@ export const fetchRecommendedProductsById = createAsyncThunk<
 export const addProduct = createAsyncThunk<
   IProduct,
   IAddProductData,
-  { rejectValue: string }
+  { rejectValue: { message: string } }
 >('products/addProduct', async (newProduct, thunkAPI) => {
   try {
     const data = new FormData();
-    console.log(newProduct.photos);
+
     for (const property in newProduct) {
       if (Object.prototype.hasOwnProperty.call(newProduct, property)) {
         const key = property as keyof IAddProductData;
+
         if (key === 'shouldTranslateName') continue;
         else if (key === 'industries') {
           data.append('industries', newProduct[key].join(','));
@@ -96,22 +98,29 @@ export const addProduct = createAsyncThunk<
         }
       }
     }
+
     const response = await api.post('products', data, {
       params: {
         shouldTranslateName: String(newProduct.shouldTranslateName),
       },
     });
+
     return response.data;
-  } catch (e) {
-    console.log(e);
-    return thunkAPI.rejectWithValue((e as Error).message);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data || { message: 'Server error' }
+      );
+    }
+
+    return thunkAPI.rejectWithValue({ message: 'Unknown error' });
   }
 });
 
 export const updateProduct = createAsyncThunk<
   IProduct,
   IUpdateProductData,
-  { rejectValue: string }
+  { rejectValue: { message: string } }
 >('products/updateProduct', async (updatedProduct, thunkAPI) => {
   try {
     const data = new FormData();
@@ -158,33 +167,51 @@ export const updateProduct = createAsyncThunk<
       },
     });
     return response.data;
-  } catch (e) {
-    return thunkAPI.rejectWithValue((e as Error).message);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data || { message: 'Server error' }
+      );
+    }
+
+    return thunkAPI.rejectWithValue({ message: 'Unknown error' });
   }
 });
 
 export const generateDescWithAi = createAsyncThunk<
   string,
   IGenerateDescData,
-  { rejectValue: string }
+  { rejectValue: { message: string } }
 >('products/description/ai', async (descData, thunkAPI) => {
   try {
     const response = await api.post('products/description/ai', descData);
     return response.data;
-  } catch (e) {
-    return thunkAPI.rejectWithValue((e as Error).message);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data || { message: 'Server error' }
+      );
+    }
+
+    return thunkAPI.rejectWithValue({ message: 'Unknown error' });
   }
 });
 
 export const deleteProduct = createAsyncThunk<
   IProduct,
   { productId: string | undefined },
-  { rejectValue: string }
+  { rejectValue: { message: string } }
 >('products/deleteProduct', async ({ productId }, thunkAPI) => {
   try {
     const response = await api.delete(`products/${productId}`);
     return response.data;
-  } catch (e) {
-    return thunkAPI.rejectWithValue((e as Error).message);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data || { message: 'Server error' }
+      );
+    }
+
+    return thunkAPI.rejectWithValue({ message: 'Unknown error' });
   }
 });

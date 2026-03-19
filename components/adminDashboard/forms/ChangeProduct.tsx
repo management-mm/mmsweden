@@ -30,7 +30,7 @@ import { selectIsLoading, selectProductDetails } from '@store/selectors';
 
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
-import { useCurrentLocale } from '@hooks/useCurrentLocale';
+import { useNotify } from '@hooks/useNotify';
 import useWindowWidth from '@hooks/useWindowWidth';
 
 import { IconId } from '@enums/iconsSpriteId';
@@ -53,6 +53,7 @@ const ChangeProduct = () => {
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [soldModalOpen, setSoldModalOpen] = useState(false);
+  const { notifyError } = useNotify();
 
   const [soldDateLabel, setSoldDateLabel] = useState<string | null>(null);
   const [pendingSold, setPendingSold] = useState<{
@@ -167,6 +168,7 @@ const ChangeProduct = () => {
           }}
           validationSchema={schema}
           onSubmit={async values => {
+            console.log(values);
             try {
               if (!productId) return;
 
@@ -180,8 +182,8 @@ const ChangeProduct = () => {
               );
 
               if (response) setIsProductUpdated(true);
-            } catch (error) {
-              console.log(error);
+            } catch (error: any) {
+              notifyError(error?.message || 'Oops... Something went wrong');
             }
           }}
         >

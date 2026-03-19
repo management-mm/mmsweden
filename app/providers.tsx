@@ -48,13 +48,19 @@ function AppContent({ children }: { children: React.ReactNode }) {
               className="fill-white"
             />
           }
-          icon={
-            <SvgIcon
-              iconId={IconId.Check}
-              className="fill-white"
-              size={{ width: 20, height: 20 }}
-            />
-          }
+          icon={({ type }) => {
+            if (type === 'success') {
+              return (
+                <SvgIcon
+                  iconId={IconId.Check}
+                  className="fill-white"
+                  size={{ width: 20, height: 20 }}
+                />
+              );
+            }
+
+            return null;
+          }}
         />
       </HelmetProvider>
     </LocalizationProvider>

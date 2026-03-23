@@ -37,6 +37,7 @@ export enum IconId {
   Ukraine = '#ukraine',
   Russia = '#russia',
   Spain = '#spain',
+  Poland = '#poland',
   Check = '#check',
   Info = '#info',
   Trash = '#trash',

@@ -8,4 +8,5 @@ export const messagesMap: Record<AppLocale, () => Promise<{ default: any }>> = {
   es: () => import('@messages/es.json'),
   ru: () => import('@messages/ru.json'),
   uk: () => import('@messages/uk.json'),
+  pl: () => import('@messages/pl.json'),
 };

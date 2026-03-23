@@ -17,10 +17,11 @@ const countriesList: ICountry[] = [
       es: 'Afganistán',
       ru: 'Афганистан',
       uk: 'Афганістан',
+      pl: 'Afganistan'
     },
     flag: 'https://flagcdn.com/w320/af.png',
     callingCode: '+93',
-    phoneFormat: '##-###-####',
+    phoneFormat: '##-###-####'
   },
   {
     translations: {
@@ -31,10 +32,11 @@ const countriesList: ICountry[] = [
       es: 'Albania',
       ru: 'Албания',
       uk: 'Албанія',
+      pl: 'Albania'
     },
     flag: 'https://flagcdn.com/w320/al.png',
     callingCode: '+355',
-    phoneFormat: '(###)###-###',
+    phoneFormat: '(###)###-###'
   },
   {
     translations: {
@@ -45,10 +47,11 @@ const countriesList: ICountry[] = [
       es: 'Argelia',
       ru: 'Алжир',
       uk: 'Алжир',
+      pl: 'Algieria'
     },
     flag: 'https://flagcdn.com/w320/dz.png',
     callingCode: '+213',
-    phoneFormat: '##-###-####',
+    phoneFormat: '##-###-####'
   },
   {
     translations: {
@@ -59,10 +62,11 @@ const countriesList: ICountry[] = [
       es: 'Andorra',
       ru: 'Андорра',
       uk: 'Андорра',
+      pl: 'Andora'
     },
     flag: 'https://flagcdn.com/w320/ad.png',
     callingCode: '+376',
-    phoneFormat: '###-###',
+    phoneFormat: '###-###'
   },
   {
     translations: {
@@ -73,10 +77,11 @@ const countriesList: ICountry[] = [
       es: 'Angola',
       ru: 'Ангола',
       uk: 'Ангола',
+      pl: 'Angola'
     },
     flag: 'https://flagcdn.com/w320/ao.png',
     callingCode: '+244',
-    phoneFormat: '(###)###-###',
+    phoneFormat: '(###)###-###'
   },
   {
     translations: {
@@ -87,10 +92,11 @@ const countriesList: ICountry[] = [
       es: 'Antigua y Barbuda',
       ru: 'Антигуа и Барбуда',
       uk: 'Антигуа і Барбуда',
+      pl: 'Antigua i Barbuda'
     },
     flag: 'https://flagcdn.com/w320/ag.png',
     callingCode: '+1268',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -101,10 +107,11 @@ const countriesList: ICountry[] = [
       es: 'Argentina',
       ru: 'Аргентина',
       uk: 'Аргентина',
+      pl: 'Argentyna'
     },
     flag: 'https://flagcdn.com/w320/ar.png',
     callingCode: '+54',
-    phoneFormat: '(###)###-####',
+    phoneFormat: '(###)###-####'
   },
   {
     translations: {
@@ -115,10 +122,11 @@ const countriesList: ICountry[] = [
       es: 'Armenia',
       ru: 'Армения',
       uk: 'Вірменія',
+      pl: 'Armenia'
     },
     flag: 'https://flagcdn.com/w320/am.png',
     callingCode: '+374',
-    phoneFormat: '##-###-###',
+    phoneFormat: '##-###-###'
   },
   {
     translations: {
@@ -129,10 +137,11 @@ const countriesList: ICountry[] = [
       es: 'Aruba',
       ru: 'Аруба',
       uk: 'Аруба',
+      pl: 'Aruba'
     },
     flag: 'https://flagcdn.com/w320/aw.png',
     callingCode: '+297',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -143,10 +152,11 @@ const countriesList: ICountry[] = [
       es: 'Australia',
       ru: 'Австралия',
       uk: 'Австралія',
+      pl: 'Australia'
     },
     flag: 'https://flagcdn.com/w320/au.png',
     callingCode: '+61',
-    phoneFormat: '#-####-####',
+    phoneFormat: '#-####-####'
   },
   {
     translations: {
@@ -157,10 +167,11 @@ const countriesList: ICountry[] = [
       es: 'Austria',
       ru: 'Австрия',
       uk: 'Австрія',
+      pl: 'Austria'
     },
     flag: 'https://flagcdn.com/w320/at.png',
     callingCode: '+43',
-    phoneFormat: '(###)###-####',
+    phoneFormat: '(###)###-####'
   },
   {
     translations: {
@@ -171,10 +182,11 @@ const countriesList: ICountry[] = [
       es: 'Azerbaiyán',
       ru: 'Азербайджан',
       uk: 'Азербайджан',
+      pl: 'Azerbejdżan'
     },
     flag: 'https://flagcdn.com/w320/az.png',
     callingCode: '+994',
-    phoneFormat: '##-###-##-##',
+    phoneFormat: '##-###-##-##'
   },
   {
     translations: {
@@ -185,10 +197,11 @@ const countriesList: ICountry[] = [
       es: 'Bahamas',
       ru: 'Багамы',
       uk: 'Багами',
+      pl: 'Bahamy'
     },
     flag: 'https://flagcdn.com/w320/bs.png',
     callingCode: '+1242',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -199,10 +212,11 @@ const countriesList: ICountry[] = [
       es: 'Baréin',
       ru: 'Бахрейн',
       uk: 'Бахрейн',
+      pl: 'Bahrajn'
     },
     flag: 'https://flagcdn.com/w320/bh.png',
     callingCode: '+973',
-    phoneFormat: '####-####',
+    phoneFormat: '####-####'
   },
   {
     translations: {
@@ -213,10 +227,11 @@ const countriesList: ICountry[] = [
       es: 'Bangladés',
       ru: 'Бангладеш',
       uk: 'Бангладеш',
+      pl: 'Bangladesz'
     },
     flag: 'https://flagcdn.com/w320/bd.png',
     callingCode: '+880',
-    phoneFormat: '##-###-###',
+    phoneFormat: '##-###-###'
   },
   {
     translations: {
@@ -227,10 +242,11 @@ const countriesList: ICountry[] = [
       es: 'Barbados',
       ru: 'Барбадос',
       uk: 'Барбадос',
+      pl: 'Barbados'
     },
     flag: 'https://flagcdn.com/w320/bb.png',
     callingCode: '+1246',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -241,10 +257,11 @@ const countriesList: ICountry[] = [
       es: 'Bielorrusia',
       ru: 'Беларусь',
       uk: 'Білорусь',
+      pl: 'Białoruś'
     },
     flag: 'https://flagcdn.com/w320/by.png',
     callingCode: '+375',
-    phoneFormat: '(##)###-##-##',
+    phoneFormat: '(##)###-##-##'
   },
   {
     translations: {
@@ -255,10 +272,11 @@ const countriesList: ICountry[] = [
       es: 'Bélgica',
       ru: 'Бельгия',
       uk: 'Бельгія',
+      pl: 'Belgia'
     },
     flag: 'https://flagcdn.com/w320/be.png',
     callingCode: '+32',
-    phoneFormat: '(###)###-###',
+    phoneFormat: '(###)###-###'
   },
   {
     translations: {
@@ -269,10 +287,11 @@ const countriesList: ICountry[] = [
       es: 'Belice',
       ru: 'Белиз',
       uk: 'Беліз',
+      pl: 'Belize'
     },
     flag: 'https://flagcdn.com/w320/bz.png',
     callingCode: '+501',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -283,10 +302,11 @@ const countriesList: ICountry[] = [
       es: 'Benín',
       ru: 'Бенин',
       uk: 'Бенін',
+      pl: 'Benin'
     },
     flag: 'https://flagcdn.com/w320/bj.png',
     callingCode: '+22#',
-    phoneFormat: '##-##-####',
+    phoneFormat: '##-##-####'
   },
   {
     translations: {
@@ -297,10 +317,11 @@ const countriesList: ICountry[] = [
       es: 'Bután',
       ru: 'Бутан',
       uk: 'Бутан',
+      pl: 'Bhutan'
     },
     flag: 'https://flagcdn.com/w320/bt.png',
     callingCode: '+975',
-    phoneFormat: ['17-###-###', '#-###-###'],
+    phoneFormat: ['17-###-###', '#-###-###']
   },
   {
     translations: {
@@ -311,10 +332,11 @@ const countriesList: ICountry[] = [
       es: 'Bolivia',
       ru: 'Боливия',
       uk: 'Болівія',
+      pl: 'Boliwia'
     },
     flag: 'https://flagcdn.com/w320/bo.png',
     callingCode: '+591',
-    phoneFormat: '#-###-####',
+    phoneFormat: '#-###-####'
   },
   {
     translations: {
@@ -325,10 +347,11 @@ const countriesList: ICountry[] = [
       es: 'Bosnia y Herzegovina',
       ru: 'Босния и Герцеговина',
       uk: 'Боснія і Герцеговина',
+      pl: 'Bośnia i Hercegowina'
     },
     flag: 'https://flagcdn.com/w320/ba.png',
     callingCode: '+387',
-    phoneFormat: ['##-#####', '##-####'],
+    phoneFormat: ['##-#####', '##-####']
   },
   {
     translations: {
@@ -339,10 +362,11 @@ const countriesList: ICountry[] = [
       es: 'Botsuana',
       ru: 'Ботсвана',
       uk: 'Ботсвана',
+      pl: 'Botswana'
     },
     flag: 'https://flagcdn.com/w320/bw.png',
     callingCode: '+267',
-    phoneFormat: '##-###-####',
+    phoneFormat: '##-###-####'
   },
   {
     translations: {
@@ -353,24 +377,26 @@ const countriesList: ICountry[] = [
       es: 'Brasil',
       ru: 'Бразилия',
       uk: 'Бразилія',
+      pl: 'Brazylia'
     },
     flag: 'https://flagcdn.com/w320/br.png',
     callingCode: '+55',
-    phoneFormat: ['(##)####-####', '(##)7###-####', '(##)9####-####'],
+    phoneFormat: ['(##)####-####', '(##)7###-####', '(##)9####-####']
   },
   {
     translations: {
       en: 'British Indian Ocean Territory',
       sv: 'Brittiska Indiska oceanen territorium',
       de: 'Britisches Territorium im Indischen Ozean',
-      fr: "Territoire britannique de l'océan Indien",
+      fr: 'Territoire britannique de l\'océan Indien',
       es: 'Territorio Británico del Océano Índico',
       ru: 'Британская территория в Индийском океане',
       uk: 'Британська територія в Індійському океані',
+      pl: 'Brytyjskie Terytorium Oceanu Indyjskiego'
     },
     flag: 'https://flagcdn.com/w320/io.png',
     callingCode: '+246',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -381,10 +407,11 @@ const countriesList: ICountry[] = [
       es: 'Brunéi',
       ru: 'Бруней',
       uk: 'Бруней',
+      pl: 'Brunei'
     },
     flag: 'https://flagcdn.com/w320/bn.png',
     callingCode: '+673',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -395,10 +422,11 @@ const countriesList: ICountry[] = [
       es: 'Bulgaria',
       ru: 'Болгария',
       uk: 'Болгарія',
+      pl: 'Bułgaria'
     },
     flag: 'https://flagcdn.com/w320/bg.png',
     callingCode: '+359',
-    phoneFormat: '(###)###-###',
+    phoneFormat: '(###)###-###'
   },
   {
     translations: {
@@ -409,10 +437,11 @@ const countriesList: ICountry[] = [
       es: 'Burkina Faso',
       ru: 'Буркина-Фасо',
       uk: 'Буркіна-Фасо',
+      pl: 'Burkina Faso'
     },
     flag: 'https://flagcdn.com/w320/bf.png',
     callingCode: '+226',
-    phoneFormat: '##-##-####',
+    phoneFormat: '##-##-####'
   },
   {
     translations: {
@@ -423,10 +452,11 @@ const countriesList: ICountry[] = [
       es: 'Burundi',
       ru: 'Бурунди',
       uk: 'Бурунді',
+      pl: 'Burundi'
     },
     flag: 'https://flagcdn.com/w320/bi.png',
     callingCode: '+257',
-    phoneFormat: '##-##-####',
+    phoneFormat: '##-##-####'
   },
   {
     translations: {
@@ -437,10 +467,11 @@ const countriesList: ICountry[] = [
       es: 'Camboya',
       ru: 'Камбоджа',
       uk: 'Камбоджа',
+      pl: 'Kambodża'
     },
     flag: 'https://flagcdn.com/w320/kh.png',
     callingCode: '+855',
-    phoneFormat: '##-###-###',
+    phoneFormat: '##-###-###'
   },
   {
     translations: {
@@ -451,10 +482,11 @@ const countriesList: ICountry[] = [
       es: 'Camerún',
       ru: 'Камерун',
       uk: 'Камерун',
+      pl: 'Kamerun'
     },
     flag: 'https://flagcdn.com/w320/cm.png',
     callingCode: '+237',
-    phoneFormat: '####-####',
+    phoneFormat: '####-####'
   },
   {
     translations: {
@@ -465,10 +497,11 @@ const countriesList: ICountry[] = [
       es: 'Canadá',
       ru: 'Канада',
       uk: 'Канада',
+      pl: 'Kanada'
     },
     flag: 'https://flagcdn.com/w320/ca.png',
     callingCode: '+1',
-    phoneFormat: '(###)###-####',
+    phoneFormat: '(###)###-####'
   },
   {
     translations: {
@@ -479,10 +512,11 @@ const countriesList: ICountry[] = [
       es: 'Cabo Verde',
       ru: 'Кабо-Верде',
       uk: 'Кабо-Верде',
+      pl: 'Republika Zielonego Przylądka'
     },
     flag: 'https://flagcdn.com/w320/cv.png',
     callingCode: '+238',
-    phoneFormat: '(###)##-##',
+    phoneFormat: '(###)##-##'
   },
   {
     translations: {
@@ -493,10 +527,11 @@ const countriesList: ICountry[] = [
       es: 'Países Bajos caribeños',
       ru: 'Карибские Нидерланды',
       uk: 'Карибські Нідерланди',
+      pl: 'Niderlandy Karaibskie'
     },
     flag: 'https://flagcdn.com/w320/bq.png',
     callingCode: '+599',
-    phoneFormat: '###-###',
+    phoneFormat: '###-###'
   },
   {
     translations: {
@@ -507,10 +542,11 @@ const countriesList: ICountry[] = [
       es: 'Islas Caimán',
       ru: 'Каймановы Острова',
       uk: 'Кайманові Острови',
+      pl: 'Kajmany'
     },
     flag: 'https://flagcdn.com/w320/ky.png',
     callingCode: '+1345',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -521,10 +557,11 @@ const countriesList: ICountry[] = [
       es: 'República Centroafricana',
       ru: 'Центральноафриканская Республика',
       uk: 'Центральноафриканська Республіка',
+      pl: 'Republika Środkowoafrykańska'
     },
     flag: 'https://flagcdn.com/w320/cf.png',
     callingCode: '+236',
-    phoneFormat: '##-##-####',
+    phoneFormat: '##-##-####'
   },
   {
     translations: {
@@ -535,12 +572,12 @@ const countriesList: ICountry[] = [
       es: 'Chad',
       ru: 'Чад',
       uk: 'Чад',
+      pl: 'Czad'
     },
     flag: 'https://flagcdn.com/w320/td.png',
     callingCode: '+235',
-    phoneFormat: '##-##-##-##',
+    phoneFormat: '##-##-##-##'
   },
-
   {
     translations: {
       en: 'Chile',
@@ -550,10 +587,11 @@ const countriesList: ICountry[] = [
       es: 'Chile',
       ru: 'Чили',
       uk: 'Чилі',
+      pl: 'Chile'
     },
     flag: 'https://flagcdn.com/w320/cl.png',
     callingCode: '+56',
-    phoneFormat: '#-####-####',
+    phoneFormat: '#-####-####'
   },
   {
     translations: {
@@ -564,10 +602,11 @@ const countriesList: ICountry[] = [
       es: 'China',
       ru: 'Китай',
       uk: 'Китай',
+      pl: 'Chiny'
     },
     flag: 'https://flagcdn.com/w320/cn.png',
     callingCode: '+86',
-    phoneFormat: '000 0000 0000',
+    phoneFormat: '000 0000 0000'
   },
   {
     translations: {
@@ -578,10 +617,11 @@ const countriesList: ICountry[] = [
       es: 'Colombia',
       ru: 'Колумбия',
       uk: 'Колумбія',
+      pl: 'Kolumbia'
     },
     flag: 'https://flagcdn.com/w320/co.png',
     callingCode: '+57',
-    phoneFormat: '(###)###-####',
+    phoneFormat: '(###)###-####'
   },
   {
     translations: {
@@ -592,10 +632,11 @@ const countriesList: ICountry[] = [
       es: 'Comoras',
       ru: 'Коморы',
       uk: 'Комори',
+      pl: 'Komory'
     },
     flag: 'https://flagcdn.com/w320/km.png',
     callingCode: '+269',
-    phoneFormat: '##-##-####',
+    phoneFormat: '##-##-####'
   },
   {
     translations: {
@@ -606,10 +647,11 @@ const countriesList: ICountry[] = [
       es: 'Congo',
       ru: 'Конго',
       uk: 'Конго',
+      pl: 'Kongo'
     },
     flag: 'https://flagcdn.com/w320/cg.png',
     callingCode: '+242',
-    phoneFormat: '##-##-##',
+    phoneFormat: '##-##-##'
   },
   {
     translations: {
@@ -620,10 +662,11 @@ const countriesList: ICountry[] = [
       es: 'República Democrática del Congo',
       ru: 'Демократическая Республика Конго',
       uk: 'Демократична Республіка Конго',
+      pl: 'Demokratyczna Republika Konga'
     },
     flag: 'https://flagcdn.com/w320/cd.png',
     callingCode: '+243',
-    phoneFormat: '##-##-####',
+    phoneFormat: '##-##-####'
   },
   {
     translations: {
@@ -634,24 +677,26 @@ const countriesList: ICountry[] = [
       es: 'Costa Rica',
       ru: 'Коста-Рика',
       uk: 'Коста-Ріка',
+      pl: 'Kostaryka'
     },
     flag: 'https://flagcdn.com/w320/cr.png',
     callingCode: '+506',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
-      en: "Côte d'Ivoire",
+      en: 'Côte d\'Ivoire',
       sv: 'Elfenbenskusten',
       de: 'Elfenbeinküste',
-      fr: "Côte d'Ivoire",
+      fr: 'Côte d\'Ivoire',
       es: 'Costa de Marfil',
-      ru: "Кот-д'Ивуар",
+      ru: 'Кот-д\'Ивуар',
       uk: 'Кот-д’Івуар',
+      pl: 'Wybrzeże Kości Słoniowej'
     },
     flag: 'https://flagcdn.com/w320/ci.png',
     callingCode: '+225',
-    phoneFormat: '##-##-####',
+    phoneFormat: '##-##-####'
   },
   {
     translations: {
@@ -662,10 +707,11 @@ const countriesList: ICountry[] = [
       es: 'Croacia',
       ru: 'Хорватия',
       uk: 'Хорватія',
+      pl: 'Chorwacja'
     },
     flag: 'https://flagcdn.com/w320/hr.png',
     callingCode: '+385',
-    phoneFormat: '###-###-###',
+    phoneFormat: '###-###-###'
   },
   {
     translations: {
@@ -676,10 +722,11 @@ const countriesList: ICountry[] = [
       es: 'Cuba',
       ru: 'Куба',
       uk: 'Куба',
+      pl: 'Kuba'
     },
     flag: 'https://flagcdn.com/w320/cu.png',
     callingCode: '+53',
-    phoneFormat: '###-###-###',
+    phoneFormat: '###-###-###'
   },
   {
     translations: {
@@ -690,10 +737,11 @@ const countriesList: ICountry[] = [
       es: 'Curaçao',
       ru: 'Кюрасао',
       uk: 'Кюрасао',
+      pl: 'Curaçao'
     },
     flag: 'https://flagcdn.com/w320/cw.png',
     callingCode: '+599',
-    phoneFormat: '###-###',
+    phoneFormat: '###-###'
   },
   {
     translations: {
@@ -704,10 +752,11 @@ const countriesList: ICountry[] = [
       es: 'Chipre',
       ru: 'Кипр',
       uk: 'Кіпр',
+      pl: 'Cypr'
     },
     flag: 'https://flagcdn.com/w320/cy.png',
     callingCode: '+357',
-    phoneFormat: '###-###-###',
+    phoneFormat: '###-###-###'
   },
   {
     translations: {
@@ -718,10 +767,11 @@ const countriesList: ICountry[] = [
       es: 'República Checa',
       ru: 'Чехия',
       uk: 'Чехія',
+      pl: 'Czechy'
     },
     flag: 'https://flagcdn.com/w320/cz.png',
     callingCode: '+420',
-    phoneFormat: '(###)###-###',
+    phoneFormat: '(###)###-###'
   },
   {
     translations: {
@@ -732,10 +782,11 @@ const countriesList: ICountry[] = [
       es: 'Dinamarca',
       ru: 'Дания',
       uk: 'Данія',
+      pl: 'Dania'
     },
     flag: 'https://flagcdn.com/w320/dk.png',
     callingCode: '+45',
-    phoneFormat: '##-##-##-##',
+    phoneFormat: '##-##-##-##'
   },
   {
     translations: {
@@ -746,10 +797,11 @@ const countriesList: ICountry[] = [
       es: 'Yibuti',
       ru: 'Джибути',
       uk: 'Джибуті',
+      pl: 'Dżibuti'
     },
     flag: 'https://flagcdn.com/w320/dj.png',
     callingCode: '+253',
-    phoneFormat: '##-##-##',
+    phoneFormat: '##-##-##'
   },
   {
     translations: {
@@ -760,10 +812,11 @@ const countriesList: ICountry[] = [
       es: 'Dominica',
       ru: 'Доминика',
       uk: 'Домініка',
+      pl: 'Dominika'
     },
     flag: 'https://flagcdn.com/w320/dm.png',
     callingCode: '+1767',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -774,10 +827,11 @@ const countriesList: ICountry[] = [
       es: 'República Dominicana',
       ru: 'Доминиканская Республика',
       uk: 'Домініканська Республіка',
+      pl: 'Dominikana'
     },
     flag: 'https://flagcdn.com/w320/do.png',
     callingCode: '+1809',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -788,10 +842,11 @@ const countriesList: ICountry[] = [
       es: 'Ecuador',
       ru: 'Эквадор',
       uk: 'Еквадор',
+      pl: 'Ekwador'
     },
     flag: 'https://flagcdn.com/w320/ec.png',
     callingCode: '+593',
-    phoneFormat: '###-###-###',
+    phoneFormat: '###-###-###'
   },
   {
     translations: {
@@ -802,10 +857,11 @@ const countriesList: ICountry[] = [
       es: 'Egipto',
       ru: 'Египет',
       uk: 'Єгипет',
+      pl: 'Egipt'
     },
     flag: 'https://flagcdn.com/w320/eg.png',
     callingCode: '+20',
-    phoneFormat: '(###)###-####',
+    phoneFormat: '(###)###-####'
   },
   {
     translations: {
@@ -816,10 +872,11 @@ const countriesList: ICountry[] = [
       es: 'El Salvador',
       ru: 'Сальвадор',
       uk: 'Сальвадор',
+      pl: 'Salwador'
     },
     flag: 'https://flagcdn.com/w320/sv.png',
     callingCode: '+503',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -830,10 +887,11 @@ const countriesList: ICountry[] = [
       es: 'Guinea Ecuatorial',
       ru: 'Экваториальная Гвинея',
       uk: 'Екваторіальна Гвінея',
+      pl: 'Gwinea Równikowa'
     },
     flag: 'https://flagcdn.com/w320/gq.png',
     callingCode: '+240',
-    phoneFormat: '##-##-##',
+    phoneFormat: '##-##-##'
   },
   {
     translations: {
@@ -844,10 +902,11 @@ const countriesList: ICountry[] = [
       es: 'Eritrea',
       ru: 'Эритрея',
       uk: 'Еритрея',
+      pl: 'Erytrea'
     },
     flag: 'https://flagcdn.com/w320/er.png',
     callingCode: '+291',
-    phoneFormat: '##-###-###',
+    phoneFormat: '##-###-###'
   },
   {
     translations: {
@@ -858,10 +917,11 @@ const countriesList: ICountry[] = [
       es: 'Estonia',
       ru: 'Эстония',
       uk: 'Естонія',
+      pl: 'Estonia'
     },
     flag: 'https://flagcdn.com/w320/ee.png',
     callingCode: '+372',
-    phoneFormat: '000 0000',
+    phoneFormat: '000 0000'
   },
   {
     translations: {
@@ -872,10 +932,11 @@ const countriesList: ICountry[] = [
       es: 'Etiopía',
       ru: 'Эфиопия',
       uk: 'Ефіопія',
+      pl: 'Etiopia'
     },
     flag: 'https://flagcdn.com/w320/et.png',
     callingCode: '+251',
-    phoneFormat: '##-###-####',
+    phoneFormat: '##-###-####'
   },
   {
     translations: {
@@ -886,10 +947,11 @@ const countriesList: ICountry[] = [
       es: 'Fiyi',
       ru: 'Фиджи',
       uk: 'Фіджі',
+      pl: 'Fidżi'
     },
     flag: 'https://flagcdn.com/w320/fj.png',
     callingCode: '+679',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -900,10 +962,11 @@ const countriesList: ICountry[] = [
       es: 'Finlandia',
       ru: 'Финляндия',
       uk: 'Фінляндія',
+      pl: 'Finlandia'
     },
     flag: 'https://flagcdn.com/w320/fi.png',
     callingCode: '+358',
-    phoneFormat: '(###)###-##-##',
+    phoneFormat: '(###)###-##-##'
   },
   {
     translations: {
@@ -914,10 +977,11 @@ const countriesList: ICountry[] = [
       es: 'Francia',
       ru: 'Франция',
       uk: 'Франція',
+      pl: 'Francja'
     },
     flag: 'https://flagcdn.com/w320/fr.png',
     callingCode: '+33',
-    phoneFormat: '(###)###-###',
+    phoneFormat: '(###)###-###'
   },
   {
     translations: {
@@ -928,10 +992,11 @@ const countriesList: ICountry[] = [
       es: 'Guayana Francesa',
       ru: 'Французская Гвиана',
       uk: 'Французька Гвіана',
+      pl: 'Gujana Francuska'
     },
     flag: 'https://flagcdn.com/w320/gf.png',
     callingCode: '+594',
-    phoneFormat: '###-##-##',
+    phoneFormat: '###-##-##'
   },
   {
     translations: {
@@ -942,10 +1007,11 @@ const countriesList: ICountry[] = [
       es: 'Polinesia Francesa',
       ru: 'Французская Полинезия',
       uk: 'Французька Полінезія',
+      pl: 'Polinezja Francuska'
     },
     flag: 'https://flagcdn.com/w320/pf.png',
     callingCode: '+689',
-    phoneFormat: '##-##-##',
+    phoneFormat: '##-##-##'
   },
   {
     translations: {
@@ -956,10 +1022,11 @@ const countriesList: ICountry[] = [
       es: 'Gabón',
       ru: 'Габон',
       uk: 'Габон',
+      pl: 'Gabon'
     },
     flag: 'https://flagcdn.com/w320/ga.png',
     callingCode: '+241',
-    phoneFormat: '#-##-##-##',
+    phoneFormat: '#-##-##-##'
   },
   {
     translations: {
@@ -970,10 +1037,11 @@ const countriesList: ICountry[] = [
       es: 'Gambia',
       ru: 'Гамбия',
       uk: 'Гамбія',
+      pl: 'Gambia'
     },
     flag: 'https://flagcdn.com/w320/gm.png',
     callingCode: '+220',
-    phoneFormat: '(###)##-##',
+    phoneFormat: '(###)##-##'
   },
   {
     translations: {
@@ -984,10 +1052,11 @@ const countriesList: ICountry[] = [
       es: 'Georgia',
       ru: 'Грузия',
       uk: 'Грузія',
+      pl: 'Gruzja'
     },
     flag: 'https://flagcdn.com/w320/ge.png',
     callingCode: '+995',
-    phoneFormat: '(###)###-###',
+    phoneFormat: '(###)###-###'
   },
   {
     translations: {
@@ -998,17 +1067,11 @@ const countriesList: ICountry[] = [
       es: 'Alemania',
       ru: 'Германия',
       uk: 'Німеччина',
+      pl: 'Niemcy'
     },
     flag: 'https://flagcdn.com/w320/de.png',
     callingCode: '+49',
-    phoneFormat: [
-      '(####)###-####',
-      '(###)###-####',
-      '(###)##-####',
-      '(###)##-###',
-      '(###)##-##',
-      '###-###',
-    ],
+    phoneFormat: ['(####)###-####', '(###)###-####', '(###)##-####', '(###)##-###', '(###)##-##', '###-###']
   },
   {
     translations: {
@@ -1019,10 +1082,11 @@ const countriesList: ICountry[] = [
       es: 'Ghana',
       ru: 'Гана',
       uk: 'Гана',
+      pl: 'Ghana'
     },
     flag: 'https://flagcdn.com/w320/gh.png',
     callingCode: '+233',
-    phoneFormat: '(###)###-###',
+    phoneFormat: '(###)###-###'
   },
   {
     translations: {
@@ -1033,10 +1097,11 @@ const countriesList: ICountry[] = [
       es: 'Grecia',
       ru: 'Греция',
       uk: 'Греція',
+      pl: 'Grecja'
     },
     flag: 'https://flagcdn.com/w320/gr.png',
     callingCode: '+30',
-    phoneFormat: '(###)###-####',
+    phoneFormat: '(###)###-####'
   },
   {
     translations: {
@@ -1047,10 +1112,11 @@ const countriesList: ICountry[] = [
       es: 'Groenlandia',
       ru: 'Гренландия',
       uk: 'Гренландія',
+      pl: 'Grenlandia'
     },
     flag: 'https://flagcdn.com/w320/gl.png',
     callingCode: '+299',
-    phoneFormat: '##-##-##',
+    phoneFormat: '##-##-##'
   },
   {
     translations: {
@@ -1061,10 +1127,11 @@ const countriesList: ICountry[] = [
       es: 'Granada',
       ru: 'Гренада',
       uk: 'Гренада',
+      pl: 'Grenada'
     },
     flag: 'https://flagcdn.com/w320/gd.png',
     callingCode: '+1473',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -1075,11 +1142,12 @@ const countriesList: ICountry[] = [
       es: 'Guadalupe',
       ru: 'Гваделупа',
       uk: 'Гваделупа',
+      pl: 'Gwadelupa'
     },
     flag: 'https://flagcdn.com/w320/gp.png',
     callingCode: '+590',
-    phoneFormat: '###-##-##',
-  }, //не страна?
+    phoneFormat: '###-##-##'
+  },
   {
     translations: {
       en: 'Guam',
@@ -1089,10 +1157,11 @@ const countriesList: ICountry[] = [
       es: 'Guam',
       ru: 'Гуам',
       uk: 'Гуам',
+      pl: 'Guam'
     },
     flag: 'https://flagcdn.com/w320/gu.png',
     callingCode: '+1671',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -1103,10 +1172,11 @@ const countriesList: ICountry[] = [
       es: 'Guatemala',
       ru: 'Гватемала',
       uk: 'Гватемала',
+      pl: 'Gwatemala'
     },
     flag: 'https://flagcdn.com/w320/gt.png',
     callingCode: '+502',
-    phoneFormat: '#-###-####',
+    phoneFormat: '#-###-####'
   },
   {
     translations: {
@@ -1117,10 +1187,11 @@ const countriesList: ICountry[] = [
       es: 'Guinea',
       ru: 'Гвинея',
       uk: 'Гвінея',
+      pl: 'Gwinea'
     },
     flag: 'https://flagcdn.com/w320/gn.png',
     callingCode: '+224',
-    phoneFormat: '##-###-###',
+    phoneFormat: '##-###-###'
   },
   {
     translations: {
@@ -1131,10 +1202,11 @@ const countriesList: ICountry[] = [
       es: 'Guinea-Bisáu',
       ru: 'Гвинея-Бисау',
       uk: 'Гвінея-Бісау',
+      pl: 'Gwinea Bissau'
     },
     flag: 'https://flagcdn.com/w320/gw.png',
     callingCode: '+245',
-    phoneFormat: '#-######',
+    phoneFormat: '#-######'
   },
   {
     translations: {
@@ -1145,10 +1217,11 @@ const countriesList: ICountry[] = [
       es: 'Guyana',
       ru: 'Гайана',
       uk: 'Гаяна',
+      pl: 'Gujana'
     },
     flag: 'https://flagcdn.com/w320/gy.png',
     callingCode: '+592',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -1159,10 +1232,11 @@ const countriesList: ICountry[] = [
       es: 'Haití',
       ru: 'Гаити',
       uk: 'Гаїті',
+      pl: 'Haiti'
     },
     flag: 'https://flagcdn.com/w320/ht.png',
     callingCode: '+509',
-    phoneFormat: '##-##-####',
+    phoneFormat: '##-##-####'
   },
   {
     translations: {
@@ -1173,10 +1247,11 @@ const countriesList: ICountry[] = [
       es: 'Honduras',
       ru: 'Гондурас',
       uk: 'Гондурас',
+      pl: 'Honduras'
     },
     flag: 'https://flagcdn.com/w320/hn.png',
     callingCode: '+504',
-    phoneFormat: '####-####',
+    phoneFormat: '####-####'
   },
   {
     translations: {
@@ -1187,10 +1262,11 @@ const countriesList: ICountry[] = [
       es: 'Hong Kong',
       ru: 'Гонконг',
       uk: 'Гонконг',
+      pl: 'Hongkong'
     },
     flag: 'https://flagcdn.com/w320/hk.png',
     callingCode: '+852',
-    phoneFormat: '####-####',
+    phoneFormat: '####-####'
   },
   {
     translations: {
@@ -1201,10 +1277,11 @@ const countriesList: ICountry[] = [
       es: 'Hungría',
       ru: 'Венгрия',
       uk: 'Угорщина',
+      pl: 'Węgry'
     },
     flag: 'https://flagcdn.com/w320/hu.png',
     callingCode: '+36',
-    phoneFormat: '(###)###-###',
+    phoneFormat: '(###)###-###'
   },
   {
     translations: {
@@ -1215,10 +1292,11 @@ const countriesList: ICountry[] = [
       es: 'Islandia',
       ru: 'Исландия',
       uk: 'Ісландія',
+      pl: 'Islandia'
     },
     flag: 'https://flagcdn.com/w320/is.png',
     callingCode: '+354',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -1229,10 +1307,11 @@ const countriesList: ICountry[] = [
       es: 'India',
       ru: 'Индия',
       uk: 'Індія',
+      pl: 'Indie'
     },
     flag: 'https://flagcdn.com/w320/in.png',
     callingCode: '+91',
-    phoneFormat: '(####)###-###',
+    phoneFormat: '(####)###-###'
   },
   {
     translations: {
@@ -1243,17 +1322,11 @@ const countriesList: ICountry[] = [
       es: 'Indonesia',
       ru: 'Индонезия',
       uk: 'Індонезія',
+      pl: 'Indonezja'
     },
     flag: 'https://flagcdn.com/w320/id.png',
     callingCode: '+62',
-    phoneFormat: [
-      '(8##)###-####',
-      '##-###-##',
-      '##-###-###',
-      '##-###-####',
-      '(8##)###-###',
-      '(8##)###-##-###',
-    ],
+    phoneFormat: ['(8##)###-####', '##-###-##', '##-###-###', '##-###-####', '(8##)###-###', '(8##)###-##-###']
   },
   {
     translations: {
@@ -1264,10 +1337,11 @@ const countriesList: ICountry[] = [
       es: 'Irán',
       ru: 'Иран',
       uk: 'Іран',
+      pl: 'Iran'
     },
     flag: 'https://flagcdn.com/w320/ir.png',
     callingCode: '+98',
-    phoneFormat: '(###)###-####',
+    phoneFormat: '(###)###-####'
   },
   {
     translations: {
@@ -1278,10 +1352,11 @@ const countriesList: ICountry[] = [
       es: 'Irak',
       ru: 'Ирак',
       uk: 'Ірак',
+      pl: 'Irak'
     },
     flag: 'https://flagcdn.com/w320/iq.png',
     callingCode: '+964',
-    phoneFormat: '(###)###-####',
+    phoneFormat: '(###)###-####'
   },
   {
     translations: {
@@ -1292,10 +1367,11 @@ const countriesList: ICountry[] = [
       es: 'Irlanda',
       ru: 'Ирландия',
       uk: 'Ірландія',
+      pl: 'Irlandia'
     },
     flag: 'https://flagcdn.com/w320/ie.png',
     callingCode: '+353',
-    phoneFormat: '(###)###-###',
+    phoneFormat: '(###)###-###'
   },
   {
     translations: {
@@ -1306,10 +1382,11 @@ const countriesList: ICountry[] = [
       es: 'Israel',
       ru: 'Израиль',
       uk: 'Ізраїль',
+      pl: 'Izrael'
     },
     flag: 'https://flagcdn.com/w320/il.png',
     callingCode: '+972',
-    phoneFormat: ['5#-###-####', '#-###-####'],
+    phoneFormat: ['5#-###-####', '#-###-####']
   },
   {
     translations: {
@@ -1320,10 +1397,11 @@ const countriesList: ICountry[] = [
       es: 'Italia',
       ru: 'Италия',
       uk: 'Італія',
+      pl: 'Włochy'
     },
     flag: 'https://flagcdn.com/w320/it.png',
     callingCode: '+39',
-    phoneFormat: '(###)####-###',
+    phoneFormat: '(###)####-###'
   },
   {
     translations: {
@@ -1334,10 +1412,11 @@ const countriesList: ICountry[] = [
       es: 'Jamaica',
       ru: 'Ямайка',
       uk: 'Ямайка',
+      pl: 'Jamajka'
     },
     flag: 'https://flagcdn.com/w320/jm.png',
     callingCode: '+1876',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -1348,10 +1427,11 @@ const countriesList: ICountry[] = [
       es: 'Japón',
       ru: 'Япония',
       uk: 'Японія',
+      pl: 'Japonia'
     },
     flag: 'https://flagcdn.com/w320/jp.png',
     callingCode: '+81',
-    phoneFormat: ['##-####-####', '(###)###-###'],
+    phoneFormat: ['##-####-####', '(###)###-###']
   },
   {
     translations: {
@@ -1362,10 +1442,11 @@ const countriesList: ICountry[] = [
       es: 'Jordania',
       ru: 'Иордания',
       uk: 'Йорданія',
+      pl: 'Jordania'
     },
     flag: 'https://flagcdn.com/w320/jo.png',
     callingCode: '+962',
-    phoneFormat: '#-####-####',
+    phoneFormat: '#-####-####'
   },
   {
     translations: {
@@ -1376,10 +1457,11 @@ const countriesList: ICountry[] = [
       es: 'Kazajistán',
       ru: 'Казахстан',
       uk: 'Казахстан',
+      pl: 'Kazachstan'
     },
     flag: 'https://flagcdn.com/w320/kz.png',
     callingCode: '+7',
-    phoneFormat: ['(6##)###-##-##', '(7##)###-##-##'],
+    phoneFormat: ['(6##)###-##-##', '(7##)###-##-##']
   },
   {
     translations: {
@@ -1390,10 +1472,11 @@ const countriesList: ICountry[] = [
       es: 'Kenia',
       ru: 'Кения',
       uk: 'Кенія',
+      pl: 'Kenia'
     },
     flag: 'https://flagcdn.com/w320/ke.png',
     callingCode: '+254',
-    phoneFormat: '###-######',
+    phoneFormat: '###-######'
   },
   {
     translations: {
@@ -1404,10 +1487,11 @@ const countriesList: ICountry[] = [
       es: 'Kiribati',
       ru: 'Кирибати',
       uk: 'Кірібаті',
+      pl: 'Kiribati'
     },
     flag: 'https://flagcdn.com/w320/ki.png',
     callingCode: '+686',
-    phoneFormat: '##-###',
+    phoneFormat: '##-###'
   },
   {
     translations: {
@@ -1418,10 +1502,11 @@ const countriesList: ICountry[] = [
       es: 'Kosovo',
       ru: 'Косово',
       uk: 'Косово',
+      pl: 'Kosowo'
     },
     flag: 'https://flagcdn.com/w320/xk.png',
     callingCode: '+383',
-    phoneFormat: '##-###-###',
+    phoneFormat: '##-###-###'
   },
   {
     translations: {
@@ -1432,10 +1517,11 @@ const countriesList: ICountry[] = [
       es: 'Kuwait',
       ru: 'Кувейт',
       uk: 'Кувейт',
+      pl: 'Kuwejt'
     },
     flag: 'https://flagcdn.com/w320/kw.png',
     callingCode: '+965',
-    phoneFormat: '####-####',
+    phoneFormat: '####-####'
   },
   {
     translations: {
@@ -1446,10 +1532,11 @@ const countriesList: ICountry[] = [
       es: 'Kirguistán',
       ru: 'Киргизия',
       uk: 'Киргизстан',
+      pl: 'Kirgistan'
     },
     flag: 'https://flagcdn.com/w320/kg.png',
     callingCode: '+996',
-    phoneFormat: '(###)###-###',
+    phoneFormat: '(###)###-###'
   },
   {
     translations: {
@@ -1460,10 +1547,11 @@ const countriesList: ICountry[] = [
       es: 'Laos',
       ru: 'Лаос',
       uk: 'Лаос',
+      pl: 'Laos'
     },
     flag: 'https://flagcdn.com/w320/la.png',
     callingCode: '+856',
-    phoneFormat: ['##-###-###', '(20##)###-###'],
+    phoneFormat: ['##-###-###', '(20##)###-###']
   },
   {
     translations: {
@@ -1474,10 +1562,11 @@ const countriesList: ICountry[] = [
       es: 'Letonia',
       ru: 'Латвия',
       uk: 'Латвія',
+      pl: 'Łotwa'
     },
     flag: 'https://flagcdn.com/w320/lv.png',
     callingCode: '+371',
-    phoneFormat: '##-###-###',
+    phoneFormat: '##-###-###'
   },
   {
     translations: {
@@ -1488,10 +1577,11 @@ const countriesList: ICountry[] = [
       es: 'Líbano',
       ru: 'Ливан',
       uk: 'Ліван',
+      pl: 'Liban'
     },
     flag: 'https://flagcdn.com/w320/lb.png',
     callingCode: '+961',
-    phoneFormat: ['#-###-###', '##-###-###'],
+    phoneFormat: ['#-###-###', '##-###-###']
   },
   {
     translations: {
@@ -1502,10 +1592,11 @@ const countriesList: ICountry[] = [
       es: 'Lesoto',
       ru: 'Лесото',
       uk: 'Лесото',
+      pl: 'Lesotho'
     },
     flag: 'https://flagcdn.com/w320/ls.png',
     callingCode: '+266',
-    phoneFormat: '#-###-####',
+    phoneFormat: '#-###-####'
   },
   {
     translations: {
@@ -1516,10 +1607,11 @@ const countriesList: ICountry[] = [
       es: 'Liberia',
       ru: 'Либерия',
       uk: 'Ліберія',
+      pl: 'Liberia'
     },
     flag: 'https://flagcdn.com/w320/lr.png',
     callingCode: '+231',
-    phoneFormat: '##-###-###',
+    phoneFormat: '##-###-###'
   },
   {
     translations: {
@@ -1530,10 +1622,11 @@ const countriesList: ICountry[] = [
       es: 'Libia',
       ru: 'Ливия',
       uk: 'Лівія',
+      pl: 'Libia'
     },
     flag: 'https://flagcdn.com/w320/ly.png',
     callingCode: '+218',
-    phoneFormat: ['##-###-###', '21-###-####'],
+    phoneFormat: ['##-###-###', '21-###-####']
   },
   {
     translations: {
@@ -1544,10 +1637,11 @@ const countriesList: ICountry[] = [
       es: 'Liechtenstein',
       ru: 'Лихтенштейн',
       uk: 'Ліхтенштейн',
+      pl: 'Liechtenstein'
     },
     flag: 'https://flagcdn.com/w320/li.png',
     callingCode: '+423',
-    phoneFormat: '(###)###-####',
+    phoneFormat: '(###)###-####'
   },
   {
     translations: {
@@ -1558,10 +1652,11 @@ const countriesList: ICountry[] = [
       es: 'Lituania',
       ru: 'Литва',
       uk: 'Литва',
+      pl: 'Litwa'
     },
     flag: 'https://flagcdn.com/w320/lt.png',
     callingCode: '+370',
-    phoneFormat: '(###)##-###',
+    phoneFormat: '(###)##-###'
   },
   {
     translations: {
@@ -1572,10 +1667,11 @@ const countriesList: ICountry[] = [
       es: 'Luxemburgo',
       ru: 'Люксембург',
       uk: 'Люксембург',
+      pl: 'Luksemburg'
     },
     flag: 'https://flagcdn.com/w320/lu.png',
     callingCode: '+352',
-    phoneFormat: '(###)###-###',
+    phoneFormat: '(###)###-###'
   },
   {
     translations: {
@@ -1586,10 +1682,11 @@ const countriesList: ICountry[] = [
       es: 'Macao',
       ru: 'Макао',
       uk: 'Макао',
+      pl: 'Makau'
     },
     flag: 'https://flagcdn.com/w320/mo.png',
     callingCode: '+853',
-    phoneFormat: '####-####',
+    phoneFormat: '####-####'
   },
   {
     translations: {
@@ -1600,10 +1697,11 @@ const countriesList: ICountry[] = [
       es: 'Macedonia del Norte',
       ru: 'Северная Македония',
       uk: 'Північна Македонія',
+      pl: 'Macedonia Północna'
     },
     flag: 'https://flagcdn.com/w320/mk.png',
     callingCode: '+389',
-    phoneFormat: '##-###-###',
+    phoneFormat: '##-###-###'
   },
   {
     translations: {
@@ -1614,10 +1712,11 @@ const countriesList: ICountry[] = [
       es: 'Madagascar',
       ru: 'Мадагаскар',
       uk: 'Мадагаскар',
+      pl: 'Madagaskar'
     },
     flag: 'https://flagcdn.com/w320/mg.png',
     callingCode: '+261',
-    phoneFormat: '##-##-#####',
+    phoneFormat: '##-##-#####'
   },
   {
     translations: {
@@ -1628,10 +1727,11 @@ const countriesList: ICountry[] = [
       es: 'Malawi',
       ru: 'Малави',
       uk: 'Малаві',
+      pl: 'Malawi'
     },
     flag: 'https://flagcdn.com/w320/mw.png',
     callingCode: '+265',
-    phoneFormat: ['1-###-###', '#-####-####'],
+    phoneFormat: ['1-###-###', '#-####-####']
   },
   {
     translations: {
@@ -1642,10 +1742,11 @@ const countriesList: ICountry[] = [
       es: 'Malasia',
       ru: 'Малайзия',
       uk: 'Малайзія',
+      pl: 'Malezja'
     },
     flag: 'https://flagcdn.com/w320/my.png',
     callingCode: '+60',
-    phoneFormat: ['##-###-####', '(###)###-###', '##-###-###', '#-###-###'],
+    phoneFormat: ['##-###-####', '(###)###-###', '##-###-###', '#-###-###']
   },
   {
     translations: {
@@ -1656,10 +1757,11 @@ const countriesList: ICountry[] = [
       es: 'Maldivas',
       ru: 'Мальдивы',
       uk: 'Мальдіви',
+      pl: 'Malediwy'
     },
     flag: 'https://flagcdn.com/w320/mv.png',
     callingCode: '+960',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -1670,10 +1772,11 @@ const countriesList: ICountry[] = [
       es: 'Mali',
       ru: 'Мали',
       uk: 'Малі',
+      pl: 'Mali'
     },
     flag: 'https://flagcdn.com/w320/ml.png',
     callingCode: '+223',
-    phoneFormat: '##-##-####',
+    phoneFormat: '##-##-####'
   },
   {
     translations: {
@@ -1684,10 +1787,11 @@ const countriesList: ICountry[] = [
       es: 'Malta',
       ru: 'Мальта',
       uk: 'Мальта',
+      pl: 'Malta'
     },
     flag: 'https://flagcdn.com/w320/mt.png',
     callingCode: '+356',
-    phoneFormat: '####-####',
+    phoneFormat: '####-####'
   },
   {
     translations: {
@@ -1698,10 +1802,11 @@ const countriesList: ICountry[] = [
       es: 'Islas Marshall',
       ru: 'Маршалловы Острова',
       uk: 'Маршаллові Острови',
+      pl: 'Wyspy Marshalla'
     },
     flag: 'https://flagcdn.com/w320/mh.png',
     callingCode: '+692',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -1712,10 +1817,11 @@ const countriesList: ICountry[] = [
       es: 'Martinica',
       ru: 'Мартиника',
       uk: 'Мартініка',
+      pl: 'Martynika'
     },
     flag: 'https://flagcdn.com/w320/mq.png',
     callingCode: '+596',
-    phoneFormat: '(###)##-##-##',
+    phoneFormat: '(###)##-##-##'
   },
   {
     translations: {
@@ -1726,10 +1832,11 @@ const countriesList: ICountry[] = [
       es: 'Mauritania',
       ru: 'Мавритания',
       uk: 'Мавританія',
+      pl: 'Mauretania'
     },
     flag: 'https://flagcdn.com/w320/mr.png',
     callingCode: '+222',
-    phoneFormat: '##-##-####',
+    phoneFormat: '##-##-####'
   },
   {
     translations: {
@@ -1740,10 +1847,11 @@ const countriesList: ICountry[] = [
       es: 'Mauricio',
       ru: 'Маврикий',
       uk: 'Маврикій',
+      pl: 'Mauritius'
     },
     flag: 'https://flagcdn.com/w320/mu.png',
     callingCode: '+230',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -1754,10 +1862,11 @@ const countriesList: ICountry[] = [
       es: 'México',
       ru: 'Мексика',
       uk: 'Мексика',
+      pl: 'Meksyk'
     },
     flag: 'https://flagcdn.com/w320/mx.png',
     callingCode: '+52',
-    phoneFormat: ['(###)###-####', '##-##-####'],
+    phoneFormat: ['(###)###-####', '##-##-####']
   },
   {
     translations: {
@@ -1768,10 +1877,11 @@ const countriesList: ICountry[] = [
       es: 'Micronesia',
       ru: 'Микронезия',
       uk: 'Мікронезія',
+      pl: 'Mikronezja'
     },
     flag: 'https://flagcdn.com/w320/fm.png',
     callingCode: '+691',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -1782,10 +1892,11 @@ const countriesList: ICountry[] = [
       es: 'Moldavia',
       ru: 'Молдова',
       uk: 'Молдова',
+      pl: 'Mołdawia'
     },
     flag: 'https://flagcdn.com/w320/md.png',
     callingCode: '+373',
-    phoneFormat: '####-####',
+    phoneFormat: '####-####'
   },
   {
     translations: {
@@ -1796,10 +1907,11 @@ const countriesList: ICountry[] = [
       es: 'Mónaco',
       ru: 'Монако',
       uk: 'Монако',
+      pl: 'Monako'
     },
     flag: 'https://flagcdn.com/w320/mc.png',
     callingCode: '+377',
-    phoneFormat: ['(###)###-###', '##-###-###'],
+    phoneFormat: ['(###)###-###', '##-###-###']
   },
   {
     translations: {
@@ -1810,10 +1922,11 @@ const countriesList: ICountry[] = [
       es: 'Mongolia',
       ru: 'Монголия',
       uk: 'Монголія',
+      pl: 'Mongolia'
     },
     flag: 'https://flagcdn.com/w320/mn.png',
     callingCode: '+976',
-    phoneFormat: '##-##-####',
+    phoneFormat: '##-##-####'
   },
   {
     translations: {
@@ -1824,10 +1937,11 @@ const countriesList: ICountry[] = [
       es: 'Montenegro',
       ru: 'Черногория',
       uk: 'Чорногорія',
+      pl: 'Czarnogóra'
     },
     flag: 'https://flagcdn.com/w320/me.png',
     callingCode: '+382',
-    phoneFormat: '##-###-###',
+    phoneFormat: '##-###-###'
   },
   {
     translations: {
@@ -1838,10 +1952,11 @@ const countriesList: ICountry[] = [
       es: 'Marruecos',
       ru: 'Марокко',
       uk: 'Марокко',
+      pl: 'Maroko'
     },
     flag: 'https://flagcdn.com/w320/ma.png',
     callingCode: '+212',
-    phoneFormat: '##-####-###',
+    phoneFormat: '##-####-###'
   },
   {
     translations: {
@@ -1852,10 +1967,11 @@ const countriesList: ICountry[] = [
       es: 'Mozambique',
       ru: 'Мозамбик',
       uk: 'Мозамбік',
+      pl: 'Mozambik'
     },
     flag: 'https://flagcdn.com/w320/mz.png',
     callingCode: '+258',
-    phoneFormat: '##-###-###',
+    phoneFormat: '##-###-###'
   },
   {
     translations: {
@@ -1865,11 +1981,12 @@ const countriesList: ICountry[] = [
       fr: 'Myanmar',
       es: 'Myanmar',
       ru: 'Мьянма',
-      uk: "М'янма",
+      uk: 'М\'янма',
+      pl: 'Mjanma (Birma)'
     },
     flag: 'https://flagcdn.com/w320/mm.png',
     callingCode: '+95',
-    phoneFormat: ['##-###-###', '#-###-###', '###-###'],
+    phoneFormat: ['##-###-###', '#-###-###', '###-###']
   },
   {
     translations: {
@@ -1880,10 +1997,11 @@ const countriesList: ICountry[] = [
       es: 'Namibia',
       ru: 'Намибия',
       uk: 'Намібія',
+      pl: 'Namibia'
     },
     flag: 'https://flagcdn.com/w320/na.png',
     callingCode: '+264',
-    phoneFormat: '##-###-####',
+    phoneFormat: '##-###-####'
   },
   {
     translations: {
@@ -1894,10 +2012,11 @@ const countriesList: ICountry[] = [
       es: 'Nauru',
       ru: 'Науру',
       uk: 'Науру',
+      pl: 'Nauru'
     },
     flag: 'https://flagcdn.com/w320/nr.png',
     callingCode: '+674',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -1908,10 +2027,11 @@ const countriesList: ICountry[] = [
       es: 'Nepal',
       ru: 'Непал',
       uk: 'Непал',
+      pl: 'Nepal'
     },
     flag: 'https://flagcdn.com/w320/np.png',
     callingCode: '+977',
-    phoneFormat: '##-###-###',
+    phoneFormat: '##-###-###'
   },
   {
     translations: {
@@ -1922,10 +2042,11 @@ const countriesList: ICountry[] = [
       es: 'Países Bajos',
       ru: 'Нидерланды',
       uk: 'Нідерланди',
+      pl: 'Holandia'
     },
     flag: 'https://flagcdn.com/w320/nl.png',
     callingCode: '+31',
-    phoneFormat: '##-###-####',
+    phoneFormat: '##-###-####'
   },
   {
     translations: {
@@ -1936,10 +2057,11 @@ const countriesList: ICountry[] = [
       es: 'Nueva Zelanda',
       ru: 'Новая Зеландия',
       uk: 'Нова Зеландія',
+      pl: 'Nowa Zelandia'
     },
     flag: 'https://flagcdn.com/w320/nz.png',
     callingCode: '+64',
-    phoneFormat: ['(###)###-###', '##-###-###', '(###)###-####'],
+    phoneFormat: ['(###)###-###', '##-###-###', '(###)###-####']
   },
   {
     translations: {
@@ -1950,10 +2072,11 @@ const countriesList: ICountry[] = [
       es: 'Nicaragua',
       ru: 'Никарагуа',
       uk: 'Нікарагуа',
+      pl: 'Nikaragua'
     },
     flag: 'https://flagcdn.com/w320/ni.png',
     callingCode: '+505',
-    phoneFormat: '####-####',
+    phoneFormat: '####-####'
   },
   {
     translations: {
@@ -1964,10 +2087,11 @@ const countriesList: ICountry[] = [
       es: 'Níger',
       ru: 'Нигер',
       uk: 'Нігер',
+      pl: 'Niger'
     },
     flag: 'https://flagcdn.com/w320/ne.png',
     callingCode: '+227',
-    phoneFormat: '##-##-####',
+    phoneFormat: '##-##-####'
   },
   {
     translations: {
@@ -1978,10 +2102,11 @@ const countriesList: ICountry[] = [
       es: 'Nigeria',
       ru: 'Нигерия',
       uk: 'Нігерія',
+      pl: 'Nigeria'
     },
     flag: 'https://flagcdn.com/w320/ng.png',
     callingCode: '+234',
-    phoneFormat: ['(###)###-####', '##-###-###', '##-###-##', '(###)###-####'],
+    phoneFormat: ['(###)###-####', '##-###-###', '##-###-##', '(###)###-####']
   },
   {
     translations: {
@@ -1992,10 +2117,11 @@ const countriesList: ICountry[] = [
       es: 'Noruega',
       ru: 'Норвегия',
       uk: 'Норвегія',
+      pl: 'Norwegia'
     },
     flag: 'https://flagcdn.com/w320/no.png',
     callingCode: '+47',
-    phoneFormat: '(###)##-###',
+    phoneFormat: '(###)##-###'
   },
   {
     translations: {
@@ -2006,10 +2132,11 @@ const countriesList: ICountry[] = [
       es: 'Omán',
       ru: 'Оман',
       uk: 'Оман',
+      pl: 'Oman'
     },
     flag: 'https://flagcdn.com/w320/om.png',
     callingCode: '+968',
-    phoneFormat: '##-###-###',
+    phoneFormat: '##-###-###'
   },
   {
     translations: {
@@ -2020,10 +2147,11 @@ const countriesList: ICountry[] = [
       es: 'Pakistán',
       ru: 'Пакистан',
       uk: 'Пакистан',
+      pl: 'Pakistan'
     },
     flag: 'https://flagcdn.com/w320/pk.png',
     callingCode: '+92',
-    phoneFormat: '(###)###-####',
+    phoneFormat: '(###)###-####'
   },
   {
     translations: {
@@ -2034,10 +2162,11 @@ const countriesList: ICountry[] = [
       es: 'Palaos',
       ru: 'Палау',
       uk: 'Палау',
+      pl: 'Palau'
     },
     flag: 'https://flagcdn.com/w320/pw.png',
     callingCode: '+680',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -2048,10 +2177,11 @@ const countriesList: ICountry[] = [
       es: 'Palestina',
       ru: 'Палестина',
       uk: 'Палестина',
+      pl: 'Palestyna'
     },
     flag: 'https://flagcdn.com/w320/ps.png',
     callingCode: '+970',
-    phoneFormat: '##-###-####',
+    phoneFormat: '##-###-####'
   },
   {
     translations: {
@@ -2062,10 +2192,11 @@ const countriesList: ICountry[] = [
       es: 'Panamá',
       ru: 'Панама',
       uk: 'Панама',
+      pl: 'Panama'
     },
     flag: 'https://flagcdn.com/w320/pa.png',
     callingCode: '+507',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -2076,10 +2207,11 @@ const countriesList: ICountry[] = [
       es: 'Papúa Nueva Guinea',
       ru: 'Папуа — Новая Гвинея',
       uk: 'Папуа Нова Гвінея',
+      pl: 'Papua-Nowa Gwinea'
     },
     flag: 'https://flagcdn.com/w320/pg.png',
     callingCode: '+675',
-    phoneFormat: '(###)##-###',
+    phoneFormat: '(###)##-###'
   },
   {
     translations: {
@@ -2090,10 +2222,11 @@ const countriesList: ICountry[] = [
       es: 'Paraguay',
       ru: 'Парагвай',
       uk: 'Парагвай',
+      pl: 'Paragwaj'
     },
     flag: 'https://flagcdn.com/w320/py.png',
     callingCode: '+595',
-    phoneFormat: '(###)###-###',
+    phoneFormat: '(###)###-###'
   },
   {
     translations: {
@@ -2104,10 +2237,11 @@ const countriesList: ICountry[] = [
       es: 'Perú',
       ru: 'Перу',
       uk: 'Перу',
+      pl: 'Peru'
     },
     flag: 'https://flagcdn.com/w320/pe.png',
     callingCode: '+51',
-    phoneFormat: '(###)###-###',
+    phoneFormat: '(###)###-###'
   },
   {
     translations: {
@@ -2118,10 +2252,11 @@ const countriesList: ICountry[] = [
       es: 'Filipinas',
       ru: 'Филиппины',
       uk: 'Філіппіни',
+      pl: 'Filipiny'
     },
     flag: 'https://flagcdn.com/w320/ph.png',
     callingCode: '+63',
-    phoneFormat: '(###)###-####',
+    phoneFormat: '(###)###-####'
   },
   {
     translations: {
@@ -2132,10 +2267,11 @@ const countriesList: ICountry[] = [
       es: 'Polonia',
       ru: 'Польша',
       uk: 'Польща',
+      pl: 'Polska'
     },
     flag: 'https://flagcdn.com/w320/pl.png',
     callingCode: '+48',
-    phoneFormat: '(###)###-###',
+    phoneFormat: '(###)###-###'
   },
   {
     translations: {
@@ -2146,10 +2282,11 @@ const countriesList: ICountry[] = [
       es: 'Portugal',
       ru: 'Португалия',
       uk: 'Португалія',
+      pl: 'Portugalia'
     },
     flag: 'https://flagcdn.com/w320/pt.png',
     callingCode: '+351',
-    phoneFormat: '##-###-####',
+    phoneFormat: '##-###-####'
   },
   {
     translations: {
@@ -2160,10 +2297,11 @@ const countriesList: ICountry[] = [
       es: 'Puerto Rico',
       ru: 'Пуэрто-Рико',
       uk: 'Пуерто-Рико',
+      pl: 'Portoryko'
     },
     flag: 'https://flagcdn.com/w320/pr.png',
     callingCode: '+1787',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -2174,10 +2312,11 @@ const countriesList: ICountry[] = [
       es: 'Catar',
       ru: 'Катар',
       uk: 'Катар',
+      pl: 'Katar'
     },
     flag: 'https://flagcdn.com/w320/qa.png',
     callingCode: '+974',
-    phoneFormat: '####-####',
+    phoneFormat: '####-####'
   },
   {
     translations: {
@@ -2188,10 +2327,11 @@ const countriesList: ICountry[] = [
       es: 'Reunión',
       ru: 'Реюньон',
       uk: 'Реюньйон',
+      pl: 'Reunion'
     },
     flag: 'https://flagcdn.com/w320/re.png',
     callingCode: '+262',
-    phoneFormat: '#####-####',
+    phoneFormat: '#####-####'
   },
   {
     translations: {
@@ -2202,10 +2342,11 @@ const countriesList: ICountry[] = [
       es: 'Rumania',
       ru: 'Румыния',
       uk: 'Румунія',
+      pl: 'Rumunia'
     },
     flag: 'https://flagcdn.com/w320/ro.png',
     callingCode: '+40',
-    phoneFormat: '##-###-####',
+    phoneFormat: '##-###-####'
   },
   {
     translations: {
@@ -2216,10 +2357,11 @@ const countriesList: ICountry[] = [
       es: 'Rusia',
       ru: 'Россия',
       uk: 'Росія',
+      pl: 'Rosja'
     },
     flag: 'https://flagcdn.com/w320/ru.png',
     callingCode: '+7',
-    phoneFormat: '(###)###-##-##',
+    phoneFormat: '(###)###-##-##'
   },
   {
     translations: {
@@ -2230,10 +2372,11 @@ const countriesList: ICountry[] = [
       es: 'Ruanda',
       ru: 'Руанда',
       uk: 'Руанда',
+      pl: 'Rwanda'
     },
     flag: 'https://flagcdn.com/w320/rw.png',
     callingCode: '+250',
-    phoneFormat: '(###)###-###',
+    phoneFormat: '(###)###-###'
   },
   {
     translations: {
@@ -2244,10 +2387,11 @@ const countriesList: ICountry[] = [
       es: 'San Cristóbal y Nieves',
       ru: 'Сент-Китс и Невис',
       uk: 'Сент-Кітс і Невіс',
+      pl: 'Saint Kitts i Nevis'
     },
     flag: 'https://flagcdn.com/w320/kn.png',
     callingCode: '+1869',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -2258,10 +2402,11 @@ const countriesList: ICountry[] = [
       es: 'Santa Lucía',
       ru: 'Сент-Люсия',
       uk: 'Сент-Люсія',
+      pl: 'Saint Lucia'
     },
     flag: 'https://flagcdn.com/w320/lc.png',
     callingCode: '+1758',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -2272,10 +2417,11 @@ const countriesList: ICountry[] = [
       es: 'San Vicente y las Granadinas',
       ru: 'Сент-Винсент и Гренадины',
       uk: 'Сент-Вінсент і Гренадини',
+      pl: 'Saint Vincent i Grenadyny'
     },
     flag: 'https://flagcdn.com/w320/vc.png',
     callingCode: '+1784',
-    phoneFormat: '###-####',
+    phoneFormat: '###-####'
   },
   {
     translations: {
@@ -2286,10 +2432,11 @@ const countriesList: ICountry[] = [
       es: 'Samoa',
       ru: 'Самоа',
       uk: 'Самоа',
+      pl: 'Samoa'
     },
     flag: 'https://flagcdn.com/w320/ws.png',
     callingCode: '+685',
-    phoneFormat: '##-####',
+    phoneFormat: '##-####'
   },
   {
     translations: {
@@ -2300,10 +2447,11 @@ const countriesList: ICountry[] = [
       es: 'San Marino',
       ru: 'Сан-Марино',
       uk: 'Сан-Марино',
+      pl: 'San Marino'
     },
     flag: 'https://flagcdn.com/w320/sm.png',
     callingCode: '+378',
-    phoneFormat: '####-######',
+    phoneFormat: '####-######'
   },
   {
     translations: {
@@ -2314,10 +2462,11 @@ const countriesList: ICountry[] = [
       es: 'São Tomé y Príncipe',
       ru: 'Сан-Томе и Принсипи',
       uk: 'Сан-Томе і Принсіпі',
+      pl: 'Wyspy Świętego Tomasza i Książęca'
     },
     flag: 'https://flagcdn.com/w320/st.png',
     callingCode: '+239',
-    phoneFormat: '##-#####',
+    phoneFormat: '##-#####'
   },
   {
     translations: {
@@ -2328,10 +2477,11 @@ const countriesList: ICountry[] = [
       es: 'Arabia Saudita',
       ru: 'Саудовская Аравия',
       uk: 'Саудівська Аравія',
+      pl: 'Arabia Saudyjska'
     },
     flag: 'https://flagcdn.com/w320/sa.png',
     callingCode: '+966',
-    phoneFormat: ['5-####-####', '#-###-####'],
+    phoneFormat: ['5-####-####', '#-###-####']
   },
   {
     translations: {
@@ -2342,10 +2492,11 @@ const countriesList: ICountry[] = [
       es: 'Senegal',
       ru: 'Сенегал',
       uk: 'Сенегал',
+      pl: 'Senegal'
     },
     flag: 'https://flagcdn.com/w320/sn.png',
     callingCode: '+221',
-    phoneFormat: '##-###-####',
+    phoneFormat: '##-###-####'
   },
   {
     translations: {
@@ -2356,10 +2507,11 @@ const countriesList: ICountry[] = [
       es: 'Serbia',
       ru: 'Сербия',
       uk: 'Сербія',
+      pl: 'Serbia'
     },
     flag: 'https://flagcdn.com/w320/rs.png',
     callingCode: '+381',
-    phoneFormat: '##-###-####',
+    phoneFormat: '##-###-####'
   },
   {
     translations: {
@@ -2370,10 +2522,11 @@ const countriesList: ICountry[] = [
       es: 'Seychelles',
       ru: 'Сейшельские Острова',
       uk: 'Сейшельські Острови',
+      pl: 'Seszele'
     },
     flag: 'https://flagcdn.com/w320/sc.png',
     callingCode: '+248',
-    phoneFormat: '#-###-###',
+    phoneFormat: '#-###-###'
   },
   {
     translations: {
@@ -2384,10 +2537,11 @@ const countriesList: ICountry[] = [
       es: 'Sierra Leona',
       ru: 'Сьерра-Леоне',
       uk: 'Сьєрра-Леоне',
+      pl: 'Sierra Leone'
     },
     flag: 'https://flagcdn.com/w320/sl.png',
     callingCode: '+232',
-    phoneFormat: '##-###-###',
+    phoneFormat: '##-###-###'
   },
   {
     translations: {
@@ -2398,10 +2552,11 @@ const countriesList: ICountry[] = [
       es: 'Singapur',
       ru: 'Сингапур',
       uk: 'Сінгапур',
+      pl: 'Singapur'
     },
     flag: 'https://flagcdn.com/w320/sg.png',
     callingCode: '+65',
-    phoneFormat: '####-####',
+    phoneFormat: '####-####'
   },
   {
     translations: {
@@ -2412,10 +2567,11 @@ const countriesList: ICountry[] = [
       es: 'Eslovaquia',
       ru: 'Словакия',
       uk: 'Словаччина',
+      pl: 'Słowacja'
     },
     flag: 'https://flagcdn.com/w320/sk.png',
     callingCode: '+421',
-    phoneFormat: '(###)###-###',
+    phoneFormat: '(###)###-###'
   },
   {
     translations: {
@@ -2426,10 +2582,11 @@ const countriesList: ICountry[] = [
       es: 'Eslovenia',
       ru: 'Словения',
       uk: 'Словенія',
+      pl: 'Słowenia'
     },
     flag: 'https://flagcdn.com/w320/si.png',
     callingCode: '+386',
-    phoneFormat: '##-###-###',
+    phoneFormat: '##-###-###'
   },
   {
     translations: {
@@ -2440,10 +2597,11 @@ const countriesList: ICountry[] = [
       es: 'Islas Salomón',
       ru: 'Соломоновы Острова',
       uk: 'Соломонові Острови',
+      pl: 'Wyspy Salomona'
     },
     flag: 'https://flagcdn.com/w320/sb.png',
     callingCode: '+677',
-    phoneFormat: ['###-####', '#####'],
+    phoneFormat: ['###-####', '#####']
   },
   {
     translations: {
@@ -2454,10 +2612,11 @@ const countriesList: ICountry[] = [
       es: 'Somalia',
       ru: 'Сомали',
       uk: 'Сомалія',
+      pl: 'Somalia'
     },
     flag: 'https://flagcdn.com/w320/so.png',
     callingCode: '+252',
-    phoneFormat: ['##-###-###', '#-###-###', '#-###-###'],
+    phoneFormat: ['##-###-###', '#-###-###', '#-###-###']
   },
   {
     translations: {
@@ -2468,10 +2627,11 @@ const countriesList: ICountry[] = [
       es: 'Sudáfrica',
       ru: 'Южная Африка',
       uk: 'Південноафриканська Республіка',
+      pl: 'Republika Południowej Afryki'
     },
     flag: 'https://flagcdn.com/w320/za.png',
     callingCode: '+27',
-    phoneFormat: '##-###-####',
+    phoneFormat: '##-###-####'
   },
   {
     translations: {
@@ -2482,10 +2642,11 @@ const countriesList: ICountry[] = [
       es: 'Corea del Sur',
       ru: 'Южная Корея',
       uk: 'Південна Корея',
+      pl: 'Korea Południowa'
     },
     flag: 'https://flagcdn.com/w320/kr.png',
     callingCode: '+82',
-    phoneFormat: '##-###-####',
+    phoneFormat: '##-###-####'
   },
   {
     translations: {
@@ -2496,10 +2657,11 @@ const countriesList: ICountry[] = [
       es: 'Sudán del Sur',
       ru: 'Южный Судан',
       uk: 'Південний Судан',
+      pl: 'Sudan Południowy'
     },
     flag: 'https://flagcdn.com/w320/ss.png',
     callingCode: '+211',
-    phoneFormat: '##-###-####',
+    phoneFormat: '##-###-####'
   },
   {
     translations: {
@@ -2510,10 +2672,11 @@ const countriesList: ICountry[] = [
       es: 'España',
       ru: 'Испания',
       uk: 'Іспанія',
+      pl: 'Hiszpania'
     },
     flag: 'https://flagcdn.com/w320/es.png',
     callingCode: '+34',
-    phoneFormat: '(###)###-###',
+    phoneFormat: '(###)###-###'
   },
   {
     translations: {
@@ -2524,10 +2687,11 @@ const countriesList: ICountry[] = [
       es: 'Sri Lanka',
       ru: 'Шри-Ланка',
       uk: 'Шрі-Ланка',
+      pl: 'Sri Lanka'
     },
     flag: 'https://flagcdn.com/w320/lk.png',
     callingCode: '+94',
-    phoneFormat: '##-###-####',
+    phoneFormat: '##-###-####'
   },
   {
     translations: {
@@ -2538,10 +2702,11 @@ const countriesList: ICountry[] = [
       es: 'Sudán',
       ru: 'Судан',
       uk: 'Судан',
+      pl: 'Sudan'
     },
     flag: 'https://flagcdn.com/w320/sd.png',
     callingCode: '+249',
-    phoneFormat: '##-###-####',
+    phoneFormat: '##-###-####'
   },
   {
     translations: {
@@ -2552,10 +2717,11 @@ const countriesList: ICountry[] = [
       es: 'Surinam',
       ru: 'Суринам',
       uk: 'Суринам',
+      pl: 'Surinam'
     },
     flag: 'https://flagcdn.com/w320/sr.png',
     callingCode: '+597',
-    phoneFormat: '###-###',
+    phoneFormat: '###-###'
   },
   {
     translations: {
@@ -2566,10 +2732,11 @@ const countriesList: ICountry[] = [
       es: 'Esuatini',
       ru: 'Эсватини',
       uk: 'Есватіні',
+      pl: 'Eswatini'
     },
     flag: 'https://flagcdn.com/w320/sz.png',
     callingCode: '+268',
-    phoneFormat: '##-##-####',
+    phoneFormat: '##-##-####'
   },
   {
     translations: {
@@ -2580,10 +2747,11 @@ const countriesList: ICountry[] = [
       es: 'Suecia',
       ru: 'Швеция',
       uk: 'Швеція',
+      pl: 'Szwecja'
     },
     flag: 'https://flagcdn.com/w320/se.png',
     callingCode: '+46',
-    phoneFormat: '##-###-####',
+    phoneFormat: '##-###-####'
   },
   {
     translations: {
@@ -2594,10 +2762,11 @@ const countriesList: ICountry[] = [
       es: 'Suiza',
       ru: 'Швейцария',
       uk: 'Швейцарія',
+      pl: 'Szwajcaria'
     },
     flag: 'https://flagcdn.com/w320/ch.png',
     callingCode: '+41',
-    phoneFormat: '##-###-####',
+    phoneFormat: '##-###-####'
   },
   {
     translations: {
@@ -2608,10 +2777,11 @@ const countriesList: ICountry[] = [
       es: 'Siria',
       ru: 'Сирия',
       uk: 'Сирія',
+      pl: 'Syria'
     },
     flag: 'https://flagcdn.com/w320/sy.png',
     callingCode: '+963',
-    phoneFormat: '##-####-###',
+    phoneFormat: '##-####-###'
   },
   {
     translations: {
@@ -2622,10 +2792,11 @@ const countriesList: ICountry[] = [
       es: 'Taiwán',
       ru: 'Тайвань',
       uk: 'Тайвань',
+      pl: 'Tajwan'
     },
     flag: 'https://flagcdn.com/w320/tw.png',
     callingCode: '+886',
-    phoneFormat: ['####-####', '#-####-####'],
+    phoneFormat: ['####-####', '#-####-####']
   },
   {
     translations: {
@@ -2636,10 +2807,11 @@ const countriesList: ICountry[] = [
       es: 'Tayikistán',
       ru: 'Таджикистан',
       uk: 'Таджикистан',
+      pl: 'Tadżykistan'
     },
     flag: 'https://flagcdn.com/w320/tj.png',
     callingCode: '+992',
-    phoneFormat: '##-###-####',
+    phoneFormat: '##-###-####'
   },
   {
     translations: {
@@ -2650,10 +2822,11 @@ const countriesList: ICountry[] = [
       es: 'Tanzania',
       ru: 'Танзания',
       uk: 'Танзанія',
+      pl: 'Tanzania'
     },
     flag: 'https://flagcdn.com/w320/tz.png',
     callingCode: '+255',
-    phoneFormat: '##-###-####',
+    phoneFormat: '##-###-####'
   },
   {
     translations: {
@@ -2664,10 +2837,11 @@ const countriesList: ICountry[] = [
       es: 'Tailandia',
       ru: 'Таиланд',
       uk: 'Таїланд',
+      pl: 'Tajlandia'
     },
     flag: 'https://flagcdn.com/w320/th.png',
     callingCode: '+66',
-    phoneFormat: ['##-###-####', '##-###-###'],
+    phoneFormat: ['##-###-####', '##-###-###']
   },
   {
     translations: {
@@ -2678,10 +2852,11 @@ const countriesList: ICountry[] = [
       es: 'Timor-Leste',
       ru: 'Тимор-Лесте',
       uk: 'Східний Тимор',
+      pl: 'Timor Wschodni'
     },
     flag: 'https://flagcdn.com/w320/tl.png',
     callingCode: '+670',
-    phoneFormat: ['###-####', '77#-#####', '78#-#####'],
+    phoneFormat: ['###-####', '77#-#####', '78#-#####']
   },
   {
     translations: {
@@ -2692,10 +2867,11 @@ const countriesList: ICountry[] = [
       es: 'Túnez',
       ru: 'Тунис',
       uk: 'Туніс',
+      pl: 'Tunezja'
     },
     flag: 'https://flagcdn.com/w320/tn.png',
     callingCode: '+216',
-    phoneFormat: '##-###-###',
+    phoneFormat: '##-###-###'
   },
   {
     translations: {
@@ -2706,10 +2882,11 @@ const countriesList: ICountry[] = [
       es: 'Turquía',
       ru: 'Турция',
       uk: 'Туреччина',
+      pl: 'Turcja'
     },
     flag: 'https://flagcdn.com/w320/tr.png',
     callingCode: '+90',
-    phoneFormat: '(###)###-####',
+    phoneFormat: '(###)###-####'
   },
   {
     translations: {
@@ -2720,10 +2897,11 @@ const countriesList: ICountry[] = [
       es: 'Turkmenistán',
       ru: 'Туркменистан',
       uk: 'Туркменістан',
+      pl: 'Turkmenistan'
     },
     flag: 'https://flagcdn.com/w320/tm.png',
     callingCode: '+993',
-    phoneFormat: '#-###-####',
+    phoneFormat: '#-###-####'
   },
   {
     translations: {
@@ -2734,10 +2912,11 @@ const countriesList: ICountry[] = [
       es: 'Tuvalu',
       ru: 'Тувалу',
       uk: 'Тувалу',
+      pl: 'Tuvalu'
     },
     flag: 'https://flagcdn.com/w320/tv.png',
     callingCode: '+688',
-    phoneFormat: ['90####', '2####'],
+    phoneFormat: ['90####', '2####']
   },
   {
     translations: {
@@ -2748,10 +2927,11 @@ const countriesList: ICountry[] = [
       es: 'Uganda',
       ru: 'Уганда',
       uk: 'Уганда',
+      pl: 'Uganda'
     },
     flag: 'https://flagcdn.com/w320/ug.png',
     callingCode: '+256',
-    phoneFormat: '(###)###-###',
+    phoneFormat: '(###)###-###'
   },
   {
     translations: {
@@ -2762,10 +2942,11 @@ const countriesList: ICountry[] = [
       es: 'Ucrania',
       ru: 'Украина',
       uk: 'Україна',
+      pl: 'Ukraina'
     },
     flag: 'https://flagcdn.com/w320/ua.png',
     callingCode: '+380',
-    phoneFormat: '(##)###-##-##',
+    phoneFormat: '(##)###-##-##'
   },
   {
     translations: {
@@ -2775,11 +2956,12 @@ const countriesList: ICountry[] = [
       fr: 'Émirats arabes unis',
       es: 'Emiratos Árabes Unidos',
       ru: 'Объединенные Арабские Эмираты',
-      uk: "Об'єднані Арабські Емірати",
+      uk: 'Об\'єднані Арабські Емірати',
+      pl: 'Zjednoczone Emiraty Arabskie'
     },
     flag: 'https://flagcdn.com/w320/ae.png',
     callingCode: '+971',
-    phoneFormat: ['5#-###-####', '#-###-####'],
+    phoneFormat: ['5#-###-####', '#-###-####']
   },
   {
     translations: {
@@ -2790,10 +2972,11 @@ const countriesList: ICountry[] = [
       es: 'Reino Unido',
       ru: 'Великобритания',
       uk: 'Великобританія',
+      pl: 'Wielka Brytania'
     },
     flag: 'https://flagcdn.com/w320/gb.png',
     callingCode: '+44',
-    phoneFormat: '##-####-####',
+    phoneFormat: '##-####-####'
   },
   {
     translations: {
@@ -2804,10 +2987,11 @@ const countriesList: ICountry[] = [
       es: 'Estados Unidos',
       ru: 'Соединенные Штаты',
       uk: 'Сполучені Штати',
+      pl: 'Stany Zjednoczone'
     },
     flag: 'https://flagcdn.com/w320/us.png',
     callingCode: '+1',
-    phoneFormat: '(###)###-####',
+    phoneFormat: '(###)###-####'
   },
   {
     translations: {
@@ -2818,10 +3002,11 @@ const countriesList: ICountry[] = [
       es: 'Uruguay',
       ru: 'Уругвай',
       uk: 'Уругвай',
+      pl: 'Urugwaj'
     },
     flag: 'https://flagcdn.com/w320/uy.png',
     callingCode: '+598',
-    phoneFormat: '#-###-##-##',
+    phoneFormat: '#-###-##-##'
   },
   {
     translations: {
@@ -2832,10 +3017,11 @@ const countriesList: ICountry[] = [
       es: 'Uzbekistán',
       ru: 'Узбекистан',
       uk: 'Узбекистан',
+      pl: 'Uzbekistan'
     },
     flag: 'https://flagcdn.com/w320/uz.png',
     callingCode: '+998',
-    phoneFormat: '##-###-####',
+    phoneFormat: '##-###-####'
   },
   {
     translations: {
@@ -2846,10 +3032,11 @@ const countriesList: ICountry[] = [
       es: 'Vanuatu',
       ru: 'Вануату',
       uk: 'Вануату',
+      pl: 'Vanuatu'
     },
     flag: 'https://flagcdn.com/w320/vu.png',
     callingCode: '+678',
-    phoneFormat: ['##-#####', '#####'],
+    phoneFormat: ['##-#####', '#####']
   },
   {
     translations: {
@@ -2860,10 +3047,11 @@ const countriesList: ICountry[] = [
       es: 'Ciudad del Vaticano',
       ru: 'Ватикан',
       uk: 'Ватикан',
+      pl: 'Watykan'
     },
     flag: 'https://flagcdn.com/w320/va.png',
     callingCode: '+39',
-    phoneFormat: '6-698-#####',
+    phoneFormat: '6-698-#####'
   },
   {
     translations: {
@@ -2874,10 +3062,11 @@ const countriesList: ICountry[] = [
       es: 'Venezuela',
       ru: 'Венесуэла',
       uk: 'Венесуела',
+      pl: 'Wenezuela'
     },
     flag: 'https://flagcdn.com/w320/ve.png',
     callingCode: '+58',
-    phoneFormat: '(###)###-####',
+    phoneFormat: '(###)###-####'
   },
   {
     translations: {
@@ -2887,11 +3076,12 @@ const countriesList: ICountry[] = [
       fr: 'Viêt Nam',
       es: 'Vietnam',
       ru: 'Вьетнам',
-      uk: "В'єтнам",
+      uk: 'В\'єтнам',
+      pl: 'Wietnam'
     },
     flag: 'https://flagcdn.com/w320/vn.png',
     callingCode: '+84',
-    phoneFormat: ['##-####-###', '(###)####-###'],
+    phoneFormat: ['##-####-###', '(###)####-###']
   },
   {
     translations: {
@@ -2902,10 +3092,11 @@ const countriesList: ICountry[] = [
       es: 'Yemen',
       ru: 'Йемен',
       uk: 'Ємен',
+      pl: 'Jemen'
     },
     flag: 'https://flagcdn.com/w320/ye.png',
     callingCode: '+967',
-    phoneFormat: ['###-###-###', '#-###-###', '##-###-###'],
+    phoneFormat: ['###-###-###', '#-###-###', '##-###-###']
   },
   {
     translations: {
@@ -2916,10 +3107,11 @@ const countriesList: ICountry[] = [
       es: 'Zambia',
       ru: 'Замбия',
       uk: 'Замбія',
+      pl: 'Zambia'
     },
     flag: 'https://flagcdn.com/w320/zm.png',
     callingCode: '+260',
-    phoneFormat: '##-###-####',
+    phoneFormat: '##-###-####'
   },
   {
     translations: {
@@ -2930,11 +3122,12 @@ const countriesList: ICountry[] = [
       es: 'Zimbabue',
       ru: 'Зимбабве',
       uk: 'Зімбабве',
+      pl: 'Zimbabwe'
     },
     flag: 'https://flagcdn.com/w320/zw.png',
     callingCode: '+263',
-    phoneFormat: '#-######',
-  },
+    phoneFormat: '#-######'
+  }
 ];
 
 export default countriesList;

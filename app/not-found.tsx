@@ -5,7 +5,7 @@ import NavLinkBtn from '@components/common/NavLinkBtn';
 export default function NotFound() {
   return (
     <section className="min-h-fallback px- relative mx-auto flex max-w-5xl items-center pt-[22px] pb-[42px] md:pt-[62px] md:pb-[400px]">
-      <div className="w-full">
+      <div className="container">
         <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm">
           <span className="h-2 w-2 rounded-full bg-red-600 shadow-[0_0_18px_rgba(220,38,38,0.35)]" />
           <span className="text-slate-700">Status: 404 — Page Not Found</span>
@@ -22,7 +22,7 @@ export default function NotFound() {
               the address incorrectly. Let’s get you back on track.
             </p>
 
-            <div className="mt-8 flex flex-wrap justify-between">
+            <div className="mt-8 flex flex-wrap justify-between gap-[14px]">
               <NavLinkBtn href="/" intent="accent" className="ml-0">
                 Go to homepage
                 <span className="font-inter text-primary ml-2 rounded-[32px] px-[8px] text-center text-[16px] leading-tight font-semibold transition group-hover:translate-x-0.5">
@@ -37,8 +37,12 @@ export default function NotFound() {
                   Go back
                 </button>
 
-                <NavLinkBtn href="/contact-us" intent="notFound">
-                  Contact us
+                <NavLinkBtn
+                  className="inline-flex w-full items-center justify-center rounded-2xl border border-slate-200 bg-transparent px-5 py-3 text-sm font-medium text-slate-900 transition hover:bg-slate-50 hover:shadow-sm focus:ring-2 focus:ring-slate-300 focus:outline-none"
+                  href="/contact-us"
+                  intent="notFound"
+                >
+                  <span>Contact&nbsp;</span>us
                 </NavLinkBtn>
               </div>
             </div>

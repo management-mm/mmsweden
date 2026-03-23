@@ -2,6 +2,10 @@ import { Suspense } from 'react';
 
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/scrollbar';
+import 'swiper/css/thumbs';
 
 import Sprite from './Sprite';
 import './globals.css';

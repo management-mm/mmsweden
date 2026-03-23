@@ -1,0 +1,180 @@
+{
+  "NavBar": {
+    "Home": "Strona główna",
+    "AllProducts": "Wszystkie produkty",
+    "SellToUs": "Sprzedaj nam",
+    "AboutUs": "O nas",
+    "ContactUs": "Kontakt"
+  },
+  "Button": {
+    "MyPriceQuote": "Moja wycena",
+    "AllMachines": "Wszystkie maszyny",
+    "NewArrivals": "Nowości",
+    "WatchOnYoutube": "Obejrzyj na YouTube",
+    "ShopNow": "Kup teraz",
+    "ShowMore": "Pokaż więcej",
+    "ViewDetails": "Szczegóły",
+    "AddedToQuote": "Dodano do wyceny",
+    "RequestPricing": "Poproś o wycenę",
+    "SubmitRequest": "Wyślij zapytanie",
+    "AddMoreItems": "Dodaj więcej pozycji",
+    "GoToProducts": "Przejdź do produktów",
+    "Reject": "Odrzuć",
+    "Accept": "Akceptuj"
+  },
+  "Title": {
+    "Industries": "Branże",
+    "LatestArrivals": "Najnowsze dostawy",
+    "WriteToUs": "Napisz do nas",
+    "Instructions": "Instrukcje",
+    "Step": "Krok {number}",
+    "FormForSale": "Formularz sprzedaży",
+    "VideoOverview": "Przegląd wideo",
+    "YouMayAlsoBeInterestedIn": "Może Cię również zainteresować",
+    "ItemsForQuote": "Pozycje do wyceny",
+    "RequestAQuote": "Poproś o wycenę",
+    "DateAdded": "Data dodania",
+    "EmptyCart": "Twój koszyk jest pusty",
+    "NoResults": "Nie znaleziono wyników dla Twojego zapytania. Spróbuj zmienić filtry.",
+    "Format": "format {number}",
+    "AnalyticsConsent": "Zgoda na analitykę"
+  },
+  "Description": {
+    "Industries": "Nasze produkty są wykorzystywane w następujących branżach:",
+    "Hero": "Maszyny używane - Nowe produkty",
+    "YearsMarket": "Lat na rynku",
+    "ProductsCatalogue": "Produktów w katalogu",
+    "SuccessfulDeals": "Udane transakcje",
+    "AboutUsPage": "Witamy w Meat Machines, Twoim zaufanym partnerze w zakresie wysokiej jakości używanych maszyn do przetwórstwa i pakowania żywności. Od 2003 roku z zaangażowaniem zapewniamy naszym klientom na całym świecie wyjątkową obsługę i najwyższej klasy sprzęt.",
+    "AboutUsShort": "Nasza historia",
+    "AboutUsLong": "<p1>Od 2003 roku Meat Machines jest Twoim zaufanym źródłem wysokiej jakości używanych maszyn do przetwórstwa i pakowania żywności. Dzięki prawie 2 000 urządzeń w naszych czterech magazynach w południowej Szwecji zapewniamy najwyższej klasy sprzęt od najlepszych producentów.</p1> <p2>Nasz zespół ponad 10 wykwalifikowanych specjalistów, w tym doświadczonych elektryków i mechaników, starannie serwisuje każdą jednostkę. Tysiące zadowolonych klientów na całym świecie ufa nam ze względu na niezawodność, jakość i konkurencyjne ceny.</p2> <p3>Pozwól nam pomóc Twojej firmie rozwijać się dzięki maszynom, na których możesz polegać!</p3>",
+    "SellToUs": "Przestań przechowywać w swoich magazynach sprzęt wart tysiące dolarów, podczas gdy wartość nieużywanych urządzeń spada z każdym rokiem.<br /> Na co więc czekasz?",
+    "WriteToUs": "Masz pytania? Nasz zespół skontaktuje się z Tobą tak szybko, jak to możliwe!",
+    "ContactUs": "Cześć, chętnie odpowiemy na wszystkie pytania w naszych godzinach pracy",
+    "Instructions": "3 proste kroki, jak sprzedać",
+    "EmptyPriceQuoteList": "Twoja lista wyceny jest obecnie pusta. Dodaj produkty, aby poprosić o cenę!",
+    "AnalyticsConsent": "Używamy analitycznych plików cookie, aby ulepszać naszą stronę internetową. Przeczytaj więcej w naszej",
+    "PrivacyPolicy": "Polityce prywatności"
+  },
+  "SellToUs": {
+    "FairTitle": "Uczciwe i konkurencyjne oferty",
+    "FairDesc": "Oferujemy uczciwe i konkurencyjne wyceny za nieużywany sprzęt, dzięki czemu otrzymujesz najlepszą wartość za maszyny, które nie są już używane.",
+    "QuickTitle": "Szybkie i bezproblemowe transakcje",
+    "QuickDesc": "Skorzystaj z najłatwiejszego i najszybszego sposobu sprzedaży sprzętu, z przedpłatą i dostawą w cenie. Transakcje są szybkie i bezproblemowe, co oszczędza Twój cenny czas i wysiłek.",
+    "SustainableTitle": "Zrównoważony i odpowiedzialny recykling",
+    "SustainableDesc": "Wspieraj bardziej zrównoważony i odpowiedzialny proces recyklingu, dając maszynom drugie życie i ograniczając ilość odpadów"
+  },
+  "Industry": {
+    "MeatTitle": "Mięso",
+    "MeatDesc": "Wilki do mięsa, mieszalniki, nadziewarki próżniowe, maszyny pakujące, separatory itp.",
+    "FishTitle": "Ryby",
+    "FishDesc": "Filetownice, separatory, krajalnice, usuwacze ości, termoformierki itp.",
+    "BakeryTitle": "Piekarnictwo",
+    "BakeryDesc": "Mieszalniki, przenośniki, detektory metalu, dozowniki, zagniatarki itp.",
+    "DairyTitle": "Nabiał",
+    "DairyDesc": "Homogenizatory, maszyny napełniające, napełniarki rotacyjne, zbiorniki, urządzenia chłodnicze, mieszalniki, krajalnice itp.",
+    "VegetablesTitle": "Owoce / Warzywa",
+    "VegetablesDesc": "Krajalnice, myjki, wagi, maszyny pakujące, detektory metalu itp.",
+    "MedicinesTitle": "Farmaceutyki",
+    "MedicinesDesc": "Prasy tabletkowe, maszyny pakujące, flowpacki, termoformierki, linie robotyczne, pompy, mieszalniki itp."
+  },
+  "Instructions": {
+    "Step1Title": "Przekaż nam informacje",
+    "Step1Desc": "Wypełniasz formularz, podając swoje dane kontaktowe, pełny opis sprzętu, który chcesz sprzedać, wskazujesz cenę oraz dołączasz wideo/zdjęcia.",
+    "Step2Title": "Szybka ocena",
+    "Step2Desc": "Nasi doświadczeni specjaliści ocenią Twój sprzęt i skontaktują się z Tobą w sprawie naszej decyzji.",
+    "Step3Title": "Transakcja!",
+    "Step3Desc": "Ustalamy z Tobą metody płatności, warunki oraz wysyłkę. Zazwyczaj organizujemy transport, więc nie musisz się o to martwić."
+  },
+  "AboutUs": {
+    "WhoWeAreTitle": "Kim jesteśmy",
+    "WhoWeAreDesc": "Dzięki ponad dwóm dekadom doświadczenia w branży Meat Machines stało się jednym z liderów rynku. Nasz zespół składa się z ponad 10 wysoko wykwalifikowanych specjalistów, którzy z pasją wykonują swoją pracę. Działamy z czterech przestronnych magazynów zlokalizowanych w południowej Szwecji, w których znajduje się imponujący zapas prawie 2 000 maszyn.",
+    "WhatWeDoTitle": "Czym się zajmujemy",
+    "WhatWeDoDesc": "Specjalizujemy się w kupnie i sprzedaży używanych maszyn do przetwórstwa i pakowania żywności. Nasz szeroki asortyment pozwala nam sprostać różnorodnym potrzebom klientów, niezależnie od ich konkretnych wymagań. Każda maszyna pochodzi od najlepszych dostawców i jest utrzymywana w doskonałym stanie dzięki naszym silnym powiązaniom z różnymi nordyckimi firmami z branży produkcji żywności.",
+    "OurCommitmentTitle": "Nasze zobowiązanie do jakości",
+    "OurCommitmentDesc": "Jakość jest podstawą wszystkiego, co robimy. Twoja przyszła maszyna ma szczęście, że trafiła w nasze wykwalifikowane i oddane ręce. Nasz zespół doświadczonych elektryków i mechaników dokładnie sprawdza i konserwuje każdą maszynę, która trafia do nas. Ponieważ przez ich ręce przeszły tysiące urządzeń, nasz zespół dba o to, abyś otrzymał niezawodny, wydajny sprzęt gotowy do pracy na najwyższym poziomie.",
+    "OurCustomersTitle": "Nasi klienci",
+    "OurCustomersDesc": "Nasze zaangażowanie w doskonałość przyniosło nam tysiące zadowolonych klientów na wszystkich kontynentach. Jesteśmy dumni z tego, że potrafimy spełniać i przewyższać oczekiwania klientów, dostarczając im najlepszy sprzęt i najlepszą obsługę na rynku.",
+    "ContinuousTitle": "Ciągłe doskonalenie",
+    "ContinuousDesc": "W Meat Machines wierzymy, że zawsze jest miejsce na poprawę. Pomimo naszego dużego doświadczenia nieustannie się uczymy i rozwijamy, aby lepiej Ci służyć. Stale udoskonalamy nasze metody wyszukiwania, ulepszamy procedury konserwacji i usprawniamy procesy wysyłki, aby zapewnić szybsze odpowiedzi i bardziej konkurencyjne ceny. Naszym celem jest dostarczanie Ci najlepszego sprzętu i najlepszej obsługi — za każdym razem.",
+    "ThankYou": "Dziękujemy za rozważenie Meat Machines jako partnera w zakresie maszyn do przetwórstwa i pakowania żywności. Cieszymy się na współpracę z Tobą i pomoc w rozwoju Twojego biznesu.",
+    "FeelFree": "Skontaktuj się z nami, jeśli masz pytania lub chcesz dowiedzieć się więcej o naszym szerokim asortymencie."
+  },
+  "WhyChooseUs": {
+    "YearsDesc": "Lata doświadczenia",
+    "TheBestTitle": "Najlepszy",
+    "TheBestDesc": "Sprzęt na rynku",
+    "ThousandsTitle": "Tysiące",
+    "ThousandsDesc": "zadowolonych klientów na całym świecie"
+  },
+  "Employee": {
+    "Hampus": "Hampus Wahlgren",
+    "HampusDesc": "SPRZEDAŻ Szwecja i zagranica",
+    "Hakan": "Håkan Wahlgren",
+    "HakanDesc": "CEO / ZAKUPY",
+    "Erika": "Erika Walgreen",
+    "ErikaDesc": "ADMINISTRACJA / ZARZĄDCA NIERUCHOMOŚCI",
+    "Eva": "Eva Andersson",
+    "EvaDesc": "FINANSE",
+    "Catharine": "Catharine Wahlgren",
+    "CatharineDesc": "FINANSE",
+    "Artem": "Artem Bortnik",
+    "ArtemDesc": "ASYSTENT SPRZEDAŻY"
+  },
+  "ContactUs": {
+    "Info1": "Jeśli masz pytania dotyczące naszych <bold>produktów lub wysyłki</bold>, skontaktuj się z <bold>Hampusem Wahlgrenem</bold> (lub z jego asystentem <bold>Artemem Bortnikiem</bold>)",
+    "Info2": "Jeśli masz pytania dotyczące <bold>płatności</bold>, skontaktuj się z <bold>Evą Andersson</bold>",
+    "ViewOnMap": "Zobacz na mapie",
+    "WorkingHours": "Godziny pracy",
+    "MonFri": "Pon.-Pt."
+  },
+  "Label": {
+    "Name": "Twoje imię",
+    "Email": "Twój e-mail",
+    "Phone": "Twój numer telefonu",
+    "ProductName": "Nazwa produktu",
+    "Company": "Nazwa firmy",
+    "AttachPhotos": "Dołącz zdjęcia",
+    "Country": "Wybierz swój kraj",
+    "Description": "Pełny opis",
+    "Message": "Wiadomość",
+    "Price": "Oferowana cena",
+    "Subject": "Temat",
+    "IDNumber": "Numer ID",
+    "Condition": "Stan",
+    "Dimensions": "Wymiary",
+    "Video": "Wideo"
+  },
+  "Placeholder": {
+    "Name": "Jan Kowalski",
+    "Email": "jan.kowalski@example.com",
+    "Price": "Podaj swoją cenę ofertową",
+    "Company": "Wpisz nazwę swojej firmy",
+    "Description": "Opisz swój produkt",
+    "Message": "Napisz do nas swoją wiadomość",
+    "ProductName": "Co sprzedajesz?",
+    "SearchProduct": "Wpisz nazwę produktu lub numer ID",
+    "Search": "Szukaj...",
+    "Subject": "Temat Twojej wiadomości",
+    "SelectCountry": "Wybierz swój kraj"
+  },
+  "Filter": {
+    "Category": "Kategoria",
+    "Manufacturer": "Producent",
+    "Industry": "Branża",
+    "Condition": "Stan",
+    "Found": "Znaleziono {number} produktów",
+    "Filters": "Filtry",
+    "New": "Nowe",
+    "Used": "Używane",
+    "Reset": "Zresetuj filtry"
+  },
+  "Product": {
+    "Dimensions": "Wymiary",
+    "Description": "Opis"
+  },
+  "Pagination": {
+    "Next": "Następna",
+    "Previous": "Poprzednia"
+  }
+}

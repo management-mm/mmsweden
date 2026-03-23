@@ -23,6 +23,8 @@ import { Label } from '@enums/i18nConstants';
 
 import countriesList from '@constants/countriesList';
 
+import { DEFAULT_LOCALE } from '@i18n/config';
+
 type CallingCodeEntry = {
   callingCode: string;
   countryValue: string;
@@ -42,10 +44,10 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
 
     if (Array.isArray(phoneFormat)) {
       return phoneFormat.map((_, index) => ({
-        value: translations[language],
+        value: translations[DEFAULT_LOCALE],
         label: (
           <PhoneCodeOption
-            name={translations[language]}
+            name={translations[language] ?? translations[DEFAULT_LOCALE]}
             callingCode={callingCode}
             flag={flag}
             phoneFormat={phoneFormat}
@@ -56,10 +58,10 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
     }
 
     return {
-      value: translations[language],
+      value: translations[DEFAULT_LOCALE],
       label: (
         <PhoneCodeOption
-          name={translations[language]}
+          name={translations[language] ?? translations[DEFAULT_LOCALE]}
           callingCode={callingCode}
           flag={flag}
           phoneFormat={phoneFormat}

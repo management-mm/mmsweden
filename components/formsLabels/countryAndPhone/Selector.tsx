@@ -71,7 +71,7 @@ const Selector: FC<ISelectorProps> = ({
           {selectedOption ? (
             <SelectedOption
               isOpen={isOpen}
-              name={selectedOption?.label?.props.name}
+              name={selectedOption?.label?.props.name ?? selectedOption.value}
               flag={selectedOption?.label?.props.flag}
               labelName={labelName}
               value={

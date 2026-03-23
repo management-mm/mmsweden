@@ -19,7 +19,7 @@ import {
 } from '@i18n/config';
 
 const optionStyles = {
-  base: 'hover:cursor-pointer w-[95px] py-[7px]',
+  base: 'hover:cursor-pointer w-[calc((100%-4px)/2)] py-[7px]',
   focus: 'lg:bg-gray-100 lg:active:bg-gray-200',
   selected: '',
 };
@@ -85,7 +85,7 @@ const LanguageSelect = () => {
         menu: base => ({
           ...base,
           zIndex: '20',
-          width: '95px',
+          width: '150px',
           right: 'calc(50% + 4px)',
           transform: 'translate(50%, 0)',
         }),
@@ -93,6 +93,10 @@ const LanguageSelect = () => {
           ...base,
           maxHeight: '400px',
           overflow: 'hidden',
+        }),
+        option: base => ({
+          ...base,
+          width: 'calc((100%-2px)/2)',
         }),
         input: base => ({
           ...base,
@@ -103,6 +107,7 @@ const LanguageSelect = () => {
       }}
       className="cursor-pointer"
       classNames={{
+        menuList: () => 'w-full flex gap-[2px] flex-wrap',
         container: () => 'cursor-pointer',
         menu: () => menuStyles,
         option: ({ isFocused, isSelected }) =>

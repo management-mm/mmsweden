@@ -20,15 +20,19 @@ import { Label } from '@enums/i18nConstants';
 
 import countriesList from '@constants/countriesList';
 
+import { DEFAULT_LOCALE } from '@i18n/config';
+
 const Country = () => {
   const language = useCurrentLocale();
 
   const options: ICountryOption[] = countriesList.map(country => ({
-    value: country.translations[language],
+    value: country.translations[DEFAULT_LOCALE],
     label: (
       <CountryOption
         flag={country.flag}
-        name={country.translations[language]}
+        name={
+          country.translations[language] ?? country.translations[DEFAULT_LOCALE]
+        }
       />
     ),
   }));

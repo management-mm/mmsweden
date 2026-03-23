@@ -21,6 +21,7 @@ const PhoneCodeOption: FC<IPhoneCodeOptionProps> = ({
   formatIndex = 0,
 }) => {
   const t = useTranslations();
+  console.log('name', name);
 
   return (
     <div className="flex flex-wrap items-center">

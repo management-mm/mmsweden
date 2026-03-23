@@ -35,6 +35,10 @@ const languageOptions: ILanguageOption[] = [
     language: 'uk',
     iconId: IconId.Ukraine,
   },
+  {
+    language: 'pl',
+    iconId: IconId.Poland,
+  },
 ];
 
 export default languageOptions;

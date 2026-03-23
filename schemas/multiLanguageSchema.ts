@@ -8,4 +8,5 @@ export const MultiLanguageSchema = Yup.object({
   ru: Yup.string().trim().required(),
   uk: Yup.string().trim().required(),
   es: Yup.string().trim().required(),
+  pl: Yup.string().trim().required(),
 });

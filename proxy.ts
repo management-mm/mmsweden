@@ -1,7 +1,7 @@
 import createMiddleware from 'next-intl/middleware';
 
 const proxy = createMiddleware({
-  locales: ['en', 'sv', 'de', 'fr', 'es', 'ru', 'uk'],
+  locales: ['en', 'sv', 'de', 'fr', 'es', 'ru', 'uk', 'pl'],
   defaultLocale: 'en',
   localePrefix: 'always',
 });

@@ -16,6 +16,7 @@ const Flag: FC<IFlagProps> = ({ name, flag }) => {
           alt={`Flag of ${name}`}
           fill
           sizes="18px"
+          unoptimized
           className="object-cover"
         />
       </div>

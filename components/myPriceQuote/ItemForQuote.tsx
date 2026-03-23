@@ -21,14 +21,14 @@ interface IItemsForQuoteProps {
 
 const ItemForQuote: FC<IItemsForQuoteProps> = ({
   product,
-  product: { _id, photos, name, idNumber },
+  product: { slug, photos, name, idNumber },
 }) => {
   const router = useRouter();
   const language = useCurrentLocale();
   const { handleToggleFavorites } = useUpdateRequestedProducts(product);
 
   const goToDetails = () => {
-    router.push(`/all-products/${_id}`);
+    router.push(`/all-products/${slug}`);
   };
 
   return (

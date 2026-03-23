@@ -7,6 +7,7 @@ export type MultiLanguageString = {
 export interface IProduct {
   _id: string;
   name: MultiLanguageString | string;
+  slug: string;
   idNumber: string;
   description: MultiLanguageString;
   dimensions: string;

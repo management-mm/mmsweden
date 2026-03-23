@@ -12,7 +12,7 @@ export const mainProductBlock = (product: IProduct) => `
                                                             <tr>
                                                                 <td align="center"
                                                                     style="padding:0;Margin:0;font-size:0px"><a
-                                                                        href="https://www.mmsweden.se/all-products/${product._id}"
+                                                                        href="https://www.mmsweden.se/all-products/${product.slug}"
                                                                         target="_blank"
                                                                         style="mso-line-height-rule:exactly;text-decoration:underline;color:#00179C;font-size:15px"><img
                                                                             width="560" alt="Main Image"
@@ -48,7 +48,7 @@ export const mainProductBlock = (product: IProduct) => `
                                                             <tr>
                                                                 <td align="center"
                                                                     style="Margin:0;padding-left:5px;padding-right:5px;padding-bottom:20px;padding-top:5px">
-                                                                    <!--[if mso]><a href="https://www.mmsweden.se/all-products/${product._id}" target="_blank" hidden> <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" esdevVmlButton href="https://www.mmsweden.se/all-products/${product._id}" style="height:35px; v-text-anchor:middle; width:151px" arcsize="50%" stroke="f" fillcolor="#fdc62f"> <w:anchorlock></w:anchorlock> <center style='color:#000000; font-family:Inter, sans-serif; font-size:12px; font-weight:700; line-height:12px; mso-text-raise:1px'>Check it Out!</center> </v:roundrect></a>
+                                                                    <!--[if mso]><a href="https://www.mmsweden.se/all-products/${product.slug}" target="_blank" hidden> <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" esdevVmlButton href="https://www.mmsweden.se/all-products/${product._id}" style="height:35px; v-text-anchor:middle; width:151px" arcsize="50%" stroke="f" fillcolor="#fdc62f"> <w:anchorlock></w:anchorlock> <center style='color:#000000; font-family:Inter, sans-serif; font-size:12px; font-weight:700; line-height:12px; mso-text-raise:1px'>Check it Out!</center> </v:roundrect></a>
 <![endif]-->
                                                                     <!--[if !mso]><!-- --><span class="msohide cw"
                                                                         style="border-style:solid;border-color:transparent;background:#fdc62f;border-width:0px;display:inline-block;border-radius:50px;width:auto;mso-hide:all"><a
@@ -70,7 +70,7 @@ export const productBlock = (product: IProduct) => `
                 <tr>
                     <td align="center"
                         style="padding-bottom:20px;Margin:0;font-size:0px"><a
-                            href="https://www.mmsweden.se/all-products/${product._id}"
+                            href="https://www.mmsweden.se/all-products/${product.slug}"
                             target="_blank"
                             style="mso-line-height-rule:exactly;text-decoration:underline;color:#00179C;font-size:15px"><img
                                 width="270" alt="Main Image"
@@ -106,11 +106,11 @@ export const productBlock = (product: IProduct) => `
                 <tr>
                     <td align="center"
                         style="Margin:0;padding-left:5px;padding-right:5px;padding-bottom:20px;padding-top:5px">
-                        <!--[if mso]><a href="https://www.mmsweden.se/all-products/${product._id}" target="_blank" hidden> <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" esdevVmlButton href="https://www.mmsweden.se/all-products/${product._id}" style="height:35px; v-text-anchor:middle; width:151px" arcsize="50%" stroke="f" fillcolor="#fdc62f"> <w:anchorlock></w:anchorlock> <center style='color:#000000; font-family:Inter, sans-serif; font-size:12px; font-weight:700; line-height:12px; mso-text-raise:1px'>Check it Out!</center> </v:roundrect></a><![endif]-->
+                        <!--[if mso]><a href="https://www.mmsweden.se/all-products/${product.slug}" target="_blank" hidden> <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" esdevVmlButton href="https://www.mmsweden.se/all-products/${product._id}" style="height:35px; v-text-anchor:middle; width:151px" arcsize="50%" stroke="f" fillcolor="#fdc62f"> <w:anchorlock></w:anchorlock> <center style='color:#000000; font-family:Inter, sans-serif; font-size:12px; font-weight:700; line-height:12px; mso-text-raise:1px'>Check it Out!</center> </v:roundrect></a><![endif]-->
                         <!--[if !mso]><!-- -->
                         <span class="msohide cw"
                             style="border-style:solid;border-color:transparent;background:#fdc62f;border-width:0px;display:inline-block;border-radius:50px;width:auto;mso-hide:all">
-                            <a href="https://www.mmsweden.se/all-products/${product._id}"
+                            <a href="https://www.mmsweden.se/all-products/${product.slug}"
                                 target="_blank" class="cs"
                                 style="mso-style-priority:100 !important;text-decoration:none !important;mso-line-height-rule:exactly;color:#000000;font-size:13px;padding:10px 25px;display:inline-block;background:#fdc62f;border-radius:50px;font-family:Inter, sans-serif;font-weight:bold;font-style:normal;line-height:15.6px;width:auto;text-align:center;letter-spacing:0;mso-padding-alt:0;mso-border-alt:10px solid #fdc62f">
                                 Check it Out!

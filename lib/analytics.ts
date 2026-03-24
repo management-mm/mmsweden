@@ -5,7 +5,7 @@ declare global {
   }
 }
 
-export const GA_MEASUREMENT_ID = 'G-4J7Y28JHN2G';
+export const GA_MEASUREMENT_ID = 'G-4J7Y28JHN2';
 
 export function initGoogleAnalytics() {
   if (typeof window === 'undefined') return;

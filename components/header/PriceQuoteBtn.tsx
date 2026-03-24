@@ -18,7 +18,7 @@ const PriceQuoteBtn = () => {
     <NavLinkBtn
       intent={'accent'}
       className="h-[38px] w-[48px] p-0 md:h-[48px] md:min-w-[145px] md:px-[14px]"
-      href="my-price-quote"
+      href="/my-price-quote"
     >
       <div className="relative">
         <SvgIcon

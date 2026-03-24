@@ -64,6 +64,7 @@ const ProductImage: FC<IProductImageProps> = ({
                 src={optimizeCloudinaryImage(photos[0], 320)}
                 alt={altText}
                 fill
+                unoptimized
                 className="rounded-t-[4px] object-cover select-none"
                 sizes="(max-width:768px) 100vw, 296px"
               />

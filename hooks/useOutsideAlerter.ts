@@ -10,7 +10,6 @@ const useOutsideAlerter = (onOutsideClick: () => void, isOpen: boolean) => {
         ref.current &&
         !ref.current.contains(event.target as Node)
       ) {
-        console.log(ref.current);
         onOutsideClick();
       }
     }

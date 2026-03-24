@@ -176,5 +176,26 @@
   "Pagination": {
     "Next": "Nästa",
     "Previous": "Föregående"
+  },
+  "Error": {
+    "Required": "{field} är ett obligatoriskt fält",
+    "InvalidEmail": "ogiltig e-postadress",
+    "TooLong": "för långt!",
+    "InvalidFormat": "ogiltigt format",
+    "OnlyNumbers": "endast siffror är tillåtna",
+    "InvalidPhone": "Vänligen ange ett giltigt telefonnummer"
+  },
+  "NotFoundText": {
+    "Status": "Status: 404 — Sidan kunde inte hittas",
+    "Title": "Oops — den här sidan finns inte.",
+    "Description": "Länken kan vara trasig, sidan kan ha flyttats eller så har adressen skrivits fel. Låt oss hjälpa dig tillbaka på rätt spår.",
+    "GoHome": "Gå till startsidan",
+    "GoBack": "Gå tillbaka",
+    "Contact": "Kontakta oss",
+    "QuickTipTitle": "Tips",
+    "QuickTipText": "Kontrollera webbadressen efter fel eller använd startsidan för att hitta det du söker.",
+    "Homepage": "Startsida",
+    "AllProducts": "Alla produkter",
+    "ErrorCode": "Felkod"
   }
 }

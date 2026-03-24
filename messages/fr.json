@@ -176,5 +176,26 @@
   "Pagination": {
     "Next": "Suivant",
     "Previous": "Précédent"
+  },
+  "Error": {
+    "Required": "{field} est un champ obligatoire",
+    "InvalidEmail": "adresse e-mail invalide",
+    "TooLong": "trop long !",
+    "InvalidFormat": "format invalide",
+    "OnlyNumbers": "seuls les chiffres sont autorisés",
+    "InvalidPhone": "Veuillez saisir un numéro de téléphone valide"
+  },
+  "NotFoundText": {
+    "Status": "Statut : 404 — Page non trouvée",
+    "Title": "Oups — cette page n’existe pas.",
+    "Description": "Le lien est peut-être cassé, la page a pu être déplacée ou l’adresse a été saisie incorrectement. Nous allons vous aider à revenir sur la bonne voie.",
+    "GoHome": "Aller à l’accueil",
+    "GoBack": "Retour",
+    "Contact": "Nous contacter",
+    "QuickTipTitle": "Astuce",
+    "QuickTipText": "Vérifiez l’URL pour détecter d’éventuelles erreurs ou utilisez la page d’accueil pour trouver ce dont vous avez besoin.",
+    "Homepage": "Accueil",
+    "AllProducts": "Tous les produits",
+    "ErrorCode": "Code d’erreur"
   }
 }

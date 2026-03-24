@@ -5,6 +5,7 @@ import { type ChangeEvent, type FC, useMemo, useState } from 'react';
 import type { ICountryOption } from '@interfaces/ICountryOption';
 import { ErrorMessage, Field, useFormikContext } from 'formik';
 import * as _ from 'lodash';
+import { useTranslations } from 'next-intl';
 
 import Menu from './Menu';
 import PhoneCodeOption from './PhoneCodeOption';
@@ -38,6 +39,7 @@ interface IPhoneProps {
 
 const Phone: FC<IPhoneProps> = ({ className }) => {
   const language = useCurrentLocale();
+  const t = useTranslations();
 
   const options = countriesList.flatMap(country => {
     const { phoneFormat, callingCode, translations, flag } = country;
@@ -235,8 +237,12 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
           />
         </div>
 
-        <ErrorMessage name="Phone">
-          {msg => <div className="mt-1 text-sm text-red-500">{msg}</div>}
+        <ErrorMessage name="phone">
+          {msg => (
+            <div className="mt-1 text-sm text-red-500">
+              {t(msg, { field: t(Label.Phone) })}
+            </div>
+          )}
         </ErrorMessage>
       </label>
 

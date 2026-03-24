@@ -40,6 +40,7 @@ const ProductHoverSwiper: FC<Props> = ({ photos, alt, setCurrentIndex }) => {
                 fill
                 className="object-cover"
                 sizes="320px"
+                unoptimized
                 priority={index === 0}
                 draggable={false}
               />

@@ -26,6 +26,7 @@ const AboutUs = () => {
                 src="/images/home/mobile-home-about-us.webp"
                 alt="Common photo"
                 width={320}
+                unoptimized
                 height={230}
                 className="h-[230px] w-full rounded-[4px] bg-slate-500 object-cover"
                 sizes="100vw"
@@ -36,6 +37,7 @@ const AboutUs = () => {
               <Image
                 src="/images/home/tablet-home-about-us.webp"
                 alt="Common photo"
+                unoptimized
                 width={538}
                 height={384}
                 className="h-[384px] w-[538px] rounded-[4px] bg-slate-500 object-cover"
@@ -47,6 +49,7 @@ const AboutUs = () => {
               <Image
                 src="/images/home/desktop-home-about-us.webp"
                 alt="Common photo"
+                unoptimized
                 width={686}
                 height={478}
                 className="h-[478px] w-[686px] rounded-[4px] bg-slate-500 object-cover"

@@ -39,6 +39,7 @@ const ItemForQuote: FC<IItemsForQuoteProps> = ({
           alt={getProductName(name, language)}
           width={97}
           height={73}
+          unoptimized
           className="rounded-[4px] object-cover"
           sizes="97px"
         />

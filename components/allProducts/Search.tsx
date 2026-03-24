@@ -29,12 +29,9 @@ const Search: FC<ISearchProps> = ({ className }) => {
 
   const [inputValue, setInputValue] = useState(titleFromUrl);
 
-  // Храним последнее значение, которое сами отправили в URL,
-  // чтобы не затирать input при собственной навигации
   const lastSubmittedValueRef = useRef(titleFromUrl);
 
   useEffect(() => {
-    // Синхронизируем input только если URL изменился НЕ из нашего ввода
     if (titleFromUrl !== lastSubmittedValueRef.current) {
       setInputValue(titleFromUrl);
     }
@@ -44,7 +41,6 @@ const Search: FC<ISearchProps> = ({ className }) => {
     const timeout = setTimeout(() => {
       const trimmedValue = inputValue.trim();
 
-      // Если URL уже содержит это значение — ничего не делаем
       if (trimmedValue === titleFromUrl) return;
 
       const params = new URLSearchParams(searchParams.toString());
@@ -79,7 +75,7 @@ const Search: FC<ISearchProps> = ({ className }) => {
       <div className="relative">
         <input
           type="text"
-          placeholder={t(Placeholder.SearchProduct)}
+          placeholder={t(Placeholder.Search)}
           value={inputValue}
           className={clsx(
             'font-openSans transition-border duration-primary focus:border-secondary-accent w-full rounded-[32px] border border-[rgba(102,102,102,0.22)] bg-transparent pr-[18px] pl-[16px] outline-none focus:border',

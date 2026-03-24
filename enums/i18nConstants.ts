@@ -191,3 +191,26 @@ export enum Pagination {
   Previous = 'Pagination.Previous',
   Next = 'Pagination.Next',
 }
+
+export enum Error {
+  Required = 'Error.Required',
+  InvalidEmail = 'Error.InvalidEmail',
+  TooLong = 'Error.TooLong',
+  InvalidFormat = 'Error.InvalidFormat',
+  OnlyNumbers = 'Error.OnlyNumbers',
+  InvalidPhone = 'Error.InvalidPhone',
+}
+
+export enum NotFoundText {
+  Status = 'NotFoundText.Status',
+  Title = 'NotFoundText.Title',
+  Description = 'NotFoundText.Description',
+  GoHome = 'NotFoundText.GoHome',
+  GoBack = 'NotFoundText.GoBack',
+  Contact = 'NotFoundText.Contact',
+  QuickTipTitle = 'NotFoundText.QuickTipTitle',
+  QuickTipText = 'NotFoundText.QuickTipText',
+  Homepage = 'NotFoundText.Homepage',
+  AllProducts = 'NotFoundText.AllProducts',
+  ErrorCode = 'NotFoundText.ErrorCode',
+}

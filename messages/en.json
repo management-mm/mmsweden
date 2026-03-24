@@ -176,5 +176,26 @@
   "Pagination": {
     "Next": "Next",
     "Previous": "Previous"
+  },
+  "Error": {
+    "Required": "{field} is a required field",
+    "InvalidEmail": "invalid email",
+    "TooLong": "too long!",
+    "InvalidFormat": "invalid format",
+    "OnlyNumbers": "Only numbers are allowed",
+    "InvalidPhone": "Please enter a valid phone number"
+  },
+  "NotFoundText": {
+    "Status": "Status: 404 — Page Not Found",
+    "Title": "Oops — this page doesn’t exist.",
+    "Description": "The link may be broken, the page might have moved, or you typed the address incorrectly. Let’s get you back on track.",
+    "GoHome": "Go to homepage",
+    "GoBack": "Go back",
+    "Contact": "Contact us",
+    "QuickTipTitle": "Quick tip",
+    "QuickTipText": "Try checking the URL for typos or use the homepage to find what you need.",
+    "Homepage": "Homepage",
+    "AllProducts": "All Products",
+    "ErrorCode": "Error code"
   }
 }

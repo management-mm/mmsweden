@@ -4,10 +4,13 @@ import { type ChangeEvent, type FC, useEffect, useMemo, useState } from 'react';
 
 import type { ICountryOption } from '@interfaces/ICountryOption';
 import { type VariantProps, cva } from 'class-variance-authority';
+import { useTranslations } from 'next-intl';
 
 import useOutsideAlerter from '@hooks/useOutsideAlerter';
 
 import { cn } from '@utils/cn';
+
+import { Placeholder } from '@enums/i18nConstants';
 
 const divVariants = cva('mt-1', {
   variants: {
@@ -76,6 +79,7 @@ const Menu: FC<IMenuProps> = ({
   setHasClickedOutside,
   intent,
 }) => {
+  const t = useTranslations();
   const outsideAlerterRef = useOutsideAlerter(() => {
     setHasClickedOutside?.(true);
     setIsOpen?.(false);
@@ -123,7 +127,7 @@ const Menu: FC<IMenuProps> = ({
       <input
         type="text"
         className={cn(inputVariants({ intent }))}
-        placeholder="Search by Name or Code"
+        placeholder={t(Placeholder.Search)}
         onChange={handleInputText}
       />
 

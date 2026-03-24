@@ -168,7 +168,6 @@ const ChangeProduct = () => {
           }}
           validationSchema={schema}
           onSubmit={async values => {
-            console.log(values);
             try {
               if (!productId) return;
 

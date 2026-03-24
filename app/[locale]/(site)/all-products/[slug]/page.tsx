@@ -126,10 +126,6 @@ export default async function ProductDetailsPage({ params }: Props) {
   const product = await getProduct(slug);
 
   if (!product) {
-    console.log(slug);
-    console.log('url:', `${siteUrl}/products/${slug}`);
-    console.log('product: ', product);
-
     notFound();
   }
 

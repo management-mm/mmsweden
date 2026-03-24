@@ -47,7 +47,6 @@ const ChangeFilter: FC<IChangeFilterProps> = ({ filterValue, filterName }) => {
               case 'industries':
                 dispatch(updateIndustry(values));
             }
-            console.log(values);
           } catch (error) {
             console.log(error);
           }

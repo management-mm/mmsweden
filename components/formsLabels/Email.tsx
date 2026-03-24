@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 
 import { ErrorMessage } from 'formik';
+import { useTranslations } from 'next-intl';
 
 import InputField from '@components/common/InputField';
 import LabelTitle from '@components/common/LabelTitle';
@@ -14,6 +15,7 @@ interface IEmailProps {
 }
 
 const Email: FC<IEmailProps> = ({ className }) => {
+  const t = useTranslations();
   return (
     <label className={cn('flex flex-col gap-[2px]', className)}>
       <div className="flex items-center gap-[2px]">
@@ -29,7 +31,11 @@ const Email: FC<IEmailProps> = ({ className }) => {
         required={true}
       />
       <ErrorMessage name="email">
-        {msg => <div className="mt-1 text-sm text-red-500">{msg}</div>}
+        {msg => (
+          <div className="mt-1 text-sm text-red-500">
+            {t(msg, { field: t(Label.Email) })}
+          </div>
+        )}
       </ErrorMessage>
     </label>
   );

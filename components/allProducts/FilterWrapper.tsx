@@ -1,6 +1,13 @@
 'use client';
 
-import { type ChangeEvent, type FC, useMemo, useState } from 'react';
+import {
+  type ChangeEvent,
+  type FC,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import Skeleton from 'react-loading-skeleton';
 
 import type { ICategory } from '@interfaces/ICategory';
@@ -32,6 +39,8 @@ interface IFilterWrapperProps {
   setKeyword: (value: string) => void;
 }
 
+const ITEMS_PER_LOAD = 30;
+
 const FilterWrapper: FC<IFilterWrapperProps> = ({
   filterName,
   items,
@@ -46,6 +55,10 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
   const t = useTranslations();
 
   const [isOpen, setIsOpen] = useState(filterName === filters.Category);
+  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_LOAD);
+
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
   const selectedValues = useMemo(() => {
     return searchParams.getAll(filterName);
@@ -55,8 +68,23 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
     return new Set(selectedValues);
   }, [selectedValues]);
 
+  const sortedItems = useMemo(() => {
+    return [...items].sort((a, b) => {
+      const nameA = getFilterItemName(filterName, a, language).toLowerCase();
+      const nameB = getFilterItemName(filterName, b, language).toLowerCase();
+
+      return nameA.localeCompare(nameB);
+    });
+  }, [items, filterName, language]);
+
+  const visibleItems = useMemo(() => {
+    return sortedItems.slice(0, visibleCount);
+  }, [sortedItems, visibleCount]);
+
+  const hasMore = visibleCount < sortedItems.length;
+
   const groupedFilters = useMemo(() => {
-    const grouped = items.reduce(
+    const grouped = visibleItems.reduce(
       (acc, item) => {
         const characterKey = getFilterItemName(filterName, item, language)
           .charAt(0)
@@ -72,18 +100,46 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
       {} as Record<string, (ICategory | IManufacturer | IIndustry)[]>
     );
 
-    Object.keys(grouped).forEach(key => {
-      grouped[key].sort((a, b) => {
-        const nameA = getFilterItemName(filterName, a, language).toLowerCase();
-        const nameB = getFilterItemName(filterName, b, language).toLowerCase();
-        return nameA.localeCompare(nameB);
-      });
-    });
-
     return Object.fromEntries(
       Object.entries(grouped).sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
     );
-  }, [items, filterName, language]);
+  }, [visibleItems, filterName, language]);
+
+  useEffect(() => {
+    setVisibleCount(ITEMS_PER_LOAD);
+  }, [items, keyword, filterName]);
+
+  useEffect(() => {
+    if (!isOpen || !hasMore || isLoading) return;
+
+    const root = scrollContainerRef.current;
+    const target = loadMoreRef.current;
+
+    if (!root || !target) return;
+
+    const observer = new IntersectionObserver(
+      entries => {
+        const firstEntry = entries[0];
+
+        if (firstEntry?.isIntersecting) {
+          setVisibleCount(prev =>
+            Math.min(prev + ITEMS_PER_LOAD, sortedItems.length)
+          );
+        }
+      },
+      {
+        root,
+        rootMargin: '0px 0px 120px 0px',
+        threshold: 0.1,
+      }
+    );
+
+    observer.observe(target);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [hasMore, isLoading, isOpen, sortedItems.length]);
 
   const title =
     filterName === filters.Category
@@ -140,7 +196,10 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
       >
         <SearchFilter keyword={keyword} setKeyword={setKeyword} />
 
-        <div className="flex h-[350px] flex-col gap-[16px] overflow-y-scroll">
+        <div
+          ref={scrollContainerRef}
+          className="flex h-[350px] flex-col gap-[16px] overflow-y-scroll"
+        >
           {Object.entries(groupedFilters).map(([character, list]) => (
             <div key={character}>
               <p className="text-desc mb-4 text-[12px] font-semibold">
@@ -187,6 +246,21 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
               </div>
             </div>
           ))}
+
+          {!isLoading && hasMore && (
+            <div ref={loadMoreRef} className="h-[1px]" />
+          )}
+
+          {isLoading && (
+            <div className="flex flex-col gap-[12px]">
+              {Array.from({ length: 8 }).map((_, index) => (
+                <div key={index} className="flex gap-[6px]">
+                  <Skeleton width={16} />
+                  <Skeleton width={150} />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </fieldset>

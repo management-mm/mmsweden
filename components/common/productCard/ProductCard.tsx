@@ -1,4 +1,5 @@
 import { type FC } from 'react';
+import Skeleton from 'react-loading-skeleton';
 
 import clsx from 'clsx';
 import type { IProduct } from 'interfaces/IProduct';
@@ -44,8 +45,9 @@ const ProductCard: FC<IProductCardProps> = ({
       className={clsx(
         'border-secondary flex h-[504px] flex-col rounded-[4px] border pb-[20px]',
         className,
-        deletionDate && 'opacity-70'
+        deletionDate && !isLoading && 'opacity-70'
       )}
+      aria-busy={isLoading}
     >
       <div className="relative mb-[8px]">
         <ProductImage
@@ -55,9 +57,15 @@ const ProductCard: FC<IProductCardProps> = ({
           language={language}
         />
 
-        <ProductCondition condition={condition} />
+        {isLoading ? (
+          <div className="absolute top-[8px] left-[8px] z-[11]">
+            <Skeleton width={72} height={24} borderRadius={999} />
+          </div>
+        ) : (
+          <ProductCondition condition={condition} />
+        )}
 
-        {deletionDate && (
+        {!isLoading && deletionDate && (
           <span className="text-secondary absolute top-[8px] right-[8px] z-[11] inline-block rounded-[32px] bg-red-900 px-[6px] py-[3px] text-[12px] leading-tight font-medium uppercase">
             Sold
           </span>
@@ -79,7 +87,12 @@ const ProductCard: FC<IProductCardProps> = ({
           dimensions={dimensions}
         />
 
-        {isAdmin ? (
+        {isLoading ? (
+          <div className="mt-[16px] flex gap-[12px]">
+            <Skeleton height={40} containerClassName="flex-1" />
+            <Skeleton height={40} containerClassName="flex-1" />
+          </div>
+        ) : isAdmin ? (
           <AdminEditProductButton language={language} slug={slug} />
         ) : (
           <ActionsButtons

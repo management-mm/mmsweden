@@ -30,22 +30,31 @@ const ProductDetails: FC<IProductDetailsProps> = ({
         className="text-primary mb-[4px] line-clamp-2 text-[16px] font-semibold uppercase"
         translate="no"
       >
-        {isLoading ? <Skeleton width={150} /> : getProductName(name, language)}
+        {isLoading ? (
+          <Skeleton width="78%" height={20} />
+        ) : (
+          getProductName(name, language)
+        )}
       </h3>
 
       <p
         className="text-secondary-accent mb-[4px] text-[14px] font-semibold"
         translate="no"
       >
-        {isLoading ? <Skeleton width={80} /> : 'ID NR '}
-        <span>{isLoading ? <Skeleton width={80} /> : idNumber}</span>
+        {isLoading ? (
+          <Skeleton width="42%" height={16} />
+        ) : (
+          <>
+            ID NR <span>{idNumber}</span>
+          </>
+        )}
       </p>
 
       <p
         className="font-openSans text-desc mb-[12px] line-clamp-2 text-[12px]"
         translate="no"
       >
-        {isLoading ? <Skeleton width={120} /> : dimensions}
+        {isLoading ? <Skeleton width="55%" height={14} /> : dimensions}
       </p>
 
       <p
@@ -53,7 +62,7 @@ const ProductDetails: FC<IProductDetailsProps> = ({
         translate="no"
       >
         {isLoading ? (
-          <Skeleton count={3} />
+          <Skeleton count={4} height={12} />
         ) : (
           description?.[language] || description?.en || ''
         )}

@@ -28,7 +28,7 @@ const SellToUs = () => {
 
           <div className="mb-[32px] text-[16px] leading-normal font-medium">
             {t.rich(Description.SellToUs, {
-              br: () => <br/>,
+              br: () => <br />,
             })}
           </div>
 

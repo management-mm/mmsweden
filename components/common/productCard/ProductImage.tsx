@@ -44,40 +44,42 @@ const ProductImage: FC<IProductImageProps> = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {!isLoading ? (
-        photos.length !== 0 ? (
-          <>
-            {isHovered && (
-              <HoverSwiper
-                photos={photos}
-                alt={altText}
-                setCurrentIndex={setCurrentIndex}
-              />
-            )}
+      {isLoading ? (
+        <Skeleton
+          height={218}
+          duration={1.2}
+          className="block rounded-t-[4px]"
+        />
+      ) : photos.length !== 0 ? (
+        <>
+          {isHovered && (
+            <HoverSwiper
+              photos={photos}
+              alt={altText}
+              setCurrentIndex={setCurrentIndex}
+            />
+          )}
 
-            <div
-              className={`relative h-[218px] w-full rounded-t-[4px] transition-opacity duration-300 ${
-                isHovered ? 'opacity-0' : 'opacity-100'
-              }`}
-            >
-              <Image
-                src={optimizeCloudinaryImage(photos[0], 320)}
-                alt={altText}
-                fill
-                unoptimized
-                className="rounded-t-[4px] object-cover select-none"
-                sizes="(max-width:768px) 100vw, 296px"
-              />
-            </div>
-          </>
-        ) : (
-          <div className="h-[200px] w-full rounded-t-[4px] bg-slate-500" />
-        )
+          <div
+            className={`relative h-[218px] w-full rounded-t-[4px] transition-opacity duration-300 ${
+              isHovered ? 'opacity-0' : 'opacity-100'
+            }`}
+          >
+            <Image
+              src={optimizeCloudinaryImage(photos[0], 320)}
+              alt={altText}
+              fill
+              unoptimized
+              className="rounded-t-[4px] object-cover select-none"
+              sizes="(max-width:768px) 100vw, 296px"
+            />
+          </div>
+        </>
       ) : (
-        <Skeleton height={200} duration={1.2} />
+        <div className="h-[218px] w-full rounded-t-[4px] bg-slate-500" />
       )}
 
-      {currentIndex !== -1 && (
+      {!isLoading && currentIndex !== -1 && (
         <LightBox
           photos={photos}
           currentIndex={currentIndex}

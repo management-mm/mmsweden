@@ -1,90 +1,40 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-
 import { fetchRecommendedProductsBySlug } from '@api/productsService';
-import clsx from 'clsx';
-import type { IProduct } from 'interfaces/IProduct';
-import { useTranslations } from 'next-intl';
-import { useParams } from 'next/navigation';
+import type { IProduct } from '@interfaces/IProduct';
+import { getTranslations } from 'next-intl/server';
 
-import DecorativeLine from '@components/common/DecorativeLine';
-import NaviArrowSlider from '@components/common/NaviArrowSlider';
-import ProductCard from '@components/common/productCard/ProductCard';
-
-import { useCurrentLocale } from '@hooks/useCurrentLocale';
-import useSwiperNavigation from '@hooks/useSwiperNavigation';
+import RecommendedProductsCarousel from './RecommendedProductsCarousel';
 
 import { Title } from '@enums/i18nConstants';
 
-const RecommendedProducts = () => {
-  const t = useTranslations();
-  const [recommendedProducts, setRecommendedProducts] = useState<IProduct[]>(
-    []
-  );
+import type { AppLocale } from '@i18n/config';
 
-  const language = useCurrentLocale();
+type Props = {
+  locale: AppLocale;
+  slug: string;
+};
 
-  const params = useParams<{ slug: string }>();
-  const slug = params?.slug;
+const RecommendedProducts = async ({ locale, slug }: Props) => {
+  let recommendedProducts: IProduct[] = [];
 
-  const { handlePrev, handleNext, onSwiperInit } = useSwiperNavigation();
+  try {
+    recommendedProducts = await fetchRecommendedProductsBySlug(slug);
+  } catch (error) {
+    console.error('Failed to load recommended products:', error);
+  }
 
-  useEffect(() => {
-    if (!slug) return;
+  if (!recommendedProducts?.length) {
+    return null;
+  }
 
-    async function fetchingRecommendedProducts() {
-      try {
-        const fetchedRecommendedProducts =
-          await fetchRecommendedProductsBySlug(slug);
-        setRecommendedProducts(fetchedRecommendedProducts);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    fetchingRecommendedProducts();
-  }, [slug]);
+  const t = await getTranslations();
+  const title = t(Title.YouMayAlsoBeInterestedIn);
 
   return (
-    <section aria-labelledby="recommended-products-heading">
-      <div className="container">
-        <div className="relative mb-[22px] flex flex-wrap items-end justify-between gap-[12px] md:flex-nowrap">
-          <h2 className="shrink-0 text-[18px] font-semibold md:text-[24px] md:leading-[0.8]">
-            {t(Title.YouMayAlsoBeInterestedIn)}
-          </h2>
-
-          <DecorativeLine className={clsx()} intent="latestArrivals" />
-
-          <div className="hidden gap-[12px] md:flex">
-            <NaviArrowSlider onClick={handlePrev} iconId={'ArrowLeft'} />
-            <NaviArrowSlider onClick={handleNext} iconId={'ArrowRight'} />
-          </div>
-        </div>
-
-        <Swiper
-          onSwiper={onSwiperInit}
-          style={{ width: 'calc(49% + 50vw)' }}
-          slidesPerView="auto"
-          spaceBetween={10}
-          className="slider"
-          breakpoints={{
-            768: { spaceBetween: 30 },
-          }}
-        >
-          {recommendedProducts.map(product => (
-            <SwiperSlide key={product._id}>
-              <ProductCard
-                language={language}
-                product={product}
-                className="w-[296px] md:w-[264px]"
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
-    </section>
+    <RecommendedProductsCarousel
+      products={recommendedProducts}
+      language={locale}
+      title={title}
+    />
   );
 };
 

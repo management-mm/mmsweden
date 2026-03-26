@@ -209,7 +209,7 @@ export default async function ProductDetailsPage({ params }: Props) {
       <Product product={product} locale={locale} slug={slug} />
 
       <Suspense fallback={<div>Loading recommended products...</div>}>
-        <RecommendedProducts />
+        <RecommendedProducts locale={locale} slug={slug} />
       </Suspense>
     </>
   );

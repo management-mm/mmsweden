@@ -1,8 +1,8 @@
 import { AppLocale } from '@i18n/config';
 
-export type MultiLanguageString = {
-  [key in AppLocale]: string;
-};
+export type Locale = 'en' | 'sv' | 'de' | 'fr' | 'es' | 'ru' | 'uk' | 'pl';
+
+export type MultiLanguageString = Record<Locale, string>;
 
 export interface IProduct {
   _id: string;

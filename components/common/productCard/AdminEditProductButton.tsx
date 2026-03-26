@@ -32,7 +32,7 @@ const AdminEditProductButton = ({ language, slug }: Props) => {
     >
       <SvgIcon
         className="fill-primary group-hover:fill-secondary"
-        iconId={IconId.EditProduct}
+        iconId={IconId.Edit}
         size={{ width: 16, height: 16 }}
       />
       Edit Product

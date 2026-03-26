@@ -2,6 +2,7 @@ import { useTranslations } from 'next-intl';
 
 import ContactsPart from './ContactsPart';
 import EmployeeItem from './EmployeeItem';
+import EmployeesList from './EmployeesList';
 import Info from './Info';
 
 import { ContactUs } from '@enums/i18nConstants';
@@ -32,11 +33,7 @@ const Contacts = () => {
 
         <ContactsPart />
 
-        <ul className="flex flex-col flex-wrap gap-[32px] md:flex-row md:gap-[30px]">
-          {employeesList.map(employee => (
-            <EmployeeItem key={employee.title} employee={employee} />
-          ))}
-        </ul>
+        <EmployeesList />
       </div>
     </section>
   );

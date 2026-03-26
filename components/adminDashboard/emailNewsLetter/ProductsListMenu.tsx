@@ -53,20 +53,17 @@ const ProductsListMenu = () => {
   );
 
   useEffect(() => {
-    const selector = listRef.current;
-    if (!selector) return;
+    const el = listRef.current;
+    if (!el) return;
 
     const handleScroll = () => {
-      if (
-        selector.scrollTop + selector.clientHeight >=
-        selector.scrollHeight - 100
-      ) {
+      if (el.scrollTop + el.clientHeight >= el.scrollHeight - 80) {
         loadPage(pageRef.current + 1);
       }
     };
 
-    selector.addEventListener('scroll', handleScroll);
-    return () => selector.removeEventListener('scroll', handleScroll);
+    el.addEventListener('scroll', handleScroll);
+    return () => el.removeEventListener('scroll', handleScroll);
   }, [loadPage]);
 
   useEffect(() => {
@@ -92,22 +89,39 @@ const ProductsListMenu = () => {
   }, [title, language]);
 
   return (
-    <>
-      {isLoading && <Loader />}
+    <div className="w-full">
+      <div className="rounded-2xl border border-gray-200 bg-white shadow-sm">
+        <div className="sticky top-0 z-10 flex items-center justify-between rounded-t-2xl border-b border-gray-200 bg-white px-4 py-3">
+          <h3 className="text-sm font-semibold text-gray-800">Products</h3>
+          <span className="text-xs text-gray-500">
+            {products.length} loaded
+          </span>
+        </div>
 
-      <div className="w-full lg:w-[600px]">
         <ul
           ref={listRef}
-          className="mt-[14px] mb-[22px] flex max-h-[600px] flex-col gap-2 overflow-auto bg-white pr-[16px]"
+          className="max-h-[500px] space-y-2 overflow-y-auto px-3 py-3"
         >
           {products.map(product => (
             <li key={product._id}>
               <ProductMenuItem product={product} />
             </li>
           ))}
+
+          {isLoading && (
+            <li className="flex justify-center py-4">
+              <Loader />
+            </li>
+          )}
+
+          {!isLoading && products.length === 0 && (
+            <li className="py-10 text-center text-sm text-gray-500">
+              No products found
+            </li>
+          )}
         </ul>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -27,6 +27,7 @@ import { IconId } from '@enums/iconsSpriteId';
 interface IProductMenuItemProps {
   product: IProduct;
 }
+
 const ProductMenuItem: FC<IProductMenuItemProps> = ({ product }) => {
   const language = useCurrentLocale();
   const { setItems } = useContext(SelectedItemsContext);
@@ -57,19 +58,19 @@ const ProductMenuItem: FC<IProductMenuItemProps> = ({ product }) => {
   };
 
   return (
-    <div
+    <button
+      type="button"
       onClick={handleClick}
       className={clsx(
-        'relative flex gap-[8px] rounded-[22px] p-[12px] hover:bg-gray-300',
-        isSelected ? 'border-secondary-accent border-2' : ''
+        'group relative flex w-full items-start gap-4 rounded-2xl border p-4 text-left transition-all duration-200',
+        'hover:-translate-y-[1px] hover:shadow-md',
+        isSelected
+          ? 'border-secondary-accent bg-secondary-accent/5 shadow-sm'
+          : 'border-gray-200 bg-white hover:border-gray-300'
       )}
     >
       {isSelected && (
-        <div
-          className={clsx(
-            'bg-secondary-accent absolute right-[12px] flex h-[32px] w-[32px] items-center justify-center rounded-full'
-          )}
-        >
+        <div className="bg-secondary-accent absolute top-3 right-3 flex h-8 w-8 items-center justify-center rounded-full shadow-sm">
           <SvgIcon
             iconId={IconId.Check}
             size={{ width: 18, height: 18 }}
@@ -78,17 +79,29 @@ const ProductMenuItem: FC<IProductMenuItemProps> = ({ product }) => {
         </div>
       )}
 
-      <img src={photos[0]} width={80} className="object-contain" />
-      <div>
-        <h3 className="line-clamp-2 text-[16px] font-semibold uppercase">
+      <div className="flex h-[88px] w-[88px] shrink-0 items-center justify-center overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
+        <img
+          src={photos?.[0] || '/placeholder-image.png'}
+          alt={name ? getProductName(name, language) : 'Product image'}
+          className="h-full w-full object-contain p-2"
+        />
+      </div>
+
+      <div className="min-w-0 flex-1 pr-10">
+        <h3 className="line-clamp-2 text-sm font-semibold tracking-[0.02em] text-gray-900 uppercase md:text-base">
           {name && getProductName(name, language)}
         </h3>
-        <p className="font-semibol mb-[4px] text-[14px]">
-          ID NR <span> {idNumber}</span>
+
+        <p className="mt-2 text-sm text-gray-600">
+          <span className="font-medium text-gray-800">ID NR:</span>{' '}
+          {idNumber || '—'}
         </p>
-        <p className="line-clamp-2 text-[14px]">{description[language]}</p>
+
+        <p className="mt-2 line-clamp-2 text-sm leading-5 text-gray-500">
+          {description?.[language] || 'No description available'}
+        </p>
       </div>
-    </div>
+    </button>
   );
 };
 

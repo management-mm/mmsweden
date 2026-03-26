@@ -83,8 +83,8 @@ const EmailNewsLetterMain = () => {
               <div className="mb-6 h-px bg-gray-200" />
 
               <div className="grid gap-6 xl:grid-cols-[420px_minmax(0,1fr)]">
-                <div className="space-y-6">
-                  <div className="rounded-2xl border border-gray-200 bg-gray-50 p-5">
+                <div className="min-w-0 space-y-6">
+                  <div className="w-full rounded-2xl border border-gray-200 bg-gray-50 p-5">
                     <h2 className="text-base font-semibold text-gray-800">
                       Week range picker
                     </h2>

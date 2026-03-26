@@ -1,4 +1,4 @@
-import { type ChangeEvent, type FC } from 'react';
+import { type FC } from 'react';
 
 import type { ICountryOption } from '@interfaces/ICountryOption';
 import clsx from 'clsx';
@@ -18,7 +18,7 @@ interface ISelectorProps {
   hasClickedOutside: boolean;
   setHasClickedOutside: (value: boolean) => void;
   isOpen: boolean;
-  handleInputText: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleInputText: (value: string) => void;
   setIsOpen: (value: boolean) => void;
   handleOptionSelected: (option: ICountryOption) => void;
   selectedOption: ICountryOption | null;
@@ -40,14 +40,12 @@ const Selector: FC<ISelectorProps> = ({
   toggleMobileMenu,
 }) => {
   const t = useTranslations();
-
   const windowWidth = useWindowWidth();
 
   return (
     <>
       <div
         className={clsx(
-          '',
           labelName === 'phone' &&
             'absolute top-1/2 left-[22px] w-auto -translate-y-1/2 transform',
           labelName === 'country' &&
@@ -55,10 +53,12 @@ const Selector: FC<ISelectorProps> = ({
         )}
         onClick={event => {
           event.preventDefault();
+
           if (windowWidth < 1178) {
             toggleMobileMenu();
             return;
           }
+
           if (hasClickedOutside && !isOpen) {
             setHasClickedOutside(false);
             return;
@@ -67,7 +67,7 @@ const Selector: FC<ISelectorProps> = ({
           setIsOpen(true);
         }}
       >
-        <div className={clsx('cursor-pointer bg-transparent')}>
+        <div className="cursor-pointer bg-transparent">
           {selectedOption ? (
             <SelectedOption
               isOpen={isOpen}
@@ -76,7 +76,7 @@ const Selector: FC<ISelectorProps> = ({
               labelName={labelName}
               value={
                 selectedOption?.label?.props[
-                  `${labelName === 'country' ? 'name' : 'callingCode'}`
+                  labelName === 'country' ? 'name' : 'callingCode'
                 ]
               }
             />
@@ -96,6 +96,7 @@ const Selector: FC<ISelectorProps> = ({
                   size={{ width: 18, height: 18 }}
                   className="fill-primary"
                 />
+
                 {labelName === 'country' && (
                   <p>{t(Placeholder.SelectCountry)}</p>
                 )}
@@ -104,11 +105,6 @@ const Selector: FC<ISelectorProps> = ({
               <SvgIcon
                 iconId={isOpen ? IconId.ArrowTop : IconId.ArrowDown}
                 size={{ width: 8, height: 8 }}
-                className={clsx(
-                  '',
-                  labelName === 'country' && '',
-                  labelName === 'phone' && ''
-                )}
               />
             </div>
           )}
@@ -123,7 +119,7 @@ const Selector: FC<ISelectorProps> = ({
             handleOptionClick={handleOptionSelected}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
-            intent={'desktop'}
+            intent="desktop"
           />
         )}
       </div>

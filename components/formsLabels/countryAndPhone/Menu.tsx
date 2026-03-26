@@ -1,6 +1,6 @@
 'use client';
 
-import { type ChangeEvent, type FC, useEffect, useMemo, useState } from 'react';
+import { type FC, useEffect, useMemo, useState } from 'react';
 
 import type { ICountryOption } from '@interfaces/ICountryOption';
 import { type VariantProps, cva } from 'class-variance-authority';
@@ -49,7 +49,7 @@ const itemVariants = cva('', {
     intent: {
       desktop:
         'duration-250 cursor-pointer py-[8px] transition-colors hover:bg-secondary',
-      mobile: 'border-t p-2 border-[#e5e7eb]',
+      mobile: 'border-t border-[#e5e7eb] p-2',
     },
   },
 });
@@ -61,7 +61,7 @@ interface IMenuProps
     VariantProps<typeof listVariants>,
     VariantProps<typeof itemVariants> {
   labelName: 'country' | 'phone';
-  handleInputText: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleInputText: (value: string) => void;
   options: ICountryOption[] | null;
   handleOptionClick: (option: ICountryOption) => void;
   isOpen?: boolean;
@@ -80,6 +80,7 @@ const Menu: FC<IMenuProps> = ({
   intent,
 }) => {
   const t = useTranslations();
+
   const outsideAlerterRef = useOutsideAlerter(() => {
     setHasClickedOutside?.(true);
     setIsOpen?.(false);
@@ -87,9 +88,7 @@ const Menu: FC<IMenuProps> = ({
 
   const pageSize = intent === 'mobile' ? 20 : 10;
 
-  const [visibleCountries, setVisibleCountries] = useState<ICountryOption[]>(
-    []
-  );
+  const [visibleCountries, setVisibleCountries] = useState<ICountryOption[]>([]);
   const [hasMore, setHasMore] = useState(false);
 
   useEffect(() => {
@@ -116,8 +115,8 @@ const Menu: FC<IMenuProps> = ({
 
   const getKey = useMemo(() => {
     return (option: ICountryOption, index: number) => {
-      const callingCode = (option as any)?.label?.props?.callingCode ?? '';
-      const name = (option as any)?.label?.props?.name ?? option.value ?? '';
+      const callingCode = option?.label?.props?.callingCode ?? '';
+      const name = option?.label?.props?.name ?? option.value ?? '';
       return `${labelName}-${callingCode}-${name}-${index}`;
     };
   }, [labelName]);
@@ -128,7 +127,7 @@ const Menu: FC<IMenuProps> = ({
         type="text"
         className={cn(inputVariants({ intent }))}
         placeholder={t(Placeholder.Search)}
-        onChange={handleInputText}
+        onChange={e => handleInputText(e.target.value)}
       />
 
       <ul
@@ -141,7 +140,7 @@ const Menu: FC<IMenuProps> = ({
           }
         }}
       >
-        {options && options.length > 0 ? (
+        {visibleCountries.length > 0 ? (
           visibleCountries.map((option, index) => (
             <li
               key={getKey(option, index)}

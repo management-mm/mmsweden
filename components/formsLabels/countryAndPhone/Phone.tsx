@@ -1,10 +1,10 @@
 'use client';
 
-import { type ChangeEvent, type FC, useMemo, useState } from 'react';
+import { type FC, useEffect, useMemo, useState } from 'react';
 
 import type { ICountryOption } from '@interfaces/ICountryOption';
 import { ErrorMessage, Field, useFormikContext } from 'formik';
-import * as _ from 'lodash';
+import debounce from 'lodash/debounce';
 import { useTranslations } from 'next-intl';
 
 import Menu from './Menu';
@@ -40,12 +40,45 @@ interface IPhoneProps {
 const Phone: FC<IPhoneProps> = ({ className }) => {
   const language = useCurrentLocale();
   const t = useTranslations();
+  const { setFieldValue } = useFormikContext<any>();
 
-  const options = countriesList.flatMap(country => {
-    const { phoneFormat, callingCode, translations, flag } = country;
+  const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
+  const [hasClickedOutside, setHasClickedOutside] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<ICountryOption | null>(
+    null
+  );
+  const [callingCode, setCallingCode] = useState('');
+  const [phoneFormat, setPhoneFormat] = useState('');
 
-    if (Array.isArray(phoneFormat)) {
-      return phoneFormat.map((_, index) => ({
+  const windowWidth = useWindowWidth();
+  const callingCodeSize = callingCode.replace('+', '').length;
+
+  const stripCountryPrefix = (format: string, code: string) => {
+    const escaped = code.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return format.replace(new RegExp(`^\\s*${escaped}\\s*`), '').trim();
+  };
+
+  const options = useMemo<ICountryOption[]>(() => {
+    return countriesList.flatMap(country => {
+      const { phoneFormat, callingCode, translations, flag } = country;
+
+      if (Array.isArray(phoneFormat)) {
+        return phoneFormat.map((_, index) => ({
+          value: translations[DEFAULT_LOCALE],
+          label: (
+            <PhoneCodeOption
+              name={translations[language] ?? translations[DEFAULT_LOCALE]}
+              callingCode={callingCode}
+              flag={flag}
+              phoneFormat={phoneFormat}
+              formatIndex={index}
+            />
+          ),
+        }));
+      }
+
+      return {
         value: translations[DEFAULT_LOCALE],
         label: (
           <PhoneCodeOption
@@ -53,29 +86,17 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
             callingCode={callingCode}
             flag={flag}
             phoneFormat={phoneFormat}
-            formatIndex={index}
           />
         ),
-      }));
-    }
+      };
+    });
+  }, [language]);
 
-    return {
-      value: translations[DEFAULT_LOCALE],
-      label: (
-        <PhoneCodeOption
-          name={translations[language] ?? translations[DEFAULT_LOCALE]}
-          callingCode={callingCode}
-          flag={flag}
-          phoneFormat={phoneFormat}
-        />
-      ),
-    };
-  });
+  const [filteredOptions, setFilteredOptions] = useState<ICountryOption[]>(options);
 
-  const stripCountryPrefix = (format: string, callingCode: string) => {
-    const escaped = callingCode.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    return format.replace(new RegExp(`^\\s*${escaped}\\s*`), '').trim();
-  };
+  useEffect(() => {
+    setFilteredOptions(options);
+  }, [options]);
 
   const callingCodeIndex = useMemo(() => {
     const map = new Map<string, CallingCodeEntry[]>();
@@ -85,7 +106,7 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
 
       const entry: CallingCodeEntry = {
         callingCode,
-        countryValue: translations[language],
+        countryValue: translations[DEFAULT_LOCALE],
         flag,
         phoneFormat,
       };
@@ -96,11 +117,16 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
     }
 
     return map;
-  }, [language]);
+  }, []);
 
   const detectByCallingCode = (rawValue: string) => {
-    const digits = rawValue.slice(1).replace(/\D/g, '');
-    if (digits.length === 0) return null;
+    const normalized = rawValue.trim();
+    const sanitized = normalized.replace(/[^\d+]/g, '');
+
+    if (!sanitized.startsWith('+')) return null;
+
+    const digits = sanitized.slice(1);
+    if (!digits.length) return null;
 
     const maxLen = Math.min(4, digits.length);
 
@@ -113,8 +139,6 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
 
     return null;
   };
-
-  const { setFieldValue } = useFormikContext();
 
   const applyDetectedCallingCode = (code: string) => {
     const candidates = callingCodeIndex.get(code);
@@ -135,44 +159,51 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
     setFieldValue('countryPhone', chosen.countryValue, false);
 
     const opt = options.find(
-      o =>
-        o?.label?.props?.callingCode === code && o.value === chosen.countryValue
+      option =>
+        option?.label?.props?.callingCode === code &&
+        option.value === chosen.countryValue
     );
 
-    if (opt) setSelectedOption(opt);
+    if (opt) {
+      setSelectedOption(opt);
+    }
   };
-
-  const [filteredOptions, setFilteredOptions] = useState(options);
-  const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
-  const [hasClickedOutside, setHasClickedOutside] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<ICountryOption | null>(
-    null
-  );
-  const [callingCode, setCallingCode] = useState('');
-  const [phoneFormat, setPhoneFormat] = useState('');
-
-  const windowWidth = useWindowWidth();
-  const callingCodeSize = callingCode.split('').slice(1);
 
   const toggleMobileMenu = () => {
-    setIsOpenMobileMenu(!isOpenMobileMenu);
+    setIsOpenMobileMenu(prev => !prev);
   };
 
-  const handleInputText = _.debounce((e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
+  const debouncedHandleInputText = useMemo(
+    () =>
+      debounce((value: string) => {
+        const query = value.trim().toLowerCase();
 
-    setFilteredOptions(
-      options.filter(option => {
-        return (
-          option.label.props.name
-            .toLowerCase()
-            .includes(e.target.value.trim().toLowerCase()) ||
-          option.label.props.callingCode.includes(e.target.value.trim())
-        );
-      })
-    );
-  });
+        if (!query) {
+          setFilteredOptions(options);
+          return;
+        }
+
+        const nextOptions = options.filter(option => {
+          const name = String(option.label.props.name ?? '').toLowerCase();
+          const code = String(option.label.props.callingCode ?? '').toLowerCase();
+
+          return name.includes(query) || code.includes(query);
+        });
+
+        setFilteredOptions(nextOptions);
+      }, 300),
+    [options]
+  );
+
+  useEffect(() => {
+    return () => {
+      debouncedHandleInputText.cancel();
+    };
+  }, [debouncedHandleInputText]);
+
+  const handleInputText = (value: string) => {
+    debouncedHandleInputText(value);
+  };
 
   const handleOptionClick = (option: ICountryOption) => {
     setSelectedOption(option);
@@ -181,7 +212,7 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
     const code = option.label.props.callingCode as string;
 
     const rawFormat = Array.isArray(phoneFormat)
-      ? phoneFormat[formatIndex]
+      ? phoneFormat[formatIndex ?? 0]
       : phoneFormat;
 
     const localFormat = stripCountryPrefix(rawFormat, code);
@@ -192,7 +223,9 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
     setCallingCode(code);
     setPhoneFormat(localFormat);
 
-    if (windowWidth < 1178) toggleMobileMenu();
+    if (windowWidth < 1178) {
+      toggleMobileMenu();
+    }
   };
 
   return (
@@ -226,7 +259,7 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
 
           <PhoneMaskedField
             phoneFormat={phoneFormat}
-            callingCodeSize={callingCodeSize.length}
+            callingCodeSize={callingCodeSize}
             detectByCallingCode={detectByCallingCode}
             onDetectCountry={({ callingCode }) =>
               applyDetectedCallingCode(callingCode)

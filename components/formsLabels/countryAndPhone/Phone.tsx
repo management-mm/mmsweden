@@ -92,7 +92,8 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
     });
   }, [language]);
 
-  const [filteredOptions, setFilteredOptions] = useState<ICountryOption[]>(options);
+  const [filteredOptions, setFilteredOptions] =
+    useState<ICountryOption[]>(options);
 
   useEffect(() => {
     setFilteredOptions(options);
@@ -185,7 +186,9 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
 
         const nextOptions = options.filter(option => {
           const name = String(option.label.props.name ?? '').toLowerCase();
-          const code = String(option.label.props.callingCode ?? '').toLowerCase();
+          const code = String(
+            option.label.props.callingCode ?? ''
+          ).toLowerCase();
 
           return name.includes(query) || code.includes(query);
         });

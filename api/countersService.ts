@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { api } from '@store/api';
+
 const baseUrl =
   process.env.API_URL || process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '');
 
@@ -17,7 +19,7 @@ export const getProductCounter = async (): Promise<number> => {
     throw new Error('API_URL is not defined');
   }
 
-  const { data } = await axios.get<{ seq: number }>(
+  const { data } = await api.get<{ seq: number }>(
     `${baseUrl}/counters/product`
   );
 
@@ -29,7 +31,7 @@ export const updateNextProductId = async (seq: number): Promise<number> => {
     throw new Error('API_URL is not defined');
   }
 
-  const { data } = await axios.patch<{ seq: number }>(
+  const { data } = await api.patch<{ seq: number }>(
     `${baseUrl}/counters/product`,
     { seq }
   );

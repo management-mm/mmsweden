@@ -9,6 +9,10 @@ const NavGeneral = () => {
         Email newsletter
       </NavItem>
 
+      <NavItem href="/admin/employees-settings" icon={IconId.Employees}>
+        Employees
+      </NavItem>
+
       <NavItem href="/admin/id-settings" icon={IconId.IdNumber}>
         Id Number Management
       </NavItem>

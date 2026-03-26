@@ -3,25 +3,34 @@ import ReactDOM from 'react-dom';
 
 import SvgIcon from './SvgIcon';
 
+import { cn } from '@utils/cn';
+
 import { IconId } from '@enums/iconsSpriteId';
 
 interface IStatusModalProps {
   children: ReactNode;
   title: string;
   handleToggleMenu?: () => void;
+  className?: string;
 }
 
 const StatusModal: FC<IStatusModalProps> = ({
   children,
   title,
   handleToggleMenu,
+  className,
 }) => {
   const modalRoot = document.getElementById('modal-root');
   if (!modalRoot) return null;
 
   const modalContent = (
     <div className="overlay fixed top-0 left-0 z-30 flex h-full w-full items-center justify-center bg-[rgba(27,27,27,0.7)]">
-      <div className="fixed z-20 flex h-[200px] flex-col items-start rounded-[16px] bg-white px-[40px] py-[40px]">
+      <div
+        className={cn(
+          'fixed z-20 flex h-[200px] flex-col items-start rounded-[16px] bg-white px-[40px] py-[40px]',
+          className
+        )}
+      >
         <p className="mb-auto font-semibold">{title}</p>
         {children}{' '}
         <button

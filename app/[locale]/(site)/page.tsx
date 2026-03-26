@@ -1,5 +1,3 @@
-import { Suspense } from 'react';
-
 import type { Metadata } from 'next';
 
 import AboutUs from '@components/home/aboutUs/AboutUs';
@@ -78,9 +76,7 @@ const HomePage = async ({ params }: Props) => {
       <Industries />
       <AboutUs />
       <SellToUs />
-      <Suspense fallback={null}>
-        <LatestArrivals />
-      </Suspense>
+      <LatestArrivals locale={locale} />
     </>
   );
 };

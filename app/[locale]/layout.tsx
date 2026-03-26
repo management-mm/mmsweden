@@ -4,16 +4,19 @@ import { notFound } from 'next/navigation';
 
 import Providers from '../providers';
 
-import { isAppLocale } from '@i18n/config';
+import { type AppLocale, SUPPORTED_LOCALES, isAppLocale } from '@i18n/config';
 import { messagesMap } from '@i18n/messages';
 
-export default async function LocaleLayout({
-  children,
-  params,
-}: {
+type Props = {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
-}) {
+};
+
+export function generateStaticParams() {
+  return SUPPORTED_LOCALES.map(locale => ({ locale }));
+}
+
+export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
 
   if (!isAppLocale(locale)) {
@@ -22,10 +25,10 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
 
-  const messages = (await messagesMap[locale]()).default;
+  const messages = (await messagesMap[locale as AppLocale]()).default;
 
   return (
-    <NextIntlClientProvider key={locale} locale={locale} messages={messages}>
+    <NextIntlClientProvider locale={locale} messages={messages}>
       <Providers locale={locale}>
         {children}
         <div id="modal-root" />

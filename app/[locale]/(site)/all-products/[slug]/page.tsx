@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import { IProduct } from '@interfaces/IProduct';
+import type { IProduct } from '@interfaces/IProduct';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
@@ -12,20 +12,9 @@ import { type AppLocale, SUPPORTED_LOCALES } from '@i18n/config';
 type Props = {
   params: Promise<{ locale: AppLocale; slug: string }>;
 };
+
 function isMultiLang(value: unknown): value is Record<string, string> {
   return typeof value === 'object' && value !== null;
-}
-
-async function getProduct(slug: string): Promise<IProduct | null> {
-  const baseUrl = process.env.API_URL!;
-
-  const res = await fetch(`${baseUrl}/products/by-slug/${slug}`, {
-    next: { revalidate: 300 },
-  });
-
-  if (!res.ok) return null;
-
-  return res.json();
 }
 
 function getApiUrl() {
@@ -35,14 +24,29 @@ function getApiUrl() {
   );
 }
 
+function getSiteUrl() {
+  return process.env.SITE_URL?.replace(/\/$/, '') ?? 'https://www.mmsweden.se';
+}
+
+async function getProduct(slug: string): Promise<IProduct | null> {
+  const baseUrl = getApiUrl();
+
+  const res = await fetch(`${baseUrl}/products/by-slug/${slug}`, {
+    cache: 'no-store',
+  });
+
+  if (!res.ok) return null;
+
+  return res.json();
+}
+
 function buildProductUrl(siteUrl: string, locale: AppLocale, slug: string) {
   return `${siteUrl}/${locale}/all-products/${slug}`;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
-  const siteUrl = getApiUrl();
-  let localizedName: string;
+  const siteUrl = getSiteUrl();
 
   const product = await getProduct(slug);
 
@@ -64,11 +68,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ['x-default', buildProductUrl(siteUrl, 'en', slug)],
   ]);
 
-  if (isMultiLang(product.name)) {
-    localizedName = product.name[locale] || product.name.en || slug;
-  } else {
-    localizedName = product.name || slug;
-  }
+  const localizedName = isMultiLang(product.name)
+    ? product.name[locale] || product.name.en || slug
+    : product.name || slug;
 
   const localizedDescription =
     product.description?.[locale] ||
@@ -120,8 +122,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductDetailsPage({ params }: Props) {
   const { locale, slug } = await params;
-  let localizedName: string;
-  const siteUrl = getApiUrl();
+  const siteUrl = getSiteUrl();
 
   const product = await getProduct(slug);
 
@@ -131,11 +132,9 @@ export default async function ProductDetailsPage({ params }: Props) {
 
   const canonicalUrl = buildProductUrl(siteUrl, locale, slug);
 
-  if (isMultiLang(product.name)) {
-    localizedName = product.name[locale] || product.name.en || slug;
-  } else {
-    localizedName = product.name || slug;
-  }
+  const localizedName = isMultiLang(product.name)
+    ? product.name[locale] || product.name.en || slug
+    : product.name || slug;
 
   const localizedDescription =
     product.description?.[locale] ||

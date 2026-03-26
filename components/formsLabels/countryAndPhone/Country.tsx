@@ -1,10 +1,10 @@
 'use client';
 
-import { type ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import type { ICountryOption } from '@interfaces/ICountryOption';
 import { Field, useFormikContext } from 'formik';
-import * as _ from 'lodash';
+import debounce from 'lodash/debounce';
 
 import CountryOption from './CountryOption';
 import Menu from './Menu';
@@ -24,25 +24,26 @@ import { DEFAULT_LOCALE } from '@i18n/config';
 
 const Country = () => {
   const language = useCurrentLocale();
-
-  const options: ICountryOption[] = countriesList.map(country => ({
-    value: country.translations[DEFAULT_LOCALE],
-    label: (
-      <CountryOption
-        flag={country.flag}
-        name={
-          country.translations[language] ?? country.translations[DEFAULT_LOCALE]
-        }
-      />
-    ),
-  }));
-
-  const { setFieldValue } = useFormikContext<{ country: string }>();
   const windowWidth = useWindowWidth();
+  const { values, setFieldValue } = useFormikContext<{ country: string }>();
 
-  const [selectedOption, setSelectedOption] = useState<ICountryOption | null>(
-    null
+  const options: ICountryOption[] = useMemo(
+    () =>
+      countriesList.map(country => ({
+        value: country.translations[DEFAULT_LOCALE],
+        label: (
+          <CountryOption
+            flag={country.flag}
+            name={
+              country.translations[language] ??
+              country.translations[DEFAULT_LOCALE]
+            }
+          />
+        ),
+      })),
+    [language]
   );
+
   const [isOpen, setIsOpen] = useState(false);
   const [filteredOptions, setFilteredOptions] =
     useState<ICountryOption[]>(options);
@@ -51,12 +52,13 @@ const Country = () => {
 
   useEffect(() => {
     setFilteredOptions(options);
-  }, [language]);
+  }, [options]);
+
+  const selectedOption =
+    options.find(option => option.value === values.country) ?? null;
 
   const handleOptionClick = (option: ICountryOption) => {
-    setSelectedOption(option);
     setFieldValue('country', option.value, false);
-
     setIsOpen(false);
 
     if (windowWidth < 1178) {
@@ -68,22 +70,31 @@ const Country = () => {
     setIsOpenMobileMenu(prev => !prev);
   };
 
-  const handleInputText = _.debounce((e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
+  const handleInputText = useMemo(
+    () =>
+      debounce((searchValue: string) => {
+        const searchTerm = searchValue.trim().toLowerCase();
 
-    const searchTerm = e.target.value.trim().toLowerCase();
+        setFilteredOptions(
+          options.filter(option => {
+            const labelElement = option.label as React.ReactElement;
+            const name = labelElement.props.name?.toLowerCase() ?? '';
+            const callingCode = labelElement.props.callingCode ?? '';
 
-    setFilteredOptions(
-      options.filter((option: ICountryOption) => {
-        const name = option.label as React.ReactElement;
-        return (
-          name.props.name.toLowerCase().includes(searchTerm) ||
-          (name.props.callingCode &&
-            name.props.callingCode.includes(searchTerm))
+            return (
+              name.includes(searchTerm) || callingCode.includes(searchTerm)
+            );
+          })
         );
-      })
-    );
-  }, 300);
+      }, 300),
+    [options]
+  );
+
+  useEffect(() => {
+    return () => {
+      handleInputText.cancel();
+    };
+  }, [handleInputText]);
 
   return (
     <>

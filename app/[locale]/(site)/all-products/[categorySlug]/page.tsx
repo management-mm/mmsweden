@@ -1,25 +1,27 @@
+import type { Metadata } from 'next';
+
 import AllProductsView from '@components/allProducts/AllProductsView';
+import {
+  type SearchParams,
+  buildCategoryMetadata,
+  normalizeArray,
+} from '@components/allProducts/allProductsSeo';
 
 import type { AppLocale } from '@i18n/config';
-
-type SearchParams = {
-  title?: string;
-  manufacturer?: string;
-  condition?: string;
-  page?: string;
-  category?: string | string[];
-  industry?: string | string[];
-};
 
 type Props = {
   params: Promise<{ locale: AppLocale; categorySlug: string }>;
   searchParams: Promise<SearchParams>;
 };
 
-const normalizeArray = (value?: string | string[]) => {
-  if (!value) return [];
-  return Array.isArray(value) ? value : [value];
-};
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale, categorySlug } = await params;
+
+  return buildCategoryMetadata({
+    locale,
+    categorySlug,
+  });
+}
 
 export default async function Page({ params, searchParams }: Props) {
   const { locale, categorySlug } = await params;

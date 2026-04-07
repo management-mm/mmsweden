@@ -20,12 +20,16 @@ interface IActionsButtonsProps {
   isLoading: boolean;
   product: IProduct;
   language: AppLocale;
+  categorySlug: string;
+  subcategorySlug: string;
 }
 
 const ActionsButtons: FC<IActionsButtonsProps> = ({
   isLoading,
   product,
   language,
+  categorySlug,
+  subcategorySlug,
 }) => {
   const t = useTranslations();
   const { isRequested, handleToggleFavorites } =
@@ -38,7 +42,7 @@ const ActionsButtons: FC<IActionsButtonsProps> = ({
       {!isLoading ? (
         <>
           <Link
-            href={`/${language}/all-products/${slug}`}
+            href={`/${language}/all-products/${categorySlug ?? product.seoCategorySlug}/${subcategorySlug ?? product.seoSubcategorySlug}/${slug}`}
             className="border-primary font-inter text-primary hover:bg-primary hover:text-secondary flex h-[40px] w-full items-center justify-center rounded-[32px] border bg-transparent text-[12px] font-semibold transition-colors duration-500"
           >
             {t(Button.ViewDetails)}

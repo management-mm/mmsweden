@@ -1,11 +1,11 @@
 import { components } from 'react-select';
 import type { DropdownIndicatorProps } from 'react-select';
 
-import type { ILanguageOption } from 'interfaces/ILanguageOption';
-
 import SvgIcon from '@components/common/SvgIcon';
 
 import { IconId } from '@enums/iconsSpriteId';
+
+import { type ILanguageOption } from '@constants/languageOptions';
 
 const DropdownIndicator = (
   props: DropdownIndicatorProps<ILanguageOption, false> & {

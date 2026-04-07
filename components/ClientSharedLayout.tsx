@@ -3,9 +3,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import SvgIcon from '@components/common/SvgIcon';
 import Footer from '@components/footer/Footer';
-import Header from '@components/header/Header';
 
 import { IconId } from '@enums/iconsSpriteId';
+import Header from './header/Header';
 
 export default function ClientSharedLayout({
   children,

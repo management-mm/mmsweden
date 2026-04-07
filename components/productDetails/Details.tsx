@@ -24,7 +24,7 @@ const Details: FC<IDetailsProps> = ({ product, language, isLoading }) => {
   const {
     idNumber,
     description,
-    category,
+    productCategory,
     manufacturer,
     industries,
     condition,
@@ -81,7 +81,7 @@ const Details: FC<IDetailsProps> = ({ product, language, isLoading }) => {
             {isLoading ? (
               <Skeleton className="!block w-full max-w-[100px]" />
             ) : (
-              category?.[language] || category?.en
+              productCategory?.[language] || productCategory?.en
             )}
           </dd>
         </div>

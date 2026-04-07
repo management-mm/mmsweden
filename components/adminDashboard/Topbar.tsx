@@ -9,9 +9,9 @@ import BackBtn from './BackBtn';
 import Nav from './Nav';
 import LogoutButton from './common/Logout';
 
-import LanguageSelect from '@components/common/LanguageSelect';
 import { Logo } from '@components/common/Logo';
 import MobileMenu from '@components/common/MobileMenu';
+import LanguageSelect from '@components/common/languageSelector/LanguageSelect';
 import BurgerMenu from '@components/header/BurgerMenu';
 
 import useWindowWidth from '@hooks/useWindowWidth';

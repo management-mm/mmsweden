@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 
-import AllProductsView from '@components/allProducts/AllProductsView';
+import AllProductsPageContent from '@components/allProducts/AllProductsPageContent';
+import { buildAllProductsMetadata } from '@components/allProducts/buildAllProductsMetadata';
 
 import type { AppLocale } from '@i18n/config';
-import { createPageMetadata } from '@i18n/seo';
 
 type SearchParams = {
   title?: string;
@@ -19,11 +19,6 @@ type Props = {
   searchParams: Promise<SearchParams>;
 };
 
-const normalizeArray = (value?: string | string[]) => {
-  if (!value) return [];
-  return Array.isArray(value) ? value : [value];
-};
-
 export async function generateMetadata({
   params,
   searchParams,
@@ -31,38 +26,21 @@ export async function generateMetadata({
   const { locale } = await params;
   const resolvedSearchParams = await searchParams;
 
-  const hasFilters =
-    !!resolvedSearchParams.title ||
-    !!resolvedSearchParams.manufacturer ||
-    !!resolvedSearchParams.condition ||
-    normalizeArray(resolvedSearchParams.category).length > 0 ||
-    normalizeArray(resolvedSearchParams.industry).length > 0;
-
-  return createPageMetadata({
+  return buildAllProductsMetadata({
     locale,
     path: '/all-products',
-    title: 'Used Food Processing Machines | Meat Machines',
-    description: 'Browse our catalogue of used food processing machinery.',
-    noIndex: hasFilters,
+    searchParams: resolvedSearchParams,
   });
 }
 
-export default async function AllProductsPage({ params, searchParams }: Props) {
+export default async function Page({ params, searchParams }: Props) {
   const { locale } = await params;
   const resolvedSearchParams = await searchParams;
 
   return (
-    <AllProductsView
-      mode="public"
+    <AllProductsPageContent
       locale={locale}
-      query={{
-        title: resolvedSearchParams.title,
-        manufacturer: resolvedSearchParams.manufacturer,
-        condition: resolvedSearchParams.condition,
-        page: resolvedSearchParams.page,
-        category: normalizeArray(resolvedSearchParams.category),
-        industry: normalizeArray(resolvedSearchParams.industry),
-      }}
+      searchParams={resolvedSearchParams}
     />
   );
 }

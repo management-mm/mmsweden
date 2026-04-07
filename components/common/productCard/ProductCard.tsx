@@ -20,6 +20,8 @@ export interface IProductCardProps {
   language: AppLocale;
   isAdmin?: boolean;
   isLoading?: boolean;
+  categorySlug: string;
+  subcategorySlug: string;
 }
 
 const ProductCard: FC<IProductCardProps> = ({
@@ -37,6 +39,8 @@ const ProductCard: FC<IProductCardProps> = ({
   language,
   isAdmin = false,
   isLoading = false,
+  categorySlug,
+  subcategorySlug,
 }) => {
   const slug = generateProductSlug(product);
 
@@ -99,6 +103,8 @@ const ProductCard: FC<IProductCardProps> = ({
             language={language}
             isLoading={isLoading}
             product={product}
+            categorySlug={categorySlug}
+            subcategorySlug={subcategorySlug}
           />
         )}
       </div>

@@ -16,6 +16,8 @@ export interface GetProductsParams {
   industry?: string[];
   manufacturer?: string;
   condition?: string;
+  categorySlug?: string;
+  subcategorySlug?: string;
 }
 
 export interface GetProductsResponse {
@@ -32,26 +34,48 @@ export const fetchRecommendedProductsBySlug = async (
   return response.data;
 };
 
-export async function getProducts(
-  params: GetProductsParams
-): Promise<GetProductsResponse> {
-  if (!baseUrl) {
-    throw new Error('API_URL is not defined on the server');
-  }
-
+export async function getProducts(query: GetProductsParams) {
   const searchParams = new URLSearchParams();
 
-  if (params.lang) searchParams.set('lang', params.lang);
-  if (params.sort) searchParams.set('sort', params.sort);
-  if (params.perPage) searchParams.set('perPage', String(params.perPage));
-  if (params.page) searchParams.set('page', String(params.page));
-  if (params.keyword) searchParams.set('keyword', params.keyword);
-  if (params.manufacturer)
-    searchParams.set('manufacturer', params.manufacturer);
-  if (params.condition) searchParams.set('condition', params.condition);
+  if (query.keyword) {
+    searchParams.append('keyword', query.keyword);
+  }
 
-  params.category?.forEach(value => searchParams.append('category', value));
-  params.industry?.forEach(value => searchParams.append('industry', value));
+  if (query.manufacturer) {
+    searchParams.append('manufacturer', query.manufacturer);
+  }
+
+  if (query.condition) {
+    searchParams.append('condition', query.condition);
+  }
+
+  if (query.categorySlug) {
+    searchParams.append('categorySlug', query.categorySlug);
+  }
+
+  if (query.subcategorySlug) {
+    searchParams.append('subcategorySlug', query.subcategorySlug);
+  }
+
+  query.category?.forEach(category => {
+    searchParams.append('category', category);
+  });
+
+  query.industry?.forEach(industry => {
+    searchParams.append('industry', industry);
+  });
+
+  if (query.page) {
+    searchParams.append('page', String(query.page));
+  }
+
+  if (query.perPage) {
+    searchParams.append('perPage', String(query.perPage));
+  }
+
+  if (query.lang) {
+    searchParams.append('lang', query.lang);
+  }
 
   const url = `${baseUrl}/products?${searchParams.toString()}`;
 
@@ -59,12 +83,13 @@ export async function getProducts(
     cache: 'no-store',
   });
 
+  const text = await res.text();
+
   if (!res.ok) {
-    const text = await res.text();
     throw new Error(
-      `Failed to fetch products: ${res.status} ${res.statusText}. URL: ${url}. Body: ${text}`
+      `Failed to fetch products: ${res.status} ${res.statusText}. Body: ${text}`
     );
   }
 
-  return res.json();
+  return text ? JSON.parse(text) : null;
 }

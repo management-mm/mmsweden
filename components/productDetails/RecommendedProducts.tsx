@@ -11,9 +11,16 @@ import type { AppLocale } from '@i18n/config';
 type Props = {
   locale: AppLocale;
   slug: string;
+  categorySlug: string;
+  subcategorySlug: string;
 };
 
-const RecommendedProducts = async ({ locale, slug }: Props) => {
+const RecommendedProducts = async ({
+  locale,
+  slug,
+  categorySlug,
+  subcategorySlug,
+}: Props) => {
   let recommendedProducts: IProduct[] = [];
 
   try {
@@ -34,6 +41,8 @@ const RecommendedProducts = async ({ locale, slug }: Props) => {
       products={recommendedProducts}
       language={locale}
       title={title}
+      categorySlug={categorySlug}
+      subcategorySlug={subcategorySlug}
     />
   );
 };

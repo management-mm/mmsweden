@@ -20,7 +20,8 @@
     "AddMoreItems": "Lägg till fler artiklar",
     "GoToProducts": "Gå till produkter",
     "Reject": "Avvisa",
-    "Accept": "Acceptera"
+    "Accept": "Acceptera",
+    "Categories": "Kategorier"
   },
   "Title": {
     "Industries": "Industri",
@@ -37,7 +38,8 @@
     "EmptyCart": "Din kundvagn är tom",
     "NoResults": "Inga resultat hittades för din förfrågan. Vänligen försök justera filtren.",
     "Format": "format {number}",
-    "AnalyticsConsent": "Samtycke för analys"
+    "AnalyticsConsent": "Samtycke för analys",
+    "All": "Alla"
   },
   "Description": {
     "Industries": "Våra produkter används inom följande branscher:",

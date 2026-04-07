@@ -1,8 +1,8 @@
 import Nav from './Nav';
 import LogoutButton from './common/Logout';
 
-import LanguageSelect from '@components/common/LanguageSelect';
 import { Logo } from '@components/common/Logo';
+import LanguageSelect from '@components/common/languageSelector/LanguageSelect';
 
 const Sidebar = () => {
   return (

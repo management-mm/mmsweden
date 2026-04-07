@@ -3,21 +3,20 @@
 import { useEffect, useRef, useState } from 'react';
 
 import clsx from 'clsx';
-import { useTranslations } from 'next-intl';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import BurgerMenu from './BurgerMenu';
 import CategoriesBurgerMenu from './CategoriesBurgerMenu';
 import CategoriesMenu from './CategoriesMenu';
+import HeaderSearch from './HeaderSearch';
 import PriceQuoteBtn from './PriceQuoteBtn';
-import ProductsListMenu from './ProductsListMenu';
 
 import { Logo } from '@components/common/Logo';
-import SvgIcon from '@components/common/SvgIcon';
 import LanguageSelect from '@components/common/languageSelector/LanguageSelect';
 
-import { Button, Placeholder } from '@enums/i18nConstants';
-import { IconId } from '@enums/iconsSpriteId';
+import useSearchKeyword from '@hooks/useSearchKeyword';
+import useWindowWidth from '@hooks/useWindowWidth';
+
+import { Button } from '@enums/i18nConstants';
 
 type MobileHeaderProps = {
   toggleMobileMenu: () => void;
@@ -28,52 +27,15 @@ const SEARCH_DEBOUNCE_MS = 400;
 export default function MobileHeader({ toggleMobileMenu }: MobileHeaderProps) {
   const [isOpenCategories, setIsOpenCategories] = useState(false);
   const [isSearchActive, setIsSearchActive] = useState(false);
+  const windowWidth = useWindowWidth();
+  const isMobile = windowWidth < 1178;
 
   const categoriesTriggerRef = useRef<HTMLButtonElement | null>(null);
 
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const t = useTranslations();
-
-  const keywordFromUrl = searchParams.get('keyword') || '';
-
-  const [searchValue, setSearchValue] = useState(keywordFromUrl);
-  const [debouncedSearchValue, setDebouncedSearchValue] = useState(searchValue);
-
-  useEffect(() => {
-    setSearchValue(keywordFromUrl);
-  }, [keywordFromUrl]);
-
-  useEffect(() => {
-    const timeoutId = window.setTimeout(() => {
-      setDebouncedSearchValue(searchValue);
-    }, SEARCH_DEBOUNCE_MS);
-
-    return () => {
-      window.clearTimeout(timeoutId);
-    };
-  }, [searchValue]);
-
-  useEffect(() => {
-    const trimmedValue = debouncedSearchValue.trim();
-    const currentKeyword = searchParams.get('keyword') || '';
-
-    if (trimmedValue === currentKeyword) return;
-
-    const params = new URLSearchParams(searchParams.toString());
-
-    if (trimmedValue) {
-      params.set('keyword', trimmedValue);
-    } else {
-      params.delete('keyword');
-    }
-
-    const queryString = params.toString();
-    const nextUrl = queryString ? `${pathname}?${queryString}` : pathname;
-
-    router.replace(nextUrl);
-  }, [debouncedSearchValue, pathname, router, searchParams]);
+  const { searchValue, setSearchValue, clearSearch } = useSearchKeyword({
+    debounceMs: SEARCH_DEBOUNCE_MS,
+    enabled: isMobile,
+  });
 
   useEffect(() => {
     if (isOpenCategories) {
@@ -90,29 +52,10 @@ export default function MobileHeader({ toggleMobileMenu }: MobileHeaderProps) {
     };
   }, [isOpenCategories]);
 
-  const clearKeywordFromUrl = () => {
-    const currentKeyword = searchParams.get('keyword');
-    if (!currentKeyword) return;
-
-    const params = new URLSearchParams(searchParams.toString());
-    params.delete('keyword');
-
-    const queryString = params.toString();
-    const nextUrl = queryString ? `${pathname}?${queryString}` : pathname;
-
-    router.replace(nextUrl);
-  };
-
   const toggleCategoriesMenu = () => {
     setIsSearchActive(false);
-    setSearchValue('');
-    setDebouncedSearchValue('');
-    clearKeywordFromUrl();
+    clearSearch();
     setIsOpenCategories(prev => !prev);
-  };
-
-  const handleSearchChange = (value: string) => {
-    setSearchValue(value);
   };
 
   return (
@@ -155,7 +98,7 @@ export default function MobileHeader({ toggleMobileMenu }: MobileHeaderProps) {
                     : 'ml-2 max-w-[120px] opacity-100'
                 )}
               >
-                {t(Button.Categories)}
+                {Button.Categories}
               </span>
             </button>
 
@@ -170,37 +113,22 @@ export default function MobileHeader({ toggleMobileMenu }: MobileHeaderProps) {
           </div>
 
           <div className="relative w-full">
-            <input
-              type="text"
-              placeholder={t(Placeholder.Search)}
+            <HeaderSearch
               value={searchValue}
-              onChange={e => handleSearchChange(e.target.value)}
+              onChange={setSearchValue}
               onFocus={() => {
                 setIsSearchActive(true);
                 setIsOpenCategories(false);
               }}
-              className="h-[44px] w-full rounded-full border border-slate-300 bg-white pr-14 pl-5 text-[14px] text-[#163A5F] outline-none placeholder:text-slate-400 focus:border-[#0B5CAB]"
-            />
-
-            <button
-              type="button"
-              aria-label="Search"
-              onClick={() => {
+              onSearchClick={() => {
                 setIsSearchActive(true);
                 setIsOpenCategories(false);
               }}
-              className="absolute top-1/2 right-[6px] flex h-[32px] w-[32px] -translate-y-1/2 items-center justify-center rounded-full bg-[#0B5CAB] text-white"
-            >
-              <SvgIcon
-                iconId={IconId.Search}
-                size={{ width: 16, height: 16 }}
-                className="fill-secondary"
-              />
-            </button>
-
-            <div>
-              <ProductsListMenu className="absolute left-0" />
-            </div>
+              wrapperClassName="relative w-full"
+              inputClassName="h-[44px] w-full rounded-full border border-slate-300 bg-white pr-14 pl-5 text-[14px] text-[#163A5F] outline-none placeholder:text-slate-400 focus:border-[#0B5CAB]"
+              buttonClassName="absolute top-1/2 right-[6px] flex h-[32px] w-[32px] -translate-y-1/2 items-center justify-center rounded-full bg-[#0B5CAB] text-white"
+              productsMenuClassName="absolute left-0"
+            />
           </div>
         </div>
       </div>

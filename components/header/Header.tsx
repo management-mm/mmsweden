@@ -3,38 +3,36 @@
 import { useRef, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import CategoriesBurgerMenu from './CategoriesBurgerMenu';
 import CategoriesMenu from './CategoriesMenu';
+import HeaderSearch from './HeaderSearch';
 import MobileHeader from './MobileHeader';
 import PriceQuoteBtn from './PriceQuoteBtn';
-import ProductsListMenu from './ProductsListMenu';
 
 import { Logo } from '@components/common/Logo';
 import MobileMenu from '@components/common/MobileMenu';
 import Navbar from '@components/common/Navbar';
-import SvgIcon from '@components/common/SvgIcon';
 import LanguageSelect from '@components/common/languageSelector/LanguageSelect';
 
-import { Button, Placeholder } from '@enums/i18nConstants';
-import { IconId } from '@enums/iconsSpriteId';
+import useSearchKeyword from '@hooks/useSearchKeyword';
+import useWindowWidth from '@hooks/useWindowWidth';
+
+import { Button } from '@enums/i18nConstants';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const windowWidth = useWindowWidth();
+  const isDesktop = windowWidth >= 1178;
   const [isOpenCategories, setIsOpenCategories] = useState(false);
 
   const categoriesTriggerRef = useRef<HTMLButtonElement | null>(null);
 
   const t = useTranslations();
 
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  const [searchValue, setSearchValue] = useState(
-    searchParams.get('keyword') || ''
-  );
+  const { searchValue, setSearchValue } = useSearchKeyword({
+    enabled: isDesktop,
+  });
 
   const toggleCategoriesMenu = () => {
     setIsOpenCategories(prev => !prev);
@@ -42,20 +40,6 @@ const Header = () => {
 
   const toggleMobileMenu = () => {
     setIsOpen(prev => !prev);
-  };
-
-  const handleSearchChange = (value: string) => {
-    setSearchValue(value);
-
-    const params = new URLSearchParams(searchParams.toString());
-
-    if (value.trim()) {
-      params.set('keyword', value);
-    } else {
-      params.delete('keyword');
-    }
-
-    router.replace(`${pathname}?${params.toString()}`);
   };
 
   return (
@@ -105,31 +89,14 @@ const Header = () => {
             </div>
 
             <div className="w-full">
-              <div className="relative mx-auto w-full max-w-[620px]">
-                <input
-                  type="text"
-                  value={searchValue}
-                  onChange={e => handleSearchChange(e.target.value)}
-                  placeholder={t(Placeholder.Search)}
-                  className="h-[48px] w-full rounded-full border border-slate-300 bg-white pr-14 pl-6 text-[14px] text-[#163A5F] transition outline-none placeholder:text-slate-400 focus:border-[#0B5CAB]"
-                />
-
-                <button
-                  type="button"
-                  aria-label="Search"
-                  className="absolute top-1/2 right-[6px] flex h-[36px] w-[36px] -translate-y-1/2 items-center justify-center rounded-full bg-[#0B5CAB] text-white transition hover:bg-[#094b8a]"
-                >
-                  <SvgIcon
-                    iconId={IconId.Search}
-                    size={{ width: 16, height: 16 }}
-                    className="fill-secondary"
-                  />
-                </button>
-
-                <div>
-                  <ProductsListMenu className="absolute" />
-                </div>
-              </div>
+              <HeaderSearch
+                value={searchValue}
+                onChange={setSearchValue}
+                wrapperClassName="relative mx-auto w-full max-w-[620px]"
+                inputClassName="h-[48px] w-full rounded-full border border-slate-300 bg-white pr-14 pl-6 text-[14px] text-[#163A5F] transition outline-none placeholder:text-slate-400 focus:border-[#0B5CAB]"
+                buttonClassName="absolute top-1/2 right-[6px] flex h-[36px] w-[36px] -translate-y-1/2 items-center justify-center rounded-full bg-[#0B5CAB] text-white transition hover:bg-[#094b8a]"
+                productsMenuClassName="absolute"
+              />
             </div>
 
             <div className="flex items-center justify-end gap-3">

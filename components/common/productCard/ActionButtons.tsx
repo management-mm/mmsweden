@@ -10,7 +10,6 @@ import Link from 'next/link';
 
 import useUpdateRequestedProducts from '@hooks/useUpdateRequestedProducts';
 
-import { generateProductSlug } from '@utils/generateProductSlug';
 
 import { Button } from '@enums/i18nConstants';
 
@@ -35,7 +34,7 @@ const ActionsButtons: FC<IActionsButtonsProps> = ({
   const { isRequested, handleToggleFavorites } =
     useUpdateRequestedProducts(product);
 
-  const slug = generateProductSlug(product);
+  const slug = product.slug
 
   return (
     <div className="mt-auto flex w-full gap-[8px] md:gap-[16px] lg:gap-[8px]">

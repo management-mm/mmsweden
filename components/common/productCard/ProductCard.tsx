@@ -40,7 +40,7 @@ const ProductCard: FC<IProductCardProps> = ({
   categorySlug,
   subcategorySlug,
 }) => {
-  const slug = product.slug
+  const slug = product.slug;
 
   return (
     <article

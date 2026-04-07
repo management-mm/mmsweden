@@ -49,17 +49,19 @@ function getSiteUrl() {
   return process.env.SITE_URL?.replace(/\/$/, '') ?? 'https://www.mmsweden.se';
 }
 
-const getProduct = cache(async (slug: string): Promise<ProductWithSeo | null> => {
-  const baseUrl = getApiUrl();
+const getProduct = cache(
+  async (slug: string): Promise<ProductWithSeo | null> => {
+    const baseUrl = getApiUrl();
 
-  const res = await fetch(`${baseUrl}/products/by-slug/${slug}`, {
-    cache: 'no-store',
-  });
+    const res = await fetch(`${baseUrl}/products/by-slug/${slug}`, {
+      cache: 'no-store',
+    });
 
-  if (!res.ok) return null;
+    if (!res.ok) return null;
 
-  return res.json();
-});
+    return res.json();
+  }
+);
 
 function buildProductPath(
   categorySlug: string,
@@ -101,7 +103,9 @@ function extractSlug(value: unknown): string | undefined {
   return undefined;
 }
 
-function extractName(value: unknown): string | Record<string, string> | undefined {
+function extractName(
+  value: unknown
+): string | Record<string, string> | undefined {
   if (
     typeof value === 'object' &&
     value !== null &&
@@ -153,7 +157,8 @@ function resolveProductSeoData(
     extractName(product.seoCategory) ?? extractName(product.seoCategoryId);
 
   const subcategoryNameSource =
-    extractName(product.seoSubcategory) ?? extractName(product.seoSubcategoryId);
+    extractName(product.seoSubcategory) ??
+    extractName(product.seoSubcategoryId);
 
   const categoryLabel = getLocalizedText(
     categoryNameSource,

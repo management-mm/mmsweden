@@ -1,10 +1,14 @@
 'use client';
 
+import { useRef, useState } from 'react';
+
 import { useTranslations } from 'next-intl';
 
 import ProductsListMenu from './ProductsListMenu';
 
 import SvgIcon from '@components/common/SvgIcon';
+
+import useOutsideAlerter from '@hooks/useOutsideAlerter';
 
 import { Placeholder } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
@@ -32,18 +36,40 @@ export default function HeaderSearch({
 }: HeaderSearchProps) {
   const t = useTranslations();
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+
+  const menuRef = useOutsideAlerter(() => setIsMenuOpen(false), isMenuOpen, [
+    inputRef,
+    buttonRef,
+  ]);
+
+  const handleFocus = () => {
+    setIsMenuOpen(true);
+    onFocus?.();
+  };
+
+  const handleChange = (newValue: string) => {
+    onChange(newValue);
+    setIsMenuOpen(true);
+  };
+
   return (
     <div className={wrapperClassName}>
       <input
+        ref={inputRef}
         type="text"
         value={value}
-        onChange={e => onChange(e.target.value)}
-        onFocus={onFocus}
+        onChange={e => handleChange(e.target.value)}
+        onFocus={handleFocus}
         placeholder={t(Placeholder.Search)}
         className={inputClassName}
       />
 
       <button
+        ref={buttonRef}
         type="button"
         aria-label="Search"
         onClick={onSearchClick}
@@ -56,9 +82,11 @@ export default function HeaderSearch({
         />
       </button>
 
-      <div>
-        <ProductsListMenu className={productsMenuClassName} />
-      </div>
+      {isMenuOpen && (
+        <div ref={menuRef}>
+          <ProductsListMenu className={productsMenuClassName} />
+        </div>
+      )}
     </div>
   );
 }

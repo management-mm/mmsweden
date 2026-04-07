@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 
 import BurgerMenu from './BurgerMenu';
 import CategoriesBurgerMenu from './CategoriesBurgerMenu';
@@ -17,7 +18,6 @@ import useSearchKeyword from '@hooks/useSearchKeyword';
 import useWindowWidth from '@hooks/useWindowWidth';
 
 import { Button } from '@enums/i18nConstants';
-import { useTranslations } from 'next-intl';
 
 type MobileHeaderProps = {
   toggleMobileMenu: () => void;
@@ -27,7 +27,7 @@ const SEARCH_DEBOUNCE_MS = 400;
 
 export default function MobileHeader({ toggleMobileMenu }: MobileHeaderProps) {
   const [isOpenCategories, setIsOpenCategories] = useState(false);
-  const t = useTranslations()
+  const t = useTranslations();
   const [isSearchActive, setIsSearchActive] = useState(false);
   const windowWidth = useWindowWidth();
   const isMobile = windowWidth < 1178;

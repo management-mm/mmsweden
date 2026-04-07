@@ -10,7 +10,6 @@ import Link from 'next/link';
 
 import useUpdateRequestedProducts from '@hooks/useUpdateRequestedProducts';
 
-
 import { Button } from '@enums/i18nConstants';
 
 import { AppLocale } from '@i18n/config';
@@ -34,7 +33,7 @@ const ActionsButtons: FC<IActionsButtonsProps> = ({
   const { isRequested, handleToggleFavorites } =
     useUpdateRequestedProducts(product);
 
-  const slug = product.slug
+  const slug = product.slug;
 
   return (
     <div className="mt-auto flex w-full gap-[8px] md:gap-[16px] lg:gap-[8px]">

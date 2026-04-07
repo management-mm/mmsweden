@@ -10,8 +10,6 @@ import ProductCondition from './ProductCondition';
 import ProductDetails from './ProductDetails';
 import ProductImage from './ProductImage';
 
-import { generateProductSlug } from '@utils/generateProductSlug';
-
 import { AppLocale } from '@i18n/config';
 
 export interface IProductCardProps {
@@ -42,7 +40,7 @@ const ProductCard: FC<IProductCardProps> = ({
   categorySlug,
   subcategorySlug,
 }) => {
-  const slug = generateProductSlug(product);
+  const slug = product.slug
 
   return (
     <article

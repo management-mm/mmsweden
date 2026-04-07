@@ -61,6 +61,6 @@ export enum IconId {
   Settings = '#settings',
   IdNumber = '#id-number',
   Employees = '#employees',
-  Categories = '#categories'
-  OpenClose = '#open-close'
+  Categories = '#categories',
+  OpenClose = '#open-close',
 }

@@ -80,7 +80,7 @@ export async function getProducts(query: GetProductsParams) {
   const url = `${baseUrl}/products?${searchParams.toString()}`;
 
   const res = await fetch(url, {
-    cache: 'no-store',
+    next: { revalidate: 60 },
   });
 
   const text = await res.text();

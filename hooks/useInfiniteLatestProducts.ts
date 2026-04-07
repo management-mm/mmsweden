@@ -40,13 +40,13 @@ export const useInfiniteLatestProducts = (
 
         const fetchedProducts = result.products ?? [];
         const newProducts = fetchedProducts.filter(
-          product => !product.deletionDate
+          (product: IProduct) => !product.deletionDate
         );
 
         setProducts(prev => {
           const existingIds = new Set(prev.map(product => product._id));
           const uniqueNewProducts = newProducts.filter(
-            product => !existingIds.has(product._id)
+            (product: IProduct) => !existingIds.has(product._id)
           );
 
           return [...prev, ...uniqueNewProducts];
@@ -86,7 +86,7 @@ export const useInfiniteLatestProducts = (
 
         const fetchedProducts = result.products ?? [];
         const initialProducts = fetchedProducts.filter(
-          product => !product.deletionDate
+          (product: IProduct) => !product.deletionDate
         );
 
         setProducts(initialProducts);

@@ -20,8 +20,8 @@ interface IActionsButtonsProps {
   isLoading: boolean;
   product: IProduct;
   language: AppLocale;
-  categorySlug: string;
-  subcategorySlug: string;
+  categorySlug?: string;
+  subcategorySlug?: string;
 }
 
 const ActionsButtons: FC<IActionsButtonsProps> = ({

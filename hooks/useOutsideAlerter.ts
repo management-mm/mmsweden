@@ -1,15 +1,27 @@
-import { useEffect, useRef } from 'react';
+import { RefObject, useEffect, useRef } from 'react';
 
-const useOutsideAlerter = (onOutsideClick: () => void, isOpen: boolean) => {
+type IgnoreRef = RefObject<HTMLElement | null>;
+
+const useOutsideAlerter = (
+  onOutsideClick: () => void,
+  isOpen: boolean,
+  ignoreRefs: IgnoreRef[] = []
+) => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    if (!isOpen) return;
+
     function handleClick(event: MouseEvent) {
-      if (
-        isOpen &&
-        ref.current &&
-        !ref.current.contains(event.target as Node)
-      ) {
+      const target = event.target as Node;
+
+      const clickedInsideMenu = ref.current?.contains(target);
+
+      const clickedInsideIgnoredElement = ignoreRefs.some(ignoreRef =>
+        ignoreRef.current?.contains(target)
+      );
+
+      if (!clickedInsideMenu && !clickedInsideIgnoredElement) {
         onOutsideClick();
       }
     }
@@ -19,7 +31,7 @@ const useOutsideAlerter = (onOutsideClick: () => void, isOpen: boolean) => {
     return () => {
       document.removeEventListener('mousedown', handleClick);
     };
-  }, [onOutsideClick, isOpen]);
+  }, [onOutsideClick, isOpen, ignoreRefs]);
 
   return ref;
 };

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -23,6 +23,8 @@ import { IconId } from '@enums/iconsSpriteId';
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenCategories, setIsOpenCategories] = useState(false);
+
+  const categoriesTriggerRef = useRef<HTMLButtonElement | null>(null);
 
   const t = useTranslations();
 
@@ -81,17 +83,23 @@ const Header = () => {
 
             <div className="relative">
               <button
+                ref={categoriesTriggerRef}
+                type="button"
                 onClick={toggleCategoriesMenu}
+                aria-expanded={isOpenCategories}
+                aria-label="Toggle categories menu"
                 className="flex h-[48px] items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-5 text-[15px] font-medium text-[#163A5F] transition hover:bg-slate-50"
               >
                 <CategoriesBurgerMenu isOpen={isOpenCategories} />
                 {t(Button.Categories)}
               </button>
+
               {isOpenCategories && (
                 <CategoriesMenu
                   mode="header"
                   isOpenHeaderMenu={isOpenCategories}
                   onCloseHeaderMenu={() => setIsOpenCategories(false)}
+                  triggerRef={categoriesTriggerRef}
                 />
               )}
             </div>
@@ -118,7 +126,7 @@ const Header = () => {
                   />
                 </button>
 
-                <div className="">
+                <div>
                   <ProductsListMenu className="absolute" />
                 </div>
               </div>

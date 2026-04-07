@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
@@ -23,43 +23,96 @@ type MobileHeaderProps = {
   toggleMobileMenu: () => void;
 };
 
+const SEARCH_DEBOUNCE_MS = 400;
+
 export default function MobileHeader({ toggleMobileMenu }: MobileHeaderProps) {
   const [isOpenCategories, setIsOpenCategories] = useState(false);
   const [isSearchActive, setIsSearchActive] = useState(false);
+
+  const categoriesTriggerRef = useRef<HTMLButtonElement | null>(null);
+
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-
-  const [searchValue, setSearchValue] = useState(
-    searchParams.get('keyword') || ''
-  );
-
   const t = useTranslations();
 
-  const toggleCategoriesMenu = () => {
-    setIsSearchActive(false);
-    setIsOpenCategories(prev => !prev);
-  };
-  useEffect(() => {
-    if (!isSearchActive) {
-      const params = new URLSearchParams(searchParams.toString());
-      params.delete('keyword');
+  const keywordFromUrl = searchParams.get('keyword') || '';
 
-      router.replace(`${pathname}?${params.toString()}`);
-    }
-  }, [isSearchActive]);
-  const handleSearchChange = (value: string) => {
-    setSearchValue(value);
+  const [searchValue, setSearchValue] = useState(keywordFromUrl);
+  const [debouncedSearchValue, setDebouncedSearchValue] = useState(searchValue);
+
+  useEffect(() => {
+    setSearchValue(keywordFromUrl);
+  }, [keywordFromUrl]);
+
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => {
+      setDebouncedSearchValue(searchValue);
+    }, SEARCH_DEBOUNCE_MS);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [searchValue]);
+
+  useEffect(() => {
+    const trimmedValue = debouncedSearchValue.trim();
+    const currentKeyword = searchParams.get('keyword') || '';
+
+    if (trimmedValue === currentKeyword) return;
 
     const params = new URLSearchParams(searchParams.toString());
 
-    if (value.trim()) {
-      params.set('keyword', value);
+    if (trimmedValue) {
+      params.set('keyword', trimmedValue);
     } else {
       params.delete('keyword');
     }
 
-    router.replace(`${pathname}?${params.toString()}`);
+    const queryString = params.toString();
+    const nextUrl = queryString ? `${pathname}?${queryString}` : pathname;
+
+    router.replace(nextUrl);
+  }, [debouncedSearchValue, pathname, router, searchParams]);
+
+  useEffect(() => {
+    if (isOpenCategories) {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    };
+  }, [isOpenCategories]);
+
+  const clearKeywordFromUrl = () => {
+    const currentKeyword = searchParams.get('keyword');
+    if (!currentKeyword) return;
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete('keyword');
+
+    const queryString = params.toString();
+    const nextUrl = queryString ? `${pathname}?${queryString}` : pathname;
+
+    router.replace(nextUrl);
+  };
+
+  const toggleCategoriesMenu = () => {
+    setIsSearchActive(false);
+    setSearchValue('');
+    setDebouncedSearchValue('');
+    clearKeywordFromUrl();
+    setIsOpenCategories(prev => !prev);
+  };
+
+  const handleSearchChange = (value: string) => {
+    setSearchValue(value);
   };
 
   return (
@@ -82,6 +135,7 @@ export default function MobileHeader({ toggleMobileMenu }: MobileHeaderProps) {
         <div className="relative flex w-full items-center gap-2">
           <div className="relative shrink-0">
             <button
+              ref={categoriesTriggerRef}
               type="button"
               onClick={toggleCategoriesMenu}
               aria-expanded={isOpenCategories}
@@ -110,9 +164,11 @@ export default function MobileHeader({ toggleMobileMenu }: MobileHeaderProps) {
                 mode="header"
                 isOpenHeaderMenu={isOpenCategories}
                 onCloseHeaderMenu={() => setIsOpenCategories(false)}
+                triggerRef={categoriesTriggerRef}
               />
             )}
           </div>
+
           <div className="relative w-full">
             <input
               type="text"
@@ -141,7 +197,8 @@ export default function MobileHeader({ toggleMobileMenu }: MobileHeaderProps) {
                 className="fill-secondary"
               />
             </button>
-            <div className="">
+
+            <div>
               <ProductsListMenu className="absolute left-0" />
             </div>
           </div>

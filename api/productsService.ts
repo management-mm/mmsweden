@@ -34,7 +34,9 @@ export const fetchRecommendedProductsBySlug = async (
   return response.data;
 };
 
-export async function getProducts(query: GetProductsParams) {
+export async function getProducts(
+  query: GetProductsParams
+): Promise<GetProductsResponse> {
   const searchParams = new URLSearchParams();
 
   if (query.keyword) {
@@ -55,6 +57,10 @@ export async function getProducts(query: GetProductsParams) {
 
   if (query.subcategorySlug) {
     searchParams.append('subcategorySlug', query.subcategorySlug);
+  }
+
+  if (query.sort) {
+    searchParams.append('sort', query.sort);
   }
 
   query.category?.forEach(category => {
@@ -91,5 +97,9 @@ export async function getProducts(query: GetProductsParams) {
     );
   }
 
-  return text ? JSON.parse(text) : null;
+  if (!text) {
+    throw new Error('Failed to fetch products: empty response body');
+  }
+
+  return JSON.parse(text) as GetProductsResponse;
 }

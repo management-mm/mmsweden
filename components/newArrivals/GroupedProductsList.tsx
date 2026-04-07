@@ -37,9 +37,19 @@ export default function GroupedProductsList() {
   const groupedEntries = useMemo(() => {
     const groupedProducts = groupProductsByDate(products);
 
-    return Object.entries(groupedProducts).sort(([a], [b]) =>
-      b.localeCompare(a)
-    );
+    return Object.entries(groupedProducts)
+      .map(
+        ([date, items]) =>
+          [
+            date,
+            [...items].sort(
+              (a, b) =>
+                new Date(b.createdAt).getTime() -
+                new Date(a.createdAt).getTime()
+            ),
+          ] as const
+      )
+      .sort(([a], [b]) => new Date(b).getTime() - new Date(a).getTime());
   }, [products]);
 
   return (

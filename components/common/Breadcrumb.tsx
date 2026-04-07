@@ -2,52 +2,74 @@
 
 import type { FC } from 'react';
 
-import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 import { NavBar } from '@enums/i18nConstants';
 
-interface IBreadcrumbProps {
-  slug?: string;
-  name?: string;
+interface IBreadcrumbItem {
+  slug: string;
+  label: string;
 }
 
-const Breadcrumb: FC<IBreadcrumbProps> = ({ slug, name }) => {
+interface IBreadcrumbProps {
+  category?: IBreadcrumbItem;
+  subcategory?: IBreadcrumbItem;
+  product?: {
+    label: string;
+  };
+}
+
+const Breadcrumb: FC<IBreadcrumbProps> = ({
+  category,
+  subcategory,
+  product,
+}) => {
   const t = useTranslations();
-  const pathname = usePathname();
+  console.log(category);
 
-  const isAllProducts = pathname.includes('/all-products');
+  const items = [
+    {
+      href: '/',
+      label: t(NavBar.Home),
+    },
+    {
+      href: '/all-products',
+      label: t(NavBar.AllProducts),
+    },
+  ];
 
-  const isProductPage = slug && pathname.includes(`/all-products/${slug}`);
+  if (category) {
+    items.push({
+      href: `/all-products/${category.slug}`,
+      label: category.label,
+    });
+  }
+
+  if (category && subcategory) {
+    items.push({
+      href: `/all-products/${category.slug}/${subcategory.slug}`,
+      label: subcategory.label,
+    });
+  }
 
   return (
     <div className="text-desc mb-[22px] flex flex-wrap items-center text-[14px] font-medium md:text-[16px]">
-      <Link href="/" className="mr-[12px] cursor-pointer hover:text-black">
-        {t(NavBar.Home)}
-      </Link>
+      {items.map((item, index) => (
+        <div key={item.href} className="flex items-center">
+          {index > 0 && <span className="mr-[12px]">/</span>}
 
-      {isAllProducts && (
-        <>
-          <span className="mr-[12px]">/</span>
-          <Link
-            href="/all-products"
-            className={clsx(
-              'mr-[12px]',
-              pathname === '/all-products' && 'text-title'
-            )}
-          >
-            {t(NavBar.AllProducts)}
+          <Link href={item.href} className="mr-[12px] hover:text-black">
+            {item.label}
           </Link>
-        </>
-      )}
+        </div>
+      ))}
 
-      {isProductPage && name && (
-        <>
+      {product?.label && (
+        <div className="flex items-center">
           <span className="mr-[12px]">/</span>
-          <span className="text-title">{name}</span>
-        </>
+          <span className="text-title mr-[12px]">{product.label}</span>
+        </div>
       )}
     </div>
   );

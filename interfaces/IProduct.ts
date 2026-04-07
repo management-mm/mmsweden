@@ -19,4 +19,7 @@ export interface IProduct {
   condition: 'used' | 'new';
   createdAt: Date;
   deletionDate: Date | null;
+  seoCategorySlug: string;
+  seoSubcategorySlug: string;
+  productCategory: MultiLanguageString;
 }

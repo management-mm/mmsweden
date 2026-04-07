@@ -36,6 +36,7 @@ export enum Button {
   GoToProducts = 'Button.GoToProducts',
   Reject = 'Button.Reject',
   Accept = 'Button.Accept',
+  Categories = 'Button.Categories',
 }
 
 export enum Title {
@@ -54,6 +55,7 @@ export enum Title {
   NoResults = 'Title.NoResults',
   Format = 'Title.Format',
   AnalyticsСonsent = 'Title.AnalyticsConsent',
+  All = 'Title.All',
 }
 
 export enum Description {

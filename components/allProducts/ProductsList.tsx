@@ -18,6 +18,8 @@ type Props = {
   initialTotal: number;
   locale: AppLocale;
   isAdmin: boolean;
+  categorySlug: string;
+  subcategorySlug: string;
 };
 
 const PER_PAGE = 9;
@@ -27,6 +29,8 @@ const ProductsList = ({
   initialTotal,
   locale,
   isAdmin,
+  categorySlug,
+  subcategorySlug,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -53,6 +57,8 @@ const ProductsList = ({
                 language={locale}
                 product={product}
                 isAdmin={isAdmin}
+                categorySlug={categorySlug}
+                subcategorySlug={subcategorySlug}
               />
             </li>
           ))}

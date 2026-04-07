@@ -9,6 +9,8 @@ import type { IManufacturer } from 'interfaces/IManufacturer';
 import Condition from './Condition';
 import FilterWrapper from './FilterWrapper';
 
+import CategoriesMenu from '@components/header/CategoriesMenu';
+
 import {
   fetchCategories,
   fetchIndustries,
@@ -86,13 +88,7 @@ const FiltersGroup: FC<IFiltersGroupProps> = ({ className }) => {
 
   return (
     <div className={className}>
-      <FilterWrapper
-        filterName={filters.Category}
-        items={categories}
-        isLoading={categoriesIsLoading}
-        keyword={categoryKeyword}
-        setKeyword={setCategoryKeyword}
-      />
+      <CategoriesMenu mode={'filters'} />
 
       <FilterWrapper
         filterName={filters.Manufacturer}

@@ -7,10 +7,17 @@ import { notFound } from 'next/navigation';
 import Product from '@components/productDetails/Product';
 import RecommendedProducts from '@components/productDetails/RecommendedProducts';
 
+import slugToLabel from '@utils/slugToLabel';
+
 import { type AppLocale, SUPPORTED_LOCALES } from '@i18n/config';
 
 type Props = {
-  params: Promise<{ locale: AppLocale; slug: string }>;
+  params: Promise<{
+    locale: AppLocale;
+    categorySlug: string;
+    subcategorySlug: string;
+    slug: string;
+  }>;
 };
 
 function isMultiLang(value: unknown): value is Record<string, string> {
@@ -40,12 +47,18 @@ async function getProduct(slug: string): Promise<IProduct | null> {
   return res.json();
 }
 
-function buildProductUrl(siteUrl: string, locale: AppLocale, slug: string) {
-  return `${siteUrl}/${locale}/all-products/${slug}`;
+function buildProductUrl(
+  siteUrl: string,
+  locale: AppLocale,
+  categorySlug: string,
+  subcategorySlug: string,
+  slug: string
+) {
+  return `${siteUrl}/${locale}/all-products/${categorySlug}/${subcategorySlug}/${slug}`;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale, slug } = await params;
+  const { locale, categorySlug, subcategorySlug, slug } = await params;
   const siteUrl = getSiteUrl();
 
   const product = await getProduct(slug);
@@ -61,11 +74,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const canonicalUrl = buildProductUrl(siteUrl, locale, slug);
+  const canonicalUrl = buildProductUrl(
+    siteUrl,
+    locale,
+    categorySlug,
+    subcategorySlug,
+    slug
+  );
 
   const languages = Object.fromEntries([
-    ...SUPPORTED_LOCALES.map(l => [l, buildProductUrl(siteUrl, l, slug)]),
-    ['x-default', buildProductUrl(siteUrl, 'en', slug)],
+    ...SUPPORTED_LOCALES.map(l => [
+      l,
+      buildProductUrl(siteUrl, l, categorySlug, subcategorySlug, slug),
+    ]),
+    [
+      'x-default',
+      buildProductUrl(siteUrl, 'en', categorySlug, subcategorySlug, slug),
+    ],
   ]);
 
   const localizedName = isMultiLang(product.name)
@@ -121,7 +146,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProductDetailsPage({ params }: Props) {
-  const { locale, slug } = await params;
+  const { locale, categorySlug, subcategorySlug, slug } = await params;
   const siteUrl = getSiteUrl();
 
   const product = await getProduct(slug);
@@ -130,7 +155,13 @@ export default async function ProductDetailsPage({ params }: Props) {
     notFound();
   }
 
-  const canonicalUrl = buildProductUrl(siteUrl, locale, slug);
+  const canonicalUrl = buildProductUrl(
+    siteUrl,
+    locale,
+    categorySlug,
+    subcategorySlug,
+    slug
+  );
 
   const localizedName = isMultiLang(product.name)
     ? product.name[locale] || product.name.en || slug
@@ -184,6 +215,18 @@ export default async function ProductDetailsPage({ params }: Props) {
       {
         '@type': 'ListItem',
         position: 3,
+        name: slugToLabel(categorySlug),
+        item: `${siteUrl}/${locale}/all-products/${categorySlug}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: slugToLabel(subcategorySlug),
+        item: `${siteUrl}/${locale}/all-products/${categorySlug}/${subcategorySlug}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 5,
         name: localizedName,
         item: canonicalUrl,
       },
@@ -206,10 +249,21 @@ export default async function ProductDetailsPage({ params }: Props) {
         }}
       />
 
-      <Product product={product} locale={locale} slug={slug} />
+      <Product
+        product={product}
+        locale={locale}
+        slug={slug}
+        categorySlug={categorySlug}
+        subcategorySlug={subcategorySlug}
+      />
 
       <Suspense fallback={<div>Loading recommended products...</div>}>
-        <RecommendedProducts locale={locale} slug={slug} />
+        <RecommendedProducts
+          locale={locale}
+          slug={slug}
+          categorySlug={categorySlug}
+          subcategorySlug={subcategorySlug}
+        />
       </Suspense>
     </>
   );

@@ -20,7 +20,8 @@
     "AddMoreItems": "Add More Items",
     "GoToProducts": "Go to Products",
     "Reject": "Reject",
-    "Accept": "Accept"
+    "Accept": "Accept",
+    "Categories": "Categories"
   },
   "Title": {
     "Industries": "Industries",
@@ -37,7 +38,8 @@
     "EmptyCart": "Your cart is empty",
     "NoResults": "No results found for your query. Please try adjusting the filters.",
     "Format": "format {number}",
-    "AnalyticsConsent": "Analytics consent"
+    "AnalyticsConsent": "Analytics consent",
+    "All": "All"
   },
   "Description": {
     "Industries": "Our products are used in such industries:",

@@ -5,7 +5,7 @@ import Select from 'react-select';
 
 import clsx from 'clsx';
 
-import DropdownIndicator from '@components/header/DropdownIndicator';
+import DropdownIndicator from '@components/common/languageSelector/DropdownIndicator';
 
 import { type AppLocale, SUPPORTED_LOCALES } from '@i18n/config';
 

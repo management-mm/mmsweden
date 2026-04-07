@@ -7,6 +7,8 @@ import ProductsTotalProvider from './ProductsTotalProvider';
 
 import Breadcrumb from '@components/common/Breadcrumb';
 
+import slugToLabel from '@utils/slugToLabel';
+
 import type { AppLocale } from '@i18n/config';
 
 type Props = {
@@ -19,6 +21,8 @@ type Props = {
     page?: string;
     category: string[];
     industry: string[];
+    categorySlug?: string;
+    subcategorySlug?: string;
   };
 };
 
@@ -27,14 +31,21 @@ const AllProductsView = async ({ mode = 'public', locale, query }: Props) => {
 
   const { products, total } = await getProducts({
     ...(query.title ? { keyword: query.title } : {}),
-    ...(query.category.length ? { category: query.category } : {}),
-    ...(query.industry.length ? { industry: query.industry } : {}),
     ...(query.manufacturer ? { manufacturer: query.manufacturer } : {}),
     ...(query.condition ? { condition: query.condition } : {}),
+    ...(query.category.length ? { category: query.category } : {}),
+    ...(query.industry.length ? { industry: query.industry } : {}),
+    ...(query.categorySlug ? { categorySlug: query.categorySlug } : {}),
+    ...(query.subcategorySlug
+      ? { subcategorySlug: query.subcategorySlug }
+      : {}),
     page: Number(query.page || 1),
     perPage: 9,
     lang: locale,
   });
+
+  const categorySlug = query.categorySlug || '';
+  const subcategorySlug = query.subcategorySlug || '';
 
   return (
     <ProductsTotalProvider total={total}>
@@ -45,7 +56,26 @@ const AllProductsView = async ({ mode = 'public', locale, query }: Props) => {
           isAdmin && 'lg:mx-0'
         )}
       >
-        {!isAdmin && <Breadcrumb />}
+        {!isAdmin && (
+          <Breadcrumb
+            category={
+              categorySlug
+                ? {
+                    slug: categorySlug,
+                    label: slugToLabel(categorySlug),
+                  }
+                : undefined
+            }
+            subcategory={
+              subcategorySlug
+                ? {
+                    slug: subcategorySlug,
+                    label: slugToLabel(subcategorySlug),
+                  }
+                : undefined
+            }
+          />
+        )}
 
         <div className="flex flex-col lg:flex-row lg:justify-start lg:gap-[30px]">
           {!isAdmin && (
@@ -53,9 +83,10 @@ const AllProductsView = async ({ mode = 'public', locale, query }: Props) => {
               <FiltersAndSearch />
             </div>
           )}
+
           {isAdmin && (
-            <div className={clsx(isAdmin && 'shrink-0 lg:hidden')}>
-              <FiltersAndSearch />
+            <div className="shrink-0 lg:hidden">
+              <FiltersAndSearch isAdmin={isAdmin} />
             </div>
           )}
 
@@ -64,6 +95,8 @@ const AllProductsView = async ({ mode = 'public', locale, query }: Props) => {
             initialTotal={total}
             locale={locale}
             isAdmin={isAdmin}
+            categorySlug={query.categorySlug as string}
+            subcategorySlug={query.subcategorySlug as string}
           />
 
           {isAdmin && (

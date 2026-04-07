@@ -20,7 +20,8 @@
     "AddMoreItems": "Dodaj więcej pozycji",
     "GoToProducts": "Przejdź do produktów",
     "Reject": "Odrzuć",
-    "Accept": "Akceptuj"
+    "Accept": "Akceptuj",
+    "Categories": "Kategorie"
   },
   "Title": {
     "Industries": "Branże",
@@ -37,7 +38,8 @@
     "EmptyCart": "Twój koszyk jest pusty",
     "NoResults": "Nie znaleziono wyników dla Twojego zapytania. Spróbuj zmienić filtry.",
     "Format": "format {number}",
-    "AnalyticsConsent": "Zgoda na analitykę"
+    "AnalyticsConsent": "Zgoda na analitykę",
+    "All": "Wszystkie"
   },
   "Description": {
     "Industries": "Nasze produkty są wykorzystywane w następujących branżach:",

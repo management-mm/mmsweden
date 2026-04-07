@@ -6,10 +6,13 @@ import Select from 'react-select';
 import clsx from 'clsx';
 import { usePathname, useRouter } from 'next/navigation';
 
-import DropdownIndicator from '@components/header/DropdownIndicator';
-import LanguageOption from '@components/header/LanguageOption';
+import DropdownIndicator from '@components/common/languageSelector/DropdownIndicator';
+import CustomOption from '@components/common/languageSelector/Option';
+import CustomSingleValue from '@components/common/languageSelector/SingleValue';
 
-import languageOptions from '@constants/languageOptions';
+import languageOptions, {
+  type ILanguageOption,
+} from '@constants/languageOptions';
 
 import {
   type AppLocale,
@@ -24,7 +27,7 @@ const optionStyles = {
   selected: '',
 };
 
-const menuStyles = 'bg-main rounded-[4px] pb-[7px]';
+const menuStyles = 'bg-main rounded-[4px] py-[8px] pl-[12px]';
 const singleValueStyles = 'mr-[6px]';
 
 const LanguageSelect = () => {
@@ -38,53 +41,50 @@ const LanguageSelect = () => {
     return isAppLocale(firstSegment) ? firstSegment : DEFAULT_LOCALE;
   }, [pathname]);
 
-  const options = languageOptions
-    .filter(option => SUPPORTED_LOCALES.includes(option.language as AppLocale))
-    .map(option => ({
-      value: option.language as AppLocale,
-      label: (
-        <LanguageOption iconId={option.iconId} language={option.language} />
-      ),
-    }));
+  const options = useMemo<ILanguageOption[]>(() => {
+    return languageOptions.filter(option =>
+      SUPPORTED_LOCALES.includes(option.language as AppLocale)
+    );
+  }, []);
 
   const currentValue =
-    options.find(option => option.value === currentLocale) ?? options[0];
+    options.find(option => option.language === currentLocale) ?? options[0];
 
-  const handleChange = (selectedOption: { value: AppLocale } | null) => {
+  const handleChange = (selectedOption: ILanguageOption | null) => {
     if (!selectedOption) return;
 
-    const newLocale = selectedOption.value;
+    const newLocale = selectedOption.language;
 
     if (newLocale === currentLocale) return;
 
     const segments = pathname.split('/');
-
     segments[1] = newLocale;
 
     const newPath = segments.join('/') || `/${newLocale}`;
-
     router.push(newPath);
   };
 
   return (
-    <Select
+    <Select<ILanguageOption, false>
       value={currentValue}
-      onMenuOpen={() => setIsMenuOpen(true)}
-      onMenuClose={() => setIsMenuOpen(false)}
       options={options}
       isSearchable={false}
+      closeMenuOnSelect
+      unstyled
+      onChange={handleChange}
+      onMenuOpen={() => setIsMenuOpen(true)}
+      onMenuClose={() => setIsMenuOpen(false)}
       components={{
         DropdownIndicator: props => (
           <DropdownIndicator {...props} isMenuOpen={isMenuOpen} />
         ),
+        Option: CustomOption,
+        SingleValue: CustomSingleValue,
       }}
-      closeMenuOnSelect
-      onChange={handleChange}
-      unstyled
       styles={{
         menu: base => ({
           ...base,
-          zIndex: '20',
+          zIndex: 20,
           width: '150px',
           right: 'calc(50% + 4px)',
           transform: 'translate(50%, 0)',
@@ -96,7 +96,7 @@ const LanguageSelect = () => {
         }),
         option: base => ({
           ...base,
-          width: 'calc((100%-2px)/2)',
+          width: 'calc((100% - 2px) / 2)',
         }),
         input: base => ({
           ...base,
@@ -112,9 +112,9 @@ const LanguageSelect = () => {
         menu: () => menuStyles,
         option: ({ isFocused, isSelected }) =>
           clsx(
+            optionStyles.base,
             isFocused && optionStyles.focus,
-            isSelected && optionStyles.selected,
-            optionStyles.base
+            isSelected && optionStyles.selected
           ),
         dropdownIndicator: () => 'absolute cursor-pointer',
         singleValue: () => singleValueStyles,

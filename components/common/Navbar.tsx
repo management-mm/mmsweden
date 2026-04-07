@@ -49,7 +49,7 @@ const linkActiveVariants = cva('', {
 const linkVariants = cva('', {
   variants: {
     intent: {
-      header: 'bg-transparent text-primary',
+      header: 'bg-transparent text-secondary',
       mobileMenu: 'bg-transparent text-primary',
       footer: '',
     },

@@ -17,9 +17,17 @@ type Props = {
   products: IProduct[];
   language: AppLocale;
   title: string;
+  categorySlug: string;
+  subcategorySlug: string;
 };
 
-const RecommendedProductsCarousel = ({ products, language, title }: Props) => {
+const RecommendedProductsCarousel = ({
+  products,
+  language,
+  title,
+  categorySlug,
+  subcategorySlug,
+}: Props) => {
   const { handlePrev, handleNext, onSwiperInit } = useSwiperNavigation();
 
   return (
@@ -57,6 +65,8 @@ const RecommendedProductsCarousel = ({ products, language, title }: Props) => {
                 language={language}
                 product={product}
                 className="w-[296px] md:w-[264px]"
+                categorySlug={categorySlug}
+                subcategorySlug={subcategorySlug}
               />
             </SwiperSlide>
           ))}

@@ -1,8 +1,8 @@
-import { Suspense } from 'react';
+import { Suspense, cache } from 'react';
 
 import type { IProduct } from '@interfaces/IProduct';
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 import Product from '@components/productDetails/Product';
 import RecommendedProducts from '@components/productDetails/RecommendedProducts';
@@ -20,6 +20,20 @@ type Props = {
   }>;
 };
 
+type SeoRef = {
+  slug?: string;
+  name?: string | Record<string, string>;
+};
+
+type ProductWithSeo = IProduct & {
+  seoCategorySlug?: string;
+  seoSubcategorySlug?: string;
+  seoCategory?: SeoRef | string | null;
+  seoSubcategory?: SeoRef | string | null;
+  seoCategoryId?: SeoRef | string | null;
+  seoSubcategoryId?: SeoRef | string | null;
+};
+
 function isMultiLang(value: unknown): value is Record<string, string> {
   return typeof value === 'object' && value !== null;
 }
@@ -35,7 +49,7 @@ function getSiteUrl() {
   return process.env.SITE_URL?.replace(/\/$/, '') ?? 'https://www.mmsweden.se';
 }
 
-async function getProduct(slug: string): Promise<IProduct | null> {
+const getProduct = cache(async (slug: string): Promise<ProductWithSeo | null> => {
   const baseUrl = getApiUrl();
 
   const res = await fetch(`${baseUrl}/products/by-slug/${slug}`, {
@@ -45,6 +59,14 @@ async function getProduct(slug: string): Promise<IProduct | null> {
   if (!res.ok) return null;
 
   return res.json();
+});
+
+function buildProductPath(
+  categorySlug: string,
+  subcategorySlug: string,
+  slug: string
+) {
+  return `/all-products/${categorySlug}/${subcategorySlug}/${slug}`;
 }
 
 function buildProductUrl(
@@ -54,7 +76,109 @@ function buildProductUrl(
   subcategorySlug: string,
   slug: string
 ) {
-  return `${siteUrl}/${locale}/all-products/${categorySlug}/${subcategorySlug}/${slug}`;
+  return `${siteUrl}/${locale}${buildProductPath(
+    categorySlug,
+    subcategorySlug,
+    slug
+  )}`;
+}
+
+function extractSlug(value: unknown): string | undefined {
+  if (typeof value === 'string' && value.trim()) {
+    return value.trim();
+  }
+
+  if (
+    typeof value === 'object' &&
+    value !== null &&
+    'slug' in value &&
+    typeof value.slug === 'string' &&
+    value.slug.trim()
+  ) {
+    return value.slug.trim();
+  }
+
+  return undefined;
+}
+
+function extractName(value: unknown): string | Record<string, string> | undefined {
+  if (
+    typeof value === 'object' &&
+    value !== null &&
+    'name' in value &&
+    (typeof value.name === 'string' || isMultiLang(value.name))
+  ) {
+    return value.name;
+  }
+
+  return undefined;
+}
+
+function getLocalizedText(
+  value: unknown,
+  locale: AppLocale,
+  fallback: string
+): string {
+  if (typeof value === 'string' && value.trim()) {
+    return value;
+  }
+
+  if (isMultiLang(value)) {
+    return value[locale] || value.en || Object.values(value)[0] || fallback;
+  }
+
+  return fallback;
+}
+
+function resolveProductSeoData(
+  product: ProductWithSeo,
+  locale: AppLocale,
+  routeCategorySlug: string,
+  routeSubcategorySlug: string
+) {
+  const actualCategorySlug =
+    extractSlug(product.seoCategorySlug) ??
+    extractSlug(product.seoCategory) ??
+    extractSlug(product.seoCategoryId);
+
+  const actualSubcategorySlug =
+    extractSlug(product.seoSubcategorySlug) ??
+    extractSlug(product.seoSubcategory) ??
+    extractSlug(product.seoSubcategoryId);
+
+  const categorySlug = actualCategorySlug ?? routeCategorySlug;
+  const subcategorySlug = actualSubcategorySlug ?? routeSubcategorySlug;
+
+  const categoryNameSource =
+    extractName(product.seoCategory) ?? extractName(product.seoCategoryId);
+
+  const subcategoryNameSource =
+    extractName(product.seoSubcategory) ?? extractName(product.seoSubcategoryId);
+
+  const categoryLabel = getLocalizedText(
+    categoryNameSource,
+    locale,
+    slugToLabel(categorySlug)
+  );
+
+  const subcategoryLabel = getLocalizedText(
+    subcategoryNameSource,
+    locale,
+    slugToLabel(subcategorySlug)
+  );
+
+  const shouldRedirect =
+    Boolean(actualCategorySlug && actualSubcategorySlug) &&
+    (routeCategorySlug !== actualCategorySlug ||
+      routeSubcategorySlug !== actualSubcategorySlug);
+
+  return {
+    categorySlug,
+    subcategorySlug,
+    categoryLabel,
+    subcategoryLabel,
+    shouldRedirect,
+  };
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -74,33 +198,51 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
+  const seoData = resolveProductSeoData(
+    product,
+    locale,
+    categorySlug,
+    subcategorySlug
+  );
+
   const canonicalUrl = buildProductUrl(
     siteUrl,
     locale,
-    categorySlug,
-    subcategorySlug,
+    seoData.categorySlug,
+    seoData.subcategorySlug,
     slug
   );
 
   const languages = Object.fromEntries([
     ...SUPPORTED_LOCALES.map(l => [
       l,
-      buildProductUrl(siteUrl, l, categorySlug, subcategorySlug, slug),
+      buildProductUrl(
+        siteUrl,
+        l,
+        seoData.categorySlug,
+        seoData.subcategorySlug,
+        slug
+      ),
     ]),
     [
       'x-default',
-      buildProductUrl(siteUrl, 'en', categorySlug, subcategorySlug, slug),
+      buildProductUrl(
+        siteUrl,
+        'en',
+        seoData.categorySlug,
+        seoData.subcategorySlug,
+        slug
+      ),
     ],
   ]);
 
-  const localizedName = isMultiLang(product.name)
-    ? product.name[locale] || product.name.en || slug
-    : product.name || slug;
+  const localizedName = getLocalizedText(product.name, locale, slug);
 
-  const localizedDescription =
-    product.description?.[locale] ||
-    product.description?.en ||
-    'Used food processing and packaging equipment.';
+  const localizedDescription = getLocalizedText(
+    product.description,
+    locale,
+    'Used food processing and packaging equipment.'
+  );
 
   const shortDescription =
     localizedDescription.length > 160
@@ -155,22 +297,38 @@ export default async function ProductDetailsPage({ params }: Props) {
     notFound();
   }
 
+  const seoData = resolveProductSeoData(
+    product,
+    locale,
+    categorySlug,
+    subcategorySlug
+  );
+
+  if (seoData.shouldRedirect) {
+    redirect(
+      `/${locale}${buildProductPath(
+        seoData.categorySlug,
+        seoData.subcategorySlug,
+        slug
+      )}`
+    );
+  }
+
   const canonicalUrl = buildProductUrl(
     siteUrl,
     locale,
-    categorySlug,
-    subcategorySlug,
+    seoData.categorySlug,
+    seoData.subcategorySlug,
     slug
   );
 
-  const localizedName = isMultiLang(product.name)
-    ? product.name[locale] || product.name.en || slug
-    : product.name || slug;
+  const localizedName = getLocalizedText(product.name, locale, slug);
 
-  const localizedDescription =
-    product.description?.[locale] ||
-    product.description?.en ||
-    'Used food processing and packaging equipment.';
+  const localizedDescription = getLocalizedText(
+    product.description,
+    locale,
+    'Used food processing and packaging equipment.'
+  );
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -215,14 +373,14 @@ export default async function ProductDetailsPage({ params }: Props) {
       {
         '@type': 'ListItem',
         position: 3,
-        name: slugToLabel(categorySlug),
-        item: `${siteUrl}/${locale}/all-products/${categorySlug}`,
+        name: seoData.categoryLabel,
+        item: `${siteUrl}/${locale}/all-products/${seoData.categorySlug}`,
       },
       {
         '@type': 'ListItem',
         position: 4,
-        name: slugToLabel(subcategorySlug),
-        item: `${siteUrl}/${locale}/all-products/${categorySlug}/${subcategorySlug}`,
+        name: seoData.subcategoryLabel,
+        item: `${siteUrl}/${locale}/all-products/${seoData.categorySlug}/${seoData.subcategorySlug}`,
       },
       {
         '@type': 'ListItem',
@@ -253,16 +411,16 @@ export default async function ProductDetailsPage({ params }: Props) {
         product={product}
         locale={locale}
         slug={slug}
-        categorySlug={categorySlug}
-        subcategorySlug={subcategorySlug}
+        categorySlug={seoData.categorySlug}
+        subcategorySlug={seoData.subcategorySlug}
       />
 
       <Suspense fallback={<div>Loading recommended products...</div>}>
         <RecommendedProducts
           locale={locale}
           slug={slug}
-          categorySlug={categorySlug}
-          subcategorySlug={subcategorySlug}
+          categorySlug={seoData.categorySlug}
+          subcategorySlug={seoData.subcategorySlug}
         />
       </Suspense>
     </>

@@ -5,6 +5,19 @@ import { type AppLocale, SUPPORTED_LOCALES } from '@i18n/config';
 type ProductSitemapItem = {
   slug: string;
   updatedAt?: string;
+  categorySlug: string;
+  subcategorySlug: string;
+};
+
+type SeoSubcategorySitemapItem = {
+  slug: string;
+  updatedAt?: string;
+};
+
+type SeoCategorySitemapItem = {
+  slug: string;
+  updatedAt?: string;
+  subcategories?: SeoSubcategorySitemapItem[];
 };
 
 const STATIC_PAGES = [
@@ -19,18 +32,32 @@ function getSiteUrl() {
   return process.env.SITE_URL?.replace(/\/$/, '') ?? 'https://www.mmsweden.se';
 }
 
-async function getProductsForSitemap(): Promise<ProductSitemapItem[]> {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+function getApiUrl() {
+  return process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') ?? '';
+}
 
+async function getProductsForSitemap(): Promise<ProductSitemapItem[]> {
+  const apiUrl = getApiUrl();
   if (!apiUrl) return [];
 
   const res = await fetch(`${apiUrl}/products/sitemap`, {
     next: { revalidate: 3600 },
   });
 
-  if (!res.ok) {
-    return [];
-  }
+  if (!res.ok) return [];
+
+  return res.json();
+}
+
+async function getSeoCategoriesForSitemap(): Promise<SeoCategorySitemapItem[]> {
+  const apiUrl = getApiUrl();
+  if (!apiUrl) return [];
+
+  const res = await fetch(`${apiUrl}/seo-categories/tree?activeOnly=true`, {
+    next: { revalidate: 3600 },
+  });
+
+  if (!res.ok) return [];
 
   return res.json();
 }
@@ -52,55 +79,95 @@ function buildAlternates(path: string) {
   };
 }
 
-function getStaticPriority(path: string) {
-  if (path === '') return 1;
-  if (path === '/all-products') return 0.9;
-  return 0.7;
-}
+function safeDate(value?: string) {
+  if (!value) return undefined;
 
-function getStaticChangeFrequency(
-  path: string
-): 'daily' | 'weekly' | 'monthly' | 'yearly' {
-  if (path === '') return 'weekly';
-  if (path === '/all-products') return 'weekly';
-  return 'monthly';
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? undefined : date;
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = getSiteUrl();
-  const products = await getProductsForSitemap();
-  const now = new Date();
+
+  const [products, categories] = await Promise.all([
+    getProductsForSitemap(),
+    getSeoCategoriesForSitemap(),
+  ]);
 
   const staticEntries: MetadataRoute.Sitemap = SUPPORTED_LOCALES.flatMap(
     locale =>
       STATIC_PAGES.map(path => ({
         url: buildLocalizedUrl(siteUrl, locale, path),
-        lastModified: now,
-        changeFrequency: getStaticChangeFrequency(path),
-        priority: getStaticPriority(path),
         alternates: buildAlternates(path),
       }))
   );
 
+  const validCategories = categories.filter(
+    category =>
+      typeof category.slug === 'string' && category.slug.trim().length > 0
+  );
+
+  const categoryEntries: MetadataRoute.Sitemap = SUPPORTED_LOCALES.flatMap(
+    locale =>
+      validCategories.map(category => {
+        const categoryPath = `/all-products/${category.slug}`;
+
+        return {
+          url: buildLocalizedUrl(siteUrl, locale, categoryPath),
+          lastModified: safeDate(category.updatedAt),
+          alternates: buildAlternates(categoryPath),
+        };
+      })
+  );
+
+  const subcategoryEntries: MetadataRoute.Sitemap = SUPPORTED_LOCALES.flatMap(
+    locale =>
+      validCategories.flatMap(category =>
+        (category.subcategories ?? [])
+          .filter(
+            subcategory =>
+              typeof subcategory.slug === 'string' &&
+              subcategory.slug.trim().length > 0
+          )
+          .map(subcategory => {
+            const subcategoryPath = `/all-products/${category.slug}/${subcategory.slug}`;
+
+            return {
+              url: buildLocalizedUrl(siteUrl, locale, subcategoryPath),
+              lastModified: safeDate(subcategory.updatedAt),
+              alternates: buildAlternates(subcategoryPath),
+            };
+          })
+      )
+  );
+
   const validProducts = products.filter(
     product =>
-      typeof product.slug === 'string' && product.slug.trim().length > 0
+      typeof product.slug === 'string' &&
+      product.slug.trim().length > 0 &&
+      typeof product.categorySlug === 'string' &&
+      product.categorySlug.trim().length > 0 &&
+      typeof product.subcategorySlug === 'string' &&
+      product.subcategorySlug.trim().length > 0
   );
 
   const productEntries: MetadataRoute.Sitemap = SUPPORTED_LOCALES.flatMap(
     locale =>
       validProducts.map(product => {
-        const productPath = `/all-products/${product.slug}`;
+        const productPath = `/all-products/${product.categorySlug}/${product.subcategorySlug}/${product.slug}`;
 
         return {
           url: buildLocalizedUrl(siteUrl, locale, productPath),
-          lastModified: product.updatedAt ? new Date(product.updatedAt) : now,
-          changeFrequency: 'weekly',
-          priority: 0.6,
+          lastModified: safeDate(product.updatedAt),
           alternates: buildAlternates(productPath),
         };
       })
   );
 
-  return [...staticEntries, ...productEntries];
+  return [
+    ...staticEntries,
+    ...categoryEntries,
+    ...subcategoryEntries,
+    ...productEntries,
+  ];
 }

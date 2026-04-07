@@ -20,8 +20,8 @@ export interface IProductCardProps {
   language: AppLocale;
   isAdmin?: boolean;
   isLoading?: boolean;
-  categorySlug: string;
-  subcategorySlug: string;
+  categorySlug?: string;
+  subcategorySlug?: string;
 }
 
 const ProductCard: FC<IProductCardProps> = ({

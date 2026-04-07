@@ -1,11 +1,12 @@
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import Header from './header/Header';
+
 import SvgIcon from '@components/common/SvgIcon';
 import Footer from '@components/footer/Footer';
 
 import { IconId } from '@enums/iconsSpriteId';
-import Header from './header/Header';
 
 export default function ClientSharedLayout({
   children,

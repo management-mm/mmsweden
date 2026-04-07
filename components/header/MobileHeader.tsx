@@ -13,10 +13,10 @@ import PriceQuoteBtn from './PriceQuoteBtn';
 import ProductsListMenu from './ProductsListMenu';
 
 import { Logo } from '@components/common/Logo';
+import SvgIcon from '@components/common/SvgIcon';
 import LanguageSelect from '@components/common/languageSelector/LanguageSelect';
 
 import { Button, Placeholder } from '@enums/i18nConstants';
-import SvgIcon from '@components/common/SvgIcon';
 import { IconId } from '@enums/iconsSpriteId';
 
 type MobileHeaderProps = {
@@ -135,7 +135,11 @@ export default function MobileHeader({ toggleMobileMenu }: MobileHeaderProps) {
               }}
               className="absolute top-1/2 right-[6px] flex h-[32px] w-[32px] -translate-y-1/2 items-center justify-center rounded-full bg-[#0B5CAB] text-white"
             >
-              <SvgIcon iconId={IconId.Search} size={{width: 16, height: 16}} className='fill-secondary'/>
+              <SvgIcon
+                iconId={IconId.Search}
+                size={{ width: 16, height: 16 }}
+                className="fill-secondary"
+              />
             </button>
             <div className="">
               <ProductsListMenu className="absolute left-0" />

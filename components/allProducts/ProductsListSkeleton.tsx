@@ -36,6 +36,9 @@ const skeletonProduct: IProduct = {
   condition: 'used',
   deletionDate: null,
   createdAt: new Date(),
+  seoCategorySlug: '',
+  seoSubcategorySlug: '',
+  productCategory: emptyMultiLanguageString,
 };
 
 const ProductsListSkeleton = ({

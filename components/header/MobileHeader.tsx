@@ -17,6 +17,7 @@ import useSearchKeyword from '@hooks/useSearchKeyword';
 import useWindowWidth from '@hooks/useWindowWidth';
 
 import { Button } from '@enums/i18nConstants';
+import { useTranslations } from 'next-intl';
 
 type MobileHeaderProps = {
   toggleMobileMenu: () => void;
@@ -26,6 +27,7 @@ const SEARCH_DEBOUNCE_MS = 400;
 
 export default function MobileHeader({ toggleMobileMenu }: MobileHeaderProps) {
   const [isOpenCategories, setIsOpenCategories] = useState(false);
+  const t = useTranslations()
   const [isSearchActive, setIsSearchActive] = useState(false);
   const windowWidth = useWindowWidth();
   const isMobile = windowWidth < 1178;
@@ -98,7 +100,7 @@ export default function MobileHeader({ toggleMobileMenu }: MobileHeaderProps) {
                     : 'ml-2 max-w-[120px] opacity-100'
                 )}
               >
-                {Button.Categories}
+                {t(Button.Categories)}
               </span>
             </button>
 

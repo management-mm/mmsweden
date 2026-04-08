@@ -11,7 +11,7 @@ import { useAppDispatch } from '@hooks/useAppDispatch';
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const dispatch = useAppDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

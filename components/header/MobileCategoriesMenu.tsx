@@ -7,6 +7,8 @@ import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 
+import MobileCategoriesMenuSkeleton from './MobileCategoriesMenuSkeleton';
+
 import SvgIcon from '@components/common/SvgIcon';
 
 import { Title } from '@enums/i18nConstants';
@@ -22,6 +24,7 @@ type Props = {
   language: AppLocale;
   selectedParent?: ISeoCategory;
   mode: 'filters' | 'header';
+  isLoading?: boolean;
 };
 
 export default function MobileCategoriesMenu({
@@ -32,12 +35,17 @@ export default function MobileCategoriesMenu({
   language,
   selectedParent,
   mode,
+  isLoading = false,
 }: Props) {
+  const t = useTranslations();
+
   const handleToggleCategory = (id: string) => {
     setSelectedParentId(prev => (prev === id ? null : id));
   };
 
-  const t = useTranslations();
+  if (isLoading) {
+    return <MobileCategoriesMenuSkeleton mode={mode} />;
+  }
 
   return (
     <div
@@ -81,11 +89,11 @@ export default function MobileCategoriesMenu({
                 <div className="flex flex-col">
                   <Link
                     href={`/all-products/${selectedParent?.slug}`}
-                    key={String(selectedParentId)}
                     className="block py-[8px] pl-[16px] text-[14px] break-words whitespace-normal"
                   >
                     {t(Title.All)}
                   </Link>
+
                   {subcategories.map(subcategory => (
                     <Link
                       href={`/all-products/${selectedParent?.slug}/${subcategory.slug}`}

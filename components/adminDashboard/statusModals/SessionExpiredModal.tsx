@@ -1,7 +1,5 @@
 'use client';
 
-import { useDispatch, useSelector } from 'react-redux';
-
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
@@ -10,14 +8,18 @@ import StatusModal from '@components/common/StatusModal';
 import { clearAuthError } from '@store/auth/slice';
 import type { AppDispatch, RootState } from '@store/store';
 
+import { useAppDispatch } from '@hooks/useAppDispatch';
+import { useAppSelector } from '@hooks/useAppSelector';
 import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 export default function SessionExpiredModal() {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const language = useCurrentLocale();
 
-  const error = useSelector((state: RootState) => state.auth.error);
-  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+  const error = useAppSelector((state: RootState) => state.auth.error);
+  const isLoggedIn = useAppSelector(
+    (state: RootState) => state.auth.isLoggedIn
+  );
 
   const isOpen = !isLoggedIn && !!error;
 

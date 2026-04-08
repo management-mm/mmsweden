@@ -8,6 +8,8 @@ import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 
+import DesktopCategoriesContentSkeleton from './DesktopCategoriesContentSkeleton';
+import DesktopCategoriesMenuSkeleton from './DesktopCategoriesMenuSkeleton';
 import MobileCategoriesMenu from './MobileCategoriesMenu';
 
 import SvgIcon from '@components/common/SvgIcon';
@@ -41,6 +43,9 @@ export default function CategoriesMenu({
   const [subcategories, setSubcategories] = useState<ISeoCategory[]>([]);
   const [selectedParentId, setSelectedParentId] = useState<string | null>(null);
 
+  const [isCategoriesLoading, setIsCategoriesLoading] = useState(true);
+  const [isSubcategoriesLoading, setIsSubcategoriesLoading] = useState(false);
+
   const isMobileView = windowWidth < 1178;
 
   useEffect(() => {
@@ -63,6 +68,8 @@ export default function CategoriesMenu({
   useEffect(() => {
     const loadCategories = async () => {
       try {
+        setIsCategoriesLoading(true);
+
         const data = await getTopLevel();
         setCategories(data);
 
@@ -71,6 +78,8 @@ export default function CategoriesMenu({
         }
       } catch (error) {
         console.error('Failed to load top-level categories:', error);
+      } finally {
+        setIsCategoriesLoading(false);
       }
     };
 
@@ -85,10 +94,14 @@ export default function CategoriesMenu({
 
     const loadSubcategories = async () => {
       try {
+        setIsSubcategoriesLoading(true);
+
         const data = await getChildren(selectedParentId);
         setSubcategories(data);
       } catch (error) {
         console.error('Failed to load subcategories:', error);
+      } finally {
+        setIsSubcategoriesLoading(false);
       }
     };
 
@@ -108,6 +121,7 @@ export default function CategoriesMenu({
       language={language}
       mode={mode}
       selectedParent={selectedParent}
+      isLoading={isCategoriesLoading || isSubcategoriesLoading}
     />
   );
 
@@ -162,6 +176,8 @@ export default function CategoriesMenu({
             {mobileMenuContent}
           </div>
         </div>
+      ) : isCategoriesLoading ? (
+        <DesktopCategoriesMenuSkeleton />
       ) : (
         <div className="flex gap-[32px] px-[20px] py-[24px] xl:gap-[40px]">
           <div className="border-r-secondary w-[340px] shrink-0 border-r pr-[24px] xl:w-[420px]">
@@ -189,45 +205,49 @@ export default function CategoriesMenu({
             ))}
           </div>
 
-          <div className="min-w-0 flex-1 pt-[24px]">
-            <p className="mb-[32px] text-[24px] font-semibold">
-              {selectedParent?.name[language]}
-            </p>
+          {isSubcategoriesLoading ? (
+            <DesktopCategoriesContentSkeleton />
+          ) : (
+            <div className="min-w-0 flex-1 pt-[24px]">
+              <p className="mb-[32px] text-[24px] font-semibold">
+                {selectedParent?.name[language]}
+              </p>
 
-            <div className="grid grid-cols-2 gap-x-[18px]">
-              <div className="min-w-0">
-                <Link
-                  href={`/all-products/${selectedParent?.slug}`}
-                  key={String(selectedParentId)}
-                  className="hover:bg-secondary block py-[8px] pl-[16px] break-words"
-                >
-                  {t(Title.All)}
-                </Link>
-
-                {subcategories.slice(0, 9).map(subcategory => (
+              <div className="grid grid-cols-2 gap-x-[18px]">
+                <div className="min-w-0">
                   <Link
-                    href={`/all-products/${selectedParent?.slug}/${subcategory.slug}`}
-                    key={String(subcategory._id)}
+                    href={`/all-products/${selectedParent?.slug}`}
+                    key={String(selectedParentId)}
                     className="hover:bg-secondary block py-[8px] pl-[16px] break-words"
                   >
-                    {subcategory.name[language]}
+                    {t(Title.All)}
                   </Link>
-                ))}
-              </div>
 
-              <div className="min-w-0">
-                {subcategories.slice(9).map(subcategory => (
-                  <Link
-                    href={`/all-products/${selectedParent?.slug}/${subcategory.slug}`}
-                    key={String(subcategory._id)}
-                    className="hover:bg-secondary block py-[8px] pl-[16px] break-words"
-                  >
-                    {subcategory.name[language]}
-                  </Link>
-                ))}
+                  {subcategories.slice(0, 9).map(subcategory => (
+                    <Link
+                      href={`/all-products/${selectedParent?.slug}/${subcategory.slug}`}
+                      key={String(subcategory._id)}
+                      className="hover:bg-secondary block py-[8px] pl-[16px] break-words"
+                    >
+                      {subcategory.name[language]}
+                    </Link>
+                  ))}
+                </div>
+
+                <div className="min-w-0">
+                  {subcategories.slice(9).map(subcategory => (
+                    <Link
+                      href={`/all-products/${selectedParent?.slug}/${subcategory.slug}`}
+                      key={String(subcategory._id)}
+                      className="hover:bg-secondary block py-[8px] pl-[16px] break-words"
+                    >
+                      {subcategory.name[language]}
+                    </Link>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       )}
     </div>

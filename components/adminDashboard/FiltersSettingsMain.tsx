@@ -85,7 +85,7 @@ const FiltersSettingsMain = () => {
     fetchingIndustries();
   }, [dispatch, industryKeyword]);
   return (
-    <div className={cn('container', 'lg:ml-0')}>
+    <div className={cn('container', 'container--no-margin')}>
       <div className="gap-[24px] pt-[30px] md:flex md:pt-[48px] lg:mb-0">
         <Block title="Category" intent="main" className="mb-[20px]">
           <SearchFilter

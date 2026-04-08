@@ -185,9 +185,7 @@ const ChangeProduct = () => {
           {({ values, setFieldValue }) => (
             <>
               <Form>
-                <div
-                  className={clsx('container', windowWidth > 1178 && 'ml-0')}
-                >
+                <div className={clsx('container', 'container--no-margin')}>
                   <div className="gap-[24px] pt-[48px] lg:flex">
                     <Block intent="main" title="Photos and video">
                       <PhotosAndVideo

@@ -1,22 +1,58 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
+import { useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-export default function useSearchKeyword() {
+type UseSearchKeywordOptions = {
+  enabled?: boolean;
+};
+
+export default function useSearchKeyword({
+  enabled = true,
+}: UseSearchKeywordOptions = {}) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const keywordFromUrl = searchParams.get('keyword') || '';
-  const [searchValue, setSearchValue] = useState(keywordFromUrl);
+  const [searchValue, setSearchValue] = useState(
+    searchParams.get('keyword') || ''
+  );
+
+  const prevPathnameRef = useRef(pathname);
+  const skipNextSyncRef = useRef(false);
 
   useEffect(() => {
-    setSearchValue(keywordFromUrl);
-  }, [keywordFromUrl]);
+    if (!enabled) return;
+
+    if (prevPathnameRef.current !== pathname) {
+      prevPathnameRef.current = pathname;
+
+      skipNextSyncRef.current = true;
+      setSearchValue('');
+
+      const params = new URLSearchParams(searchParams.toString());
+
+      if (params.has('keyword')) {
+        params.delete('keyword');
+
+        const queryString = params.toString();
+        router.replace(queryString ? `${pathname}?${queryString}` : pathname);
+      }
+
+      return;
+    }
+
+    prevPathnameRef.current = pathname;
+  }, [pathname, searchParams, router, enabled]);
 
   useEffect(() => {
+    if (!enabled) return;
+
+    if (skipNextSyncRef.current) {
+      skipNextSyncRef.current = false;
+      return;
+    }
+
     const trimmedValue = searchValue.trim();
     const currentKeyword = searchParams.get('keyword') || '';
 
@@ -32,7 +68,7 @@ export default function useSearchKeyword() {
 
     const queryString = params.toString();
     router.replace(queryString ? `${pathname}?${queryString}` : pathname);
-  }, [searchValue, searchParams, pathname, router]);
+  }, [searchValue, searchParams, pathname, router, enabled]);
 
   const clearSearch = () => {
     setSearchValue('');

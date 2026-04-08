@@ -1,13 +1,14 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { useDispatch } from 'react-redux';
 
 import { useParams, useRouter } from 'next/navigation';
 
 import { logOut } from '@store/auth/operations';
 import { clearAuthError, resetAuthState } from '@store/auth/slice';
 import type { AppDispatch } from '@store/store';
+
+import { useAppDispatch } from '@hooks/useAppDispatch';
 
 type LogoutButtonProps = {
   children?: ReactNode;
@@ -16,7 +17,7 @@ type LogoutButtonProps = {
 export default function LogoutButton({
   children = 'Log out',
 }: LogoutButtonProps) {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const params = useParams();
 

@@ -9,9 +9,17 @@ import LanguageSelect from '@components/common/languageSelector/LanguageSelect';
 
 type MobileHeaderProps = {
   toggleMobileMenu: () => void;
+  searchValue: string;
+  setSearchValue: (value: string) => void;
+  clearSearch: () => void;
 };
 
-export default function MobileHeader({ toggleMobileMenu }: MobileHeaderProps) {
+export default function MobileHeader({
+  toggleMobileMenu,
+  searchValue,
+  setSearchValue,
+  clearSearch,
+}: MobileHeaderProps) {
   return (
     <div className="py-3">
       <div className="flex items-center justify-between gap-3">
@@ -28,7 +36,11 @@ export default function MobileHeader({ toggleMobileMenu }: MobileHeaderProps) {
         </div>
       </div>
 
-      <MobileSearchBar />
+      <MobileSearchBar
+        value={searchValue}
+        onChange={setSearchValue}
+        clearSearch={clearSearch}
+      />
     </div>
   );
 }

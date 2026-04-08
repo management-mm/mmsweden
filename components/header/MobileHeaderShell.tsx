@@ -7,7 +7,17 @@ import MobileHeader from './MobileHeader';
 import MobileMenu from '@components/common/MobileMenu';
 import Navbar from '@components/common/Navbar';
 
-const MobileHeaderShell = () => {
+type Props = {
+  searchValue: string;
+  setSearchValue: (value: string) => void;
+  clearSearch: () => void;
+};
+
+const MobileHeaderShell = ({
+  searchValue,
+  setSearchValue,
+  clearSearch,
+}: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMobileMenu = () => {
@@ -17,7 +27,12 @@ const MobileHeaderShell = () => {
   return (
     <div className="lg:hidden">
       <div className="container">
-        <MobileHeader toggleMobileMenu={toggleMobileMenu} />
+        <MobileHeader
+          toggleMobileMenu={toggleMobileMenu}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          clearSearch={clearSearch}
+        />
       </div>
 
       <MobileMenu

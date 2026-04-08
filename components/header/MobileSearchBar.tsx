@@ -5,14 +5,14 @@ import { useState } from 'react';
 import HeaderSearch from './HeaderSearch';
 import MobileCategoriesButton from './MobileCategoriesButton';
 
-import useSearchKeyword from '@hooks/useSearchKeyword';
+type Props = {
+  value: string;
+  onChange: (value: string) => void;
+  clearSearch: () => void;
+};
 
-const MobileSearchBar = () => {
+const MobileSearchBar = ({ value, onChange, clearSearch }: Props) => {
   const [isSearchActive, setIsSearchActive] = useState(false);
-
-  const { searchValue, setSearchValue, clearSearch } = useSearchKeyword({
-    enabled: true,
-  });
 
   return (
     <div className="mt-3">
@@ -27,8 +27,8 @@ const MobileSearchBar = () => {
 
         <div className="relative w-full">
           <HeaderSearch
-            value={searchValue}
-            onChange={setSearchValue}
+            value={value}
+            onChange={onChange}
             onFocus={() => {
               setIsSearchActive(true);
             }}

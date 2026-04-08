@@ -1,53 +1,51 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 type UseSearchKeywordOptions = {
-  debounceMs?: number;
   enabled?: boolean;
 };
 
 export default function useSearchKeyword({
-  debounceMs = 0,
   enabled = true,
 }: UseSearchKeywordOptions = {}) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const keywordFromUrl = searchParams.get('keyword') || '';
-
-  const [searchValue, setSearchValue] = useState(keywordFromUrl);
-  const [debouncedValue, setDebouncedValue] = useState(keywordFromUrl);
-
-  useEffect(() => {
-    if (!enabled) return;
-    setSearchValue(keywordFromUrl);
-  }, [keywordFromUrl, enabled]);
+  const [searchValue, setSearchValue] = useState(
+    searchParams.get('keyword') || ''
+  );
+  const prevPathnameRef = useRef(pathname);
 
   useEffect(() => {
     if (!enabled) return;
 
-    if (!debounceMs) {
-      setDebouncedValue(searchValue);
+    if (prevPathnameRef.current !== pathname) {
+      prevPathnameRef.current = pathname;
+      setSearchValue('');
+
+      const params = new URLSearchParams(searchParams.toString());
+
+      if (params.has('keyword')) {
+        params.delete('keyword');
+
+        const queryString = params.toString();
+        router.replace(queryString ? `${pathname}?${queryString}` : pathname);
+      }
+
       return;
     }
 
-    const timeoutId = window.setTimeout(() => {
-      setDebouncedValue(searchValue);
-    }, debounceMs);
-
-    return () => {
-      window.clearTimeout(timeoutId);
-    };
-  }, [searchValue, debounceMs, enabled]);
+    prevPathnameRef.current = pathname;
+  }, [pathname, searchParams, router, enabled]);
 
   useEffect(() => {
     if (!enabled) return;
 
-    const trimmedValue = debouncedValue.trim();
+    const trimmedValue = searchValue.trim();
     const currentKeyword = searchParams.get('keyword') || '';
 
     if (trimmedValue === currentKeyword) return;
@@ -61,27 +59,11 @@ export default function useSearchKeyword({
     }
 
     const queryString = params.toString();
-    const nextUrl = queryString ? `${pathname}?${queryString}` : pathname;
-
-    router.replace(nextUrl);
-  }, [debouncedValue, pathname, router, searchParams, enabled]);
+    router.replace(queryString ? `${pathname}?${queryString}` : pathname);
+  }, [searchValue, searchParams, pathname, router, enabled]);
 
   const clearSearch = () => {
     setSearchValue('');
-    setDebouncedValue('');
-
-    if (!enabled) return;
-
-    const currentKeyword = searchParams.get('keyword');
-    if (!currentKeyword) return;
-
-    const params = new URLSearchParams(searchParams.toString());
-    params.delete('keyword');
-
-    const queryString = params.toString();
-    const nextUrl = queryString ? `${pathname}?${queryString}` : pathname;
-
-    router.replace(nextUrl);
   };
 
   return {

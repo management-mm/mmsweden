@@ -1,8 +1,9 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
+import { usePathname } from 'next/navigation';
 
 import ProductsListMenu from './ProductsListMenu';
 
@@ -45,6 +46,11 @@ export default function HeaderSearch({
     inputRef,
     buttonRef,
   ]);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
 
   const handleFocus = () => {
     setIsMenuOpen(true);

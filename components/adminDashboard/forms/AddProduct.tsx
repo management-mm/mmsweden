@@ -97,6 +97,7 @@ const AddProduct = () => {
         }}
         validationSchema={schema}
         onSubmit={async (values: IAddProductData) => {
+          console.log(values);
           try {
             setIsSubmit(true);
 

@@ -11,4 +11,5 @@ export interface ISeoCategory {
     title: MultiLanguageString;
     description: MultiLanguageString;
   };
+  productCategoryId?: string;
 }

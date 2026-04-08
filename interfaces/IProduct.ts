@@ -22,4 +22,7 @@ export interface IProduct {
   seoCategorySlug: string;
   seoSubcategorySlug: string;
   productCategory: MultiLanguageString;
+  seoSubcategoryId?: string;
+  seoCategoryId?: string;
+  productCategoryId?: string;
 }

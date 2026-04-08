@@ -27,12 +27,14 @@ export interface IUpdateProductData {
   photoQueue: (string | File)[];
   photos: File[];
   video: string;
-  category: string | MultiLanguageString;
   manufacturer: string;
   industries: string[];
   condition: 'used' | 'new';
   deletionDate: Date | null | string;
   shouldTranslateName: boolean;
+  seoSubcategoryId: string;
+  seoCategoryId: string;
+  productCategoryId: string;
 }
 
 export interface IGenerateDescData {
@@ -132,8 +134,9 @@ export const updateProduct = createAsyncThunk<
         if (key === 'id') continue;
         if (key === 'shouldTranslateName') continue;
         if (key === 'deletionDate' && !updatedProduct[key]) continue;
-        else if (
-          (key === 'name' || key === 'description' || key === 'category') &&
+
+        if (
+          (key === 'name' || key === 'description') &&
           typeof updatedProduct[key] === 'object'
         ) {
           data.append(key, JSON.stringify(updatedProduct[key]));
@@ -144,28 +147,32 @@ export const updateProduct = createAsyncThunk<
             if (typeof item === 'string') {
               return item;
             }
+
             return 'file';
           });
+
           data.append('photoQueue', stringsArray.join(','));
         } else if (key === 'photos') {
           updatedProduct[key].forEach(photo => {
             data.append('photos', photo);
           });
         } else {
-          const v = updatedProduct[key];
+          const value = updatedProduct[key];
 
-          if (typeof v === 'string' && v.trim() === '') continue;
-          if (v === null || v === undefined) continue;
+          if (typeof value === 'string' && value.trim() === '') continue;
+          if (value === null || value === undefined) continue;
 
-          data.append(key, v as string);
+          data.append(key, String(value));
         }
       }
     }
+
     const response = await api.put(`products/${updatedProduct.id}`, data, {
       params: {
         shouldTranslateName: String(updatedProduct.shouldTranslateName),
       },
     });
+
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

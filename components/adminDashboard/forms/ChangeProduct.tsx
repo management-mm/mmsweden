@@ -146,13 +146,6 @@ const ChangeProduct = () => {
 
             dimensions: product.dimensions || '',
 
-            category:
-              typeof product.category === 'string'
-                ? product.category
-                : product.category
-                  ? { ...emptyName, ...product.category }
-                  : '',
-
             manufacturer: product.manufacturer || '',
 
             industries: product.industries?.map(ind => ind.en) || [],
@@ -165,6 +158,9 @@ const ChangeProduct = () => {
 
             deletionDate: product.deletionDate || null,
             shouldTranslateName: false,
+            seoCategoryId: product.seoCategoryId || '',
+            seoSubcategoryId: product.seoSubcategoryId || '',
+            productCategoryId: product.productCategoryId || '',
           }}
           validationSchema={schema}
           onSubmit={async values => {
@@ -210,7 +206,7 @@ const ChangeProduct = () => {
                         title="Category, Manufacturer, Industry"
                       >
                         <CatManInd
-                          initialCategory={product.category.en}
+                          initialCategory={product.seoSubcategoryId}
                           initialManufacturer={product.manufacturer}
                           initialIndustries={product.industries}
                         />

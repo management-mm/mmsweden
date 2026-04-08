@@ -21,4 +21,7 @@ export const schema = Yup.object().shape({
   ),
   video: safeString(),
   photos: Yup.array(),
+  seoCategoryId: Yup.string(),
+  seoSubcategoryId: Yup.string(),
+  productCategoryId: Yup.string(),
 });

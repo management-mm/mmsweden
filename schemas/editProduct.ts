@@ -37,4 +37,8 @@ export const schema = Yup.object().shape({
 
   deletionDate: safeString(),
   shouldTranslateName: Yup.boolean().nullable().notRequired(),
+
+  seoCategoryId: Yup.string(),
+  seoSubcategoryId: Yup.string(),
+  productCategoryId: Yup.string(),
 });

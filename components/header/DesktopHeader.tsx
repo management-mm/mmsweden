@@ -4,7 +4,12 @@ import PriceQuoteBtn from './PriceQuoteBtn';
 
 import { Logo } from '@components/common/Logo';
 
-const DesktopHeader = () => {
+type Props = {
+  searchValue: string;
+  setSearchValue: (value: string) => void;
+};
+
+const DesktopHeader = ({ searchValue, setSearchValue }: Props) => {
   return (
     <div className="hidden bg-white lg:block">
       <div className="container">
@@ -16,7 +21,10 @@ const DesktopHeader = () => {
           <HeaderCategories />
 
           <div className="w-full">
-            <HeaderSearchContainer />
+            <HeaderSearchContainer
+              value={searchValue}
+              onChange={setSearchValue}
+            />
           </div>
 
           <div className="flex items-center justify-end gap-3">

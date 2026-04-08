@@ -29,12 +29,14 @@ const Search: FC<ISearchProps> = ({ className }) => {
 
   const [inputValue, setInputValue] = useState(titleFromUrl);
 
-  const lastSubmittedValueRef = useRef(titleFromUrl);
+  const isUpdatingFromInputRef = useRef(false);
 
   useEffect(() => {
-    if (titleFromUrl !== lastSubmittedValueRef.current) {
+    if (!isUpdatingFromInputRef.current) {
       setInputValue(titleFromUrl);
     }
+
+    isUpdatingFromInputRef.current = false;
   }, [titleFromUrl]);
 
   useEffect(() => {
@@ -52,7 +54,7 @@ const Search: FC<ISearchProps> = ({ className }) => {
         params.delete('title');
       }
 
-      lastSubmittedValueRef.current = trimmedValue;
+      isUpdatingFromInputRef.current = true;
 
       const qs = params.toString();
       const nextUrl = qs ? `${pathname}?${qs}` : pathname;
@@ -66,7 +68,6 @@ const Search: FC<ISearchProps> = ({ className }) => {
   const isEmptyValue = inputValue.trim().length === 0;
 
   const handleReset = () => {
-    lastSubmittedValueRef.current = '';
     setInputValue('');
   };
 

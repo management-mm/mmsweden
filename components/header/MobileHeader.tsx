@@ -35,7 +35,6 @@ export default function MobileHeader({ toggleMobileMenu }: MobileHeaderProps) {
   const categoriesTriggerRef = useRef<HTMLButtonElement | null>(null);
 
   const { searchValue, setSearchValue, clearSearch } = useSearchKeyword({
-    debounceMs: SEARCH_DEBOUNCE_MS,
     enabled: isMobile,
   });
 

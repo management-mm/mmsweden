@@ -111,6 +111,12 @@
   padding-inline: var(--container-padding);
 }
 
+@media (min-width: 1178px) {
+  .container--no-margin {
+    margin-inline: 0;
+  }
+}
+
 @media (min-width: 360px) {
   .container {
     max-width: var(--container-sm);

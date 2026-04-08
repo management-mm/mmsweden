@@ -108,7 +108,7 @@ const AddProduct = () => {
         }}
       >
         <Form>
-          <div className={cn('container', 'lg:ml-0')}>
+          <div className={cn('container', 'container--no-margin')}>
             <div className="gap-[24px] pt-[48px] lg:flex">
               <Block
                 title="Photos and video"

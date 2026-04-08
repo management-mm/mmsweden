@@ -53,7 +53,7 @@ const AllProductsView = async ({ mode = 'public', locale, query }: Props) => {
         className={clsx(
           'container',
           'pt-[12px] md:pt-[22px]',
-          isAdmin && 'lg:mx-0'
+          isAdmin && 'container--no-margin'
         )}
       >
         {!isAdmin && (

@@ -1,8 +1,9 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
+import { usePathname } from 'next/navigation';
 
 import CategoriesBurgerMenu from './CategoriesBurgerMenu';
 import CategoriesMenu from './CategoriesMenu';
@@ -13,10 +14,15 @@ const HeaderCategories = () => {
   const [isOpen, setIsOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const t = useTranslations();
+  const pathname = usePathname();
 
   const toggleMenu = () => {
     setIsOpen(prev => !prev);
   };
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
   return (
     <div className="relative shrink-0">

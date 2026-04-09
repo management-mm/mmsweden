@@ -1,83 +1,95 @@
-'use client';
-
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 type UseSearchKeywordOptions = {
   enabled?: boolean;
+  debounceMs?: number;
 };
 
 export default function useSearchKeyword({
   enabled = true,
+  debounceMs = 400,
 }: UseSearchKeywordOptions = {}) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const [searchValue, setSearchValue] = useState(
-    searchParams.get('keyword') || ''
-  );
+  const keywordFromUrl = searchParams.get('keyword') ?? '';
+  const [searchValue, setSearchValue] = useState(keywordFromUrl);
 
-  const prevPathnameRef = useRef(pathname);
-  const skipNextSyncRef = useRef(false);
+  const skipNextDebounceRef = useRef(false);
+  const lastSyncedValueRef = useRef(keywordFromUrl);
 
   useEffect(() => {
     if (!enabled) return;
 
-    if (prevPathnameRef.current !== pathname) {
-      prevPathnameRef.current = pathname;
+    if (keywordFromUrl === lastSyncedValueRef.current) {
+      return;
+    }
 
-      skipNextSyncRef.current = true;
-      setSearchValue('');
+    setSearchValue(prev => (prev === keywordFromUrl ? prev : keywordFromUrl));
+  }, [keywordFromUrl, enabled]);
+
+  const syncToUrl = useCallback(
+    (rawValue: string) => {
+      if (!enabled) return;
+
+      const trimmedValue = rawValue.trim();
+      const currentKeyword = searchParams.get('keyword') ?? '';
+
+      if (trimmedValue === currentKeyword) return;
+
+      lastSyncedValueRef.current = trimmedValue;
 
       const params = new URLSearchParams(searchParams.toString());
 
-      if (params.has('keyword')) {
+      if (trimmedValue) {
+        params.set('keyword', trimmedValue);
+      } else {
         params.delete('keyword');
-
-        const queryString = params.toString();
-        router.replace(queryString ? `${pathname}?${queryString}` : pathname);
       }
 
-      return;
-    }
+      const queryString = params.toString();
+      const nextUrl = queryString ? `${pathname}?${queryString}` : pathname;
 
-    prevPathnameRef.current = pathname;
-  }, [pathname, searchParams, router, enabled]);
+      router.replace(nextUrl, { scroll: false });
+    },
+    [enabled, pathname, router, searchParams]
+  );
 
   useEffect(() => {
     if (!enabled) return;
 
-    if (skipNextSyncRef.current) {
-      skipNextSyncRef.current = false;
+    if (skipNextDebounceRef.current) {
+      skipNextDebounceRef.current = false;
       return;
     }
 
-    const trimmedValue = searchValue.trim();
-    const currentKeyword = searchParams.get('keyword') || '';
+    const timeoutId = window.setTimeout(() => {
+      syncToUrl(searchValue);
+    }, debounceMs);
 
-    if (trimmedValue === currentKeyword) return;
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [searchValue, syncToUrl, debounceMs, enabled]);
 
-    const params = new URLSearchParams(searchParams.toString());
-
-    if (trimmedValue) {
-      params.set('keyword', trimmedValue);
-    } else {
-      params.delete('keyword');
-    }
-
-    const queryString = params.toString();
-    router.replace(queryString ? `${pathname}?${queryString}` : pathname);
-  }, [searchValue, searchParams, pathname, router, enabled]);
-
-  const clearSearch = () => {
+  const clearSearch = useCallback(() => {
+    skipNextDebounceRef.current = true;
     setSearchValue('');
-  };
+    syncToUrl('');
+  }, [syncToUrl]);
+
+  const commitSearch = useCallback(() => {
+    skipNextDebounceRef.current = true;
+    syncToUrl(searchValue);
+  }, [searchValue, syncToUrl]);
 
   return {
     searchValue,
     setSearchValue,
     clearSearch,
+    commitSearch,
   };
 }

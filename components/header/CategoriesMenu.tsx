@@ -1,6 +1,6 @@
 'use client';
 
-import { RefObject, useEffect, useState } from 'react';
+import { RefObject, useEffect, useMemo, useState } from 'react';
 
 import { getChildren, getTopLevel } from '@api/categoriesService';
 import { ISeoCategory } from '@interfaces/ISeoCategory';
@@ -22,7 +22,7 @@ import { Filter, Title } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
 type Props = {
-  mode?: 'filters' | 'header';
+  mode?: 'filters' | 'header' | 'mobile';
   isOpenHeaderMenu?: boolean;
   onCloseHeaderMenu?: () => void;
   triggerRef?: RefObject<HTMLElement | null>;
@@ -46,22 +46,25 @@ export default function CategoriesMenu({
   const [isCategoriesLoading, setIsCategoriesLoading] = useState(true);
   const [isSubcategoriesLoading, setIsSubcategoriesLoading] = useState(false);
 
-  const isMobileView = windowWidth < 1178;
+  const isMobileMode = mode === 'mobile';
+  const isMobileView = isMobileMode || windowWidth < 1178;
+  const isHeaderMode = mode === 'header';
+  const isFiltersMode = mode === 'filters';
 
   useEffect(() => {
-    if (mode === 'filters') {
+    if (isFiltersMode) {
       setIsOpen(true);
     }
-  }, [mode]);
+  }, [isFiltersMode]);
 
   const outsideAlerterRef = useOutsideAlerter(
     () => {
-      if (mode !== 'header') return;
+      if (!isHeaderMode) return;
       if (!isOpenHeaderMenu) return;
 
       onCloseHeaderMenu?.();
     },
-    mode === 'header' && isOpenHeaderMenu,
+    isHeaderMode && isOpenHeaderMenu,
     triggerRef ? [triggerRef] : []
   );
 
@@ -108,8 +111,10 @@ export default function CategoriesMenu({
     loadSubcategories();
   }, [selectedParentId]);
 
-  const selectedParent = categories.find(
-    category => String(category._id) === selectedParentId
+  const selectedParent = useMemo(
+    () =>
+      categories.find(category => String(category._id) === selectedParentId),
+    [categories, selectedParentId]
   );
 
   const mobileMenuContent = (
@@ -125,11 +130,11 @@ export default function CategoriesMenu({
     />
   );
 
-  if (mode === 'header' && !isOpenHeaderMenu) {
+  if (isHeaderMode && !isOpenHeaderMenu) {
     return null;
   }
 
-  if (mode === 'filters') {
+  if (isFiltersMode) {
     return (
       <div className="mb-[10px]">
         <button
@@ -158,6 +163,10 @@ export default function CategoriesMenu({
         </div>
       </div>
     );
+  }
+
+  if (isMobileMode) {
+    return <div className="w-full">{mobileMenuContent}</div>;
   }
 
   return (

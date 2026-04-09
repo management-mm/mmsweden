@@ -3,9 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
+import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
-
-import ProductsListMenu from './ProductsListMenu';
 
 import SvgIcon from '@components/common/SvgIcon';
 
@@ -14,10 +13,15 @@ import useOutsideAlerter from '@hooks/useOutsideAlerter';
 import { Placeholder } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
+const ProductsListMenu = dynamic(() => import('./ProductsListMenu'), {
+  ssr: false,
+});
+
 type HeaderSearchProps = {
   value: string;
   onChange: (value: string) => void;
   onFocus?: () => void;
+  onBlur?: () => void;
   onSearchClick?: () => void;
   wrapperClassName?: string;
   inputClassName?: string;
@@ -29,6 +33,7 @@ export default function HeaderSearch({
   value,
   onChange,
   onFocus,
+  onBlur,
   onSearchClick,
   wrapperClassName = '',
   inputClassName = '',
@@ -36,6 +41,7 @@ export default function HeaderSearch({
   productsMenuClassName = '',
 }: HeaderSearchProps) {
   const t = useTranslations();
+  const pathname = usePathname();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -46,7 +52,6 @@ export default function HeaderSearch({
     inputRef,
     buttonRef,
   ]);
-  const pathname = usePathname();
 
   useEffect(() => {
     setIsMenuOpen(false);
@@ -57,9 +62,33 @@ export default function HeaderSearch({
     onFocus?.();
   };
 
+  const handleBlur = () => {
+    onBlur?.();
+  };
+
   const handleChange = (newValue: string) => {
-    onChange(newValue);
+    if (typeof onChange === 'function') {
+      onChange(newValue);
+    }
     setIsMenuOpen(true);
+  };
+
+  const handleSearchClick = () => {
+    onSearchClick?.();
+    setIsMenuOpen(false);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      onSearchClick?.();
+      setIsMenuOpen(false);
+      inputRef.current?.blur();
+    }
+
+    if (event.key === 'Escape') {
+      setIsMenuOpen(false);
+      inputRef.current?.blur();
+    }
   };
 
   return (
@@ -70,6 +99,8 @@ export default function HeaderSearch({
         value={value}
         onChange={e => handleChange(e.target.value)}
         onFocus={handleFocus}
+        onBlur={handleBlur}
+        onKeyDown={handleKeyDown}
         placeholder={t(Placeholder.Search)}
         className={inputClassName}
       />
@@ -78,7 +109,7 @@ export default function HeaderSearch({
         ref={buttonRef}
         type="button"
         aria-label="Search"
-        onClick={onSearchClick}
+        onClick={handleSearchClick}
         className={buttonClassName}
       >
         <SvgIcon

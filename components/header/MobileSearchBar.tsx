@@ -9,9 +9,15 @@ type Props = {
   value: string;
   onChange: (value: string) => void;
   clearSearch: () => void;
+  onSearchClick: () => void;
 };
 
-const MobileSearchBar = ({ value, onChange, clearSearch }: Props) => {
+const MobileSearchBar = ({
+  value,
+  onChange,
+  clearSearch,
+  onSearchClick,
+}: Props) => {
   const [isSearchActive, setIsSearchActive] = useState(false);
 
   return (
@@ -32,8 +38,14 @@ const MobileSearchBar = ({ value, onChange, clearSearch }: Props) => {
             onFocus={() => {
               setIsSearchActive(true);
             }}
+            onBlur={() => {
+              if (!value.trim()) {
+                setIsSearchActive(false);
+              }
+            }}
             onSearchClick={() => {
               setIsSearchActive(true);
+              onSearchClick();
             }}
             wrapperClassName="relative w-full"
             inputClassName="h-[44px] w-full rounded-full border border-slate-300 bg-white pr-14 pl-5 text-[14px] text-[#163A5F] outline-none placeholder:text-slate-400 focus:border-[#0B5CAB]"

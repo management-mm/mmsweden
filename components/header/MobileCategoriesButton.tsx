@@ -1,9 +1,10 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
+import { usePathname } from 'next/navigation';
 
 import CategoriesBurgerMenu from './CategoriesBurgerMenu';
 import CategoriesMenu from './CategoriesMenu';
@@ -24,8 +25,13 @@ export default function MobileCategoriesButton({
   const [isOpen, setIsOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const t = useTranslations();
+  const pathname = usePathname();
 
   useLockBodyScroll(isOpen);
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
   const handleToggle = () => {
     onToggleBeforeOpen?.();

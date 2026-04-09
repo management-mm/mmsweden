@@ -2,11 +2,9 @@
 
 import React from 'react';
 
-import BaseProviders from './BaseProviders';
+import dynamic from 'next/dynamic';
 
-import CookieConsent from '@components/CookieConsent';
-import AppToastContainer from '@components/common/AppToastContainer';
-import ScrollToTopButton from '@components/common/ScrollToTopButton';
+import BaseProviders from './BaseProviders';
 
 import { useScrollToTop } from '@hooks/useScrollToTop';
 
@@ -17,16 +15,31 @@ type Props = {
   locale: AppLocale;
 };
 
-function PublicAppContent({ children }: { children: React.ReactNode }) {
+const CookieConsent = dynamic(() => import('@components/CookieConsent'), {
+  ssr: false,
+});
+
+const ScrollToTopButton = dynamic(
+  () => import('@components/common/ScrollToTopButton'),
+  {
+    ssr: false,
+  }
+);
+
+const AppToastContainer = dynamic(
+  () => import('@components/common/AppToastContainer'),
+  {
+    ssr: false,
+  }
+);
+
+function PublicUiEnhancements() {
   useScrollToTop();
 
   return (
     <>
       <CookieConsent />
       <ScrollToTopButton />
-
-      {children}
-
       <AppToastContainer />
     </>
   );
@@ -35,7 +48,8 @@ function PublicAppContent({ children }: { children: React.ReactNode }) {
 export default function PublicProviders({ children, locale }: Props) {
   return (
     <BaseProviders locale={locale}>
-      <PublicAppContent>{children}</PublicAppContent>
+      {children}
+      <PublicUiEnhancements />
     </BaseProviders>
   );
 }

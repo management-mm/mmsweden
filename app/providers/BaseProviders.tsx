@@ -1,7 +1,6 @@
 'use client';
 
 import React, { createContext, useEffect } from 'react';
-import { HelmetProvider } from 'react-helmet-async';
 import { Provider as ReduxProvider } from 'react-redux';
 
 import { setupApiInterceptors } from '@store/api';
@@ -18,7 +17,7 @@ export const LocaleContext = createContext<AppLocale>('en');
 
 let interceptorsInitialized = false;
 
-export default function BaseProviders({ children, locale }: Props) {
+function InterceptorsInitializer() {
   useEffect(() => {
     if (interceptorsInitialized) return;
 
@@ -26,10 +25,15 @@ export default function BaseProviders({ children, locale }: Props) {
     interceptorsInitialized = true;
   }, []);
 
+  return null;
+}
+
+export default function BaseProviders({ children, locale }: Props) {
   return (
     <LocaleContext.Provider value={locale}>
       <ReduxProvider store={store}>
-        <HelmetProvider>{children}</HelmetProvider>
+        <InterceptorsInitializer />
+        {children}
       </ReduxProvider>
     </LocaleContext.Provider>
   );

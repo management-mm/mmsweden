@@ -1,13 +1,11 @@
-import DesktopHeader from './DesktopHeader';
-import MobileHeaderShell from './MobileHeaderShell';
+import HeaderContent from './HeaderContent';
 import TopBar from './TopBar';
 
 const Header = () => {
   return (
     <header className="relative z-30 border-b border-slate-200 bg-white">
       <TopBar />
-      <DesktopHeader />
-      <MobileHeaderShell />
+      <HeaderContent />
     </header>
   );
 };

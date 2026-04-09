@@ -1,14 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+
+import dynamic from 'next/dynamic';
 
 import MobileHeader from './MobileHeader';
 
-import MobileMenu from '@components/common/MobileMenu';
-import Navbar from '@components/common/Navbar';
-
 import useMediaQuery from '@hooks/useMediaQuery';
 import useSearchKeyword from '@hooks/useSearchKeyword';
+
+const MobileMenuDrawer = dynamic(() => import('./MobileMenuDrawer'), {
+  ssr: false,
+});
 
 const MobileHeaderShell = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,15 +23,19 @@ const MobileHeaderShell = () => {
       debounceMs: 400,
     });
 
-  const toggleMobileMenu = () => {
-    setIsOpen(prev => !prev);
-  };
+  const openMobileMenu = useCallback(() => {
+    setIsOpen(true);
+  }, []);
+
+  const closeMobileMenu = useCallback(() => {
+    setIsOpen(false);
+  }, []);
 
   return (
     <div className="lg:hidden">
       <div className="container">
         <MobileHeader
-          toggleMobileMenu={toggleMobileMenu}
+          openMobileMenu={openMobileMenu}
           searchValue={searchValue}
           setSearchValue={setSearchValue}
           clearSearch={clearSearch}
@@ -36,17 +43,9 @@ const MobileHeaderShell = () => {
         />
       </div>
 
-      <MobileMenu
-        direction="right"
-        isOpen={isOpen}
-        handleToggleMenu={toggleMobileMenu}
-      >
-        <div className="container">
-          <div className="flex items-center justify-center">
-            <Navbar intent="mobileMenu" />
-          </div>
-        </div>
-      </MobileMenu>
+      {isOpen ? (
+        <MobileMenuDrawer isOpen={isOpen} onClose={closeMobileMenu} />
+      ) : null}
     </div>
   );
 };

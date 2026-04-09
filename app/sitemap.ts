@@ -5,8 +5,8 @@ import { type AppLocale, SUPPORTED_LOCALES } from '@i18n/config';
 type ProductSitemapItem = {
   slug: string;
   updatedAt?: string;
-  categorySlug: string;
-  subcategorySlug: string;
+  seoCategorySlug: string;
+  seoSubcategorySlug: string;
 };
 
 type SeoSubcategorySitemapItem = {
@@ -33,33 +33,39 @@ function getSiteUrl() {
 }
 
 function getApiUrl() {
-  return process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') ?? '';
+  return (
+    process.env.API_URL?.replace(/\/$/, '') ||
+    process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') ||
+    'https://mmsweden-server.onrender.com'
+  );
+}
+
+async function safeFetchJson<T>(url: string): Promise<T> {
+  try {
+    const res = await fetch(url, {
+      next: { revalidate: 3600 },
+    });
+
+    if (!res.ok) {
+      return [] as T;
+    }
+
+    return res.json();
+  } catch {
+    return [] as T;
+  }
 }
 
 async function getProductsForSitemap(): Promise<ProductSitemapItem[]> {
   const apiUrl = getApiUrl();
-  if (!apiUrl) return [];
-
-  const res = await fetch(`${apiUrl}/products/sitemap`, {
-    next: { revalidate: 3600 },
-  });
-
-  if (!res.ok) return [];
-
-  return res.json();
+  return safeFetchJson<ProductSitemapItem[]>(`${apiUrl}/products/sitemap`);
 }
 
 async function getSeoCategoriesForSitemap(): Promise<SeoCategorySitemapItem[]> {
   const apiUrl = getApiUrl();
-  if (!apiUrl) return [];
-
-  const res = await fetch(`${apiUrl}/seo-categories/tree?activeOnly=true`, {
-    next: { revalidate: 3600 },
-  });
-
-  if (!res.ok) return [];
-
-  return res.json();
+  return safeFetchJson<SeoCategorySitemapItem[]>(
+    `${apiUrl}/seo-categories/tree?activeOnly=true`
+  );
 }
 
 function buildLocalizedUrl(siteUrl: string, locale: AppLocale, path: string) {
@@ -86,6 +92,10 @@ function safeDate(value?: string) {
   return Number.isNaN(date.getTime()) ? undefined : date;
 }
 
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = getSiteUrl();
 
@@ -102,9 +112,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }))
   );
 
-  const validCategories = categories.filter(
-    category =>
-      typeof category.slug === 'string' && category.slug.trim().length > 0
+  const validCategories = categories.filter(category =>
+    isNonEmptyString(category.slug)
   );
 
   const categoryEntries: MetadataRoute.Sitemap = SUPPORTED_LOCALES.flatMap(
@@ -124,11 +133,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     locale =>
       validCategories.flatMap(category =>
         (category.subcategories ?? [])
-          .filter(
-            subcategory =>
-              typeof subcategory.slug === 'string' &&
-              subcategory.slug.trim().length > 0
-          )
+          .filter(subcategory => isNonEmptyString(subcategory.slug))
           .map(subcategory => {
             const subcategoryPath = `/all-products/${category.slug}/${subcategory.slug}`;
 
@@ -143,18 +148,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const validProducts = products.filter(
     product =>
-      typeof product.slug === 'string' &&
-      product.slug.trim().length > 0 &&
-      typeof product.categorySlug === 'string' &&
-      product.categorySlug.trim().length > 0 &&
-      typeof product.subcategorySlug === 'string' &&
-      product.subcategorySlug.trim().length > 0
+      isNonEmptyString(product.slug) &&
+      isNonEmptyString(product.seoCategorySlug) &&
+      isNonEmptyString(product.seoSubcategorySlug)
   );
 
   const productEntries: MetadataRoute.Sitemap = SUPPORTED_LOCALES.flatMap(
     locale =>
       validProducts.map(product => {
-        const productPath = `/all-products/${product.categorySlug}/${product.subcategorySlug}/${product.slug}`;
+        const productPath = `/all-products/${product.seoCategorySlug}/${product.seoSubcategorySlug}/${product.slug}`;
 
         return {
           url: buildLocalizedUrl(siteUrl, locale, productPath),
@@ -164,10 +166,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       })
   );
 
-  return [
+  const allEntries = [
     ...staticEntries,
     ...categoryEntries,
     ...subcategoryEntries,
     ...productEntries,
   ];
+
+  const uniqueEntries = Array.from(
+    new Map(allEntries.map(entry => [entry.url, entry])).values()
+  );
+
+  return uniqueEntries;
 }

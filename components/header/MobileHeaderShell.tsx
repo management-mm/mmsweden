@@ -7,18 +7,18 @@ import MobileHeader from './MobileHeader';
 import MobileMenu from '@components/common/MobileMenu';
 import Navbar from '@components/common/Navbar';
 
-type Props = {
-  searchValue: string;
-  setSearchValue: (value: string) => void;
-  clearSearch: () => void;
-};
+import useMediaQuery from '@hooks/useMediaQuery';
+import useSearchKeyword from '@hooks/useSearchKeyword';
 
-const MobileHeaderShell = ({
-  searchValue,
-  setSearchValue,
-  clearSearch,
-}: Props) => {
+const MobileHeaderShell = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const isMobile = useMediaQuery('(max-width: 1023px)');
+
+  const { searchValue, setSearchValue, clearSearch, commitSearch } =
+    useSearchKeyword({
+      enabled: isMobile,
+      debounceMs: 400,
+    });
 
   const toggleMobileMenu = () => {
     setIsOpen(prev => !prev);
@@ -32,6 +32,7 @@ const MobileHeaderShell = ({
           searchValue={searchValue}
           setSearchValue={setSearchValue}
           clearSearch={clearSearch}
+          commitSearch={commitSearch}
         />
       </div>
 

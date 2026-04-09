@@ -23,7 +23,7 @@ type Props = {
   setSelectedParentId: Dispatch<SetStateAction<string | null>>;
   language: AppLocale;
   selectedParent?: ISeoCategory;
-  mode: 'filters' | 'header';
+  mode: 'filters' | 'header' | 'mobile';
   isLoading?: boolean;
 };
 
@@ -51,11 +51,13 @@ export default function MobileCategoriesMenu({
     <div
       className={clsx(
         'w-full overflow-x-hidden',
-        mode === 'filters' && 'h-[350px] overflow-y-scroll'
+        mode === 'filters' && 'h-[350px] overflow-y-scroll',
+        mode === 'mobile' && 'overflow-visible'
       )}
     >
       {categories.map(category => {
         const isOpen = String(category._id) === selectedParentId;
+        const currentSubcategories = isOpen ? subcategories : [];
 
         return (
           <div key={String(category._id)} className="border-b border-slate-200">
@@ -88,15 +90,15 @@ export default function MobileCategoriesMenu({
               <div className="overflow-x-hidden bg-white px-[16px] pb-[16px]">
                 <div className="flex flex-col">
                   <Link
-                    href={`/all-products/${selectedParent?.slug}`}
+                    href={`/all-products/${category.slug}`}
                     className="block py-[8px] pl-[16px] text-[14px] break-words whitespace-normal"
                   >
                     {t(Title.All)}
                   </Link>
 
-                  {subcategories.map(subcategory => (
+                  {currentSubcategories.map(subcategory => (
                     <Link
-                      href={`/all-products/${selectedParent?.slug}/${subcategory.slug}`}
+                      href={`/all-products/${category.slug}/${subcategory.slug}`}
                       key={String(subcategory._id)}
                       className="block py-[8px] pl-[16px] text-[14px] break-words whitespace-normal"
                     >

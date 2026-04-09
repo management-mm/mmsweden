@@ -5,7 +5,7 @@ import Skeleton from 'react-loading-skeleton';
 import clsx from 'clsx';
 
 type Props = {
-  mode: 'filters' | 'header';
+  mode: 'filters' | 'header' | 'mobile';
   itemsCount?: number;
 };
 
@@ -17,7 +17,8 @@ export default function MobileCategoriesMenuSkeleton({
     <div
       className={clsx(
         'w-full overflow-x-hidden',
-        mode === 'filters' && 'h-[350px] overflow-y-scroll'
+        mode === 'filters' && 'h-[350px] overflow-y-scroll',
+        mode === 'mobile' && 'overflow-visible'
       )}
     >
       {Array.from({ length: itemsCount }).map((_, index) => (

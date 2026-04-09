@@ -12,6 +12,7 @@ type MobileHeaderProps = {
   searchValue: string;
   setSearchValue: (value: string) => void;
   clearSearch: () => void;
+  commitSearch: () => void;
 };
 
 export default function MobileHeader({
@@ -19,6 +20,7 @@ export default function MobileHeader({
   searchValue,
   setSearchValue,
   clearSearch,
+  commitSearch,
 }: MobileHeaderProps) {
   return (
     <div className="py-3">
@@ -40,6 +42,7 @@ export default function MobileHeader({
         value={searchValue}
         onChange={setSearchValue}
         clearSearch={clearSearch}
+        onSearchClick={commitSearch}
       />
     </div>
   );

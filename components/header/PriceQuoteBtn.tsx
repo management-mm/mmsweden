@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
 
@@ -15,10 +17,15 @@ import { IconId } from '@enums/iconsSpriteId';
 const PriceQuoteBtn = () => {
   const requestedProducts = useAppSelector(selectRequestedProducts);
   const t = useTranslations();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <NavLinkBtn
-      intent={'accent'}
+      intent="accent"
       className="h-[38px] w-[48px] p-0 md:h-[48px] md:min-w-[145px] md:px-[14px]"
       href="/my-price-quote"
     >
@@ -28,7 +35,8 @@ const PriceQuoteBtn = () => {
           size={{ width: 18, height: 18 }}
           className="fill-primary md:mr-[12px]"
         />
-        {requestedProducts.length !== 0 && (
+
+        {mounted && requestedProducts.length !== 0 && (
           <span
             className={clsx(
               'bg-primary font-inter text-secondary absolute rounded-full text-center text-[10px] font-black',

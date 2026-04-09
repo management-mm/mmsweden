@@ -66,6 +66,8 @@ const LanguageSelect = () => {
 
   return (
     <Select<ILanguageOption, false>
+      instanceId="language-select"
+      inputId="language-select-input"
       value={currentValue}
       options={options}
       isSearchable={false}

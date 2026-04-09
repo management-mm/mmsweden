@@ -2,8 +2,10 @@
 
 import { useContext } from 'react';
 
-import { LocaleContext } from 'app/providers';
+import { LocaleContext } from 'app/providers/BaseProviders';
 
-export function useCurrentLocale() {
+import type { AppLocale } from '@i18n/config';
+
+export const useCurrentLocale = (): AppLocale => {
   return useContext(LocaleContext);
-}
+};

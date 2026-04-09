@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import 'react-loading-skeleton/dist/skeleton.css';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';

@@ -28,7 +28,9 @@ const ItemForQuote: FC<IItemsForQuoteProps> = ({
   const { handleToggleFavorites } = useUpdateRequestedProducts(product);
 
   const goToDetails = () => {
-    router.push(`/${language}/all-products/${product.seoCategorySlug}/${product.seoSubcategorySlug}/${slug}`);
+    router.push(
+      `/${language}/all-products/${product.seoCategorySlug}/${product.seoSubcategorySlug}/${slug}`
+    );
   };
 
   return (

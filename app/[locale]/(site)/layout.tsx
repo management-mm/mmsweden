@@ -14,7 +14,6 @@ type Props = {
 
 export default async function SiteLayout({ children, params }: Props) {
   const { locale } = await params;
-
   const safeLocale = locale as AppLocale;
 
   return (

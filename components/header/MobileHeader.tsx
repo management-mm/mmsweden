@@ -1,5 +1,7 @@
 'use client';
 
+import React, { memo } from 'react';
+
 import BurgerMenu from './BurgerMenu';
 import MobileSearchBar from './MobileSearchBar';
 import PriceQuoteBtn from './PriceQuoteBtn';
@@ -8,15 +10,15 @@ import { Logo } from '@components/common/Logo';
 import LanguageSelect from '@components/common/languageSelector/LanguageSelect';
 
 type MobileHeaderProps = {
-  toggleMobileMenu: () => void;
+  openMobileMenu: () => void;
   searchValue: string;
   setSearchValue: (value: string) => void;
   clearSearch: () => void;
   commitSearch: () => void;
 };
 
-export default function MobileHeader({
-  toggleMobileMenu,
+function MobileHeader({
+  openMobileMenu,
   searchValue,
   setSearchValue,
   clearSearch,
@@ -34,7 +36,7 @@ export default function MobileHeader({
           <div className="flex-1">
             <PriceQuoteBtn />
           </div>
-          <BurgerMenu handleToggleMobileMenu={toggleMobileMenu} />
+          <BurgerMenu handleToggleMobileMenu={openMobileMenu} />
         </div>
       </div>
 
@@ -47,3 +49,5 @@ export default function MobileHeader({
     </div>
   );
 }
+
+export default memo(MobileHeader);

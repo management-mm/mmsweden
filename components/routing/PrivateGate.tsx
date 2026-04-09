@@ -48,7 +48,7 @@ export default function PrivateGate({
 
   if (!isHydrated) return <Loader />;
   if (isRefreshing) return <Loader />;
-  if (!isLoggedIn) return <Loader />;
+  if (!isLoggedIn) return null;
 
   return <>{children}</>;
 }

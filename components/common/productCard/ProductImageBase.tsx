@@ -28,11 +28,13 @@ export default function ProductImageBase({
   return (
     <div className="relative h-[218px] w-full rounded-t-[4px]">
       <Image
-        src={optimizeCloudinaryImage(photos[0], 480)}
+        src={optimizeCloudinaryImage(photos[0], 360)}
         alt={altText}
         fill
         unoptimized
         priority={priority}
+        fetchPriority={priority ? 'high' : undefined}
+        loading={priority ? 'eager' : 'lazy'}
         className="rounded-t-[4px] object-cover select-none"
         sizes="(max-width: 768px) 100vw, 296px"
       />

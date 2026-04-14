@@ -4,6 +4,7 @@ import { type FC } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import Image from 'next/image';
+import 'swiper/css';
 
 import NaviArrowSlider from '../NaviArrowSlider';
 
@@ -36,7 +37,7 @@ const ProductHoverSwiper: FC<Props> = ({ photos, alt, onImageClick }) => {
               onClick={() => onImageClick(index)}
             >
               <Image
-                src={optimizeCloudinaryImage(photo, 480)}
+                src={optimizeCloudinaryImage(photo, 360)}
                 alt={alt}
                 fill
                 className="object-cover"

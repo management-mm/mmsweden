@@ -15,9 +15,8 @@ const FiltersAndSearch = ({ isAdmin }: Props) => {
         isAdmin ? 'hidden lg:block' : ''
       )}
     >
-      <Search className="md:hidden lg:block" />
+      <Search />
       <Filters />
-      <Search className="hidden md:block lg:hidden" />
     </aside>
   );
 };

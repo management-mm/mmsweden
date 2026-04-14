@@ -1,8 +1,5 @@
-'use client';
-
-import { useTranslation } from 'react-i18next';
-
 import type { IProduct } from 'interfaces/IProduct';
+import { getTranslations } from 'next-intl/server';
 
 import ResetFilters from './ResetFilters';
 
@@ -24,7 +21,7 @@ type Props = {
 
 const PER_PAGE = 9;
 
-const ProductsList = ({
+const ProductsList = async ({
   initialProducts,
   initialTotal,
   locale,
@@ -32,10 +29,11 @@ const ProductsList = ({
   categorySlug,
   subcategorySlug,
 }: Props) => {
-  const { t } = useTranslation();
+  const t = await getTranslations();
 
   const pageCount = Math.ceil(initialTotal / PER_PAGE);
   const hasAnyFilters = false;
+
   return (
     <section className="pb-[96px] lg:pb-[124px]">
       {hasAnyFilters && <ResetFilters />}
@@ -48,7 +46,7 @@ const ProductsList = ({
         </div>
       ) : (
         <ul className="mb-[32px] flex w-full flex-wrap justify-center gap-[30px] md:justify-normal lg:mb-[44px] lg:w-[852px]">
-          {initialProducts.map(product => (
+          {initialProducts.map((product, index) => (
             <li
               key={product._id}
               className="w-[296px] md:w-[calc((100%-30px)/2)] lg:w-[calc((100%-2*30px)/3)]"
@@ -59,6 +57,7 @@ const ProductsList = ({
                 isAdmin={isAdmin}
                 categorySlug={categorySlug}
                 subcategorySlug={subcategorySlug}
+                priority={index === 0}
               />
             </li>
           ))}

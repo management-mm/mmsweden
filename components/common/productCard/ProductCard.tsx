@@ -8,6 +8,7 @@ import ActionsButtons from './ActionButtons';
 import AdminEditProductButton from './AdminEditProductButton';
 import ProductCondition from './ProductCondition';
 import ProductDetails from './ProductDetails';
+import ProductImageBase from './ProductImageBase';
 import ProductImageHover from './ProductImageHover';
 
 import { AppLocale } from '@i18n/config';
@@ -20,6 +21,8 @@ export interface IProductCardProps {
   isLoading?: boolean;
   categorySlug?: string;
   subcategorySlug?: string;
+  priority?: boolean;
+  interactiveImage?: boolean;
 }
 
 const ProductCard: FC<IProductCardProps> = ({
@@ -39,6 +42,8 @@ const ProductCard: FC<IProductCardProps> = ({
   isLoading = false,
   categorySlug,
   subcategorySlug,
+  priority = false,
+  interactiveImage = true,
 }) => {
   const slug = product.slug;
 
@@ -52,7 +57,21 @@ const ProductCard: FC<IProductCardProps> = ({
       aria-busy={isLoading}
     >
       <div className="relative mb-[8px]">
-        <ProductImageHover photos={photos} name={name} language={language} />
+        {interactiveImage ? (
+          <ProductImageHover
+            photos={photos}
+            name={name}
+            language={language}
+            priority={priority}
+          />
+        ) : (
+          <ProductImageBase
+            photos={photos}
+            name={name}
+            language={language}
+            priority={priority}
+          />
+        )}
 
         {isLoading ? (
           <div className="absolute top-[8px] left-[8px] z-[11]">

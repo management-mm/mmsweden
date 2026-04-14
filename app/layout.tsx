@@ -1,13 +1,8 @@
 import { Suspense } from 'react';
 import 'react-loading-skeleton/dist/skeleton.css';
-import 'react-loading-skeleton/dist/skeleton.css';
 
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
-import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/scrollbar';
-import 'swiper/css/thumbs';
 
 import Sprite from './Sprite';
 import './globals.css';

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import clsx from 'clsx';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -19,6 +19,10 @@ import {
   SUPPORTED_LOCALES,
   isAppLocale,
 } from '@i18n/config';
+
+const supportedLanguageOptions = languageOptions.filter(option =>
+  SUPPORTED_LOCALES.includes(option.language as AppLocale)
+);
 
 const getOptionLabel = (option: ILanguageOption) => {
   if (
@@ -41,31 +45,22 @@ const LanguageSelect = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const currentLocale = useMemo<AppLocale>(() => {
-    const firstSegment = pathname.split('/')[1];
-    return isAppLocale(firstSegment) ? firstSegment : DEFAULT_LOCALE;
-  }, [pathname]);
+  const firstSegment = pathname.split('/')[1];
+  const currentLocale = isAppLocale(firstSegment)
+    ? firstSegment
+    : DEFAULT_LOCALE;
 
-  const isAdmin = useMemo(() => {
-    const segments = pathname.split('/').filter(Boolean);
-
-    if (segments.length === 0) return false;
-
-    if (isAppLocale(segments[0])) {
-      return segments[1] === 'admin';
-    }
-
-    return segments[0] === 'admin';
-  }, [pathname]);
-
-  const options = useMemo<ILanguageOption[]>(() => {
-    return languageOptions.filter(option =>
-      SUPPORTED_LOCALES.includes(option.language as AppLocale)
-    );
-  }, []);
+  const segments = pathname.split('/').filter(Boolean);
+  const isAdmin =
+    segments.length > 0 &&
+    (isAppLocale(segments[0])
+      ? segments[1] === 'admin'
+      : segments[0] === 'admin');
 
   const currentValue =
-    options.find(option => option.language === currentLocale) ?? options[0];
+    supportedLanguageOptions.find(
+      option => option.language === currentLocale
+    ) ?? supportedLanguageOptions[0];
 
   useEffect(() => {
     if (!isOpen) return;
@@ -100,10 +95,10 @@ const LanguageSelect = () => {
       return;
     }
 
-    const segments = pathname.split('/');
-    segments[1] = newLocale;
+    const nextSegments = pathname.split('/');
+    nextSegments[1] = newLocale;
 
-    const nextPathname = segments.join('/') || `/${newLocale}`;
+    const nextPathname = nextSegments.join('/') || `/${newLocale}`;
     const queryString = searchParams.toString();
 
     router.push(queryString ? `${nextPathname}?${queryString}` : nextPathname);
@@ -154,7 +149,7 @@ const LanguageSelect = () => {
       {isOpen && (
         <div className="bg-main absolute right-0 z-20 mt-2 min-w-[70px] rounded-[4px] p-[8px] shadow-lg">
           <ul className="flex flex-col gap-[2px]" role="listbox">
-            {options.map(option => {
+            {supportedLanguageOptions.map(option => {
               const isSelected = option.language === currentLocale;
 
               return (

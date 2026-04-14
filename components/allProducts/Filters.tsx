@@ -49,15 +49,19 @@ const Filters = () => {
         <FoundProducts />
       </div>
 
-      <MobileMenu
-        direction="left"
-        isOpen={isOpen}
-        handleToggleMenu={handleToggleFilters}
-      >
-        <FiltersGroup className="px-[28px] lg:px-0" />
-      </MobileMenu>
+      {isOpen && (
+        <MobileMenu
+          direction="left"
+          isOpen={isOpen}
+          handleToggleMenu={handleToggleFilters}
+        >
+          <FiltersGroup className="px-[28px] lg:px-0" />
+        </MobileMenu>
+      )}
 
-      <FiltersGroup className="hidden lg:block" />
+      <div className="hidden lg:block">
+        <FiltersGroup className="" />
+      </div>
     </>
   );
 };

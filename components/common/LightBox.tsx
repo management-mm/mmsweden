@@ -9,6 +9,7 @@ import {
 } from 'react-zoom-pan-pinch';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import 'swiper/css';
 import { Keyboard } from 'swiper/modules';
 
 import SvgIcon from './SvgIcon';
@@ -68,28 +69,28 @@ const LightBox: FC<ILightBoxProps> = ({
         {currentIndex + 1} / {photos.length}
       </span>
       <div className="absolute top-0 right-0 flex h-[45px] gap-[20px] bg-[rgba(35,35,35,.65)] px-[20px]">
-        <button onClick={() => handleZoomIn(currentIndex)}>
+        <button type="button" onClick={() => handleZoomIn(currentIndex)}>
           <SvgIcon
             className="fill-secondary"
             iconId={IconId.ZoomIn}
             size={{ width: 26, height: 26 }}
           />
         </button>
-        <button onClick={() => handleZoomOut(currentIndex)}>
+        <button type="button" onClick={() => handleZoomOut(currentIndex)}>
           <SvgIcon
             className="fill-secondary"
             iconId={IconId.ZoomOut}
             size={{ width: 26, height: 26 }}
           />
         </button>
-        <button onClick={() => handleResetZoom(currentIndex)}>
+        <button type="button" onClick={() => handleResetZoom(currentIndex)}>
           <SvgIcon
             className="fill-secondary"
             iconId={IconId.ZoomReset}
             size={{ width: 26, height: 26 }}
           />
         </button>
-        <button onClick={() => setCurrentIndex(-1)}>
+        <button type="button" onClick={() => setCurrentIndex(-1)}>
           <SvgIcon
             iconId={IconId.Close}
             size={{ width: 26, height: 26 }}

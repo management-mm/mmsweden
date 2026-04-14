@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import type { IProduct } from '@interfaces/IProduct';
 import clsx from 'clsx';
+import 'swiper/css';
 
 import DecorativeLine from '@components/common/DecorativeLine';
 import NaviArrowSlider from '@components/common/NaviArrowSlider';

@@ -1,6 +1,6 @@
 'use client';
 
-import { type FC, useEffect, useRef, useState } from 'react';
+import { type FC, useEffect, useMemo, useRef, useState } from 'react';
 
 import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
@@ -24,6 +24,10 @@ const Search: FC<ISearchProps> = ({ className }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const searchParamsString = useMemo(
+    () => searchParams.toString(),
+    [searchParams]
+  );
   const titleFromUrl = searchParams.get('title') ?? '';
   const isAdmin = pathname.includes('/admin/email-newsletter');
 
@@ -40,12 +44,12 @@ const Search: FC<ISearchProps> = ({ className }) => {
   }, [titleFromUrl]);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      const trimmedValue = inputValue.trim();
+    const trimmedValue = inputValue.trim();
 
+    const timeout = setTimeout(() => {
       if (trimmedValue === titleFromUrl) return;
 
-      const params = new URLSearchParams(searchParams.toString());
+      const params = new URLSearchParams(searchParamsString);
       params.delete('page');
 
       if (trimmedValue) {
@@ -63,7 +67,7 @@ const Search: FC<ISearchProps> = ({ className }) => {
     }, 300);
 
     return () => clearTimeout(timeout);
-  }, [inputValue, pathname, router, searchParams, titleFromUrl]);
+  }, [inputValue, pathname, router, searchParamsString, titleFromUrl]);
 
   const isEmptyValue = inputValue.trim().length === 0;
 

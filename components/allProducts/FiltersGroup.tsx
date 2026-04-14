@@ -61,34 +61,49 @@ const FiltersGroup: FC<IFiltersGroupProps> = ({ className }) => {
   const industriesIsLoading = useAppSelector(selectIndustriesIsLoading);
 
   useEffect(() => {
+    const shouldFetch =
+      debouncedCategoryKeyword.length > 0 || categories.length === 0;
+
+    if (!shouldFetch) return;
+
     dispatch(
       fetchCategories({
         keyword: debouncedCategoryKeyword,
         lang: language,
       })
     );
-  }, [dispatch, debouncedCategoryKeyword, language]);
+  }, [dispatch, debouncedCategoryKeyword, language, categories.length]);
 
   useEffect(() => {
+    const shouldFetch =
+      debouncedManufacturerKeyword.length > 0 || manufacturers.length === 0;
+
+    if (!shouldFetch) return;
+
     dispatch(
       fetchManufacturers({
         keyword: debouncedManufacturerKeyword,
       })
     );
-  }, [dispatch, debouncedManufacturerKeyword]);
+  }, [dispatch, debouncedManufacturerKeyword, manufacturers.length]);
 
   useEffect(() => {
+    const shouldFetch =
+      debouncedIndustryKeyword.length > 0 || industries.length === 0;
+
+    if (!shouldFetch) return;
+
     dispatch(
       fetchIndustries({
         keyword: debouncedIndustryKeyword,
         lang: language,
       })
     );
-  }, [dispatch, debouncedIndustryKeyword, language]);
+  }, [dispatch, debouncedIndustryKeyword, language, industries.length]);
 
   return (
     <div className={className}>
-      <CategoriesMenu mode={'filters'} />
+      <CategoriesMenu mode="filters" />
 
       <FilterWrapper
         filterName={filters.Manufacturer}

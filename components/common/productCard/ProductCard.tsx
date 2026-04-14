@@ -8,7 +8,7 @@ import ActionsButtons from './ActionButtons';
 import AdminEditProductButton from './AdminEditProductButton';
 import ProductCondition from './ProductCondition';
 import ProductDetails from './ProductDetails';
-import ProductImage from './ProductImage';
+import ProductImageHover from './ProductImageHover';
 
 import { AppLocale } from '@i18n/config';
 
@@ -52,12 +52,7 @@ const ProductCard: FC<IProductCardProps> = ({
       aria-busy={isLoading}
     >
       <div className="relative mb-[8px]">
-        <ProductImage
-          isLoading={isLoading}
-          photos={photos}
-          name={name}
-          language={language}
-        />
+        <ProductImageHover photos={photos} name={name} language={language} />
 
         {isLoading ? (
           <div className="absolute top-[8px] left-[8px] z-[11]">

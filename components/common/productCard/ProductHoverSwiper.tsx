@@ -14,10 +14,10 @@ import { optimizeCloudinaryImage } from '@utils/cloudinary';
 interface Props {
   photos: string[];
   alt: string;
-  setCurrentIndex: (index: number) => void;
+  onImageClick: (index: number) => void;
 }
 
-const ProductHoverSwiper: FC<Props> = ({ photos, alt, setCurrentIndex }) => {
+const ProductHoverSwiper: FC<Props> = ({ photos, alt, onImageClick }) => {
   const { handlePrev, handleNext, onSwiperInit } = useSwiperNavigation();
 
   return (
@@ -30,21 +30,22 @@ const ProductHoverSwiper: FC<Props> = ({ photos, alt, setCurrentIndex }) => {
       >
         {photos.map((photo, index) => (
           <SwiperSlide key={`${photo}-${index}`} className="photo-slide">
-            <div
-              className="relative h-[218px] w-full overflow-hidden rounded-[4px]"
-              onClick={() => setCurrentIndex(index)}
+            <button
+              type="button"
+              className="relative block h-[218px] w-full overflow-hidden rounded-[4px]"
+              onClick={() => onImageClick(index)}
             >
               <Image
-                src={optimizeCloudinaryImage(photo, 320)}
+                src={optimizeCloudinaryImage(photo, 480)}
                 alt={alt}
                 fill
                 className="object-cover"
-                sizes="320px"
+                sizes="(max-width: 768px) 100vw, 296px"
                 unoptimized
                 priority={index === 0}
                 draggable={false}
               />
-            </div>
+            </button>
           </SwiperSlide>
         ))}
 

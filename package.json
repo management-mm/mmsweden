@@ -66,6 +66,8 @@
   "devDependencies": {
     "@eslint/js": "^9.9.0",
     "@tailwindcss/postcss": "^4.2.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/fslightbox-react": "^1.7.8",
     "@types/lodash": "^4.17.7",
@@ -79,6 +81,7 @@
     "eslint": "^9.9.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "globals": "^15.9.0",
+    "jsdom": "^29.0.2",
     "postcss": "^8.5.6",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.6",
@@ -86,6 +89,7 @@
     "tailwindcss": "^4.2.1",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
+    "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.1.4"
   }
 }

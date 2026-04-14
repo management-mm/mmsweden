@@ -71,7 +71,7 @@ const DeleteOrSold: FC<IDeleteOrSoldProps> = ({
         type="button"
         onClick={() => onOpenDeleteModal()}
         className={clsx(
-          'mb-[20px] w-full rounded-[32px] py-[10px] text-center',
+          'mb-[20px] w-full cursor-pointer rounded-[32px] py-[10px] text-center',
           isDelete
             ? 'text-secondary border border-red-900 bg-red-900'
             : 'border-primary text-primary border bg-transparent'
@@ -93,7 +93,7 @@ const DeleteOrSold: FC<IDeleteOrSoldProps> = ({
             onOpenSoldModal();
           }}
           className={clsx(
-            'mb-[20px] w-[100px] rounded-[32px] py-[10px] text-center md:w-[calc((100%-12px)/2)]',
+            'mb-[20px] w-[100px] cursor-pointer rounded-[32px] py-[10px] text-center md:w-[calc((100%-12px)/2)]',
             formDeletionDate
               ? 'text-secondary border border-red-900 bg-red-900'
               : 'border-primary text-primary border bg-transparent'

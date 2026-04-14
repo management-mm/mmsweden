@@ -96,6 +96,8 @@ export default function RootLayout({
           <Sprite />
         </Suspense>
         {children}
+
+        <div id="modal-root" />
       </body>
     </html>
   );

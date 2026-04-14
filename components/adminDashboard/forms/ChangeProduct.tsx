@@ -230,6 +230,11 @@ const ChangeProduct = () => {
                             setSoldDateLabel(null);
                           }}
                         />
+                        {soldDateLabel && (
+                          <p className="text-sm text-gray-600">
+                            This product will be deleted on {soldDateLabel}.
+                          </p>
+                        )}
                       </Block>
 
                       <button

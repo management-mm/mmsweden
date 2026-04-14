@@ -24,19 +24,21 @@ const StatusModal: FC<IStatusModalProps> = ({
   if (!modalRoot) return null;
 
   const modalContent = (
-    <div className="overlay fixed top-0 left-0 z-30 flex h-full w-full items-center justify-center bg-[rgba(27,27,27,0.7)]">
+    <div className="fixed inset-0 z-30 flex items-center justify-center bg-[rgba(27,27,27,0.7)]">
       <div
         className={cn(
-          'fixed z-20 flex h-[200px] flex-col items-start rounded-[16px] bg-white px-[40px] py-[40px]',
+          'relative flex min-h-[200px] flex-col items-start rounded-[16px] bg-white px-[40px] py-[40px]',
           className
         )}
       >
         <p className="mb-auto font-semibold">{title}</p>
-        {children}{' '}
+
+        {children}
+
         <button
           type="button"
           onClick={() => {
-            if (handleToggleMenu) handleToggleMenu();
+            handleToggleMenu?.();
           }}
           className="absolute top-[16px] right-[16px]"
         >
@@ -45,6 +47,7 @@ const StatusModal: FC<IStatusModalProps> = ({
       </div>
     </div>
   );
+
   return ReactDOM.createPortal(modalContent, modalRoot);
 };
 

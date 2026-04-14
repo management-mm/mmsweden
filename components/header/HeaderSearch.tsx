@@ -56,21 +56,20 @@ export default function HeaderSearch({
   useEffect(() => {
     setIsMenuOpen(false);
   }, [pathname]);
-
-  const handleFocus = () => {
-    setIsMenuOpen(true);
-    onFocus?.();
-  };
-
   const handleBlur = () => {
     onBlur?.();
   };
 
-  const handleChange = (newValue: string) => {
-    if (typeof onChange === 'function') {
-      onChange(newValue);
+  const handleFocus = () => {
+    if (value.trim()) {
+      setIsMenuOpen(true);
     }
-    setIsMenuOpen(true);
+    onFocus?.();
+  };
+
+  const handleChange = (newValue: string) => {
+    onChange(newValue);
+    setIsMenuOpen(Boolean(newValue.trim()));
   };
 
   const handleSearchClick = () => {
@@ -119,7 +118,7 @@ export default function HeaderSearch({
         />
       </button>
 
-      {isMenuOpen && (
+      {isMenuOpen && value.trim().length >= 2 && (
         <div ref={menuRef}>
           <ProductsListMenu className={productsMenuClassName} />
         </div>

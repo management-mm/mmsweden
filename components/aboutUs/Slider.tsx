@@ -3,6 +3,8 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import Image from 'next/image';
+import 'swiper/css';
+import 'swiper/css/scrollbar';
 import { Autoplay, Scrollbar } from 'swiper/modules';
 
 import photosAboutUsList from '@constants/photosAboutUsList';

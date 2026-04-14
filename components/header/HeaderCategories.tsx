@@ -3,12 +3,16 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
+import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
 
 import CategoriesBurgerMenu from './CategoriesBurgerMenu';
-import CategoriesMenu from './CategoriesMenu';
 
 import { Button } from '@enums/i18nConstants';
+
+const CategoriesMenu = dynamic(() => import('./CategoriesMenu'), {
+  ssr: false,
+});
 
 const HeaderCategories = () => {
   const [isOpen, setIsOpen] = useState(false);

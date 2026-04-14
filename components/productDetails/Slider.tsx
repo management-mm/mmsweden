@@ -7,6 +7,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import dynamic from 'next/dynamic';
 import type SwiperType from 'swiper';
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/thumbs';
 import { FreeMode, Keyboard, Thumbs } from 'swiper/modules';
 
 import NaviArrowSlider from '@components/common/NaviArrowSlider';

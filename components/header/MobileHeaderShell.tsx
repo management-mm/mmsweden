@@ -6,7 +6,6 @@ import dynamic from 'next/dynamic';
 
 import MobileHeader from './MobileHeader';
 
-import useMediaQuery from '@hooks/useMediaQuery';
 import useSearchKeyword from '@hooks/useSearchKeyword';
 
 const MobileMenuDrawer = dynamic(() => import('./MobileMenuDrawer'), {
@@ -15,12 +14,9 @@ const MobileMenuDrawer = dynamic(() => import('./MobileMenuDrawer'), {
 
 const MobileHeaderShell = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const isMobile = useMediaQuery('(max-width: 1023px)');
-
   const { searchValue, setSearchValue, clearSearch, commitSearch } =
     useSearchKeyword({
-      enabled: isMobile,
-      debounceMs: 400,
+      enabled: true,
     });
 
   const openMobileMenu = useCallback(() => {

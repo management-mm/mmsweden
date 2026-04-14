@@ -3,6 +3,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import type { IProduct } from '@interfaces/IProduct';
+import 'swiper/css';
 
 import DecorativeLine from '@components/common/DecorativeLine';
 import SvgIcon from '@components/common/SvgIcon';

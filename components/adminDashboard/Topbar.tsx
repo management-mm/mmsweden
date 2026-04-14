@@ -14,6 +14,7 @@ import MobileMenu from '@components/common/MobileMenu';
 import LanguageSelect from '@components/common/languageSelector/LanguageSelect';
 import BurgerMenu from '@components/header/BurgerMenu';
 
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 import useWindowWidth from '@hooks/useWindowWidth';
 
 import { cn } from '@utils/cn';
@@ -22,6 +23,7 @@ const Topbar = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const pathname = usePathname();
   const windowWidth = useWindowWidth();
+  const locale = useCurrentLocale();
 
   const toggleMobileMenu = () => {
     setIsOpen(prev => !prev);
@@ -39,7 +41,7 @@ const Topbar = () => {
         <BurgerMenu handleToggleMobileMenu={toggleMobileMenu} />
       </div>
 
-      {pathname === '/admin/all-products' ? (
+      {pathname === `/${locale}/admin/all-products` ? (
         <h1
           className={clsx(
             'text-primiry text-[24px] font-semibold',

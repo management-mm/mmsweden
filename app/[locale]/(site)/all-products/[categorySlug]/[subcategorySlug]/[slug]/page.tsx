@@ -134,6 +134,15 @@ function getLocalizedText(
   return fallback;
 }
 
+function getConditionLabel(
+  condition: IProduct['condition'] | undefined
+): string {
+  if (condition === 'new') return 'New';
+  if (condition === 'used') return 'Used';
+
+  return 'Used';
+}
+
 function resolveProductSeoData(
   product: ProductWithSeo,
   locale: AppLocale,
@@ -194,7 +203,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!product) {
     return {
-      title: 'Product Not Found | Meat Machines',
+      title: 'Product Not Found | MMSweden',
       description: 'The requested product could not be found.',
       robots: {
         index: false,
@@ -241,24 +250,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ],
   ]);
 
-  const localizedName = getLocalizedText(product.name, locale, slug);
+  const localizedName = getLocalizedText(product.name, locale, slug).trim();
+  const conditionLabel = getConditionLabel(product.condition);
 
-  const localizedDescription = getLocalizedText(
-    product.description,
-    locale,
-    'Used food processing and packaging equipment.'
-  );
+  const title = `${conditionLabel} ${localizedName} For Sale | MMSweden`;
 
-  const shortDescription =
-    localizedDescription.length > 160
-      ? `${localizedDescription.slice(0, 157)}...`
-      : localizedDescription;
+  const description = `Buy a ${conditionLabel.toLowerCase()} ${localizedName} on MMSweden. We're a specialized reseller of high-quality used food processing and packing machinery`;
 
   const ogImage = product.photos?.[0];
 
   return {
-    title: `${localizedName} | Meat Machines`,
-    description: shortDescription,
+    title,
+    description,
     alternates: {
       canonical: canonicalUrl,
       languages,
@@ -268,8 +271,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       follow: true,
     },
     openGraph: {
-      title: `${localizedName} | Meat Machines`,
-      description: shortDescription,
+      title,
+      description,
       url: canonicalUrl,
       type: 'website',
       images: ogImage
@@ -285,8 +288,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${localizedName} | Meat Machines`,
-      description: shortDescription,
+      title,
+      description,
       images: ogImage ? [ogImage] : [],
     },
   };

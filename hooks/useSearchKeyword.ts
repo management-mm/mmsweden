@@ -4,10 +4,12 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 type UseSearchKeywordOptions = {
   enabled?: boolean;
+  debounceMs?: number;
 };
 
 export default function useSearchKeyword({
   enabled = true,
+  debounceMs = 400,
 }: UseSearchKeywordOptions = {}) {
   const router = useRouter();
   const pathname = usePathname();
@@ -20,6 +22,7 @@ export default function useSearchKeyword({
   const keywordFromUrl = searchParams.get('keyword') ?? '';
   const [searchValue, setSearchValue] = useState(keywordFromUrl);
 
+  const skipNextDebounceRef = useRef(false);
   const lastSyncedValueRef = useRef(keywordFromUrl);
 
   useEffect(() => {
@@ -59,12 +62,31 @@ export default function useSearchKeyword({
     [enabled, pathname, router, searchParams, searchParamsString]
   );
 
+  useEffect(() => {
+    if (!enabled) return;
+
+    if (skipNextDebounceRef.current) {
+      skipNextDebounceRef.current = false;
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      syncToUrl(searchValue);
+    }, debounceMs);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [searchValue, syncToUrl, debounceMs, enabled]);
+
   const clearSearch = useCallback(() => {
+    skipNextDebounceRef.current = true;
     setSearchValue('');
     syncToUrl('');
   }, [syncToUrl]);
 
   const commitSearch = useCallback(() => {
+    skipNextDebounceRef.current = true;
     syncToUrl(searchValue);
   }, [searchValue, syncToUrl]);
 

@@ -56,15 +56,16 @@ export default function HeaderSearch({
   useEffect(() => {
     setIsMenuOpen(false);
   }, [pathname]);
-  const handleBlur = () => {
-    onBlur?.();
-  };
 
   const handleFocus = () => {
     if (value.trim()) {
       setIsMenuOpen(true);
     }
     onFocus?.();
+  };
+
+  const handleBlur = () => {
+    onBlur?.();
   };
 
   const handleChange = (newValue: string) => {
@@ -74,14 +75,14 @@ export default function HeaderSearch({
 
   const handleSearchClick = () => {
     onSearchClick?.();
-    setIsMenuOpen(false);
+    setIsMenuOpen(Boolean(value.trim()));
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       onSearchClick?.();
-      setIsMenuOpen(false);
-      inputRef.current?.blur();
+      setIsMenuOpen(Boolean(value.trim()));
+      return;
     }
 
     if (event.key === 'Escape') {
@@ -118,7 +119,7 @@ export default function HeaderSearch({
         />
       </button>
 
-      {isMenuOpen && value.trim().length >= 2 && (
+      {isMenuOpen && value.trim().length > 0 && (
         <div ref={menuRef}>
           <ProductsListMenu className={productsMenuClassName} />
         </div>

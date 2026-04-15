@@ -49,6 +49,10 @@ function getSiteUrl() {
   return process.env.SITE_URL?.replace(/\/$/, '') ?? 'https://www.mmsweden.se';
 }
 
+function serializeJsonLd(data: unknown) {
+  return JSON.stringify(data).replace(/</g, '\\u003c');
+}
+
 const getProduct = cache(
   async (slug: string): Promise<ProductWithSeo | null> => {
     const baseUrl = getApiUrl();
@@ -195,6 +199,60 @@ function resolveProductSeoData(
   };
 }
 
+function buildBreadcrumbJsonLd(items: Array<{ name: string; item: string }>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((entry, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: entry.name,
+      item: entry.item,
+    })),
+  };
+}
+
+function buildProductJsonLd(params: {
+  product: ProductWithSeo;
+  locale: AppLocale;
+  canonicalUrl: string;
+  localizedName: string;
+  localizedDescription: string;
+}) {
+  const { product, locale, canonicalUrl, localizedName, localizedDescription } =
+    params;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: localizedName,
+    description: localizedDescription,
+    sku: product.idNumber,
+    productID: product.idNumber,
+    image: product.photos ?? [],
+    brand: product.manufacturer
+      ? {
+          '@type': 'Brand',
+          name: product.manufacturer,
+        }
+      : undefined,
+    itemCondition:
+      product.condition === 'new'
+        ? 'https://schema.org/NewCondition'
+        : product.condition === 'used'
+          ? 'https://schema.org/UsedCondition'
+          : undefined,
+    url: canonicalUrl,
+    inLanguage: locale,
+    offers: {
+      '@type': 'Offer',
+      url: canonicalUrl,
+      priceCurrency: 'SEK',
+      availability: 'https://schema.org/InStock',
+    },
+  } satisfies Record<string, unknown>;
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, categorySlug, subcategorySlug, slug } = await params;
   const siteUrl = getSiteUrl();
@@ -338,80 +396,50 @@ export default async function ProductDetailsPage({ params }: Props) {
     'Used food processing and packaging equipment.'
   );
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: localizedName,
-    description: localizedDescription,
-    sku: product.idNumber,
-    productID: product.idNumber,
-    image: product.photos ?? [],
-    brand: product.manufacturer
-      ? {
-          '@type': 'Brand',
-          name: product.manufacturer,
-        }
-      : undefined,
-    itemCondition:
-      product.condition === 'new'
-        ? 'https://schema.org/NewCondition'
-        : product.condition === 'used'
-          ? 'https://schema.org/UsedCondition'
-          : undefined,
-    url: canonicalUrl,
-    inLanguage: locale,
-  } satisfies Record<string, unknown>;
+  const productJsonLd = buildProductJsonLd({
+    product,
+    locale,
+    canonicalUrl,
+    localizedName,
+    localizedDescription,
+  });
 
-  const breadcrumbJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: `${siteUrl}/${locale}`,
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'All Products',
-        item: `${siteUrl}/${locale}/all-products`,
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: seoData.categoryLabel,
-        item: `${siteUrl}/${locale}/all-products/${seoData.categorySlug}`,
-      },
-      {
-        '@type': 'ListItem',
-        position: 4,
-        name: seoData.subcategoryLabel,
-        item: `${siteUrl}/${locale}/all-products/${seoData.categorySlug}/${seoData.subcategorySlug}`,
-      },
-      {
-        '@type': 'ListItem',
-        position: 5,
-        name: localizedName,
-        item: canonicalUrl,
-      },
-    ],
-  };
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+    {
+      name: 'Home',
+      item: `${siteUrl}/${locale}`,
+    },
+    {
+      name: 'All Products',
+      item: `${siteUrl}/${locale}/all-products`,
+    },
+    {
+      name: seoData.categoryLabel,
+      item: `${siteUrl}/${locale}/all-products/${seoData.categorySlug}`,
+    },
+    {
+      name: seoData.subcategoryLabel,
+      item: `${siteUrl}/${locale}/all-products/${seoData.categorySlug}/${seoData.subcategorySlug}`,
+    },
+    {
+      name: localizedName,
+      item: canonicalUrl,
+    },
+  ]);
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(jsonLd),
+          __html: serializeJsonLd(productJsonLd),
         }}
       />
 
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbJsonLd),
+          __html: serializeJsonLd(breadcrumbJsonLd),
         }}
       />
 

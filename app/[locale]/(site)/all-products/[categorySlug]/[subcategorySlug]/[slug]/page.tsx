@@ -54,7 +54,7 @@ const getProduct = cache(
     const baseUrl = getApiUrl();
 
     const res = await fetch(`${baseUrl}/products/by-slug/${slug}`, {
-      cache: 'no-store',
+      next: { revalidate: 300 },
     });
 
     if (!res.ok) return null;

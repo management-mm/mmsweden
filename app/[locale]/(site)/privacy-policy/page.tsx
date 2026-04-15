@@ -1,3 +1,24 @@
+import type { Metadata } from 'next';
+
+import type { AppLocale } from '@i18n/config';
+import { createPageMetadata } from '@i18n/seo';
+
+type Props = {
+  params: Promise<{ locale: AppLocale }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+
+  return createPageMetadata({
+    locale,
+    path: '/privacy-policy',
+    title: 'Privacy Policy | Meat Machines',
+    description:
+      'Read the privacy policy for Meat Machines and learn how we handle analytics, cookies, and personal data.',
+  });
+}
+
 export default function PrivacyPolicyPage() {
   return (
     <main className="mx-auto max-w-3xl px-4 py-10 text-sm leading-6 text-gray-800">

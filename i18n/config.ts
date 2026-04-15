@@ -9,7 +9,7 @@ export const SUPPORTED_LOCALES = [
   'pl',
 ] as const;
 
-export type AppLocale = 'en' | 'sv' | 'de' | 'fr' | 'es' | 'ru' | 'uk' | 'pl';
+export type AppLocale = (typeof SUPPORTED_LOCALES)[number];
 
 export const DEFAULT_LOCALE: AppLocale = 'en';
 

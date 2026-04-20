@@ -198,6 +198,17 @@
     "QuickTipText": "Überprüfen Sie die URL auf Tippfehler oder nutzen Sie die Startseite, um das Gesuchte zu finden.",
     "Homepage": "Startseite",
     "AllProducts": "Alle Produkte",
-    "ErrorCode": "Fehlercode"
+    "ErrorCode": "Fehlercode",
+
+    "NoProductsFound": "Keine Produkte gefunden",
+    "NoProductsFoundDesc": "Versuchen Sie, Ihre Suchanfrage zu ändern oder die Rechtschreibung des eingegebenen Textes zu überprüfen.",
+    "NoMatching": "Keine passenden Produkte",
+    "NoMatchingDesc": "Versuchen Sie, einige Filter zu ändern oder zurückzusetzen, um mehr verfügbare Produkte anzuzeigen.",
+    "NoProductsCategory": "Noch keine Produkte in dieser Kategorie",
+    "NoProductsCategoryDesc": "Für diese Kategorie wurden noch keine Produkte hinzugefügt. Bitte schauen Sie später noch einmal vorbei oder entdecken Sie andere Kategorien.",
+    "NoProductsAvailable": "Keine Produkte verfügbar",
+    "NoProductsAvailableDesc": "Derzeit sind keine Produkte zur Anzeige verfügbar.",
+    "SearchQuery": "Suchanfrage",
+    "Category": "Kategorie"
   }
 }

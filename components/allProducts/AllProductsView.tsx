@@ -97,6 +97,17 @@ const AllProductsView = async ({ mode = 'public', locale, query }: Props) => {
             isAdmin={isAdmin}
             categorySlug={query.categorySlug as string}
             subcategorySlug={query.subcategorySlug as string}
+            hasSearch={Boolean(query.title?.trim())}
+            hasAnyFilters={
+              Boolean(query.manufacturer) ||
+              Boolean(query.condition) ||
+              query.category.length > 0 ||
+              query.industry.length > 0
+            }
+            searchQuery={query.title}
+            categoryName={slugToLabel(
+              query.subcategorySlug || query.categorySlug || ''
+            )}
           />
 
           {isAdmin && (

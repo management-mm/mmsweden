@@ -1,12 +1,10 @@
 import type { IProduct } from 'interfaces/IProduct';
-import { getTranslations } from 'next-intl/server';
 
+import EmptyProductsState from './EmptyProductsState';
 import ResetFilters from './ResetFilters';
 
 import Pagination from '@components/common/Pagination';
 import ProductCard from '@components/common/productCard/ProductCard';
-
-import { Title } from '@enums/i18nConstants';
 
 import { AppLocale } from '@i18n/config';
 
@@ -17,33 +15,49 @@ type Props = {
   isAdmin: boolean;
   categorySlug: string;
   subcategorySlug: string;
+  hasAnyFilters?: boolean;
+  hasSearch?: boolean;
+  searchQuery?: string;
+  categoryName?: string;
 };
 
 const PER_PAGE = 9;
 
-const ProductsList = async ({
+const ProductsList = ({
   initialProducts,
   initialTotal,
   locale,
   isAdmin,
   categorySlug,
   subcategorySlug,
+  hasAnyFilters = false,
+  hasSearch = false,
+  searchQuery,
+  categoryName,
 }: Props) => {
-  const t = await getTranslations();
-
   const pageCount = Math.ceil(initialTotal / PER_PAGE);
-  const hasAnyFilters = false;
+  const isEmpty = initialProducts.length === 0;
+  const hasCategoryContext = Boolean(categorySlug || subcategorySlug);
+
+  const emptyVariant = hasSearch
+    ? 'search'
+    : hasAnyFilters
+      ? 'filters'
+      : hasCategoryContext
+        ? 'category'
+        : 'default';
 
   return (
     <section className="pb-[96px] lg:pb-[124px]">
       {hasAnyFilters && <ResetFilters />}
 
-      {initialProducts.length === 0 && hasAnyFilters ? (
-        <div className="lg:flex lg:w-[852px] lg:justify-center lg:pt-[32px]">
-          <p className="text-title text-center text-[18px] font-medium">
-            {t(Title.NoResults)}
-          </p>
-        </div>
+      {isEmpty ? (
+        <EmptyProductsState
+          variant={emptyVariant}
+          searchQuery={searchQuery}
+          categoryName={categoryName}
+          className="lg:w-[852px]"
+        />
       ) : (
         <ul className="mb-[32px] flex w-full flex-wrap justify-center gap-[30px] md:justify-normal lg:mb-[44px] lg:w-[852px]">
           {initialProducts.map((product, index) => (
@@ -64,7 +78,7 @@ const ProductsList = async ({
         </ul>
       )}
 
-      {pageCount > 1 && <Pagination pageCount={pageCount} />}
+      {!isEmpty && pageCount > 1 && <Pagination pageCount={pageCount} />}
     </section>
   );
 };

@@ -198,6 +198,16 @@
     "QuickTipText": "Kontrollera webbadressen efter fel eller använd startsidan för att hitta det du söker.",
     "Homepage": "Startsida",
     "AllProducts": "Alla produkter",
-    "ErrorCode": "Felkod"
+    "ErrorCode": "Felkod",
+    "NoProductsFound": "Inga produkter hittades",
+    "NoProductsFoundDesc": "Försök att ändra din sökfråga eller kontrollera stavningen av den angivna texten.",
+    "NoMatching": "Inga matchande produkter",
+    "NoMatchingDesc": "Försök att ändra eller återställa vissa filter för att se fler tillgängliga produkter.",
+    "NoProductsCategory": "Inga produkter i denna kategori ännu",
+    "NoProductsCategoryDesc": "Produkter för denna kategori har ännu inte lagts till. Kom gärna tillbaka senare eller utforska andra kategorier.",
+    "NoProductsAvailable": "Inga produkter tillgängliga",
+    "NoProductsAvailableDesc": "Det finns för närvarande inga produkter att visa.",
+    "SearchQuery": "Sökfråga",
+    "Category": "Kategori"
   }
 }

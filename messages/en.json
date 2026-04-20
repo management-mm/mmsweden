@@ -198,6 +198,17 @@
     "QuickTipText": "Try checking the URL for typos or use the homepage to find what you need.",
     "Homepage": "Homepage",
     "AllProducts": "All Products",
-    "ErrorCode": "Error code"
+    "ErrorCode": "Error code",
+
+    "NoProductsFound": "No products found",
+    "NoProductsFoundDesc": "Try changing your search query or check the spelling of the entered text.",
+    "NoMatching": "No matching products",
+    "NoMatchingDesc": "Try changing or resetting some filters to see more available products.",
+    "NoProductsCategory": "No products in this category yet",
+    "NoProductsCategoryDesc": "Products for this category have not been added yet. Please check back later or explore other categories.",
+    "NoProductsAvailable": "No products available",
+    "NoProductsAvailableDesc": "There are currently no products to display.",
+    "SearchQuery": "Search query",
+    "Category": "Category"
   }
 }

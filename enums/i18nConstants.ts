@@ -215,4 +215,15 @@ export enum NotFoundText {
   Homepage = 'NotFoundText.Homepage',
   AllProducts = 'NotFoundText.AllProducts',
   ErrorCode = 'NotFoundText.ErrorCode',
+
+  NoProductsFound = 'NotFoundText.NoProductsFound',
+  NoProductsFoundDesc = 'NotFoundText.NoProductsFoundDesc',
+  NoMatching = 'NotFoundText.NoMatching',
+  NoMatchingDesc = 'NotFoundText.NoMatchingDesc',
+  NoProductsCategory = 'NotFoundText.NoProductsCategory',
+  NoProductsCategoryDesc = 'NotFoundText.NoProductsCategoryDesc',
+  NoProductsAvailable = 'NotFoundText.NoProductsAvailable',
+  NoProductsAvailableDesc = 'NotFoundText.NoProductsAvailableDesc',
+  SearchQuery = 'NotFoundText.SearchQuery',
+  Category = 'NotFoundText.Category',
 }

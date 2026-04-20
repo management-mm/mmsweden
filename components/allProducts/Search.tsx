@@ -28,11 +28,11 @@ const Search: FC<ISearchProps> = ({ className }) => {
     () => searchParams.toString(),
     [searchParams]
   );
+
   const titleFromUrl = searchParams.get('title') ?? '';
   const isAdmin = pathname.includes('/admin/email-newsletter');
 
   const [inputValue, setInputValue] = useState(titleFromUrl);
-
   const isUpdatingFromInputRef = useRef(false);
 
   useEffect(() => {
@@ -89,32 +89,26 @@ const Search: FC<ISearchProps> = ({ className }) => {
           onChange={e => setInputValue(e.target.value)}
         />
 
-        {isEmptyValue ? (
+        <button
+          type="button"
+          onClick={handleReset}
+          disabled={isEmptyValue}
+          aria-label={isEmptyValue ? 'Search icon' : 'Reset search'}
+          className={clsx(
+            'absolute right-[18px] flex items-center justify-center',
+            isAdmin ? 'bottom-[16px]' : 'bottom-[14px]',
+            isEmptyValue ? 'pointer-events-none' : ''
+          )}
+        >
           <SvgIcon
-            className={clsx(
-              'fill-desc absolute right-[18px]',
-              isAdmin ? 'bottom-[16px]' : 'bottom-[14px]'
-            )}
-            iconId={IconId.Search}
-            size={{ width: isAdmin ? 16 : 14, height: isAdmin ? 16 : 14 }}
+            className="fill-desc"
+            iconId={isEmptyValue ? IconId.Search : IconId.Reset}
+            size={{
+              width: isEmptyValue ? (isAdmin ? 16 : 14) : 12,
+              height: isEmptyValue ? (isAdmin ? 16 : 14) : 12,
+            }}
           />
-        ) : (
-          <button
-            type="button"
-            onClick={handleReset}
-            className={clsx(
-              'absolute right-[18px]',
-              isAdmin ? 'bottom-[16px]' : 'bottom-[14px]'
-            )}
-            aria-label="Reset search"
-          >
-            <SvgIcon
-              className="fill-desc"
-              iconId={IconId.Reset}
-              size={{ width: 12, height: 12 }}
-            />
-          </button>
-        )}
+        </button>
       </div>
     </label>
   );

@@ -11,8 +11,6 @@ import MobileCategoriesMenuSkeleton from './MobileCategoriesMenuSkeleton';
 
 import SvgIcon from '@components/common/SvgIcon';
 
-import { useCurrentLocale } from '@hooks/useCurrentLocale';
-
 import { Title } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
@@ -24,9 +22,9 @@ type Props = {
   selectedParentId: string | null;
   setSelectedParentId: Dispatch<SetStateAction<string | null>>;
   locale: AppLocale;
-  selectedParent?: ISeoCategory;
   mode: 'filters' | 'header' | 'mobile';
-  isLoading?: boolean;
+  isCategoriesLoading?: boolean;
+  isSubcategoriesLoading?: boolean;
 };
 
 export default function MobileCategoriesMenu({
@@ -35,16 +33,17 @@ export default function MobileCategoriesMenu({
   selectedParentId,
   setSelectedParentId,
   locale,
-  selectedParent,
   mode,
-  isLoading = false,
+  isCategoriesLoading = false,
+  isSubcategoriesLoading = false,
 }: Props) {
   const t = useTranslations();
+
   const handleToggleCategory = (id: string) => {
     setSelectedParentId(prev => (prev === id ? null : id));
   };
 
-  if (isLoading) {
+  if (isCategoriesLoading) {
     return <MobileCategoriesMenuSkeleton mode={mode} />;
   }
 
@@ -52,7 +51,7 @@ export default function MobileCategoriesMenu({
     <div
       className={clsx(
         'w-full overflow-x-hidden',
-        mode === 'filters' && 'h-[350px] overflow-y-scroll',
+        mode === 'filters' && 'h-[350px] overflow-y-auto',
         mode === 'mobile' && 'overflow-visible'
       )}
     >
@@ -97,15 +96,25 @@ export default function MobileCategoriesMenu({
                     {t(Title.All)}
                   </Link>
 
-                  {currentSubcategories.map(subcategory => (
-                    <Link
-                      href={`/${locale}/all-products/${category.slug}/${subcategory.slug}`}
-                      key={String(subcategory._id)}
-                      className="block py-[8px] pl-[16px] text-[14px] break-words whitespace-normal"
-                    >
-                      {subcategory.name[locale]}
-                    </Link>
-                  ))}
+                  {isSubcategoriesLoading ? (
+                    <div className="py-[8px] pl-[16px]">
+                      <div className="space-y-[10px]">
+                        <div className="h-[16px] w-[70%] animate-pulse rounded bg-slate-200" />
+                        <div className="h-[16px] w-[55%] animate-pulse rounded bg-slate-200" />
+                        <div className="h-[16px] w-[65%] animate-pulse rounded bg-slate-200" />
+                      </div>
+                    </div>
+                  ) : (
+                    currentSubcategories.map(subcategory => (
+                      <Link
+                        href={`/${locale}/all-products/${category.slug}/${subcategory.slug}`}
+                        key={String(subcategory._id)}
+                        className="block py-[8px] pl-[16px] text-[14px] break-words whitespace-normal"
+                      >
+                        {subcategory.name[locale]}
+                      </Link>
+                    ))
+                  )}
                 </div>
               </div>
             )}

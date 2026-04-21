@@ -7,8 +7,8 @@ import Video from './Video';
 import Breadcrumb from '@components/common/Breadcrumb';
 
 import { cn } from '@utils/cn';
+import { getBreadcrumbCategories } from '@utils/getBreadcrumbCategoryData';
 import getProductName from '@utils/getProductName';
-import slugToLabel from '@utils/slugToLabel';
 
 import type { AppLocale } from '@i18n/config';
 
@@ -20,30 +20,27 @@ type Props = {
   subcategorySlug?: string;
 };
 
-const Product = ({ product, locale, categorySlug, subcategorySlug }: Props) => {
+const Product = async ({
+  product,
+  locale,
+  categorySlug,
+  subcategorySlug,
+}: Props) => {
   const { name, photos, video } = product;
 
   const productName = name ? getProductName(name, locale) : '';
 
+  const { category, subcategory } = await getBreadcrumbCategories(
+    locale,
+    categorySlug,
+    subcategorySlug
+  );
+
   return (
     <div className={cn('container', 'pt-[12px] md:pt-[22px]')}>
       <Breadcrumb
-        category={
-          categorySlug
-            ? {
-                slug: categorySlug,
-                label: slugToLabel(categorySlug),
-              }
-            : undefined
-        }
-        subcategory={
-          subcategorySlug
-            ? {
-                slug: subcategorySlug,
-                label: slugToLabel(subcategorySlug),
-              }
-            : undefined
-        }
+        category={category}
+        subcategory={subcategory}
         product={
           productName
             ? {

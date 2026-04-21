@@ -7,7 +7,7 @@ import ProductsTotalProvider from './ProductsTotalProvider';
 
 import Breadcrumb from '@components/common/Breadcrumb';
 
-import slugToLabel from '@utils/slugToLabel';
+import { getBreadcrumbCategories } from '@utils/getBreadcrumbCategoryData';
 
 import type { AppLocale } from '@i18n/config';
 
@@ -44,8 +44,11 @@ const AllProductsView = async ({ mode = 'public', locale, query }: Props) => {
     lang: locale,
   });
 
-  const categorySlug = query.categorySlug || '';
-  const subcategorySlug = query.subcategorySlug || '';
+  const { category, subcategory } = await getBreadcrumbCategories(
+    locale,
+    query.categorySlug,
+    query.subcategorySlug
+  );
 
   return (
     <ProductsTotalProvider total={total}>
@@ -57,24 +60,7 @@ const AllProductsView = async ({ mode = 'public', locale, query }: Props) => {
         )}
       >
         {!isAdmin && (
-          <Breadcrumb
-            category={
-              categorySlug
-                ? {
-                    slug: categorySlug,
-                    label: slugToLabel(categorySlug),
-                  }
-                : undefined
-            }
-            subcategory={
-              subcategorySlug
-                ? {
-                    slug: subcategorySlug,
-                    label: slugToLabel(subcategorySlug),
-                  }
-                : undefined
-            }
-          />
+          <Breadcrumb category={category} subcategory={subcategory} />
         )}
 
         <div className="flex flex-col lg:flex-row lg:justify-start lg:gap-[30px]">
@@ -105,9 +91,7 @@ const AllProductsView = async ({ mode = 'public', locale, query }: Props) => {
               query.industry.length > 0
             }
             searchQuery={query.title}
-            categoryName={slugToLabel(
-              query.subcategorySlug || query.categorySlug || ''
-            )}
+            categoryName={subcategory?.label || category?.label || ''}
           />
 
           {isAdmin && (

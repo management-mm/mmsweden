@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import type { MultiLanguageString } from '@interfaces/IProduct';
 import dynamic from 'next/dynamic';
@@ -36,8 +36,16 @@ export default function ProductImageHover({
   const [currentIndex, setCurrentIndex] = useState(-1);
 
   const altText = name ? getProductName(name, locale) : '';
+  const hasMultiplePhotos = photos.length > 1;
+  const isLightboxOpen = currentIndex !== -1;
 
-  if (!photos.length) {
+  useEffect(() => {
+    if (isLightboxOpen) {
+      setIsHovered(false);
+    }
+  }, [isLightboxOpen]);
+
+  if (!photos.length || !hasMultiplePhotos) {
     return (
       <ProductImageBase
         photos={photos}
@@ -51,11 +59,18 @@ export default function ProductImageHover({
   return (
     <>
       <div
-        className="relative h-[218px] w-full"
+        className="relative h-[218px] w-full overflow-hidden rounded-t-[8px]"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        onFocus={() => setIsHovered(true)}
+        onBlur={() => setIsHovered(false)}
       >
-        <div className={isHovered ? 'opacity-0' : 'opacity-100'}>
+        <div
+          className={[
+            'absolute inset-0 transition-opacity duration-300',
+            isHovered ? 'pointer-events-none opacity-0' : 'opacity-100',
+          ].join(' ')}
+        >
           <ProductImageBase
             photos={photos}
             name={name}
@@ -64,16 +79,21 @@ export default function ProductImageHover({
           />
         </div>
 
-        {isHovered && (
+        <div
+          className={[
+            'absolute inset-0 transition-opacity duration-300',
+            isHovered ? 'opacity-100' : 'pointer-events-none opacity-0',
+          ].join(' ')}
+        >
           <HoverSwiper
             photos={photos}
             alt={altText}
             onImageClick={setCurrentIndex}
           />
-        )}
+        </div>
       </div>
 
-      {currentIndex !== -1 && (
+      {isLightboxOpen && (
         <LightBox
           photos={photos}
           currentIndex={currentIndex}

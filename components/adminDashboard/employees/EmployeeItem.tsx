@@ -31,7 +31,7 @@ const EmployeeItem: FC<IEmployeeItemProps> = ({
   onDelete,
   isOrdering = false,
 }) => {
-  const language = useCurrentLocale();
+  const locale = useCurrentLocale();
 
   const [isEditing, setIsEditing] = useState(false);
   const [confirmAction, setConfirmAction] = useState<'save' | 'delete' | null>(
@@ -40,9 +40,9 @@ const EmployeeItem: FC<IEmployeeItemProps> = ({
   const [pendingValues, setPendingValues] =
     useState<IEditEmployeeFormValues | null>(null);
 
-  const currentName = employee.name?.[language] ?? employee.name?.en ?? '';
+  const currentName = employee.name?.[locale] ?? employee.name?.en ?? '';
   const currentDescription =
-    employee.description?.[language] ?? employee.description?.en ?? '';
+    employee.description?.[locale] ?? employee.description?.en ?? '';
 
   const handleRequestSave = (values: IEditEmployeeFormValues) => {
     setPendingValues(values);
@@ -67,14 +67,14 @@ const EmployeeItem: FC<IEmployeeItemProps> = ({
             ? pendingValues.name
             : {
                 ...employee.name,
-                [language]: pendingValues.name,
+                [locale]: pendingValues.name,
               },
         description:
           typeof pendingValues.description === 'object'
             ? pendingValues.description
             : {
                 ...employee.description,
-                [language]: pendingValues.description,
+                [locale]: pendingValues.description,
               },
         phone: pendingValues.phone,
         additionalInfo: pendingValues.additionalInfo,
@@ -125,7 +125,7 @@ const EmployeeItem: FC<IEmployeeItemProps> = ({
           <EditEmployeeForm
             setIsEditing={setIsEditing}
             employee={employee}
-            language={language}
+            locale={locale}
             currentName={employee.name}
             currentDescription={employee.description}
             onRequestSave={handleRequestSave}

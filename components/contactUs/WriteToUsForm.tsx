@@ -25,7 +25,7 @@ const WriteToUsForm = () => {
   const [loading, setLoading] = useState(false);
   const { notifySuccess, notifyError } = useNotify();
 
-  const language = useCurrentLocale();
+  const locale = useCurrentLocale();
 
   return (
     <>
@@ -68,7 +68,7 @@ const WriteToUsForm = () => {
                   message,
                 });
 
-                notifySuccess(response[language]);
+                notifySuccess(response[locale]);
                 actions.resetForm();
               } catch (error: unknown) {
                 if (axios.isAxiosError(error)) {

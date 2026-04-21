@@ -22,27 +22,27 @@ const LightBox = dynamic(() => import('@components/common/LightBox'), {
 interface Props {
   photos: string[];
   name: MultiLanguageString | string;
-  language: AppLocale;
+  locale: AppLocale;
   priority?: boolean;
 }
 
 export default function ProductImageHover({
   photos,
   name,
-  language,
+  locale,
   priority = false,
 }: Props) {
   const [isHovered, setIsHovered] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(-1);
 
-  const altText = name ? getProductName(name, language) : '';
+  const altText = name ? getProductName(name, locale) : '';
 
   if (!photos.length) {
     return (
       <ProductImageBase
         photos={photos}
         name={name}
-        language={language}
+        locale={locale}
         priority={priority}
       />
     );
@@ -59,7 +59,7 @@ export default function ProductImageHover({
           <ProductImageBase
             photos={photos}
             name={name}
-            language={language}
+            locale={locale}
             priority={priority}
           />
         </div>

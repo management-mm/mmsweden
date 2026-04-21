@@ -38,7 +38,7 @@ interface IPhoneProps {
 }
 
 const Phone: FC<IPhoneProps> = ({ className }) => {
-  const language = useCurrentLocale();
+  const locale = useCurrentLocale();
   const t = useTranslations();
   const { setFieldValue } = useFormikContext<any>();
 
@@ -68,7 +68,7 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
           value: translations[DEFAULT_LOCALE],
           label: (
             <PhoneCodeOption
-              name={translations[language] ?? translations[DEFAULT_LOCALE]}
+              name={translations[locale] ?? translations[DEFAULT_LOCALE]}
               callingCode={callingCode}
               flag={flag}
               phoneFormat={phoneFormat}
@@ -82,7 +82,7 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
         value: translations[DEFAULT_LOCALE],
         label: (
           <PhoneCodeOption
-            name={translations[language] ?? translations[DEFAULT_LOCALE]}
+            name={translations[locale] ?? translations[DEFAULT_LOCALE]}
             callingCode={callingCode}
             flag={flag}
             phoneFormat={phoneFormat}
@@ -90,7 +90,7 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
         ),
       };
     });
-  }, [language]);
+  }, [locale]);
 
   const [filteredOptions, setFilteredOptions] =
     useState<ICountryOption[]>(options);

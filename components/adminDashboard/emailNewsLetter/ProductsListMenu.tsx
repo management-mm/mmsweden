@@ -25,7 +25,7 @@ const ProductsListMenu = () => {
   const listRef = useRef<HTMLUListElement | null>(null);
 
   const searchParams = useSearchParams();
-  const language = useCurrentLocale();
+  const locale = useCurrentLocale();
 
   const title = useMemo(() => searchParams.get('title'), [searchParams]);
 
@@ -37,7 +37,7 @@ const ProductsListMenu = () => {
 
       const result = await getProducts({
         ...(title ? { keyword: title } : {}),
-        lang: language,
+        lang: locale,
         page: nextPage,
         perPage: PER_PAGE,
       });
@@ -51,7 +51,7 @@ const ProductsListMenu = () => {
       pageRef.current = nextPage;
       setIsLoading(false);
     },
-    [hasMore, title, language, isLoading]
+    [hasMore, title, locale, isLoading]
   );
 
   useEffect(() => {
@@ -77,7 +77,7 @@ const ProductsListMenu = () => {
 
       const result = await getProducts({
         ...(title ? { keyword: title } : {}),
-        lang: language,
+        lang: locale,
         page: 1,
         perPage: PER_PAGE,
       });
@@ -88,7 +88,7 @@ const ProductsListMenu = () => {
     };
 
     loadInitial();
-  }, [title, language]);
+  }, [title, locale]);
 
   return (
     <div className={cn('w-full')}>

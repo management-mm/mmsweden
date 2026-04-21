@@ -27,7 +27,7 @@ const FormForSale = () => {
   const [loading, setLoading] = useState(false);
   const { notifySuccess, notifyError } = useNotify();
 
-  const language = useCurrentLocale();
+  const locale = useCurrentLocale();
 
   return (
     <>
@@ -83,7 +83,7 @@ const FormForSale = () => {
 
                 const message = await sellToUs(formData);
 
-                notifySuccess(message[language]);
+                notifySuccess(message[locale]);
                 actions.resetForm();
               } catch (error: unknown) {
                 if (axios.isAxiosError(error)) {

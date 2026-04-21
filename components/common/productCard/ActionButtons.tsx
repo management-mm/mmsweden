@@ -17,7 +17,7 @@ import { AppLocale } from '@i18n/config';
 interface IActionsButtonsProps {
   isLoading: boolean;
   product: IProduct;
-  language: AppLocale;
+  locale: AppLocale;
   categorySlug?: string;
   subcategorySlug?: string;
 }
@@ -25,7 +25,7 @@ interface IActionsButtonsProps {
 const ActionsButtons: FC<IActionsButtonsProps> = ({
   isLoading,
   product,
-  language,
+  locale,
   categorySlug,
   subcategorySlug,
 }) => {
@@ -40,7 +40,7 @@ const ActionsButtons: FC<IActionsButtonsProps> = ({
       {!isLoading ? (
         <>
           <Link
-            href={`/${language}/all-products/${categorySlug ?? product.seoCategorySlug}/${subcategorySlug ?? product.seoSubcategorySlug}/${slug}`}
+            href={`/${locale}/all-products/${categorySlug ?? product.seoCategorySlug}/${subcategorySlug ?? product.seoSubcategorySlug}/${slug}`}
             className="border-primary font-inter text-primary hover:bg-primary hover:text-secondary flex h-[40px] w-full items-center justify-center rounded-[32px] border bg-transparent text-[12px] font-semibold transition-colors duration-500"
           >
             {t(Button.ViewDetails)}

@@ -35,7 +35,7 @@ const SelectedProductItem: FC<ISelectedProductItemProps> = ({
   const { setItems } = useContext(SelectedItemsContext);
   const { setSlotItemMap } = useContext(SlotItemMapContext);
 
-  const language = useCurrentLocale();
+  const locale = useCurrentLocale();
   const dispatch = useAppDispatch();
   const handleRemove = () => {
     dispatch(toggleSelectedProducts(item));
@@ -52,7 +52,7 @@ const SelectedProductItem: FC<ISelectedProductItemProps> = ({
     <div className="relative min-h-[100px] w-full" data-swapy-item={itemId}>
       <img
         src={photos[0]}
-        alt={`photo-${getProductName(name, language)}`}
+        alt={`photo-${getProductName(name, locale)}`}
         className="h-full w-full rounded object-cover"
       />
       <button
@@ -64,13 +64,13 @@ const SelectedProductItem: FC<ISelectedProductItemProps> = ({
         <SvgIcon iconId={IconId.Trash} size={{ width: 16, height: 16 }} />
       </button>
       <h3 className="text-primary line-clamp-2 text-[16px] font-semibold uppercase">
-        {name && getProductName(name, language)}
+        {name && getProductName(name, locale)}
       </h3>
       <p className="text-secondary-accent mb-[4px] text-[14px] font-semibold">
         ID NR <span> {idNumber}</span>
       </p>
       <p className="text-desc line-clamp-2 text-[14px]">
-        {description[language]}
+        {description[locale]}
       </p>
     </div>
   );

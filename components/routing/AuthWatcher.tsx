@@ -13,10 +13,10 @@ export default function AuthWatcher() {
   const isLoggedIn = useAppSelector(
     (state: RootState) => state.auth.isLoggedIn
   );
-  const language = useCurrentLocale();
+  const locale = useCurrentLocale();
   useEffect(() => {
     if (!isLoggedIn && error) {
-      router.push(`/${language}/login`);
+      router.push(`/${locale}/login`);
     }
   }, [error, isLoggedIn, router]);
   return null;

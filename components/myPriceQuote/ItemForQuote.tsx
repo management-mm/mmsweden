@@ -24,12 +24,12 @@ const ItemForQuote: FC<IItemsForQuoteProps> = ({
   product: { slug, photos, name, idNumber },
 }) => {
   const router = useRouter();
-  const language = useCurrentLocale();
+  const locale = useCurrentLocale();
   const { handleToggleFavorites } = useUpdateRequestedProducts(product);
 
   const goToDetails = () => {
     router.push(
-      `/${language}/all-products/${product.seoCategorySlug}/${product.seoSubcategorySlug}/${slug}`
+      `/${locale}/all-products/${product.seoCategorySlug}/${product.seoSubcategorySlug}/${slug}`
     );
   };
 
@@ -38,7 +38,7 @@ const ItemForQuote: FC<IItemsForQuoteProps> = ({
       <button type="button" className="mr-[14px]" onClick={goToDetails}>
         <Image
           src={photos[0]}
-          alt={getProductName(name, language)}
+          alt={getProductName(name, locale)}
           width={97}
           height={73}
           unoptimized
@@ -49,7 +49,7 @@ const ItemForQuote: FC<IItemsForQuoteProps> = ({
 
       <div>
         <h3 className="text-[16px] font-semibold">
-          {getProductName(name, language)}
+          {getProductName(name, locale)}
         </h3>
         <p className="text-primary text-[14px] font-medium">
           ID NR #<span>{idNumber}</span>

@@ -17,11 +17,11 @@ import type { AppLocale } from '@i18n/config';
 
 type Props = {
   products: IProduct[];
-  language: AppLocale;
+  locale: AppLocale;
   title: string;
 };
 
-const LatestArrivalsCarousel = ({ products, language, title }: Props) => {
+const LatestArrivalsCarousel = ({ products, locale, title }: Props) => {
   const { handlePrev, handleNext, onSwiperInit } = useSwiperNavigation();
 
   return (
@@ -78,7 +78,7 @@ const LatestArrivalsCarousel = ({ products, language, title }: Props) => {
           {products.map(product => (
             <SwiperSlide key={product._id}>
               <ProductCard
-                language={language}
+                locale={locale}
                 product={product}
                 className="w-[296px] md:w-[264px] lg:w-[264px]"
               />

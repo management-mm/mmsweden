@@ -34,7 +34,7 @@ export default function CategoriesMenu({
   onCloseHeaderMenu,
   triggerRef,
 }: Props) {
-  const language = useCurrentLocale();
+  const locale = useCurrentLocale();
   const windowWidth = useWindowWidth();
   const t = useTranslations();
 
@@ -123,7 +123,7 @@ export default function CategoriesMenu({
       subcategories={subcategories}
       selectedParentId={selectedParentId}
       setSelectedParentId={setSelectedParentId}
-      language={language}
+      locale={locale}
       mode={mode}
       selectedParent={selectedParent}
       isLoading={isCategoriesLoading || isSubcategoriesLoading}
@@ -203,7 +203,7 @@ export default function CategoriesMenu({
                 )}
               >
                 <span className="min-w-0 flex-1 pr-[12px]">
-                  {category.name[language]}
+                  {category.name[locale]}
                 </span>
 
                 <SvgIcon
@@ -219,13 +219,13 @@ export default function CategoriesMenu({
           ) : (
             <div className="min-w-0 flex-1 pt-[24px]">
               <p className="mb-[32px] text-[24px] font-semibold">
-                {selectedParent?.name[language]}
+                {selectedParent?.name[locale]}
               </p>
 
               <div className="grid grid-cols-2 gap-x-[18px]">
                 <div className="min-w-0">
                   <Link
-                    href={`/all-products/${selectedParent?.slug}`}
+                    href={`/${locale}/all-products/${selectedParent?.slug}`}
                     key={String(selectedParentId)}
                     className="hover:bg-secondary block py-[8px] pl-[16px] break-words"
                   >
@@ -234,11 +234,11 @@ export default function CategoriesMenu({
 
                   {subcategories.slice(0, 9).map(subcategory => (
                     <Link
-                      href={`/all-products/${selectedParent?.slug}/${subcategory.slug}`}
+                      href={`/${locale}/all-products/${selectedParent?.slug}/${subcategory.slug}`}
                       key={String(subcategory._id)}
                       className="hover:bg-secondary block py-[8px] pl-[16px] break-words"
                     >
-                      {subcategory.name[language]}
+                      {subcategory.name[locale]}
                     </Link>
                   ))}
                 </div>
@@ -246,11 +246,11 @@ export default function CategoriesMenu({
                 <div className="min-w-0">
                   {subcategories.slice(9).map(subcategory => (
                     <Link
-                      href={`/all-products/${selectedParent?.slug}/${subcategory.slug}`}
+                      href={`/${locale}/all-products/${selectedParent?.slug}/${subcategory.slug}`}
                       key={String(subcategory._id)}
                       className="hover:bg-secondary block py-[8px] pl-[16px] break-words"
                     >
-                      {subcategory.name[language]}
+                      {subcategory.name[locale]}
                     </Link>
                   ))}
                 </div>

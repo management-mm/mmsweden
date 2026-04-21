@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { getNextProductId } from '@api/countersService';
 import { schema } from '@schemas/addProduct';
-import axios from 'axios';
 import { Form, Formik } from 'formik';
 
 import Block from '../Block';

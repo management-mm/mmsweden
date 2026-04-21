@@ -39,7 +39,7 @@ const RecommendedProducts = async ({
   return (
     <RecommendedProductsCarousel
       products={recommendedProducts}
-      language={locale}
+      locale={locale}
       title={title}
       categorySlug={categorySlug}
       subcategorySlug={subcategorySlug}

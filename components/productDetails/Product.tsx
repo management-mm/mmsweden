@@ -80,7 +80,7 @@ const Product = ({ product, locale, categorySlug, subcategorySlug }: Props) => {
             )}
           </div>
 
-          <Details isLoading={false} language={locale} product={product} />
+          <Details isLoading={false} locale={locale} product={product} />
         </div>
 
         {video && (

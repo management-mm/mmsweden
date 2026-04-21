@@ -43,11 +43,7 @@ const LatestArrivals = async ({ locale }: Props) => {
   }
 
   return (
-    <LatestArrivalsCarousel
-      products={products}
-      language={locale}
-      title={title}
-    />
+    <LatestArrivalsCarousel products={products} locale={locale} title={title} />
   );
 };
 

@@ -30,7 +30,7 @@ const ResetFilters = () => {
   const categories = useAppSelector(selectCategories);
   const industries = useAppSelector(selectIndustries);
 
-  const language = useCurrentLocale();
+  const locale = useCurrentLocale();
 
   const [filtersToReset, setFiltersToReset] = useState<
     { value: string; filterName: FilterName }[]
@@ -96,7 +96,7 @@ const ResetFilters = () => {
           onClick={() => handleRemoveOne(filter.filterName, filter.value)}
           className="border-primary bg-secondary text-primary flex items-center gap-[8px] rounded-[32px] border px-[8px] py-[7px] text-[12px]"
         >
-          {getFilterValueTranslation(filter, categories, industries, language)}
+          {getFilterValueTranslation(filter, categories, industries, locale)}
 
           <div className="bg-primary flex h-[12px] w-[12px] items-center justify-center rounded-full">
             <SvgIcon

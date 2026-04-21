@@ -29,7 +29,7 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
   itemName,
   isLoading,
 }) => {
-  const language = useCurrentLocale();
+  const locale = useCurrentLocale();
 
   const [groupedFilters, setGroupedFilters] = useState<
     Record<string, FilterItem[]>
@@ -37,7 +37,7 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
 
   useEffect(() => {
     const grouped = items.reduce<Record<string, FilterItem[]>>((acc, item) => {
-      const characterKey = getFilterItemName(itemName, item, language)
+      const characterKey = getFilterItemName(itemName, item, locale)
         .charAt(0)
         .toUpperCase();
 
@@ -51,8 +51,8 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
 
     Object.keys(grouped).forEach(key => {
       grouped[key].sort((a, b) => {
-        const nameA = getFilterItemName(itemName, a, language).toLowerCase();
-        const nameB = getFilterItemName(itemName, b, language).toLowerCase();
+        const nameA = getFilterItemName(itemName, a, locale).toLowerCase();
+        const nameB = getFilterItemName(itemName, b, locale).toLowerCase();
         return nameA.localeCompare(nameB);
       });
     });
@@ -62,7 +62,7 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
     );
 
     setGroupedFilters(sortedGrouped);
-  }, [items, itemName, language]);
+  }, [items, itemName, locale]);
 
   return (
     <div className="scrollbar-none lg:scrollbar-thin mb-[14px] flex h-[400px] flex-col gap-[16px] overflow-y-scroll">
@@ -82,7 +82,7 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
                 <div className="flex w-full justify-between">
                   {!isLoading ? (
                     <Block
-                      title={getFilterItemName(itemName, item, language)}
+                      title={getFilterItemName(itemName, item, locale)}
                       intent="filter"
                     >
                       <ChangeFilter filterName={itemName} filterValue={item} />

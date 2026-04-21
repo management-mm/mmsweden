@@ -14,11 +14,11 @@ import { AppLocale } from '@i18n/config';
 
 interface IDetailsProps {
   product: IProduct;
-  language: AppLocale;
+  locale: AppLocale;
   isLoading: boolean;
 }
 
-const Details: FC<IDetailsProps> = ({ product, language, isLoading }) => {
+const Details: FC<IDetailsProps> = ({ product, locale, isLoading }) => {
   const t = useTranslations();
 
   const {
@@ -57,7 +57,7 @@ const Details: FC<IDetailsProps> = ({ product, language, isLoading }) => {
             <Skeleton className="!block w-[70%]" />
           </div>
         ) : (
-          <p>{description?.[language] || description?.en}</p>
+          <p>{description?.[locale] || description?.en}</p>
         )}
       </div>
 
@@ -81,7 +81,7 @@ const Details: FC<IDetailsProps> = ({ product, language, isLoading }) => {
             {isLoading ? (
               <Skeleton className="!block w-full max-w-[100px]" />
             ) : (
-              productCategory?.[language] || productCategory?.en
+              productCategory?.[locale] || productCategory?.en
             )}
           </dd>
         </div>
@@ -107,7 +107,7 @@ const Details: FC<IDetailsProps> = ({ product, language, isLoading }) => {
             ) : (
               industries.map((industry, index) => (
                 <span key={industry.en}>
-                  {industry?.[language] || industry?.en}
+                  {industry?.[locale] || industry?.en}
                   {index !== industries.length - 1 && ' | '}
                 </span>
               ))

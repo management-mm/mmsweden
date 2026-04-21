@@ -42,7 +42,7 @@ const FormForRequestQuote = () => {
   const requestedProducts = useAppSelector(selectRequestedProducts);
   const { notifySuccess, notifyError } = useNotify();
 
-  const language = useCurrentLocale();
+  const locale = useCurrentLocale();
 
   return (
     <>
@@ -88,7 +88,7 @@ const FormForRequestQuote = () => {
                 products,
               });
 
-              notifySuccess(response[language]);
+              notifySuccess(response[locale]);
               actions.resetForm();
             } catch (error: unknown) {
               if (axios.isAxiosError(error)) {

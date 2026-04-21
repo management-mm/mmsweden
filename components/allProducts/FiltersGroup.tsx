@@ -50,7 +50,7 @@ const FiltersGroup: FC<IFiltersGroupProps> = ({ className }) => {
   );
   const debouncedIndustryKeyword = useDebouncedValue(industryKeyword, 300);
 
-  const language = useCurrentLocale();
+  const locale = useCurrentLocale();
 
   const categories: ICategory[] = useAppSelector(selectCategories);
   const manufacturers: IManufacturer[] = useAppSelector(selectManufacturers);
@@ -69,10 +69,10 @@ const FiltersGroup: FC<IFiltersGroupProps> = ({ className }) => {
     dispatch(
       fetchCategories({
         keyword: debouncedCategoryKeyword,
-        lang: language,
+        lang: locale,
       })
     );
-  }, [dispatch, debouncedCategoryKeyword, language, categories.length]);
+  }, [dispatch, debouncedCategoryKeyword, locale, categories.length]);
 
   useEffect(() => {
     const shouldFetch =
@@ -96,10 +96,10 @@ const FiltersGroup: FC<IFiltersGroupProps> = ({ className }) => {
     dispatch(
       fetchIndustries({
         keyword: debouncedIndustryKeyword,
-        lang: language,
+        lang: locale,
       })
     );
-  }, [dispatch, debouncedIndustryKeyword, language, industries.length]);
+  }, [dispatch, debouncedIndustryKeyword, locale, industries.length]);
 
   return (
     <div className={className}>

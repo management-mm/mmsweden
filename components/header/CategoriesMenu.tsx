@@ -89,17 +89,17 @@ export default function CategoriesMenu({
   );
 
   const mobileMenuContent = (
-  <MobileCategoriesMenu
-    categories={categories}
-    subcategories={subcategories}
-    selectedParentId={selectedParentId}
-    setSelectedParentId={setSelectedParentId}
-    locale={locale}
-    mode={mode}
-    isCategoriesLoading={isCategoriesLoading}
-    isSubcategoriesLoading={isSubcategoriesLoading}
-  />
-);
+    <MobileCategoriesMenu
+      categories={categories}
+      subcategories={subcategories}
+      selectedParentId={selectedParentId}
+      setSelectedParentId={setSelectedParentId}
+      locale={locale}
+      mode={mode}
+      isCategoriesLoading={isCategoriesLoading}
+      isSubcategoriesLoading={isSubcategoriesLoading}
+    />
+  );
 
   if (categoriesError || subcategoriesError) {
     return <div>Failed to load categories</div>;

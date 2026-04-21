@@ -15,6 +15,10 @@ type UseInfiniteLatestProductsReturn = {
   observerRef: React.RefObject<HTMLDivElement>;
 };
 
+const isAbortError = (error: unknown): boolean => {
+  return error instanceof Error && error.name === 'AbortError';
+};
+
 export const useInfiniteLatestProducts = (
   locale: AppLocale
 ): UseInfiniteLatestProductsReturn => {
@@ -25,18 +29,29 @@ export const useInfiniteLatestProducts = (
 
   const pageRef = useRef(1);
   const observerRef = useRef<HTMLDivElement>(null);
+  const controllerRef = useRef<AbortController | null>(null);
+  const isRequestInFlightRef = useRef(false);
 
   const loadPage = useCallback(
     async (nextPage: number) => {
+      if (isRequestInFlightRef.current) return;
+
+      controllerRef.current?.abort();
+      const controller = new AbortController();
+      controllerRef.current = controller;
+      isRequestInFlightRef.current = true;
       setIsLoading(true);
 
       try {
-        const result = await getProducts({
-          sort: 'latest',
-          perPage: PER_PAGE,
-          page: nextPage,
-          lang: locale,
-        });
+        const result = await getProducts(
+          {
+            sort: 'latest',
+            perPage: PER_PAGE,
+            page: nextPage,
+            lang: locale,
+          },
+          { signal: controller.signal }
+        );
 
         const fetchedProducts = result.products ?? [];
         const newProducts = fetchedProducts.filter(
@@ -52,15 +67,19 @@ export const useInfiniteLatestProducts = (
           return [...prev, ...uniqueNewProducts];
         });
 
-        if (fetchedProducts.length < PER_PAGE) {
-          setHasMore(false);
-        }
-
+        setHasMore(fetchedProducts.length === PER_PAGE);
         pageRef.current = nextPage;
       } catch (error) {
-        console.error(error);
-        setHasMore(false);
+        if (!isAbortError(error)) {
+          console.error(error);
+          setHasMore(false);
+        }
       } finally {
+        if (controllerRef.current === controller) {
+          controllerRef.current = null;
+        }
+
+        isRequestInFlightRef.current = false;
         setIsLoading(false);
         setIsFirstLoading(false);
       }
@@ -70,6 +89,11 @@ export const useInfiniteLatestProducts = (
 
   useEffect(() => {
     const loadInitial = async () => {
+      controllerRef.current?.abort();
+      const controller = new AbortController();
+      controllerRef.current = controller;
+      isRequestInFlightRef.current = true;
+
       setProducts([]);
       setHasMore(true);
       setIsLoading(false);
@@ -77,12 +101,15 @@ export const useInfiniteLatestProducts = (
       pageRef.current = 1;
 
       try {
-        const result = await getProducts({
-          sort: 'latest',
-          perPage: PER_PAGE,
-          page: 1,
-          lang: locale,
-        });
+        const result = await getProducts(
+          {
+            sort: 'latest',
+            perPage: PER_PAGE,
+            page: 1,
+            lang: locale,
+          },
+          { signal: controller.signal }
+        );
 
         const fetchedProducts = result.products ?? [];
         const initialProducts = fetchedProducts.filter(
@@ -92,14 +119,25 @@ export const useInfiniteLatestProducts = (
         setProducts(initialProducts);
         setHasMore(fetchedProducts.length === PER_PAGE);
       } catch (error) {
-        console.error(error);
-        setHasMore(false);
+        if (!isAbortError(error)) {
+          console.error(error);
+          setHasMore(false);
+        }
       } finally {
+        if (controllerRef.current === controller) {
+          controllerRef.current = null;
+        }
+
+        isRequestInFlightRef.current = false;
         setIsFirstLoading(false);
       }
     };
 
     loadInitial();
+
+    return () => {
+      controllerRef.current?.abort();
+    };
   }, [locale]);
 
   useEffect(() => {
@@ -114,7 +152,8 @@ export const useInfiniteLatestProducts = (
           firstEntry.isIntersecting &&
           hasMore &&
           !isLoading &&
-          !isFirstLoading
+          !isFirstLoading &&
+          !isRequestInFlightRef.current
         ) {
           loadPage(pageRef.current + 1);
         }

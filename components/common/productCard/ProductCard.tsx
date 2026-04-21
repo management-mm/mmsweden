@@ -50,13 +50,15 @@ const ProductCard: FC<IProductCardProps> = ({
   return (
     <article
       className={clsx(
-        'border-secondary flex h-[504px] flex-col rounded-[4px] border pb-[20px]',
+        'group border-secondary flex h-[504px] flex-col overflow-hidden rounded-[8px] border bg-white pb-[20px] shadow-sm transition-all duration-300',
+        !isLoading &&
+          'focus-within:-translate-y-1 focus-within:shadow-lg hover:-translate-y-1 hover:shadow-lg',
         className,
         deletionDate && !isLoading && 'opacity-70'
       )}
       aria-busy={isLoading}
     >
-      <div className="relative mb-[8px]">
+      <div className="relative mb-[10px]">
         {interactiveImage ? (
           <ProductImageHover
             photos={photos}
@@ -82,7 +84,7 @@ const ProductCard: FC<IProductCardProps> = ({
         )}
 
         {!isLoading && deletionDate && (
-          <span className="text-secondary absolute top-[8px] right-[8px] z-[11] inline-block rounded-[32px] bg-red-900 px-[6px] py-[3px] text-[12px] leading-tight font-medium uppercase">
+          <span className="text-secondary absolute top-[8px] right-[8px] z-[11] inline-flex items-center rounded-full bg-red-900 px-[8px] py-[4px] text-[12px] leading-none font-medium uppercase shadow-sm">
             Sold
           </span>
         )}
@@ -90,8 +92,8 @@ const ProductCard: FC<IProductCardProps> = ({
 
       <div
         className={clsx(
-          'flex flex-grow flex-col',
-          isAdmin ? 'px-[6px]' : 'px-[14px]'
+          'flex min-h-0 flex-grow flex-col',
+          isAdmin ? 'px-[8px]' : 'px-[14px]'
         )}
       >
         <ProductDetails
@@ -105,19 +107,31 @@ const ProductCard: FC<IProductCardProps> = ({
 
         {isLoading ? (
           <div className="mt-[16px] flex gap-[12px]">
-            <Skeleton height={40} containerClassName="flex-1" />
-            <Skeleton height={40} containerClassName="flex-1" />
+            <Skeleton
+              height={40}
+              borderRadius={999}
+              containerClassName="flex-1"
+            />
+            <Skeleton
+              height={40}
+              borderRadius={999}
+              containerClassName="flex-1"
+            />
           </div>
         ) : isAdmin ? (
-          <AdminEditProductButton locale={locale} slug={slug} />
+          <div className="mt-auto">
+            <AdminEditProductButton locale={locale} slug={slug} />
+          </div>
         ) : (
-          <ActionsButtons
-            locale={locale}
-            isLoading={isLoading}
-            product={product}
-            categorySlug={categorySlug}
-            subcategorySlug={subcategorySlug}
-          />
+          <div className="mt-auto">
+            <ActionsButtons
+              locale={locale}
+              isLoading={isLoading}
+              product={product}
+              categorySlug={categorySlug}
+              subcategorySlug={subcategorySlug}
+            />
+          </div>
         )}
       </div>
     </article>

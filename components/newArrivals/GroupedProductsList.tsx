@@ -16,11 +16,22 @@ import { Title } from '@enums/i18nConstants';
 
 type GroupedProducts = Record<string, IProduct[]>;
 
+const GROUP_TIME_ZONE = 'Europe/Stockholm';
+
+const getDateKey = (date: string | Date): string => {
+  return new Intl.DateTimeFormat('sv-SE', {
+    timeZone: GROUP_TIME_ZONE,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(new Date(date));
+};
+
 const groupProductsByDate = (products: IProduct[]): GroupedProducts => {
   const grouped: GroupedProducts = {};
 
   for (const product of products) {
-    const dateKey = new Date(product.createdAt).toISOString().slice(0, 10);
+    const dateKey = getDateKey(product.createdAt);
     (grouped[dateKey] ??= []).push(product);
   }
 
@@ -52,8 +63,12 @@ export default function GroupedProductsList() {
       .sort(([a], [b]) => new Date(b).getTime() - new Date(a).getTime());
   }, [products]);
 
+  if (isFirstLoading) {
+    return <Loader />;
+  }
+
   return (
-    <>
+    <div aria-busy={isLoading}>
       {groupedEntries.map(([date, items]) => (
         <ProductsGroupSection
           key={date}
@@ -64,9 +79,13 @@ export default function GroupedProductsList() {
         />
       ))}
 
-      {(isFirstLoading || isLoading) && <Loader />}
+      {isLoading && (
+        <div className="flex justify-center py-6">
+          <Loader />
+        </div>
+      )}
 
       {hasMore && <div ref={observerRef} className="h-10 w-full" />}
-    </>
+    </div>
   );
 }

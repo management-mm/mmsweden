@@ -3,8 +3,8 @@ import type { IProduct } from 'interfaces/IProduct';
 
 import type { AppLocale } from '@i18n/config';
 
-const baseUrl =
-  process.env.API_URL || process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '');
+const rawBaseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL;
+const baseUrl = rawBaseUrl?.replace(/\/$/, '');
 
 export interface GetProductsParams {
   lang?: AppLocale;
@@ -25,18 +25,28 @@ export interface GetProductsResponse {
   total: number;
 }
 
-export const fetchRecommendedProductsBySlug = async (
-  slug: string | undefined
-): Promise<IProduct[]> => {
-  const response = await axios.get(
-    `${baseUrl}/products/${slug}/recommended-products`
-  );
-  return response.data;
-};
+interface RequestOptions {
+  signal?: AbortSignal;
+}
 
-export async function getProducts(
-  query: GetProductsParams
-): Promise<GetProductsResponse> {
+function getBaseUrl(): string {
+  if (!baseUrl) {
+    throw new Error(
+      'API URL is not configured. Set API_URL or NEXT_PUBLIC_API_URL.'
+    );
+  }
+
+  return baseUrl;
+}
+
+function buildUrl(path: string, searchParams?: URLSearchParams): string {
+  const queryString = searchParams?.toString();
+  return queryString
+    ? `${getBaseUrl()}${path}?${queryString}`
+    : `${getBaseUrl()}${path}`;
+}
+
+function createProductsSearchParams(query: GetProductsParams): URLSearchParams {
   const searchParams = new URLSearchParams();
 
   if (query.keyword) {
@@ -71,11 +81,11 @@ export async function getProducts(
     searchParams.append('industry', industry);
   });
 
-  if (query.page) {
+  if (typeof query.page === 'number') {
     searchParams.append('page', String(query.page));
   }
 
-  if (query.perPage) {
+  if (typeof query.perPage === 'number') {
     searchParams.append('perPage', String(query.perPage));
   }
 
@@ -83,9 +93,35 @@ export async function getProducts(
     searchParams.append('lang', query.lang);
   }
 
-  const url = `${baseUrl}/products?${searchParams.toString()}`;
+  return searchParams;
+}
+
+export const fetchRecommendedProductsBySlug = async (
+  slug: string | undefined,
+  options: RequestOptions = {}
+): Promise<IProduct[]> => {
+  if (!slug) {
+    return [];
+  }
+
+  const response = await axios.get<IProduct[]>(
+    buildUrl(`/products/${slug}/recommended-products`),
+    {
+      signal: options.signal,
+    }
+  );
+
+  return response.data;
+};
+
+export async function getProducts(
+  query: GetProductsParams,
+  options: RequestOptions = {}
+): Promise<GetProductsResponse> {
+  const url = buildUrl('/products', createProductsSearchParams(query));
 
   const res = await fetch(url, {
+    signal: options.signal,
     next: { revalidate: 60 },
   });
 

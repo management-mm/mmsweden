@@ -2,7 +2,6 @@
 
 import { RefObject, useEffect, useMemo, useState } from 'react';
 
-import { getChildren, getTopLevel } from '@api/categoriesService';
 import { ISeoCategory } from '@interfaces/ISeoCategory';
 import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
@@ -14,6 +13,8 @@ import MobileCategoriesMenu from './MobileCategoriesMenu';
 
 import SvgIcon from '@components/common/SvgIcon';
 
+import { useChildCategories } from '@hooks/queries/useChildCategories';
+import { useTopLevelCategories } from '@hooks/queries/useTopLevelCategories';
 import { useCurrentLocale } from '@hooks/useCurrentLocale';
 import useOutsideAlerter from '@hooks/useOutsideAlerter';
 import useWindowWidth from '@hooks/useWindowWidth';
@@ -39,17 +40,30 @@ export default function CategoriesMenu({
   const t = useTranslations();
 
   const [isOpen, setIsOpen] = useState(mode === 'filters');
-  const [categories, setCategories] = useState<ISeoCategory[]>([]);
-  const [subcategories, setSubcategories] = useState<ISeoCategory[]>([]);
   const [selectedParentId, setSelectedParentId] = useState<string | null>(null);
-
-  const [isCategoriesLoading, setIsCategoriesLoading] = useState(true);
-  const [isSubcategoriesLoading, setIsSubcategoriesLoading] = useState(false);
 
   const isMobileMode = mode === 'mobile';
   const isMobileView = isMobileMode || windowWidth < 1178;
   const isHeaderMode = mode === 'header';
   const isFiltersMode = mode === 'filters';
+
+  const {
+    data: categories = [],
+    isLoading: isCategoriesLoading,
+    error: categoriesError,
+  } = useTopLevelCategories();
+
+  const {
+    data: subcategories = [],
+    isLoading: isSubcategoriesLoading,
+    error: subcategoriesError,
+  } = useChildCategories(selectedParentId);
+
+  useEffect(() => {
+    if (!selectedParentId && categories.length > 0) {
+      setSelectedParentId(String(categories[0]._id));
+    }
+  }, [categories, selectedParentId]);
 
   useEffect(() => {
     if (isFiltersMode) {
@@ -68,49 +82,6 @@ export default function CategoriesMenu({
     triggerRef ? [triggerRef] : []
   );
 
-  useEffect(() => {
-    const loadCategories = async () => {
-      try {
-        setIsCategoriesLoading(true);
-
-        const data = await getTopLevel();
-        setCategories(data);
-
-        if (data.length > 0) {
-          setSelectedParentId(String(data[0]._id));
-        }
-      } catch (error) {
-        console.error('Failed to load top-level categories:', error);
-      } finally {
-        setIsCategoriesLoading(false);
-      }
-    };
-
-    loadCategories();
-  }, []);
-
-  useEffect(() => {
-    if (!selectedParentId) {
-      setSubcategories([]);
-      return;
-    }
-
-    const loadSubcategories = async () => {
-      try {
-        setIsSubcategoriesLoading(true);
-
-        const data = await getChildren(selectedParentId);
-        setSubcategories(data);
-      } catch (error) {
-        console.error('Failed to load subcategories:', error);
-      } finally {
-        setIsSubcategoriesLoading(false);
-      }
-    };
-
-    loadSubcategories();
-  }, [selectedParentId]);
-
   const selectedParent = useMemo(
     () =>
       categories.find(category => String(category._id) === selectedParentId),
@@ -118,17 +89,21 @@ export default function CategoriesMenu({
   );
 
   const mobileMenuContent = (
-    <MobileCategoriesMenu
-      categories={categories}
-      subcategories={subcategories}
-      selectedParentId={selectedParentId}
-      setSelectedParentId={setSelectedParentId}
-      locale={locale}
-      mode={mode}
-      selectedParent={selectedParent}
-      isLoading={isCategoriesLoading || isSubcategoriesLoading}
-    />
-  );
+  <MobileCategoriesMenu
+    categories={categories}
+    subcategories={subcategories}
+    selectedParentId={selectedParentId}
+    setSelectedParentId={setSelectedParentId}
+    locale={locale}
+    mode={mode}
+    isCategoriesLoading={isCategoriesLoading}
+    isSubcategoriesLoading={isSubcategoriesLoading}
+  />
+);
+
+  if (categoriesError || subcategoriesError) {
+    return <div>Failed to load categories</div>;
+  }
 
   if (isHeaderMode && !isOpenHeaderMenu) {
     return null;
@@ -226,7 +201,6 @@ export default function CategoriesMenu({
                 <div className="min-w-0">
                   <Link
                     href={`/${locale}/all-products/${selectedParent?.slug}`}
-                    key={String(selectedParentId)}
                     className="hover:bg-secondary block py-[8px] pl-[16px] break-words"
                   >
                     {t(Title.All)}

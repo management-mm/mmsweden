@@ -6,6 +6,7 @@ import localFont from 'next/font/local';
 
 import Sprite from './Sprite';
 import './globals.css';
+import ReactQueryProvider from './providers/ReactQueryProvider';
 
 import { cn } from '@utils/cn';
 
@@ -90,7 +91,7 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <Sprite />
         </Suspense>
-        {children}
+        <ReactQueryProvider>{children}</ReactQueryProvider>
 
         <div id="modal-root" />
       </body>

@@ -1,8 +1,7 @@
 'use client';
 
-import { RefObject, useEffect, useMemo, useState } from 'react';
+import { type RefObject, useEffect, useMemo, useState } from 'react';
 
-import { ISeoCategory } from '@interfaces/ISeoCategory';
 import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
@@ -46,6 +45,7 @@ export default function CategoriesMenu({
   const isMobileView = isMobileMode || windowWidth < 1178;
   const isHeaderMode = mode === 'header';
   const isFiltersMode = mode === 'filters';
+  const isDesktopHeaderMenu = isHeaderMode && !isMobileView;
 
   const {
     data: categories = [],
@@ -60,10 +60,14 @@ export default function CategoriesMenu({
   } = useChildCategories(selectedParentId);
 
   useEffect(() => {
-    if (!selectedParentId && categories.length > 0) {
-      setSelectedParentId(String(categories[0]._id));
+    if (selectedParentId || categories.length === 0) return;
+
+    if (isDesktopHeaderMenu) {
+      return;
     }
-  }, [categories, selectedParentId]);
+
+    setSelectedParentId(String(categories[0]._id));
+  }, [categories, selectedParentId, isDesktopHeaderMenu]);
 
   useEffect(() => {
     if (isFiltersMode) {
@@ -71,11 +75,18 @@ export default function CategoriesMenu({
     }
   }, [isFiltersMode]);
 
+  useEffect(() => {
+    if (isDesktopHeaderMenu && !isOpenHeaderMenu) {
+      setSelectedParentId(null);
+    }
+  }, [isDesktopHeaderMenu, isOpenHeaderMenu]);
+
   const outsideAlerterRef = useOutsideAlerter(
     () => {
       if (!isHeaderMode) return;
       if (!isOpenHeaderMenu) return;
 
+      setSelectedParentId(null);
       onCloseHeaderMenu?.();
     },
     isHeaderMode && isOpenHeaderMenu,
@@ -87,6 +98,12 @@ export default function CategoriesMenu({
       categories.find(category => String(category._id) === selectedParentId),
     [categories, selectedParentId]
   );
+
+  const handleCategorySelect = (categoryId: string) => {
+    if (categoryId !== selectedParentId) {
+      setSelectedParentId(categoryId);
+    }
+  };
 
   const mobileMenuContent = (
     <MobileCategoriesMenu
@@ -148,10 +165,9 @@ export default function CategoriesMenu({
     <div
       ref={outsideAlerterRef}
       className={clsx(
-        'border-t-primary fixed top-[128px] right-0 bottom-0 left-0 z-50 border-t bg-white md:top-[164px]',
         isMobileView
-          ? 'overflow-hidden'
-          : 'overflow-x-hidden overflow-y-auto rounded-none py-[24px] lg:absolute lg:top-[68px] lg:right-auto lg:bottom-auto lg:left-[-190px] lg:h-auto lg:w-[min(1140px,calc(100vw-60px))] lg:overflow-visible lg:rounded-b-[22px]'
+          ? 'border-t-primary fixed top-[128px] right-0 bottom-0 left-0 z-50 border-t bg-white md:top-[164px]'
+          : 'absolute top-[68px] left-[-190px] z-50'
       )}
     >
       {isMobileView ? (
@@ -161,74 +177,91 @@ export default function CategoriesMenu({
           </div>
         </div>
       ) : isCategoriesLoading ? (
-        <DesktopCategoriesMenuSkeleton />
+        <div className="w-[420px] overflow-hidden rounded-[18px] border border-black/5 bg-white py-[14px] shadow-[0_18px_50px_rgba(15,23,42,0.14)]">
+          <DesktopCategoriesMenuSkeleton />
+        </div>
       ) : (
-        <div className="flex gap-[32px] px-[20px] py-[24px] xl:gap-[40px]">
-          <div className="border-r-secondary w-[340px] shrink-0 border-r pr-[24px] xl:w-[420px]">
-            {categories.map(category => (
-              <button
-                key={String(category._id)}
-                type="button"
-                onClick={() => setSelectedParentId(String(category._id))}
-                className={clsx(
-                  'text-primary hover:bg-secondary flex w-full items-center justify-between py-[18px] pr-[20px] pl-[16px] text-start uppercase',
-                  String(category._id) === selectedParentId
-                    ? 'bg-secondary font-bold'
-                    : 'bg-white font-medium'
-                )}
-              >
-                <span className="min-w-0 flex-1 pr-[12px]">
-                  {category.name[locale]}
-                </span>
+        <div className="relative">
+          <div className="w-[420px] overflow-hidden rounded-[18px] border border-black/5 bg-white py-[14px] shadow-[0_18px_50px_rgba(15,23,42,0.14)]">
+            {categories.map(category => {
+              const categoryId = String(category._id);
+              const isSelected = categoryId === selectedParentId;
 
-                <SvgIcon
-                  iconId={IconId.ArrowRight}
-                  size={{ width: 14, height: 14 }}
-                />
-              </button>
-            ))}
+              return (
+                <button
+                  key={categoryId}
+                  type="button"
+                  onClick={() => handleCategorySelect(categoryId)}
+                  onMouseEnter={() => handleCategorySelect(categoryId)}
+                  onFocus={() => handleCategorySelect(categoryId)}
+                  className={clsx(
+                    'text-primary flex w-full items-center justify-between px-[18px] py-[16px] text-start uppercase transition-all duration-200',
+                    isSelected
+                      ? 'bg-secondary font-bold'
+                      : 'hover:bg-secondary bg-white font-medium'
+                  )}
+                >
+                  <span className="min-w-0 flex-1 pr-[12px]">
+                    {category.name[locale]}
+                  </span>
+
+                  <SvgIcon
+                    iconId={IconId.ArrowRight}
+                    size={{ width: 14, height: 14 }}
+                    className={clsx(
+                      'shrink-0 transition-transform duration-200',
+                      isSelected && 'translate-x-1'
+                    )}
+                  />
+                </button>
+              );
+            })}
           </div>
 
-          {isSubcategoriesLoading ? (
-            <DesktopCategoriesContentSkeleton />
-          ) : (
-            <div className="min-w-0 flex-1 pt-[24px]">
-              <p className="mb-[32px] text-[24px] font-semibold">
-                {selectedParent?.name[locale]}
-              </p>
-
-              <div className="grid grid-cols-2 gap-x-[18px]">
+          {selectedParentId && (
+            <div className="absolute top-0 left-[calc(100%+16px)] w-[460px] overflow-hidden rounded-[18px] border border-black/5 bg-white p-[24px] shadow-[0_18px_50px_rgba(15,23,42,0.14)]">
+              {isSubcategoriesLoading ? (
+                <DesktopCategoriesContentSkeleton />
+              ) : (
                 <div className="min-w-0">
-                  <Link
-                    href={`/${locale}/all-products/${selectedParent?.slug}`}
-                    className="hover:bg-secondary block py-[8px] pl-[16px] break-words"
-                  >
-                    {t(Title.All)}
-                  </Link>
+                  <p className="mb-[24px] text-[24px] font-semibold">
+                    {selectedParent?.name[locale]}
+                  </p>
 
-                  {subcategories.slice(0, 9).map(subcategory => (
-                    <Link
-                      href={`/${locale}/all-products/${selectedParent?.slug}/${subcategory.slug}`}
-                      key={String(subcategory._id)}
-                      className="hover:bg-secondary block py-[8px] pl-[16px] break-words"
-                    >
-                      {subcategory.name[locale]}
-                    </Link>
-                  ))}
-                </div>
+                  <div className="grid grid-cols-2 gap-x-[24px] gap-y-[2px]">
+                    <div className="min-w-0">
+                      <Link
+                        href={`/${locale}/all-products/${selectedParent?.slug}`}
+                        className="hover:bg-secondary block rounded-[8px] py-[8px] pl-[12px] break-words transition-colors duration-200"
+                      >
+                        {t(Title.All)}
+                      </Link>
 
-                <div className="min-w-0">
-                  {subcategories.slice(9).map(subcategory => (
-                    <Link
-                      href={`/${locale}/all-products/${selectedParent?.slug}/${subcategory.slug}`}
-                      key={String(subcategory._id)}
-                      className="hover:bg-secondary block py-[8px] pl-[16px] break-words"
-                    >
-                      {subcategory.name[locale]}
-                    </Link>
-                  ))}
+                      {subcategories.slice(0, 9).map(subcategory => (
+                        <Link
+                          href={`/${locale}/all-products/${selectedParent?.slug}/${subcategory.slug}`}
+                          key={String(subcategory._id)}
+                          className="hover:bg-secondary block rounded-[8px] py-[8px] pl-[12px] break-words transition-colors duration-200"
+                        >
+                          {subcategory.name[locale]}
+                        </Link>
+                      ))}
+                    </div>
+
+                    <div className="min-w-0">
+                      {subcategories.slice(9).map(subcategory => (
+                        <Link
+                          href={`/${locale}/all-products/${selectedParent?.slug}/${subcategory.slug}`}
+                          key={String(subcategory._id)}
+                          className="hover:bg-secondary block rounded-[8px] py-[8px] pl-[12px] break-words transition-colors duration-200"
+                        >
+                          {subcategory.name[locale]}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           )}
         </div>

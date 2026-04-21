@@ -5,6 +5,8 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
+
 import { cn } from '@utils/cn';
 
 const navVariants = cva('flex', {
@@ -62,12 +64,13 @@ type NavbarProps = VariantProps<typeof navVariants> &
 const Navbar = ({ intent }: NavbarProps) => {
   const t = useTranslations();
   const pathname = usePathname();
+  const locale = useCurrentLocale();
 
   const links = [
-    { href: '/all-products', label: t('NavBar.AllProducts') },
-    { href: '/sell-to-us', label: t('NavBar.SellToUs') },
-    { href: '/about-us', label: t('NavBar.AboutUs') },
-    { href: '/contact-us', label: t('NavBar.ContactUs') },
+    { href: `/${locale}/all-products`, label: t('NavBar.AllProducts') },
+    { href: `/${locale}/sell-to-us`, label: t('NavBar.SellToUs') },
+    { href: `/${locale}/about-us`, label: t('NavBar.AboutUs') },
+    { href: `/${locale}/contact-us`, label: t('NavBar.ContactUs') },
   ];
 
   const isActive = (href: string) => {

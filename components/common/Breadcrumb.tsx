@@ -32,11 +32,11 @@ const Breadcrumb: FC<IBreadcrumbProps> = ({
 
   const items = [
     {
-      href: '/',
+      href: `/${locale}`,
       label: t(NavBar.Home),
     },
     {
-      href: '/all-products',
+      href: `/${locale}/all-products`,
       label: t(NavBar.AllProducts),
     },
   ];

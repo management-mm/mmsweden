@@ -16,7 +16,7 @@ import { AppLocale } from '@i18n/config';
 export interface IProductCardProps {
   product: IProduct;
   className?: string;
-  language: AppLocale;
+  locale: AppLocale;
   isAdmin?: boolean;
   isLoading?: boolean;
   categorySlug?: string;
@@ -37,7 +37,7 @@ const ProductCard: FC<IProductCardProps> = ({
     deletionDate,
   },
   className,
-  language,
+  locale,
   isAdmin = false,
   isLoading = false,
   categorySlug,
@@ -61,14 +61,14 @@ const ProductCard: FC<IProductCardProps> = ({
           <ProductImageHover
             photos={photos}
             name={name}
-            language={language}
+            locale={locale}
             priority={priority}
           />
         ) : (
           <ProductImageBase
             photos={photos}
             name={name}
-            language={language}
+            locale={locale}
             priority={priority}
           />
         )}
@@ -97,7 +97,7 @@ const ProductCard: FC<IProductCardProps> = ({
         <ProductDetails
           isLoading={isLoading}
           name={name}
-          language={language}
+          locale={locale}
           idNumber={idNumber}
           description={description}
           dimensions={dimensions}
@@ -109,10 +109,10 @@ const ProductCard: FC<IProductCardProps> = ({
             <Skeleton height={40} containerClassName="flex-1" />
           </div>
         ) : isAdmin ? (
-          <AdminEditProductButton language={language} slug={slug} />
+          <AdminEditProductButton locale={locale} slug={slug} />
         ) : (
           <ActionsButtons
-            language={language}
+            locale={locale}
             isLoading={isLoading}
             product={product}
             categorySlug={categorySlug}

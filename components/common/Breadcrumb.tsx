@@ -5,6 +5,8 @@ import type { FC } from 'react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
+
 import { NavBar } from '@enums/i18nConstants';
 
 interface IBreadcrumbItem {
@@ -26,7 +28,7 @@ const Breadcrumb: FC<IBreadcrumbProps> = ({
   product,
 }) => {
   const t = useTranslations();
-  console.log(category);
+  const locale = useCurrentLocale();
 
   const items = [
     {
@@ -41,14 +43,14 @@ const Breadcrumb: FC<IBreadcrumbProps> = ({
 
   if (category) {
     items.push({
-      href: `/all-products/${category.slug}`,
+      href: `/${locale}/all-products/${category.slug}`,
       label: category.label,
     });
   }
 
   if (category && subcategory) {
     items.push({
-      href: `/all-products/${category.slug}/${subcategory.slug}`,
+      href: `/${locale}/all-products/${category.slug}/${subcategory.slug}`,
       label: subcategory.label,
     });
   }

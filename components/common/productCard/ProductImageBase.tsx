@@ -9,17 +9,17 @@ import { AppLocale } from '@i18n/config';
 interface Props {
   photos: string[];
   name: MultiLanguageString | string;
-  language: AppLocale;
+  locale: AppLocale;
   priority?: boolean;
 }
 
 export default function ProductImageBase({
   photos,
   name,
-  language,
+  locale,
   priority = false,
 }: Props) {
-  const altText = name ? getProductName(name, language) : '';
+  const altText = name ? getProductName(name, locale) : '';
 
   if (!photos.length) {
     return <div className="h-[218px] w-full rounded-t-[4px] bg-slate-500" />;

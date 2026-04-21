@@ -30,7 +30,7 @@ const ProductsListMenu = ({ className }: ProductsListMenuProps) => {
   const listRef = useRef<HTMLUListElement | null>(null);
 
   const searchParams = useSearchParams();
-  const language = useCurrentLocale();
+  const locale = useCurrentLocale();
 
   const title = useMemo(
     () => searchParams.get('keyword')?.trim() || '',
@@ -46,7 +46,7 @@ const ProductsListMenu = ({ className }: ProductsListMenuProps) => {
       try {
         const result = await getProducts({
           keyword: title,
-          lang: language,
+          lang: locale,
           page: nextPage,
           perPage: PER_PAGE,
         });
@@ -60,7 +60,7 @@ const ProductsListMenu = ({ className }: ProductsListMenuProps) => {
         setIsLoading(false);
       }
     },
-    [title, language, hasMore, isLoading]
+    [title, locale, hasMore, isLoading]
   );
 
   useEffect(() => {
@@ -79,7 +79,7 @@ const ProductsListMenu = ({ className }: ProductsListMenuProps) => {
       try {
         const result = await getProducts({
           keyword: title,
-          lang: language,
+          lang: locale,
           page: 1,
           perPage: PER_PAGE,
         });
@@ -94,7 +94,7 @@ const ProductsListMenu = ({ className }: ProductsListMenuProps) => {
     };
 
     loadInitial();
-  }, [title, language]);
+  }, [title, locale]);
 
   useEffect(() => {
     if (!title) return;
@@ -131,7 +131,7 @@ const ProductsListMenu = ({ className }: ProductsListMenuProps) => {
           {products.map(product => (
             <li key={product._id}>
               <Link
-                href={`/${language}/all-products/${product.seoCategorySlug}/${product.seoSubcategorySlug}/${product.slug}`}
+                href={`/${locale}/all-products/${product.seoCategorySlug}/${product.seoSubcategorySlug}/${product.slug}`}
                 className="block rounded-xl transition hover:bg-gray-50"
               >
                 <ProductMenuItem product={product} />

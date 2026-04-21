@@ -23,7 +23,7 @@ import countriesList from '@constants/countriesList';
 import { DEFAULT_LOCALE } from '@i18n/config';
 
 const Country = () => {
-  const language = useCurrentLocale();
+  const locale = useCurrentLocale();
   const windowWidth = useWindowWidth();
   const { values, setFieldValue } = useFormikContext<{ country: string }>();
 
@@ -35,13 +35,13 @@ const Country = () => {
           <CountryOption
             flag={country.flag}
             name={
-              country.translations[language] ??
+              country.translations[locale] ??
               country.translations[DEFAULT_LOCALE]
             }
           />
         ),
       })),
-    [language]
+    [locale]
   );
 
   const [isOpen, setIsOpen] = useState(false);

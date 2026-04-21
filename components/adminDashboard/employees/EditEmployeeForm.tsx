@@ -20,7 +20,7 @@ interface IEditEmployeeFormValues {
 
 interface IEditEmployeeFormProps {
   setIsEditing: (value: boolean) => void;
-  language: AppLocale;
+  locale: AppLocale;
   currentName: MultiLanguageString;
   currentDescription: MultiLanguageString;
   employee: IEmployee;

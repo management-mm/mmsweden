@@ -14,7 +14,7 @@ import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 export default function SessionExpiredModal() {
   const dispatch = useAppDispatch();
-  const language = useCurrentLocale();
+  const locale = useCurrentLocale();
 
   const error = useAppSelector((state: RootState) => state.auth.error);
   const isLoggedIn = useAppSelector(
@@ -41,7 +41,7 @@ export default function SessionExpiredModal() {
 
         <Link
           className="border-primary text-primary w-full rounded-[32px] border py-[10px] text-center font-semibold"
-          href={`/${language}/login`}
+          href={`/${locale}/login`}
           onClick={handleClose}
         >
           Go to Login

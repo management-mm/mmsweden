@@ -16,7 +16,7 @@ import type { AppLocale } from '@i18n/config';
 
 type Props = {
   products: IProduct[];
-  language: AppLocale;
+  locale: AppLocale;
   title: string;
   categorySlug: string;
   subcategorySlug: string;
@@ -24,7 +24,7 @@ type Props = {
 
 const RecommendedProductsCarousel = ({
   products,
-  language,
+  locale,
   title,
   categorySlug,
   subcategorySlug,
@@ -63,7 +63,7 @@ const RecommendedProductsCarousel = ({
           {products.map(product => (
             <SwiperSlide key={product._id}>
               <ProductCard
-                language={language}
+                locale={locale}
                 product={product}
                 className="w-[296px] md:w-[264px]"
                 categorySlug={categorySlug}

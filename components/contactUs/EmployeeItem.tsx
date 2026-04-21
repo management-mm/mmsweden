@@ -21,17 +21,16 @@ interface IEmployeeItemProps {
 const EmployeeItem: FC<IEmployeeItemProps> = ({
   employee: { name, description, phone, additionalInfo, email },
 }) => {
-  const t = useTranslations();
-  const language = useCurrentLocale();
+  const locale = useCurrentLocale();
 
   return (
     <li className="shadow-card relative flex h-[252px] w-full flex-col items-center pt-[26px] md:w-[calc((100%-30px)/2)] lg:w-[calc((100%-2*30px)/3)]">
       <h3 className="text-primary mb-[12px] text-[18px] font-medium">
-        {name?.[language] ?? name?.en ?? ''}
+        {name?.[locale] ?? name?.en ?? ''}
       </h3>
 
       <p className="text-secondary-accent mb-[32px] text-center text-[16px] font-medium">
-        {description?.[language] ?? description?.en ?? ''}
+        {description?.[locale] ?? description?.en ?? ''}
       </p>
 
       <address>

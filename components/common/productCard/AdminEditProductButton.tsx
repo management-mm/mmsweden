@@ -13,11 +13,11 @@ import { IconId } from '@enums/iconsSpriteId';
 import { AppLocale } from '@i18n/config';
 
 interface Props {
-  language: AppLocale;
+  locale: AppLocale;
   slug: string;
 }
 
-const AdminEditProductButton = ({ language, slug }: Props) => {
+const AdminEditProductButton = ({ locale, slug }: Props) => {
   const dispatch = useAppDispatch();
 
   const handleClear = () => {
@@ -26,7 +26,7 @@ const AdminEditProductButton = ({ language, slug }: Props) => {
 
   return (
     <Link
-      href={`/${language}/admin/all-products/edit-product/${slug}`}
+      href={`/${locale}/admin/all-products/edit-product/${slug}`}
       onClick={handleClear}
       className="group border-primary text-primary hover:bg-primary hover:text-secondary transition-boxShadow flex w-full items-center justify-center gap-[8px] rounded-[32px] border py-[10px] text-[12px] font-semibold duration-500"
     >

@@ -10,7 +10,7 @@ import { AppLocale } from '@i18n/config';
 interface IProductDetailsProps {
   isLoading: boolean;
   name: string | MultiLanguageString;
-  language: AppLocale;
+  locale: AppLocale;
   idNumber: string;
   description: MultiLanguageString;
   dimensions: string;
@@ -19,7 +19,7 @@ interface IProductDetailsProps {
 const ProductDetails: FC<IProductDetailsProps> = ({
   isLoading,
   name,
-  language,
+  locale,
   idNumber,
   description,
   dimensions,
@@ -33,7 +33,7 @@ const ProductDetails: FC<IProductDetailsProps> = ({
         {isLoading ? (
           <Skeleton width="78%" height={20} />
         ) : (
-          getProductName(name, language)
+          getProductName(name, locale)
         )}
       </h3>
 
@@ -64,7 +64,7 @@ const ProductDetails: FC<IProductDetailsProps> = ({
         {isLoading ? (
           <Skeleton count={4} height={12} />
         ) : (
-          description?.[language] || description?.en || ''
+          description?.[locale] || description?.en || ''
         )}
       </p>
     </>

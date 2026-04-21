@@ -11,6 +11,8 @@ import MobileCategoriesMenuSkeleton from './MobileCategoriesMenuSkeleton';
 
 import SvgIcon from '@components/common/SvgIcon';
 
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
+
 import { Title } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
@@ -21,7 +23,7 @@ type Props = {
   subcategories: ISeoCategory[];
   selectedParentId: string | null;
   setSelectedParentId: Dispatch<SetStateAction<string | null>>;
-  language: AppLocale;
+  locale: AppLocale;
   selectedParent?: ISeoCategory;
   mode: 'filters' | 'header' | 'mobile';
   isLoading?: boolean;
@@ -32,13 +34,12 @@ export default function MobileCategoriesMenu({
   subcategories,
   selectedParentId,
   setSelectedParentId,
-  language,
+  locale,
   selectedParent,
   mode,
   isLoading = false,
 }: Props) {
   const t = useTranslations();
-
   const handleToggleCategory = (id: string) => {
     setSelectedParentId(prev => (prev === id ? null : id));
   };
@@ -70,7 +71,7 @@ export default function MobileCategoriesMenu({
               )}
             >
               <span className="min-w-0 flex-1 pr-[12px] break-words whitespace-normal">
-                {category.name[language]}
+                {category.name[locale]}
               </span>
 
               <div
@@ -90,7 +91,7 @@ export default function MobileCategoriesMenu({
               <div className="overflow-x-hidden bg-white px-[16px] pb-[16px]">
                 <div className="flex flex-col">
                   <Link
-                    href={`/all-products/${category.slug}`}
+                    href={`/${locale}/all-products/${category.slug}`}
                     className="block py-[8px] pl-[16px] text-[14px] break-words whitespace-normal"
                   >
                     {t(Title.All)}
@@ -98,11 +99,11 @@ export default function MobileCategoriesMenu({
 
                   {currentSubcategories.map(subcategory => (
                     <Link
-                      href={`/all-products/${category.slug}/${subcategory.slug}`}
+                      href={`/${locale}/all-products/${category.slug}/${subcategory.slug}`}
                       key={String(subcategory._id)}
                       className="block py-[8px] pl-[16px] text-[14px] break-words whitespace-normal"
                     >
-                      {subcategory.name[language]}
+                      {subcategory.name[locale]}
                     </Link>
                   ))}
                 </div>

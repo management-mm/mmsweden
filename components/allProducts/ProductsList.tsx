@@ -66,7 +66,7 @@ const ProductsList = ({
               className="w-[296px] md:w-[calc((100%-30px)/2)] lg:w-[calc((100%-2*30px)/3)]"
             >
               <ProductCard
-                language={locale}
+                locale={locale}
                 product={product}
                 isAdmin={isAdmin}
                 categorySlug={categorySlug}

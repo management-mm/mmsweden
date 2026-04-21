@@ -51,7 +51,7 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const language = useCurrentLocale();
+  const locale = useCurrentLocale();
   const t = useTranslations();
 
   const [isOpen, setIsOpen] = useState(filterName === filters.Category);
@@ -70,12 +70,12 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
 
   const sortedItems = useMemo(() => {
     return [...items].sort((a, b) => {
-      const nameA = getFilterItemName(filterName, a, language).toLowerCase();
-      const nameB = getFilterItemName(filterName, b, language).toLowerCase();
+      const nameA = getFilterItemName(filterName, a, locale).toLowerCase();
+      const nameB = getFilterItemName(filterName, b, locale).toLowerCase();
 
       return nameA.localeCompare(nameB);
     });
-  }, [items, filterName, language]);
+  }, [items, filterName, locale]);
 
   const visibleItems = useMemo(() => {
     return sortedItems.slice(0, visibleCount);
@@ -86,7 +86,7 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
   const groupedFilters = useMemo(() => {
     const grouped = visibleItems.reduce(
       (acc, item) => {
-        const characterKey = getFilterItemName(filterName, item, language)
+        const characterKey = getFilterItemName(filterName, item, locale)
           .charAt(0)
           ?.toUpperCase();
 
@@ -103,7 +103,7 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
     return Object.fromEntries(
       Object.entries(grouped).sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
     );
-  }, [visibleItems, filterName, language]);
+  }, [visibleItems, filterName, locale]);
 
   useEffect(() => {
     setVisibleCount(ITEMS_PER_LOAD);
@@ -235,7 +235,7 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
                           className="font-openSans text-[14px] capitalize"
                           htmlFor={item._id}
                         >
-                          {getFilterItemName(filterName, item, language)}
+                          {getFilterItemName(filterName, item, locale)}
                         </label>
                       ) : (
                         <Skeleton width={150} />

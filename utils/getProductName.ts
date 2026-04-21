@@ -4,7 +4,7 @@ import { AppLocale } from '@i18n/config';
 
 const getProductName = (
   name: MultiLanguageString | string,
-  language: AppLocale
-) => (typeof name === 'object' ? name?.[language] : name);
+  locale: AppLocale
+) => (typeof name === 'object' ? name?.[locale] : name);
 
 export default getProductName;

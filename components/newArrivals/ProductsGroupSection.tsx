@@ -29,7 +29,7 @@ export default function ProductsGroupSection({
       <ul className="flex flex-wrap justify-center gap-4 md:justify-start">
         {items.map(product => (
           <li key={product._id} className="w-[296px] md:w-[264px]">
-            <ProductCard product={product} language={locale} />
+            <ProductCard product={product} locale={locale} />
           </li>
         ))}
       </ul>

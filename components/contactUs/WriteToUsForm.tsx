@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 import { contactUs } from '@api/mailerService';
 import { schema } from '@schemas/writeToUs';
-import axios from 'axios';
 import { Form, Formik } from 'formik';
 import { useTranslations } from 'next-intl';
 
@@ -17,6 +16,10 @@ import Phone from '@components/formsLabels/countryAndPhone/Phone';
 
 import { useCurrentLocale } from '@hooks/useCurrentLocale';
 import { useNotify } from '@hooks/useNotify';
+
+import { getErrorMessage } from '@utils/errors/getErrorMessage';
+import { logError } from '@utils/errors/logError';
+import { normalizeError } from '@utils/errors/normalizeError';
 
 import { Button, Description, Title } from '@enums/i18nConstants';
 
@@ -55,8 +58,8 @@ const WriteToUsForm = () => {
             onSubmit={async (values, actions) => {
               try {
                 setLoading(true);
-                const phone = values.callingCode + values.phone;
 
+                const phone = values.callingCode + values.phone;
                 const { name, email, countryPhone, subject, message } = values;
 
                 const response = await contactUs({
@@ -70,39 +73,49 @@ const WriteToUsForm = () => {
 
                 notifySuccess(response[locale]);
                 actions.resetForm();
-              } catch (error: unknown) {
-                if (axios.isAxiosError(error)) {
-                  notifyError(
-                    error.response?.data?.message ||
-                      'Oops... Something went wrong'
-                  );
-                } else {
-                  notifyError('Unexpected error occurred');
-                }
+              } catch (error) {
+                const normalizedError = normalizeError(error);
+
+                logError(normalizedError, {
+                  scope: 'contactUs',
+                  details: {
+                    email: values.email,
+                    subject: values.subject,
+                    locale,
+                  },
+                });
+
+                notifyError(getErrorMessage(normalizedError));
               } finally {
                 setLoading(false);
+                actions.setSubmitting(false);
               }
             }}
           >
-            <Form>
-              <div className="mb-[22px]">
-                <div className="mb-[22px] flex flex-col flex-wrap gap-[14px] md:flex-row md:gap-x-[30px] md:gap-y-[22px]">
-                  <Name className="md:w-[calc((100%-30px)/2)]" />
-                  <Email className="md:w-[calc((100%-30px)/2)]" />
-                  <Phone className="md:w-[calc((100%-30px)/2)]" />
-                  <Subject className="md:w-[calc((100%-30px)/2)]" />
+            {({ isSubmitting }) => (
+              <Form>
+                <div className="mb-[22px]">
+                  <div className="mb-[22px] flex flex-col flex-wrap gap-[14px] md:flex-row md:gap-x-[30px] md:gap-y-[22px]">
+                    <Name className="md:w-[calc((100%-30px)/2)]" />
+                    <Email className="md:w-[calc((100%-30px)/2)]" />
+                    <Phone className="md:w-[calc((100%-30px)/2)]" />
+                    <Subject className="md:w-[calc((100%-30px)/2)]" />
+                  </div>
+
+                  <Message />
                 </div>
 
-                <Message />
-              </div>
-
-              <button
-                className="bg-accent text-primary shadow-accent mx-auto block w-full rounded-[32px] px-[32px] py-[16px] font-semibold md:w-auto"
-                type="submit"
-              >
-                {t(Button.SubmitRequest)}
-              </button>
-            </Form>
+                <button
+                  className="bg-accent text-primary shadow-accent mx-auto block w-full rounded-[32px] px-[32px] py-[16px] font-semibold disabled:cursor-not-allowed disabled:opacity-70 md:w-auto"
+                  type="submit"
+                  disabled={loading || isSubmitting}
+                >
+                  {loading || isSubmitting
+                    ? 'Sending...'
+                    : t(Button.SubmitRequest)}
+                </button>
+              </Form>
+            )}
           </Formik>
         </div>
       </section>

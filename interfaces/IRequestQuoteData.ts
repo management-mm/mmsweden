@@ -11,4 +11,5 @@ export interface IRequestQuoteData {
   country: string;
   company: string;
   products: Product[];
+  message: string;
 }

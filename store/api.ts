@@ -1,28 +1,18 @@
+import { getAuthToken } from '@api/getAuthToken';
 import axios from 'axios';
 
 import { resetAuthState, setAuthError } from '@store/auth/slice';
 import type { AppStore } from '@store/store';
 
+import { AppError } from '@utils/errors/AppError';
+import { createThunkRejectValue } from '@utils/errors/createThunkRejectValue';
+
 export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
-const getPersistedToken = (): string | null => {
-  if (typeof window === 'undefined') return null;
-
-  const raw = window.localStorage.getItem('persist:auth');
-  if (!raw) return null;
-
-  try {
-    const parsed = JSON.parse(raw);
-    return parsed.token ? JSON.parse(parsed.token) : null;
-  } catch {
-    return null;
-  }
-};
-
 api.interceptors.request.use(config => {
-  const token = getPersistedToken();
+  const token = getAuthToken();
 
   if (token) {
     config.headers = config.headers ?? {};
@@ -45,7 +35,7 @@ export const setupApiInterceptors = (store: AppStore) => {
     error => {
       const status = error.response?.status;
       const requestUrl = error.config?.url ?? '';
-      const hasToken = !!getPersistedToken();
+      const hasToken = !!getAuthToken();
 
       const isAuthRequest =
         requestUrl.includes('/auth/login') ||
@@ -62,7 +52,17 @@ export const setupApiInterceptors = (store: AppStore) => {
         is401Handled = true;
 
         store.dispatch(resetAuthState());
-        store.dispatch(setAuthError('Session expired. Please log in again.'));
+        store.dispatch(
+          setAuthError(
+            createThunkRejectValue(
+              new AppError(
+                'Session expired. Please log in again.',
+                'UNAUTHORIZED',
+                { status: 401 }
+              )
+            )
+          )
+        );
 
         window.localStorage.removeItem('persist:auth');
 

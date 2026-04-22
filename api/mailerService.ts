@@ -2,43 +2,90 @@ import type { IContactUsData } from '@interfaces/IContactUsData';
 import type { IRequestQuoteData } from '@interfaces/IRequestQuoteData';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://mmsweden-server.onrender.com/';
+import { AppError } from '@utils/errors/AppError';
+import { normalizeError } from '@utils/errors/normalizeError';
 
-const handleError = (error: unknown) => {
-  if (axios.isAxiosError(error)) {
-    throw new Error(error.response?.data?.message || 'Server error');
-  } else {
-    throw new Error('Unknown error');
+const rawBaseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL;
+const baseURL = rawBaseUrl?.replace(/\/$/, '');
+
+type MailerResponse = {
+  message: Record<string, string>;
+};
+
+const mailerApi = axios.create({
+  baseURL,
+});
+
+const getBaseUrl = (): string => {
+  if (!baseURL) {
+    throw new AppError(
+      'API URL is not configured. Set API_URL or NEXT_PUBLIC_API_URL.',
+      'UNKNOWN',
+      {
+        isOperational: false,
+      }
+    );
+  }
+
+  return baseURL;
+};
+
+const rethrowMailerError = (error: unknown): never => {
+  throw normalizeError(error);
+};
+
+export const requestQuote = async (
+  data: IRequestQuoteData
+): Promise<Record<string, string>> => {
+  try {
+    getBaseUrl();
+
+    const response = await mailerApi.post<MailerResponse>(
+      'mailer/request-quote',
+      data
+    );
+
+    return response.data.message;
+  } catch (error) {
+    throw normalizeError(error);
   }
 };
 
-export const requestQuote = async (data: IRequestQuoteData) => {
+export const sellToUs = async (
+  data: FormData
+): Promise<Record<string, string>> => {
   try {
-    const resp = await axios.post('mailer/request-quote', data);
-    return resp.data.message;
+    getBaseUrl();
+
+    const response = await mailerApi.post<MailerResponse>(
+      'mailer/sell-to-us',
+      data,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+
+    return response.data.message;
   } catch (error) {
-    handleError(error);
+    throw normalizeError(error);
   }
 };
 
-export const sellToUs = async (data: FormData) => {
+export const contactUs = async (
+  data: IContactUsData
+): Promise<Record<string, string>> => {
   try {
-    const resp = await axios.post('mailer/sell-to-us', data, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    return resp.data.message;
-  } catch (error) {
-    handleError(error);
-  }
-};
+    getBaseUrl();
 
-export const contactUs = async (data: IContactUsData) => {
-  try {
-    const resp = await axios.post('mailer/contact-us', data);
-    return resp.data.message;
+    const response = await mailerApi.post<MailerResponse>(
+      'mailer/contact-us',
+      data
+    );
+
+    return response.data.message;
   } catch (error) {
-    handleError(error);
+    throw normalizeError(error);
   }
 };

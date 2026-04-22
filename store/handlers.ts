@@ -1,19 +1,51 @@
 import { type PayloadAction } from '@reduxjs/toolkit';
 
-export const handlePending = <T>(state: T & { isLoading: boolean }) => {
+import type { ThunkRejectValue } from '@utils/errors/createThunkRejectValue';
+
+type StateWithLoading = {
+  isLoading: boolean;
+};
+
+type StateWithError = {
+  error: ThunkRejectValue | null;
+};
+
+type StateWithItems<U> = {
+  items: U[];
+};
+
+const createFallbackRejectValue = (message?: string): ThunkRejectValue => ({
+  message: message || 'Something went wrong. Please try again.',
+  code: 'UNKNOWN',
+});
+
+const getRejectedPayload = (
+  action: PayloadAction<ThunkRejectValue | undefined> & {
+    error?: { message?: string };
+  }
+): ThunkRejectValue => {
+  return action.payload ?? createFallbackRejectValue(action.error?.message);
+};
+
+export const handlePending = <T>(
+  state: T & StateWithLoading & StateWithError
+) => {
   state.isLoading = true;
+  state.error = null;
 };
 
 export const handleRejected = <T>(
-  state: T & { isLoading: boolean; error: string | null },
-  action: PayloadAction<string | undefined>
+  state: T & StateWithLoading & StateWithError,
+  action: PayloadAction<ThunkRejectValue | undefined> & {
+    error?: { message?: string };
+  }
 ) => {
   state.isLoading = false;
-  state.error = action.payload ?? null;
+  state.error = getRejectedPayload(action);
 };
 
 export const handleFetchFulfilled = <T, U>(
-  state: T & { items: U[]; isLoading: boolean; error: string | null },
+  state: T & StateWithItems<U> & StateWithLoading & StateWithError,
   action: PayloadAction<U[]>
 ) => {
   state.isLoading = false;
@@ -22,36 +54,25 @@ export const handleFetchFulfilled = <T, U>(
 };
 
 export const handleUpdateFulfilled = <T, U extends { _id: string }>(
-  state: T & { items: U[]; isLoading: boolean; error: string | null },
+  state: T & StateWithItems<U> & StateWithLoading & StateWithError,
   action: PayloadAction<U>
 ) => {
   state.isLoading = false;
   state.error = null;
 
   const index = state.items.findIndex(item => item._id === action.payload._id);
+
   if (index !== -1) {
     state.items[index] = action.payload;
   }
 };
 
-type ErrorPayload = {
-  message?: string | string[];
-};
-
-export const handleProductRejected = (
-  state: {
-    isLoading: boolean;
-    error: string | null;
-  },
-  action: PayloadAction<ErrorPayload | undefined>
+export const handleProductRejected = <T>(
+  state: T & StateWithLoading & StateWithError,
+  action: PayloadAction<ThunkRejectValue | undefined> & {
+    error?: { message?: string };
+  }
 ) => {
   state.isLoading = false;
-
-  const message = action.payload?.message;
-
-  if (Array.isArray(message)) {
-    state.error = message.join(', ');
-  } else {
-    state.error = message ?? null;
-  }
+  state.error = getRejectedPayload(action);
 };

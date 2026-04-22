@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 import { requestQuote } from '@api/mailerService';
 import { schema } from '@schemas/formForRequestQuote';
-import axios from 'axios';
 import { ErrorMessage, Form, Formik } from 'formik';
 import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
@@ -22,6 +21,9 @@ import { useAppSelector } from '@hooks/useAppSelector';
 import { useCurrentLocale } from '@hooks/useCurrentLocale';
 import { useNotify } from '@hooks/useNotify';
 
+import { getErrorMessage } from '@utils/errors/getErrorMessage';
+import { logError } from '@utils/errors/logError';
+import { normalizeError } from '@utils/errors/normalizeError';
 import getProductName from '@utils/getProductName';
 
 import { Button, Label, Placeholder } from '@enums/i18nConstants';
@@ -76,7 +78,8 @@ const FormForRequestQuote = () => {
 
               const phone = values.callingCode + values.phone;
 
-              const { name, email, country, countryPhone, company } = values;
+              const { name, email, country, countryPhone, company, message } =
+                values;
 
               const response = await requestQuote({
                 name,
@@ -85,58 +88,70 @@ const FormForRequestQuote = () => {
                 country,
                 countryPhone,
                 company,
+                message,
                 products,
               });
 
               notifySuccess(response[locale]);
               actions.resetForm();
-            } catch (error: unknown) {
-              if (axios.isAxiosError(error)) {
-                notifyError(
-                  error.response?.data?.message ||
-                    'Oops... Something went wrong'
-                );
-              } else {
-                notifyError('Unexpected error occurred');
-              }
+            } catch (error) {
+              const normalizedError = normalizeError(error);
+
+              logError(normalizedError, {
+                scope: 'requestQuote',
+                details: {
+                  email: values.email,
+                  company: values.company,
+                  locale,
+                  productsCount: requestedProducts.length,
+                },
+              });
+
+              notifyError(getErrorMessage(normalizedError));
             } finally {
               setLoading(false);
+              actions.setSubmitting(false);
             }
           }}
         >
-          <Form>
-            <div className="mb-[32px] flex flex-col gap-[14px]">
-              <Name />
-              <Email />
-              <Phone />
-              <Country />
-              <Company />
+          {({ isSubmitting }) => (
+            <Form>
+              <div className="mb-[32px] flex flex-col gap-[14px]">
+                <Name />
+                <Email />
+                <Phone />
+                <Country />
+                <Company />
 
-              <label className="flex flex-col gap-[2px]">
-                <LabelTitle title={Label.Message} />
+                <label className="flex flex-col gap-[2px]">
+                  <LabelTitle title={Label.Message} />
 
-                <InputField
-                  name="message"
-                  as="textarea"
-                  placeholder={Placeholder.Message}
-                  className="h-[180px] rounded-[22px]"
-                />
+                  <InputField
+                    name="message"
+                    as="textarea"
+                    placeholder={Placeholder.Message}
+                    className="h-[180px] rounded-[22px]"
+                  />
 
-                <ErrorMessage name="message">
-                  {msg => (
-                    <div className="mt-1 text-sm text-red-500">{msg}</div>
-                  )}
-                </ErrorMessage>
-              </label>
-            </div>
+                  <ErrorMessage name="message">
+                    {msg => (
+                      <div className="mt-1 text-sm text-red-500">{msg}</div>
+                    )}
+                  </ErrorMessage>
+                </label>
+              </div>
 
-            <button
-              className="bg-accent text-primary shadow-accent mx-auto block w-full rounded-[32px] px-[32px] py-[16px] font-semibold md:w-auto"
-              type="submit"
-            >
-              {t(Button.SubmitRequest)}
-            </button>
-          </Form>
+              <button
+                className="bg-accent text-primary shadow-accent mx-auto block w-full rounded-[32px] px-[32px] py-[16px] font-semibold disabled:cursor-not-allowed disabled:opacity-70 md:w-auto"
+                type="submit"
+                disabled={loading || isSubmitting}
+              >
+                {loading || isSubmitting
+                  ? 'Sending...'
+                  : t(Button.SubmitRequest)}
+              </button>
+            </Form>
+          )}
         </Formik>
       </section>
     </>

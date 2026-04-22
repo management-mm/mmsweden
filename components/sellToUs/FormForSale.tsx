@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 import { sellToUs } from '@api/mailerService';
 import { schema } from '@schemas/formForSale';
-import axios from 'axios';
 import { Form, Formik } from 'formik';
 import { useTranslations } from 'next-intl';
 
@@ -19,6 +18,10 @@ import Phone from '@components/formsLabels/countryAndPhone/Phone';
 
 import { useCurrentLocale } from '@hooks/useCurrentLocale';
 import { useNotify } from '@hooks/useNotify';
+
+import { getErrorMessage } from '@utils/errors/getErrorMessage';
+import { logError } from '@utils/errors/logError';
+import { normalizeError } from '@utils/errors/normalizeError';
 
 import { Button, Title } from '@enums/i18nConstants';
 
@@ -55,6 +58,7 @@ const FormForSale = () => {
             onSubmit={async (values, actions) => {
               try {
                 setLoading(true);
+
                 const phone = values.callingCode + values.phone;
 
                 const {
@@ -85,42 +89,53 @@ const FormForSale = () => {
 
                 notifySuccess(message[locale]);
                 actions.resetForm();
-              } catch (error: unknown) {
-                if (axios.isAxiosError(error)) {
-                  notifyError(
-                    error.response?.data?.message ||
-                      'Oops... Something went wrong'
-                  );
-                } else {
-                  notifyError('Unexpected error occurred');
-                }
+              } catch (error) {
+                const normalizedError = normalizeError(error);
+
+                logError(normalizedError, {
+                  scope: 'sellToUs',
+                  details: {
+                    email: values.email,
+                    productName: values.productName,
+                    locale,
+                    photosCount: values.photos.length,
+                  },
+                });
+
+                notifyError(getErrorMessage(normalizedError));
               } finally {
                 setLoading(false);
+                actions.setSubmitting(false);
               }
             }}
           >
-            <Form>
-              <div className="mb-[32px] md:flex md:gap-[30px]">
-                <div className="mb-[22px] flex flex-col gap-[22px] md:mb-0 md:w-[calc((100%-30px)/2)]">
-                  <Name />
-                  <Email />
-                  <Phone />
-                  <ProductName />
-                  <Price />
+            {({ isSubmitting }) => (
+              <Form>
+                <div className="mb-[32px] md:flex md:gap-[30px]">
+                  <div className="mb-[22px] flex flex-col gap-[22px] md:mb-0 md:w-[calc((100%-30px)/2)]">
+                    <Name />
+                    <Email />
+                    <Phone />
+                    <ProductName />
+                    <Price />
+                  </div>
+
+                  <Description />
                 </div>
 
-                <Description />
-              </div>
+                <AttachPhotos />
 
-              <AttachPhotos />
-
-              <button
-                className="bg-accent text-primary shadow-accent mx-auto block w-full rounded-[32px] px-[32px] py-[16px] font-semibold md:w-auto"
-                type="submit"
-              >
-                {t(Button.SubmitRequest)}
-              </button>
-            </Form>
+                <button
+                  className="bg-accent text-primary shadow-accent mx-auto block w-full rounded-[32px] px-[32px] py-[16px] font-semibold disabled:cursor-not-allowed disabled:opacity-70 md:w-auto"
+                  type="submit"
+                  disabled={loading || isSubmitting}
+                >
+                  {loading || isSubmitting
+                    ? 'Sending...'
+                    : t(Button.SubmitRequest)}
+                </button>
+              </Form>
+            )}
           </Formik>
         </div>
       </section>

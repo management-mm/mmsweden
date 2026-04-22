@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { getNextProductId } from '@api/countersService';
 import { schema } from '@schemas/addProduct';
@@ -14,6 +14,7 @@ import PhotosAndVideo from '../photosAndVideo/PhotosAndVideo';
 import SuccessModal from '../statusModals/SuccessModal';
 
 import StatusModal from '@components/common/StatusModal';
+import RetryBlock from '@components/common/error/RetryBlock';
 import Loader from '@components/common/loaders/Loader';
 
 import { type IAddProductData, addProduct } from '@store/products/operations';
@@ -25,6 +26,10 @@ import { useAppSelector } from '@hooks/useAppSelector';
 import { useNotify } from '@hooks/useNotify';
 
 import { cn } from '@utils/cn';
+import { AppError } from '@utils/errors/AppError';
+import { getErrorMessage } from '@utils/errors/getErrorMessage';
+import { logError } from '@utils/errors/logError';
+import { normalizeError } from '@utils/errors/normalizeError';
 
 const AddProduct = () => {
   const dispatch = useAppDispatch();
@@ -35,6 +40,7 @@ const AddProduct = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
   const [initialIdNumber, setInitialIdNumber] = useState<number | null>(null);
+  const [idError, setIdError] = useState<AppError | null>(null);
 
   const handleToggleMenu = () => setIsOpen(prev => !prev);
 
@@ -42,18 +48,26 @@ const AddProduct = () => {
     dispatch(clearProduct());
   }, [dispatch]);
 
-  useEffect(() => {
-    const loadId = async () => {
-      try {
-        const id = await getNextProductId();
-        setInitialIdNumber(id);
-      } catch (error) {
-        console.error('Failed to fetch next product id', error);
-      }
-    };
+  const loadId = useCallback(async () => {
+    setIdError(null);
 
-    loadId();
+    try {
+      const id = await getNextProductId();
+      setInitialIdNumber(id);
+    } catch (error) {
+      const normalizedError = normalizeError(error);
+
+      logError(normalizedError, {
+        scope: 'getNextProductId',
+      });
+
+      setIdError(normalizedError);
+    }
   }, []);
+
+  useEffect(() => {
+    loadId();
+  }, [loadId]);
 
   useEffect(() => {
     if (!product) {
@@ -65,12 +79,31 @@ const AddProduct = () => {
   }, [product]);
 
   const editHref = useMemo(() => {
-    const slug = (product as any)?.slug;
+    const slug = (product as { slug?: string } | null)?.slug;
 
     return slug
       ? `/admin/all-products/edit-product/${slug}`
       : '/admin/all-products';
   }, [product]);
+
+  if (idError) {
+    return (
+      <div
+        className={cn(
+          'container',
+          'container--no-margin',
+          'pt-[48px] pb-[64px]'
+        )}
+      >
+        <RetryBlock
+          error={idError}
+          message="Failed to load the next product ID."
+          onRetry={loadId}
+          className="max-w-[520px]"
+        />
+      </div>
+    );
+  }
 
   if (initialIdNumber === null) {
     return <Loader />;
@@ -95,59 +128,74 @@ const AddProduct = () => {
           shouldTranslateName: false,
         }}
         validationSchema={schema}
-        onSubmit={async (values: IAddProductData) => {
-          console.log(values);
-          try {
-            setIsSubmit(true);
+        onSubmit={async (values: IAddProductData, { setSubmitting }) => {
+          setIsSubmit(false);
 
+          try {
             await dispatch(addProduct(values)).unwrap();
-          } catch (error: any) {
-            notifyError(error?.message || 'Oops... Something went wrong');
+            setIsSubmit(true);
+          } catch (error) {
+            const normalizedError = normalizeError(error);
+
+            logError(normalizedError, {
+              scope: 'addProduct',
+              details: {
+                idNumber: values.idNumber,
+              },
+            });
+
+            notifyError(getErrorMessage(normalizedError));
+            setIsSubmit(false);
+          } finally {
+            setSubmitting(false);
           }
         }}
       >
-        <Form>
-          <div className={cn('container', 'container--no-margin')}>
-            <div className="gap-[24px] pt-[48px] lg:flex">
-              <Block
-                title="Photos and video"
-                intent="main"
-                className="mb-[20px] lg:mb-0"
-              >
-                <PhotosAndVideo />
-              </Block>
-
-              <div className="pb-[64px]">
+        {({ isSubmitting }) => (
+          <Form>
+            <div className={cn('container', 'container--no-margin')}>
+              <div className="gap-[24px] pt-[48px] lg:flex">
                 <Block
-                  title="General Information"
+                  title="Photos and video"
                   intent="main"
-                  className="mb-[20px]"
+                  className="mb-[20px] lg:mb-0"
                 >
-                  <GeneralInformation />
+                  <PhotosAndVideo />
                 </Block>
 
-                <Block
-                  title="Category, Manufacturer, Industry"
-                  intent="main"
-                  className="mb-[20px]"
-                >
-                  <CatManInd />
-                </Block>
+                <div className="pb-[64px]">
+                  <Block
+                    title="General Information"
+                    intent="main"
+                    className="mb-[20px]"
+                  >
+                    <GeneralInformation />
+                  </Block>
 
-                <Block title="Condition" intent="main" className="mb-[20px]">
-                  <Condition />
-                </Block>
+                  <Block
+                    title="Category, Manufacturer, Industry"
+                    intent="main"
+                    className="mb-[20px]"
+                  >
+                    <CatManInd />
+                  </Block>
 
-                <button
-                  className="bg-accent w-full rounded-[32px] py-[16px]"
-                  type="submit"
-                >
-                  Save
-                </button>
+                  <Block title="Condition" intent="main" className="mb-[20px]">
+                    <Condition />
+                  </Block>
+
+                  <button
+                    className="bg-accent w-full rounded-[32px] py-[16px] disabled:cursor-not-allowed disabled:opacity-70"
+                    type="submit"
+                    disabled={isLoading || isSubmitting}
+                  >
+                    {isLoading || isSubmitting ? 'Saving...' : 'Save'}
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </Form>
+          </Form>
+        )}
       </Formik>
 
       {isLoading && (

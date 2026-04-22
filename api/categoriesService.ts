@@ -1,20 +1,44 @@
 import { ISeoCategory } from '@interfaces/ISeoCategory';
 
-const baseUrl = (
-  process.env.API_URL ||
-  process.env.NEXT_PUBLIC_API_URL ||
-  ''
-).replace(/\/$/, '');
+import { AppError, type AppErrorCode } from '@utils/errors/AppError';
+import { normalizeError } from '@utils/errors/normalizeError';
+
+const rawBaseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL;
+const baseUrl = rawBaseUrl?.replace(/\/$/, '');
 
 type GetSeoCategoriesParams = {
   activeOnly?: boolean;
 };
 
+function getBaseUrl(): string {
+  if (!baseUrl) {
+    throw new AppError(
+      'API URL is not configured. Set API_URL or NEXT_PUBLIC_API_URL.',
+      'UNKNOWN',
+      {
+        isOperational: false,
+      }
+    );
+  }
+
+  return baseUrl;
+}
+
+function getErrorCodeByStatus(status: number): AppErrorCode {
+  if (status === 400 || status === 422) return 'VALIDATION';
+  if (status === 401) return 'UNAUTHORIZED';
+  if (status === 403) return 'FORBIDDEN';
+  if (status === 404) return 'NOT_FOUND';
+  if (status >= 500) return 'SERVER';
+
+  return 'UNKNOWN';
+}
+
 function buildUrl(
   path: string,
   params?: Record<string, string | boolean | undefined>
-) {
-  const url = new URL(`${baseUrl}${path}`);
+): string {
+  const url = new URL(`${getBaseUrl()}${path}`);
 
   if (params) {
     Object.entries(params).forEach(([key, value]) => {
@@ -28,18 +52,54 @@ function buildUrl(
 }
 
 async function fetchJson<T>(url: string): Promise<T> {
-  const res = await fetch(url, {
-    cache: 'no-store',
-  });
+  try {
+    const res = await fetch(url, {
+      cache: 'no-store',
+    });
 
-  if (!res.ok) {
     const text = await res.text();
-    throw new Error(
-      `Failed to fetch SEO categories: ${res.status} ${res.statusText}. URL: ${url}. Body: ${text}`
-    );
-  }
 
-  return res.json();
+    if (!res.ok) {
+      throw new AppError(
+        `Failed to fetch SEO categories: ${res.status} ${res.statusText}`,
+        getErrorCodeByStatus(res.status),
+        {
+          status: res.status,
+          details: {
+            url,
+            body: text,
+          },
+        }
+      );
+    }
+
+    if (!text) {
+      throw new AppError(
+        'Failed to fetch SEO categories: empty response body',
+        'SERVER',
+        {
+          details: { url },
+        }
+      );
+    }
+
+    try {
+      return JSON.parse(text) as T;
+    } catch {
+      throw new AppError(
+        'Failed to parse SEO categories response JSON',
+        'SERVER',
+        {
+          details: {
+            url,
+            body: text,
+          },
+        }
+      );
+    }
+  } catch (error) {
+    throw normalizeError(error);
+  }
 }
 
 export async function getTree(

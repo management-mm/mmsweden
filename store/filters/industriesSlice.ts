@@ -10,14 +10,28 @@ import {
   handleUpdateFulfilled,
 } from '@store/handlers';
 
+import type { ThunkRejectValue } from '@utils/errors/createThunkRejectValue';
+
+interface IndustriesState {
+  items: IIndustry[];
+  isLoading: boolean;
+  error: ThunkRejectValue | null;
+}
+
+const initialState: IndustriesState = {
+  items: [],
+  isLoading: false,
+  error: null,
+};
+
 const industriesSlice = createSlice({
   name: 'industries',
-  initialState: {
-    items: [] as IIndustry[],
-    isLoading: false,
-    error: null,
+  initialState,
+  reducers: {
+    clearIndustriesError: state => {
+      state.error = null;
+    },
   },
-  reducers: {},
   extraReducers: builder =>
     builder
       .addCase(fetchIndustries.pending, handlePending)
@@ -32,4 +46,5 @@ const industriesSlice = createSlice({
       .addCase(updateIndustry.rejected, handleRejected),
 });
 
+export const { clearIndustriesError } = industriesSlice.actions;
 export const industriesReducer = industriesSlice.reducer;

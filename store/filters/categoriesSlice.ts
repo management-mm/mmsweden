@@ -10,14 +10,28 @@ import {
   handleUpdateFulfilled,
 } from '@store/handlers';
 
+import type { ThunkRejectValue } from '@utils/errors/createThunkRejectValue';
+
+interface CategoriesState {
+  items: ICategory[];
+  isLoading: boolean;
+  error: ThunkRejectValue | null;
+}
+
+const initialState: CategoriesState = {
+  items: [],
+  isLoading: false,
+  error: null,
+};
+
 const categoriesSlice = createSlice({
   name: 'categories',
-  initialState: {
-    items: [] as ICategory[],
-    isLoading: false,
-    error: null,
+  initialState,
+  reducers: {
+    clearCategoriesError: state => {
+      state.error = null;
+    },
   },
-  reducers: {},
   extraReducers: builder =>
     builder
       .addCase(fetchCategories.pending, handlePending)
@@ -32,4 +46,5 @@ const categoriesSlice = createSlice({
       .addCase(updateCategory.rejected, handleRejected),
 });
 
+export const { clearCategoriesError } = categoriesSlice.actions;
 export const categoriesReducer = categoriesSlice.reducer;

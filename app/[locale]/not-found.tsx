@@ -9,7 +9,7 @@ import { NotFoundText } from '@enums/i18nConstants';
 export default function NotFound() {
   const t = useTranslations();
   return (
-    <section className="min-h-fallback px- relative mx-auto flex max-w-5xl items-center pt-[22px] pb-[42px] md:pt-[62px] md:pb-[400px]">
+    <section className="min-h-fallback relative mx-auto flex max-w-5xl items-center pt-[22px] pb-[42px] md:pt-[62px] md:pb-[400px]">
       <div className="container">
         <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm">
           <span className="h-2 w-2 rounded-full bg-red-600 shadow-[0_0_18px_rgba(220,38,38,0.35)]" />

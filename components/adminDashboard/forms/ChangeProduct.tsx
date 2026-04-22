@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { schema } from '@schemas/editProduct';
 import clsx from 'clsx';
@@ -19,6 +19,7 @@ import SuccessModal from '../statusModals/SuccessModal';
 
 import StatusModal from '@components/common/StatusModal';
 import SvgIcon from '@components/common/SvgIcon';
+import RetryBlock from '@components/common/error/RetryBlock';
 import Loader from '@components/common/loaders/Loader';
 
 import {
@@ -26,12 +27,18 @@ import {
   fetchProductBySlug,
   updateProduct,
 } from '@store/products/operations';
+import { clearProduct } from '@store/products/productsSlice';
 import { selectIsLoading, selectProductDetails } from '@store/selectors';
 
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
 import { useNotify } from '@hooks/useNotify';
 import useWindowWidth from '@hooks/useWindowWidth';
+
+import { AppError } from '@utils/errors/AppError';
+import { getErrorMessage } from '@utils/errors/getErrorMessage';
+import { logError } from '@utils/errors/logError';
+import { normalizeError } from '@utils/errors/normalizeError';
 
 import { IconId } from '@enums/iconsSpriteId';
 
@@ -50,25 +57,26 @@ const ChangeProduct = () => {
   const productId = product?._id;
 
   const [isDelete, setIsDelete] = useState(false);
-
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [soldModalOpen, setSoldModalOpen] = useState(false);
-  const { notifyError } = useNotify();
-
   const [soldDateLabel, setSoldDateLabel] = useState<string | null>(null);
+  const [isProductUpdated, setIsProductUpdated] = useState(false);
+  const [loadError, setLoadError] = useState<AppError | null>(null);
+
   const [pendingSold, setPendingSold] = useState<{
     iso: string;
     label: string;
   } | null>(null);
 
+  const { notifyError } = useNotify();
+
   const editHref = useMemo(() => {
-    const slug = (product as any)?.slug;
-    return slug
-      ? `/admin/all-products/edit-product/${slug}`
+    const productSlug = (product as { slug?: string } | null)?.slug;
+
+    return productSlug
+      ? `/admin/all-products/edit-product/${productSlug}`
       : '/admin/all-products';
   }, [product]);
-
-  const [isProductUpdated, setIsProductUpdated] = useState(false);
 
   const emptyName = useMemo(() => {
     return Object.values(SUPPORTED_LOCALES).reduce(
@@ -80,10 +88,32 @@ const ChangeProduct = () => {
     );
   }, []);
 
-  useEffect(() => {
-    if (!slug) return;
-    dispatch(fetchProductBySlug({ slug }));
+  const loadProduct = useCallback(async () => {
+    if (!slug) {
+      setLoadError(new AppError('Product slug is missing.', 'VALIDATION'));
+      return;
+    }
+
+    setLoadError(null);
+    dispatch(clearProduct());
+
+    try {
+      await dispatch(fetchProductBySlug({ slug })).unwrap();
+    } catch (error) {
+      const normalizedError = normalizeError(error);
+
+      logError(normalizedError, {
+        scope: 'fetchProductBySlug',
+        details: { slug },
+      });
+
+      setLoadError(normalizedError);
+    }
   }, [dispatch, slug]);
+
+  useEffect(() => {
+    loadProduct();
+  }, [loadProduct]);
 
   useEffect(() => {
     if (product?.deletionDate) {
@@ -96,6 +126,19 @@ const ChangeProduct = () => {
       setSoldDateLabel(null);
     }
   }, [product?.deletionDate]);
+
+  if (loadError && !product) {
+    return (
+      <div className="container pt-[48px] pb-[64px]">
+        <RetryBlock
+          error={loadError}
+          message="Failed to load product data."
+          onRetry={loadProduct}
+          className="max-w-[560px]"
+        />
+      </div>
+    );
+  }
 
   if (!product && isDelete) {
     return (
@@ -118,7 +161,9 @@ const ChangeProduct = () => {
     );
   }
 
-  if (isLoading && !isProductUpdated) return <Loader />;
+  if (isLoading && !product && !isProductUpdated) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -127,14 +172,12 @@ const ChangeProduct = () => {
           enableReinitialize
           initialValues={{
             id: product._id,
-
             name:
               typeof product.name === 'string'
                 ? product.name
                 : product.name
                   ? { ...emptyName, ...product.name }
                   : '',
-
             idNumber: product.idNumber || '',
             autoGenerateId: true,
             description:
@@ -143,19 +186,13 @@ const ChangeProduct = () => {
                 : product.description
                   ? { ...emptyName, ...product.description }
                   : '',
-
             dimensions: product.dimensions || '',
-
             manufacturer: product.manufacturer || '',
-
             industries: product.industries?.map(ind => ind.en) || [],
-
             condition: product.condition || 'used',
             video: product.video || '',
-
             photoQueue: (product.photos ?? []) as (string | File)[],
             photos: [] as File[],
-
             deletionDate: product.deletionDate || null,
             shouldTranslateName: false,
             seoCategoryId: product.seoCategoryId || '',
@@ -163,26 +200,40 @@ const ChangeProduct = () => {
             productCategoryId: product.productCategoryId || '',
           }}
           validationSchema={schema}
-          onSubmit={async values => {
+          onSubmit={async (values, { setSubmitting }) => {
             try {
-              if (!productId) return;
+              if (!productId) {
+                throw new AppError('Product ID is missing.', 'VALIDATION');
+              }
 
               if (isDelete) {
-                await dispatch(deleteProduct({ productId }));
+                await dispatch(deleteProduct({ productId })).unwrap();
                 return;
               }
 
-              const response = await dispatch(
+              await dispatch(
                 updateProduct({ ...values, id: productId })
-              );
+              ).unwrap();
 
-              if (response) setIsProductUpdated(true);
-            } catch (error: any) {
-              notifyError(error?.message || 'Oops... Something went wrong');
+              setIsProductUpdated(true);
+            } catch (error) {
+              const normalizedError = normalizeError(error);
+
+              logError(normalizedError, {
+                scope: isDelete ? 'deleteProduct' : 'updateProduct',
+                details: {
+                  productId,
+                  slug,
+                },
+              });
+
+              notifyError(getErrorMessage(normalizedError));
+            } finally {
+              setSubmitting(false);
             }
           }}
         >
-          {({ values, setFieldValue }) => (
+          {({ values, setFieldValue, isSubmitting }) => (
             <>
               <Form>
                 <div className={clsx('container', 'container--no-margin')}>
@@ -211,7 +262,7 @@ const ChangeProduct = () => {
                       </Block>
 
                       <Block intent="main" title="Condition">
-                        <Condition initialValue={product?.condition} />
+                        <Condition initialValue={product.condition} />
                       </Block>
 
                       <Block
@@ -230,6 +281,7 @@ const ChangeProduct = () => {
                             setSoldDateLabel(null);
                           }}
                         />
+
                         {soldDateLabel && (
                           <p className="text-sm text-gray-600">
                             This product will be deleted on {soldDateLabel}.
@@ -238,10 +290,11 @@ const ChangeProduct = () => {
                       </Block>
 
                       <button
-                        className="bg-accent w-full rounded-[32px] py-[16px]"
+                        className="bg-accent w-full rounded-[32px] py-[16px] disabled:cursor-not-allowed disabled:opacity-70"
                         type="submit"
+                        disabled={isLoading || isSubmitting}
                       >
-                        Save
+                        {isLoading || isSubmitting ? 'Saving...' : 'Save'}
                       </button>
                     </div>
                   </div>
@@ -275,6 +328,7 @@ const ChangeProduct = () => {
                     setFieldValue('deletionDate', pendingSold.iso, false);
                     setSoldDateLabel(pendingSold.label);
                   }
+
                   setIsDelete(false);
                   setSoldModalOpen(false);
                 }}
@@ -287,7 +341,7 @@ const ChangeProduct = () => {
 
       {isLoading && isProductUpdated && (
         <StatusModal
-          title="Please wait, the product is being uppdated."
+          title="Please wait, the product is being updated."
           handleToggleMenu={() => setIsProductUpdated(false)}
         >
           <Loader />
@@ -296,9 +350,9 @@ const ChangeProduct = () => {
 
       {isProductUpdated && !isLoading && (
         <SuccessModal
-          mainMessage={'🎉🎉🎉Great! Your product is succesfully updated'}
+          mainMessage="🎉🎉🎉Great! Your product is successfully updated"
           handleToggleMenu={() => setIsProductUpdated(false)}
-          statusProduct={'updated'}
+          statusProduct="updated"
           linkProduct={editHref}
         />
       )}

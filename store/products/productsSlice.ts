@@ -9,11 +9,7 @@ import {
   updateProduct,
 } from './operations';
 
-import {
-  handlePending,
-  handleProductRejected,
-  handleRejected,
-} from '@store/handlers';
+import type { ThunkRejectValue } from '@utils/errors/createThunkRejectValue';
 
 const deleteProductFromList = (products: IProduct[], productId: string) => {
   const index = products.findIndex(product => product._id === productId);
@@ -34,11 +30,56 @@ interface IProductsState {
   itemsForQuote: IProduct[];
   isAiGenerating: boolean;
   isLoading: boolean;
-  error: string | null;
+  error: ThunkRejectValue | null;
   cache: Record<string, ProductsCacheEntry>;
   statusByKey: Record<string, 'idle' | 'loading' | 'succeeded' | 'failed'>;
-  errorByKey: Record<string, string | null>;
+  errorByKey: Record<string, ThunkRejectValue | null>;
 }
+
+type ProductRejectedAction =
+  | ReturnType<typeof fetchProductBySlug.rejected>
+  | ReturnType<typeof addProduct.rejected>
+  | ReturnType<typeof deleteProduct.rejected>
+  | ReturnType<typeof updateProduct.rejected>;
+
+type AiRejectedAction = ReturnType<typeof generateDescWithAi.rejected>;
+
+const createFallbackRejectValue = (message?: string): ThunkRejectValue => ({
+  message: message || 'Something went wrong. Please try again.',
+  code: 'UNKNOWN',
+});
+
+const getRejectedPayload = (
+  action: ProductRejectedAction | AiRejectedAction
+): ThunkRejectValue => {
+  return action.payload ?? createFallbackRejectValue(action.error.message);
+};
+
+const handlePending = (state: IProductsState) => {
+  state.isLoading = true;
+  state.error = null;
+};
+
+const handleRejected = (
+  state: IProductsState,
+  action: ProductRejectedAction
+) => {
+  state.isLoading = false;
+  state.error = getRejectedPayload(action);
+};
+
+const handleGenerateDescWithAiPending = (state: IProductsState) => {
+  state.isAiGenerating = true;
+  state.error = null;
+};
+
+const handleGenerateDescWithAiRejected = (
+  state: IProductsState,
+  action: AiRejectedAction
+) => {
+  state.isAiGenerating = false;
+  state.error = getRejectedPayload(action);
+};
 
 const handleFetchProductBySlugFulfilled = (
   state: IProductsState,
@@ -57,10 +98,6 @@ const handleAddProductFulfilled = (
   state.error = null;
   state.items.push(action.payload);
   state.productDetails = action.payload;
-};
-
-const handleGenerateDescWithAiPending = (state: IProductsState) => {
-  state.isAiGenerating = true;
 };
 
 const handleGenerateDescWithAiFulfilled = (
@@ -111,6 +148,10 @@ const productsSlice = createSlice({
   reducers: {
     clearProduct: state => {
       state.productDetails = null;
+      state.error = null;
+    },
+    clearProductsError: state => {
+      state.error = null;
     },
     setInitialProducts: (
       state,
@@ -125,6 +166,7 @@ const productsSlice = createSlice({
       state.items = items;
       state.total = total;
       state.isLoading = false;
+      state.error = null;
 
       if (cacheKey) {
         state.cache[cacheKey] = {
@@ -145,17 +187,18 @@ const productsSlice = createSlice({
       .addCase(fetchProductBySlug.rejected, handleRejected)
       .addCase(addProduct.pending, handlePending)
       .addCase(addProduct.fulfilled, handleAddProductFulfilled)
-      .addCase(addProduct.rejected, handleProductRejected)
+      .addCase(addProduct.rejected, handleRejected)
       .addCase(deleteProduct.pending, handlePending)
       .addCase(deleteProduct.fulfilled, handleDeleteProductFulfilled)
-      .addCase(deleteProduct.rejected, handleProductRejected)
+      .addCase(deleteProduct.rejected, handleRejected)
       .addCase(updateProduct.pending, handlePending)
       .addCase(updateProduct.fulfilled, handleUpdateProductFulfilled)
-      .addCase(updateProduct.rejected, handleProductRejected)
+      .addCase(updateProduct.rejected, handleRejected)
       .addCase(generateDescWithAi.pending, handleGenerateDescWithAiPending)
       .addCase(generateDescWithAi.fulfilled, handleGenerateDescWithAiFulfilled)
-      .addCase(generateDescWithAi.rejected, handleProductRejected),
+      .addCase(generateDescWithAi.rejected, handleGenerateDescWithAiRejected),
 });
 
-export const { clearProduct, setInitialProducts } = productsSlice.actions;
+export const { clearProduct, clearProductsError, setInitialProducts } =
+  productsSlice.actions;
 export const productsReducer = productsSlice.reducer;

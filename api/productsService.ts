@@ -1,6 +1,9 @@
 import axios from 'axios';
 import type { IProduct } from 'interfaces/IProduct';
 
+import { AppError, type AppErrorCode } from '@utils/errors/AppError';
+import { normalizeError } from '@utils/errors/normalizeError';
+
 import type { AppLocale } from '@i18n/config';
 
 const rawBaseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL;
@@ -31,16 +34,31 @@ interface RequestOptions {
 
 function getBaseUrl(): string {
   if (!baseUrl) {
-    throw new Error(
-      'API URL is not configured. Set API_URL or NEXT_PUBLIC_API_URL.'
+    throw new AppError(
+      'API URL is not configured. Set API_URL or NEXT_PUBLIC_API_URL.',
+      'UNKNOWN',
+      {
+        isOperational: false,
+      }
     );
   }
 
   return baseUrl;
 }
 
+function getErrorCodeByStatus(status: number): AppErrorCode {
+  if (status === 400 || status === 422) return 'VALIDATION';
+  if (status === 401) return 'UNAUTHORIZED';
+  if (status === 403) return 'FORBIDDEN';
+  if (status === 404) return 'NOT_FOUND';
+  if (status >= 500) return 'SERVER';
+
+  return 'UNKNOWN';
+}
+
 function buildUrl(path: string, searchParams?: URLSearchParams): string {
   const queryString = searchParams?.toString();
+
   return queryString
     ? `${getBaseUrl()}${path}?${queryString}`
     : `${getBaseUrl()}${path}`;
@@ -104,38 +122,60 @@ export const fetchRecommendedProductsBySlug = async (
     return [];
   }
 
-  const response = await axios.get<IProduct[]>(
-    buildUrl(`/products/${slug}/recommended-products`),
-    {
-      signal: options.signal,
-    }
-  );
+  try {
+    const response = await axios.get<IProduct[]>(
+      buildUrl(`/products/${slug}/recommended-products`),
+      {
+        signal: options.signal,
+      }
+    );
 
-  return response.data;
+    return response.data;
+  } catch (error) {
+    throw normalizeError(error);
+  }
 };
 
 export async function getProducts(
   query: GetProductsParams,
   options: RequestOptions = {}
 ): Promise<GetProductsResponse> {
-  const url = buildUrl('/products', createProductsSearchParams(query));
+  try {
+    const url = buildUrl('/products', createProductsSearchParams(query));
 
-  const res = await fetch(url, {
-    signal: options.signal,
-    next: { revalidate: 60 },
-  });
+    const res = await fetch(url, {
+      signal: options.signal,
+      next: { revalidate: 60 },
+    });
 
-  const text = await res.text();
+    const text = await res.text();
 
-  if (!res.ok) {
-    throw new Error(
-      `Failed to fetch products: ${res.status} ${res.statusText}. Body: ${text}`
-    );
+    if (!res.ok) {
+      throw new AppError(
+        `Failed to fetch products: ${res.status} ${res.statusText}`,
+        getErrorCodeByStatus(res.status),
+        {
+          status: res.status,
+          details: text,
+        }
+      );
+    }
+
+    if (!text) {
+      throw new AppError(
+        'Failed to fetch products: empty response body',
+        'SERVER'
+      );
+    }
+
+    try {
+      return JSON.parse(text) as GetProductsResponse;
+    } catch {
+      throw new AppError('Failed to parse products response JSON', 'SERVER', {
+        details: text,
+      });
+    }
+  } catch (error) {
+    throw normalizeError(error);
   }
-
-  if (!text) {
-    throw new Error('Failed to fetch products: empty response body');
-  }
-
-  return JSON.parse(text) as GetProductsResponse;
 }

@@ -30,11 +30,17 @@ const MobileMenu: FC<IMobileMenuProps> = ({
     handleToggleMenu();
   }, isOpen);
   useEffect(() => {
+    const body = document.body;
+
     if (isOpen) {
-      document.querySelector('body')?.classList.add('overflow-y-hidden');
+      body.classList.add('overflow-y-hidden');
     } else {
-      document.querySelector('body')?.classList.remove('overflow-y-hidden');
+      body.classList.remove('overflow-y-hidden');
     }
+
+    return () => {
+      body.classList.remove('overflow-y-hidden');
+    };
   }, [isOpen]);
   return (
     <div

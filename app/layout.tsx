@@ -6,6 +6,7 @@ import localFont from 'next/font/local';
 
 import Sprite from './Sprite';
 import './globals.css';
+import GoogleTagManagerProvider from './providers/GoogleTagManagerProvider';
 import ReactQueryProvider from './providers/ReactQueryProvider';
 
 import { cn } from '@utils/cn';
@@ -87,12 +88,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning className={inter.variable}>
+      <GoogleTagManagerProvider />
       <body className={cn(inter.className, 'bg-main')}>
         <Suspense fallback={null}>
           <Sprite />
         </Suspense>
         <ReactQueryProvider>{children}</ReactQueryProvider>
-
         <div id="modal-root" />
       </body>
     </html>

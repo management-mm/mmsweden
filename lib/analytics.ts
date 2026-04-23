@@ -1,11 +1,14 @@
 declare global {
   interface Window {
-    dataLayer: unknown[];
     gtag?: (...args: unknown[]) => void;
   }
 }
 
 export const GA_MEASUREMENT_ID = 'G-4J7Y28JHN2';
+
+type WindowWithDataLayer = Window & {
+  dataLayer: unknown[];
+};
 
 export function initGoogleAnalytics() {
   if (typeof window === 'undefined') return;
@@ -31,4 +34,7 @@ export function initGoogleAnalytics() {
     });
   `;
   document.head.appendChild(script2);
+
+  const w = window as WindowWithDataLayer;
+  w.dataLayer = w.dataLayer || [];
 }

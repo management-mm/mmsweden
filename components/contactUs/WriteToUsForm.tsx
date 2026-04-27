@@ -17,6 +17,7 @@ import Phone from '@components/formsLabels/countryAndPhone/Phone';
 import { useCurrentLocale } from '@hooks/useCurrentLocale';
 import { useNotify } from '@hooks/useNotify';
 
+import { pushToDataLayer } from '@utils/analytics/pushToDataLayer';
 import { getErrorMessage } from '@utils/errors/getErrorMessage';
 import { logError } from '@utils/errors/logError';
 import { normalizeError } from '@utils/errors/normalizeError';
@@ -70,7 +71,11 @@ const WriteToUsForm = () => {
                   subject,
                   message,
                 });
-
+                pushToDataLayer({
+                  event: 'contact_success',
+                  form_name: 'contact',
+                  page_type: 'contact',
+                });
                 notifySuccess(response[locale]);
                 actions.resetForm();
               } catch (error) {

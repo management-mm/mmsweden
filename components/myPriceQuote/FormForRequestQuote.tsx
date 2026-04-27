@@ -21,6 +21,7 @@ import { useAppSelector } from '@hooks/useAppSelector';
 import { useCurrentLocale } from '@hooks/useCurrentLocale';
 import { useNotify } from '@hooks/useNotify';
 
+import { pushToDataLayer } from '@utils/analytics/pushToDataLayer';
 import { getErrorMessage } from '@utils/errors/getErrorMessage';
 import { logError } from '@utils/errors/logError';
 import { normalizeError } from '@utils/errors/normalizeError';
@@ -91,7 +92,13 @@ const FormForRequestQuote = () => {
                 message,
                 products,
               });
-
+              pushToDataLayer({
+                event: 'request_pricing_success',
+                form_name: 'request_pricing',
+                page_type: 'product',
+                product_slug: requestedProducts[0].slug,
+                machine_id: requestedProducts[0].idNumber,
+              });
               notifySuccess(response[locale]);
               actions.resetForm();
             } catch (error) {

@@ -19,6 +19,7 @@ import Phone from '@components/formsLabels/countryAndPhone/Phone';
 import { useCurrentLocale } from '@hooks/useCurrentLocale';
 import { useNotify } from '@hooks/useNotify';
 
+import { pushToDataLayer } from '@utils/analytics/pushToDataLayer';
 import { getErrorMessage } from '@utils/errors/getErrorMessage';
 import { logError } from '@utils/errors/logError';
 import { normalizeError } from '@utils/errors/normalizeError';
@@ -86,7 +87,11 @@ const FormForSale = () => {
                 }
 
                 const message = await sellToUs(formData);
-
+                pushToDataLayer({
+                  event: 'sell_to_us_success',
+                  form_name: 'sell_to_us',
+                  page_type: 'sell_to_us',
+                });
                 notifySuccess(message[locale]);
                 actions.resetForm();
               } catch (error) {

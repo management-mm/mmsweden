@@ -33,8 +33,8 @@ const LoginForm = () => {
   };
 
   return (
-    <section className="min-h-screen bg-gray-50 px-4 py-8">
-      <div className="mx-auto flex min-h-[calc(100vh-64px)] max-w-6xl items-center justify-center">
+    <section className="min-h-[calc(100vh-164px)] bg-gray-50 px-4 py-8">
+      <div className="mx-auto flex min-h-[calc(100vh-164px)] max-w-6xl items-center justify-center">
         <div className="w-full max-w-[420px] rounded-3xl border border-gray-200 bg-white p-6 shadow-md md:p-8">
           <div className="mb-6">
             <h1 className="text-2xl font-semibold text-gray-900">Log in</h1>

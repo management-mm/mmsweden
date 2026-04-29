@@ -10,10 +10,9 @@ type Props = {
 const FiltersAndSearch = ({ isAdmin }: Props) => {
   return (
     <aside
-      className={clsx(
-        'md:flex md:items-center md:justify-between lg:block lg:w-[264px] lg:pb-[62px]',
-        isAdmin ? 'hidden lg:block' : ''
-      )}
+      className={
+        'md:flex md:items-center md:justify-between lg:block lg:w-[264px] lg:pb-[62px]'
+      }
     >
       <Search />
       <Filters />

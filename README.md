@@ -293,4 +293,4 @@ This project is private/internal unless you explicitly choose to publish it unde
 
 If you have any questions about this project, feel free to reach out:
 
-- **Email:** [marharyta-katsan@gmail.com](mailto:marharyta-katsan@gmail.com)
+- **Email:** [marharyta.katsan@gmail.com](mailto:marharyta.katsan@gmail.com)

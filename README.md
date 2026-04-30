@@ -255,15 +255,15 @@ The robots configuration allows indexing of the public site and blocks `/admin` 
 
 ### Dashboard overview
 
-![Admin dashboard overview](./public/sreanshots/dashboard-overview.png)
+![Admin dashboard overview](public/screenshots/dashboard-overview.png)
 
 ### New product form
 
-![Admin new product](./public/sreanshots/new-product.png)
+![Admin new product](public/screenshots/new-product.png)
 
 ### Email newsletter management
 
-![Admin Email newsletter management](./public/sreanshots/email-newsletter.png)
+![Admin Email newsletter management](public/screenshots/email-newsletter.png)
 
 
 ---

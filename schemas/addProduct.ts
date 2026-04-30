@@ -24,4 +24,6 @@ export const schema = Yup.object().shape({
   seoCategoryId: Yup.string(),
   seoSubcategoryId: Yup.string(),
   productCategoryId: Yup.string(),
+  notes: Yup.string().notRequired(),
+  isDraft: Yup.boolean().notRequired(),
 });

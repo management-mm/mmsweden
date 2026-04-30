@@ -70,12 +70,7 @@ const AddProduct = () => {
   }, [loadId]);
 
   useEffect(() => {
-    if (!product) {
-      setIsOpen(false);
-      return;
-    }
-
-    setIsOpen(true);
+    setIsOpen(Boolean(product));
   }, [product]);
 
   const editHref = useMemo(() => {
@@ -126,6 +121,8 @@ const AddProduct = () => {
           photos: [],
           video: '',
           shouldTranslateName: false,
+          notes: '',
+          isDraft: false,
         }}
         validationSchema={schema}
         onSubmit={async (values: IAddProductData, { setSubmitting }) => {
@@ -151,7 +148,7 @@ const AddProduct = () => {
           }
         }}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, setFieldValue }) => (
           <Form>
             <div className={cn('container', 'container--no-margin')}>
               <div className="gap-[24px] pt-[48px] lg:flex">
@@ -184,13 +181,27 @@ const AddProduct = () => {
                     <Condition />
                   </Block>
 
-                  <button
-                    className="bg-accent w-full rounded-[32px] py-[16px] disabled:cursor-not-allowed disabled:opacity-70"
-                    type="submit"
-                    disabled={isLoading || isSubmitting}
-                  >
-                    {isLoading || isSubmitting ? 'Saving...' : 'Save'}
-                  </button>
+                  <div className="flex items-center gap-[8px]">
+                    <button
+                      className="border-primary w-full rounded-[32px] border py-[14px] disabled:cursor-not-allowed disabled:opacity-70"
+                      type="submit"
+                      onClick={() => setFieldValue('isDraft', true)}
+                      disabled={isLoading || isSubmitting}
+                    >
+                      {isLoading || isSubmitting
+                        ? 'Saving...'
+                        : 'Save as draft'}
+                    </button>
+
+                    <button
+                      className="bg-accent w-full rounded-[32px] py-[14px] disabled:cursor-not-allowed disabled:opacity-70"
+                      type="submit"
+                      onClick={() => setFieldValue('isDraft', false)}
+                      disabled={isLoading || isSubmitting}
+                    >
+                      {isLoading || isSubmitting ? 'Saving...' : 'Save'}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -200,7 +211,7 @@ const AddProduct = () => {
 
       {isLoading && (
         <StatusModal title="Please wait, the product is being added to the website.">
-          <Loader />
+          <div className="border-primary mt-[32px] h-[40px] w-[40px] animate-spin rounded-full border-4 border-t-transparent" />
         </StatusModal>
       )}
 

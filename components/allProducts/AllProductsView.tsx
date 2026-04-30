@@ -5,11 +5,14 @@ import FiltersAndSearch from './FiltersAndSearch';
 import ProductsList from './ProductsList';
 import ProductsTotalProvider from './ProductsTotalProvider';
 
+import ProductQuickFilters from '@components/adminDashboard/common/ProductQuickFilters';
 import Breadcrumb from '@components/common/Breadcrumb';
 
 import { getBreadcrumbCategories } from '@utils/getBreadcrumbCategoryData';
 
 import type { AppLocale } from '@i18n/config';
+
+type ProductFilter = 'sold' | 'draft' | 'hasNotes';
 
 type Props = {
   mode?: 'public' | 'admin';
@@ -23,6 +26,7 @@ type Props = {
     industry: string[];
     categorySlug?: string;
     subcategorySlug?: string;
+    filter?: ProductFilter;
   };
 };
 
@@ -39,9 +43,15 @@ const AllProductsView = async ({ mode = 'public', locale, query }: Props) => {
     ...(query.subcategorySlug
       ? { subcategorySlug: query.subcategorySlug }
       : {}),
+
+    ...(query.filter === 'sold' ? { hasDeletionDate: true } : {}),
+    ...(query.filter === 'draft' ? { isDraft: true } : {}),
+    ...(query.filter === 'hasNotes' ? { hasNotes: true } : {}),
+
     page: Number(query.page || 1),
     perPage: 9,
     lang: locale,
+    isAdmin,
   });
 
   const { category, subcategory } = await getBreadcrumbCategories(
@@ -62,6 +72,8 @@ const AllProductsView = async ({ mode = 'public', locale, query }: Props) => {
         {!isAdmin && (
           <Breadcrumb category={category} subcategory={subcategory} />
         )}
+
+        {isAdmin && <ProductQuickFilters />}
 
         <div className="flex flex-col lg:flex-row lg:justify-start lg:gap-[30px]">
           {!isAdmin && (
@@ -88,7 +100,8 @@ const AllProductsView = async ({ mode = 'public', locale, query }: Props) => {
               Boolean(query.manufacturer) ||
               Boolean(query.condition) ||
               query.category.length > 0 ||
-              query.industry.length > 0
+              query.industry.length > 0 ||
+              Boolean(query.filter)
             }
             searchQuery={query.title}
             categoryName={subcategory?.label || category?.label || ''}

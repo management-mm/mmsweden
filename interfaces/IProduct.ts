@@ -25,4 +25,6 @@ export interface IProduct {
   seoSubcategoryId?: string;
   seoCategoryId?: string;
   productCategoryId?: string;
+  notes?: string;
+  isDraft?: boolean;
 }

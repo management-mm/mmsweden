@@ -83,12 +83,14 @@ const ResetFilters = () => {
 
   return (
     <div className="mb-[22px] flex flex-wrap gap-[12px]">
-      <button
-        onClick={handleResetAll}
-        className="rounded-[32px] border border-[rgba(211,67,21,1)] bg-[rgba(211,67,21,.12)] px-[8px] py-[7px] text-[12px] text-[rgba(211,67,21,1)]"
-      >
-        {t(Filter.Reset)}
-      </button>
+      {filtersToReset.length > 0 && (
+        <button
+          onClick={handleResetAll}
+          className="rounded-[32px] border border-[rgba(211,67,21,1)] bg-[rgba(211,67,21,.12)] px-[8px] py-[7px] text-[12px] text-[rgba(211,67,21,1)]"
+        >
+          {t(Filter.Reset)}
+        </button>
+      )}
 
       {filtersToReset.map(filter => (
         <button

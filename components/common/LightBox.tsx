@@ -1,6 +1,6 @@
 'use client';
 
-import { type FC, createRef, useRef } from 'react';
+import { type FC, createRef, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import {
   type ReactZoomPanPinchContentRef,
@@ -34,9 +34,16 @@ const LightBox: FC<ILightBoxProps> = ({
   setCurrentIndex,
 }) => {
   const { handlePrev, handleNext, onSwiperInit } = useSwiperNavigation();
+
+  const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
+
   const slideRefs = useRef<React.RefObject<ReactZoomPanPinchContentRef>[]>(
     photos.map(() => createRef<ReactZoomPanPinchContentRef>())
   );
+
+  useEffect(() => {
+    setModalRoot(document.getElementById('modal-root'));
+  }, []);
 
   const handleZoomIn = (index: number) => {
     slideRefs.current[index]?.current?.zoomIn();
@@ -50,24 +57,25 @@ const LightBox: FC<ILightBoxProps> = ({
     slideRefs.current[index]?.current?.resetTransform();
   };
 
-  const modalRoot = document.getElementById('modal-root');
   if (!modalRoot) return null;
 
-  const modalContent = (
+  return ReactDOM.createPortal(
     <div
       onClick={e => {
         if (
           e.currentTarget === e.target ||
           (e.target instanceof HTMLElement &&
             e.target.classList.contains('swiper-slide'))
-        )
+        ) {
           setCurrentIndex(-1);
+        }
       }}
       className="overlay fixed top-0 left-0 z-30 flex h-full w-full items-center justify-center bg-[rgba(27,27,27,0.7)]"
     >
       <span className="text-secondary absolute top-2 left-4 text-[18px]">
         {currentIndex + 1} / {photos.length}
       </span>
+
       <div className="absolute top-0 right-0 flex h-[45px] gap-[20px] bg-[rgba(35,35,35,.65)] px-[20px]">
         <button type="button" onClick={() => handleZoomIn(currentIndex)}>
           <SvgIcon
@@ -76,6 +84,7 @@ const LightBox: FC<ILightBoxProps> = ({
             size={{ width: 26, height: 26 }}
           />
         </button>
+
         <button type="button" onClick={() => handleZoomOut(currentIndex)}>
           <SvgIcon
             className="fill-secondary"
@@ -83,6 +92,7 @@ const LightBox: FC<ILightBoxProps> = ({
             size={{ width: 26, height: 26 }}
           />
         </button>
+
         <button type="button" onClick={() => handleResetZoom(currentIndex)}>
           <SvgIcon
             className="fill-secondary"
@@ -90,6 +100,7 @@ const LightBox: FC<ILightBoxProps> = ({
             size={{ width: 26, height: 26 }}
           />
         </button>
+
         <button type="button" onClick={() => setCurrentIndex(-1)}>
           <SvgIcon
             iconId={IconId.Close}
@@ -107,7 +118,7 @@ const LightBox: FC<ILightBoxProps> = ({
           onlyInViewport: false,
         }}
         slidesPerView={1}
-        centeredSlides={true}
+        centeredSlides
         spaceBetween={0}
         initialSlide={currentIndex}
         onSlideChange={swiper => setCurrentIndex(swiper.activeIndex)}
@@ -143,6 +154,7 @@ const LightBox: FC<ILightBoxProps> = ({
         onClick={handlePrev}
         iconId="ArrowLeft"
       />
+
       <NaviArrowSlider
         intent="details"
         className="right-[20px]"
@@ -150,10 +162,9 @@ const LightBox: FC<ILightBoxProps> = ({
         onClick={handleNext}
         iconId="ArrowRight"
       />
-    </div>
+    </div>,
+    modalRoot
   );
-
-  return ReactDOM.createPortal(modalContent, modalRoot);
 };
 
 export default LightBox;

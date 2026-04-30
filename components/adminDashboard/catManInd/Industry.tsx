@@ -112,7 +112,7 @@ const Industry: FC<IIndustryProps> = ({
         ) : (
           Array.from({ length: newFieldCount }).map((_, index) => (
             <div key={index}>
-              <LabelTitle title={'Add new industry'} />
+              <LabelTitle title={'Add new industry'} type={'string'} />
               <InputFieldWithCheck
                 placeholder={'Enter industry'}
                 name="industries"

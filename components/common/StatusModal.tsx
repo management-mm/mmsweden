@@ -1,4 +1,6 @@
-import { type FC, type ReactNode } from 'react';
+'use client';
+
+import { type FC, type ReactNode, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import SvgIcon from './SvgIcon';
@@ -20,10 +22,15 @@ const StatusModal: FC<IStatusModalProps> = ({
   handleToggleMenu,
   className,
 }) => {
-  const modalRoot = document.getElementById('modal-root');
+  const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setModalRoot(document.getElementById('modal-root'));
+  }, []);
+
   if (!modalRoot) return null;
 
-  const modalContent = (
+  return ReactDOM.createPortal(
     <div className="fixed inset-0 z-30 flex items-center justify-center bg-[rgba(27,27,27,0.7)]">
       <div
         className={cn(
@@ -37,18 +44,15 @@ const StatusModal: FC<IStatusModalProps> = ({
 
         <button
           type="button"
-          onClick={() => {
-            handleToggleMenu?.();
-          }}
+          onClick={handleToggleMenu}
           className="absolute top-[16px] right-[16px]"
         >
           <SvgIcon iconId={IconId.Close} size={{ width: 28, height: 28 }} />
         </button>
       </div>
-    </div>
+    </div>,
+    modalRoot
   );
-
-  return ReactDOM.createPortal(modalContent, modalRoot);
 };
 
 export default StatusModal;

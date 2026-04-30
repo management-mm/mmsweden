@@ -53,6 +53,7 @@ const handleLogInRejected = (
   action: ReturnType<typeof logIn.rejected>
 ): void => {
   state.isLoading = false;
+  state.isLoggedIn = true;
   state.error =
     action.payload ?? createFallbackRejectValue(action.error.message);
 };

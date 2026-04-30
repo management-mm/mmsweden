@@ -80,7 +80,7 @@ const CatManItem: FC<ICatManItemProps> = ({
         />
         {isClick ? (
           <>
-            <LabelTitle title={`Add new ${itemName}`} />
+            <LabelTitle title={`Add new ${itemName}`} type={'string'} />
             <InputFieldWithCheck
               placeholder={`Enter ${itemName}`}
               name={itemName}

@@ -104,7 +104,7 @@ const ProductName: FC<IProductNameProps> = ({ initialValue }) => {
         </>
       ) : (
         <label className="flex flex-col gap-[12px]">
-          <LabelTitle title="Name" />
+          <LabelTitle title="Name" type="string" />
           {Object.values(SUPPORTED_LOCALES).map(lang => (
             <div key={lang} className="relative">
               <label

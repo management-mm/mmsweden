@@ -50,7 +50,7 @@ const ProductCard: FC<IProductCardProps> = ({
   return (
     <article
       className={clsx(
-        'group border-secondary flex h-[504px] flex-col overflow-hidden rounded-[8px] border bg-white pb-[20px] shadow-sm transition-all duration-300',
+        'border-secondary flex h-[504px] flex-col overflow-hidden rounded-[8px] border bg-white pb-[20px] shadow-sm transition-all duration-300',
         !isLoading &&
           'focus-within:-translate-y-1 focus-within:shadow-lg hover:-translate-y-1 hover:shadow-lg',
         className,
@@ -86,6 +86,11 @@ const ProductCard: FC<IProductCardProps> = ({
         {!isLoading && deletionDate && (
           <span className="text-secondary absolute top-[8px] right-[8px] z-[11] inline-flex items-center rounded-full bg-red-900 px-[8px] py-[4px] text-[12px] leading-none font-medium uppercase shadow-sm">
             Sold
+          </span>
+        )}
+        {product.isDraft && (
+          <span className="text-primary bg-secondary absolute right-[8px] bottom-[8px] z-[11] inline-flex items-center rounded-full px-[8px] py-[4px] text-[12px] leading-none font-medium uppercase shadow-sm">
+            Draft
           </span>
         )}
       </div>

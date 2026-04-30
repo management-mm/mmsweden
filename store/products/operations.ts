@@ -41,6 +41,8 @@ export interface IUpdateProductData {
   seoSubcategoryId: string;
   seoCategoryId: string;
   productCategoryId: string;
+  notes: string;
+  isDraft: boolean;
 }
 
 export interface IGenerateDescData {
@@ -188,6 +190,8 @@ export const updateProduct = createAsyncThunk<
           updatedProduct[key].forEach(photo => {
             data.append('photos', photo);
           });
+        } else if (key === 'isDraft') {
+          data.append('isDraft', String(Boolean(updatedProduct[key])));
         } else {
           const value = updatedProduct[key];
 

@@ -1,4 +1,4 @@
-import AllProductsView from '@components/allProducts/AllProductsView';
+import AdminProductsView from '@components/allProducts/AdminProductsView';
 
 import type { AppLocale } from '@i18n/config';
 
@@ -9,6 +9,7 @@ type SearchParams = {
   page?: string;
   category?: string | string[];
   industry?: string | string[];
+  filter?: 'sold' | 'draft' | 'hasNotes';
 };
 
 type Props = {
@@ -29,8 +30,7 @@ export default async function AdminAllProductsPage({
   const resolvedSearchParams = await searchParams;
 
   return (
-    <AllProductsView
-      mode="admin"
+    <AdminProductsView
       locale={locale}
       query={{
         title: resolvedSearchParams.title,
@@ -39,6 +39,7 @@ export default async function AdminAllProductsPage({
         page: resolvedSearchParams.page || '1',
         category: normalizeArray(resolvedSearchParams.category),
         industry: normalizeArray(resolvedSearchParams.industry),
+        filter: resolvedSearchParams.filter,
       }}
     />
   );

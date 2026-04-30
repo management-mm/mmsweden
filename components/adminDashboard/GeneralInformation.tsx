@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 
 import Checkbox from './common/Checkbox';
 import DescriptionProduct from './formsFields/DescriptionProduct';
+import Notes from './formsFields/Notes';
 import ProductName from './formsFields/ProductName';
 
 import LabelTitle from '@components/common/LabelTitle';
@@ -87,6 +88,7 @@ const GeneralInformation: FC<IGeneralInformationProps> = ({ product }) => {
           className="border-neutral transition-border duration-primary focus:border-secondary-accent rounded-[32px] border px-[22px] py-[14px] text-[14px] outline-none focus:border"
         />
       </label>
+      <Notes />
     </div>
   );
 };

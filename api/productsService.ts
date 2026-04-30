@@ -1,6 +1,8 @@
 import axios from 'axios';
 import type { IProduct } from 'interfaces/IProduct';
 
+import { api } from '@store/api';
+
 import { AppError, type AppErrorCode } from '@utils/errors/AppError';
 import { normalizeError } from '@utils/errors/normalizeError';
 
@@ -21,6 +23,10 @@ export interface GetProductsParams {
   condition?: string;
   categorySlug?: string;
   subcategorySlug?: string;
+  isAdmin?: boolean;
+  hasDeletionDate?: boolean;
+  isDraft?: boolean;
+  hasNotes?: boolean;
 }
 
 export interface GetProductsResponse {
@@ -111,6 +117,18 @@ function createProductsSearchParams(query: GetProductsParams): URLSearchParams {
     searchParams.append('lang', query.lang);
   }
 
+  if (query.hasDeletionDate) {
+    searchParams.append('hasDeletionDate', 'true');
+  }
+
+  if (query.isDraft) {
+    searchParams.append('isDraft', 'true');
+  }
+
+  if (query.hasNotes) {
+    searchParams.append('hasNotes', 'true');
+  }
+
   return searchParams;
 }
 
@@ -135,6 +153,22 @@ export const fetchRecommendedProductsBySlug = async (
     throw normalizeError(error);
   }
 };
+
+export async function getAdminProducts(
+  query: GetProductsParams,
+  options: RequestOptions = {}
+): Promise<GetProductsResponse> {
+  try {
+    const response = await api.get<GetProductsResponse>('/products/admin', {
+      params: createProductsSearchParams(query),
+      signal: options.signal,
+    });
+
+    return response.data;
+  } catch (error) {
+    throw normalizeError(error);
+  }
+}
 
 export async function getProducts(
   query: GetProductsParams,

@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { schema } from '@schemas/editProduct';
 import clsx from 'clsx';
@@ -13,6 +13,7 @@ import Condition from '../Condition';
 import DeleteOrSold from '../DeleteOrSold';
 import GeneralInformation from '../GeneralInformation';
 import CatManInd from '../catManInd/CatManInd';
+import DraftMessage from '../common/DraftMessage';
 import MessageDeleteOrSold from '../common/MessageDeleteOrSold';
 import PhotosAndVideo from '../photosAndVideo/PhotosAndVideo';
 import SuccessModal from '../statusModals/SuccessModal';
@@ -33,7 +34,6 @@ import { selectIsLoading, selectProductDetails } from '@store/selectors';
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { useAppSelector } from '@hooks/useAppSelector';
 import { useNotify } from '@hooks/useNotify';
-import useWindowWidth from '@hooks/useWindowWidth';
 
 import { AppError } from '@utils/errors/AppError';
 import { getErrorMessage } from '@utils/errors/getErrorMessage';
@@ -46,7 +46,6 @@ import { AppLocale, SUPPORTED_LOCALES } from '@i18n/config';
 
 const ChangeProduct = () => {
   const dispatch = useAppDispatch();
-  const windowWidth = useWindowWidth();
 
   const params = useParams<{ slug: string }>();
   const slug = params?.slug;
@@ -55,6 +54,8 @@ const ChangeProduct = () => {
   const isLoading = useAppSelector(selectIsLoading);
 
   const productId = product?._id;
+
+  const submitIsDraftRef = useRef(false);
 
   const [isDelete, setIsDelete] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -149,7 +150,9 @@ const ChangeProduct = () => {
             iconId={IconId.Cancel}
             size={{ width: 90, height: 90 }}
           />
+
           <p className="mb-6 text-[22px]">There is no product anymore</p>
+
           <Link
             className="border-primary text-primary mx-auto block w-full rounded-[32px] border px-[10px] py-[10px] text-center font-semibold"
             href="/admin/all-products"
@@ -198,6 +201,8 @@ const ChangeProduct = () => {
             seoCategoryId: product.seoCategoryId || '',
             seoSubcategoryId: product.seoSubcategoryId || '',
             productCategoryId: product.productCategoryId || '',
+            notes: product.notes || '',
+            isDraft: product.isDraft ?? false,
           }}
           validationSchema={schema}
           onSubmit={async (values, { setSubmitting }) => {
@@ -210,9 +215,16 @@ const ChangeProduct = () => {
                 await dispatch(deleteProduct({ productId })).unwrap();
                 return;
               }
-
+              console.log(
+                'submitIsDraftRef.current:',
+                submitIsDraftRef.current
+              );
               await dispatch(
-                updateProduct({ ...values, id: productId })
+                updateProduct({
+                  ...values,
+                  id: productId,
+                  isDraft: submitIsDraftRef.current,
+                })
               ).unwrap();
 
               setIsProductUpdated(true);
@@ -233,8 +245,9 @@ const ChangeProduct = () => {
             }
           }}
         >
-          {({ values, setFieldValue, isSubmitting }) => (
+          {({ values, setFieldValue, isSubmitting, submitForm }) => (
             <>
+              {product.isDraft && <DraftMessage />}
               <Form>
                 <div className={clsx('container', 'container--no-margin')}>
                   <div className="gap-[24px] pt-[48px] lg:flex">
@@ -289,13 +302,33 @@ const ChangeProduct = () => {
                         )}
                       </Block>
 
-                      <button
-                        className="bg-accent w-full rounded-[32px] py-[16px] disabled:cursor-not-allowed disabled:opacity-70"
-                        type="submit"
-                        disabled={isLoading || isSubmitting}
-                      >
-                        {isLoading || isSubmitting ? 'Saving...' : 'Save'}
-                      </button>
+                      <div className="flex items-center gap-[8px]">
+                        <button
+                          type="button"
+                          className="border-primary w-full rounded-[32px] border py-[14px] disabled:cursor-not-allowed disabled:opacity-70"
+                          onClick={() => {
+                            submitIsDraftRef.current = true;
+                            submitForm();
+                          }}
+                          disabled={isLoading || isSubmitting}
+                        >
+                          {isLoading || isSubmitting
+                            ? 'Saving...'
+                            : 'Save as draft'}
+                        </button>
+
+                        <button
+                          type="button"
+                          className="bg-accent w-full rounded-[32px] py-[14px] disabled:cursor-not-allowed disabled:opacity-70"
+                          onClick={() => {
+                            submitIsDraftRef.current = false;
+                            submitForm();
+                          }}
+                          disabled={isLoading || isSubmitting}
+                        >
+                          {isLoading || isSubmitting ? 'Saving...' : 'Save'}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -344,7 +377,7 @@ const ChangeProduct = () => {
           title="Please wait, the product is being updated."
           handleToggleMenu={() => setIsProductUpdated(false)}
         >
-          <Loader />
+          <div className="border-primary fixed top-1/2 left-1/2 z-5 mt-[32px] h-[40px] w-[40px] -translate-x-1/2 -translate-y-1/2 animate-spin rounded-full border-4 border-t-transparent" />
         </StatusModal>
       )}
 

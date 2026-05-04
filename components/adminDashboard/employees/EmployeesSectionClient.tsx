@@ -141,7 +141,7 @@ export default function EmployeesSectionClient({
               </p>
             </div>
 
-            <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
+            <div className="flex shrink-0 flex-col gap-3 lg:flex-row">
               {isOrdering ? (
                 <>
                   <button

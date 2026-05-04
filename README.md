@@ -1,11 +1,15 @@
 # MMSweden Frontend
 
-A multilingual **Next.js** frontend for **Meat Machines / MMSweden**, built for showcasing used food processing and packaging equipment and for managing catalog content through an internal admin panel.
+A multilingual **Next.js** frontend for **Meat Machines / MMSweden**, built for
+showcasing used food processing and packaging equipment and for managing catalog
+content through an internal admin panel.
 
 The repository contains two main parts:
 
-- a **public website** with localized pages, product discovery, inquiry forms, and SEO-oriented routing;
-- an **admin panel** for managing products, filters, employees, newsletters, and internal settings.
+- a **public website** with localized pages, product discovery, inquiry forms,
+  and SEO-oriented routing;
+- an **admin panel** for managing products, filters, employees, newsletters, and
+  internal settings.
 
 Live site: **www.mmsweden.se**
 
@@ -13,14 +17,18 @@ Live site: **www.mmsweden.se**
 
 ## Overview
 
-This project is a TypeScript-based web application built with the Next.js App Router. It supports multiple locales, integrates with an external backend API, and includes a protected admin area for day-to-day content operations.
+This project is a TypeScript-based web application built with the Next.js App
+Router. It supports multiple locales, integrates with an external backend API,
+and includes a protected admin area for day-to-day content operations.
 
 From the repository structure, the app includes:
 
 - a localized public site under `app/[locale]/(site)`;
 - a protected admin area under `app/[locale]/admin`;
-- service modules for products, categories, counters, employees, auth token handling, and mail requests;
-- internationalization via `next-intl` with message files for multiple languages;
+- service modules for products, categories, counters, employees, auth token
+  handling, and mail requests;
+- internationalization via `next-intl` with message files for multiple
+  languages;
 - sitemap and robots support for SEO.
 
 ---
@@ -30,8 +38,10 @@ From the repository structure, the app includes:
 ### Public website
 
 - multilingual routing with locale-prefixed URLs;
-- homepage, About Us, All Products, Contact Us, Sell to Us, New Arrivals, My Price Quote, Privacy Policy, and Login pages;
-- product catalog browsing with filters, sorting, pagination, and SEO category support;
+- homepage, About Us, All Products, Contact Us, Sell to Us, New Arrivals, My
+  Price Quote, Privacy Policy, and Login pages;
+- product catalog browsing with filters, sorting, pagination, and SEO category
+  support;
 - contact and inquiry flows connected to backend mail endpoints;
 - SEO metadata, robots rules, and sitemap routes.
 
@@ -62,7 +72,9 @@ From the repository structure, the app includes:
 - **DaisyUI**
 - **Vitest**
 
-Additional UI and utility packages include MUI, Swiper, `react-select`, `react-icons`, drag-and-drop utilities, masking libraries, and other helpers used throughout the public site and admin interface.
+Additional UI and utility packages include MUI, Swiper, `react-select`,
+`react-icons`, drag-and-drop utilities, masking libraries, and other helpers
+used throughout the public site and admin interface.
 
 ---
 
@@ -111,7 +123,8 @@ The default locale is **English (`en`)**.
 
 ## Public Routes
 
-The public-facing part of the app lives inside `app/[locale]/(site)` and includes pages such as:
+The public-facing part of the app lives inside `app/[locale]/(site)` and
+includes pages such as:
 
 - Home
 - About Us
@@ -148,7 +161,8 @@ Based on the current repository structure, it includes:
 - `id-settings`
 - `settings`
 
-The admin layout uses protected routing components, so authentication is required to access these pages.
+The admin layout uses protected routing components, so authentication is
+required to access these pages.
 
 ---
 
@@ -168,7 +182,8 @@ SITE_URL=http://localhost:3000
 
 - `API_URL` is used on the server side.
 - `NEXT_PUBLIC_API_URL` is used in browser-accessible code.
-- `SITE_URL` is used for canonical URLs, structured metadata, and sitemap/robots generation.
+- `SITE_URL` is used for canonical URLs, structured metadata, and sitemap/robots
+  generation.
 
 Adjust the values to match your local backend and frontend URLs.
 
@@ -234,7 +249,8 @@ Current services in the repository include:
 - `mailerService.ts`
 - `getAuthToken.ts`
 
-These services cover catalog operations, SEO categories, counters/IDs, employee management, admin auth token retrieval, and contact/request form submissions.
+These services cover catalog operations, SEO categories, counters/IDs, employee
+management, admin auth token retrieval, and contact/request form submissions.
 
 ---
 
@@ -247,7 +263,8 @@ The project includes SEO-focused infrastructure such as:
 - `robots.ts`;
 - sitemap routes including product, category, page, and blog sitemap files.
 
-The robots configuration allows indexing of the public site and blocks `/admin` and `/api`.
+The robots configuration allows indexing of the public site and blocks `/admin`
+and `/api`.
 
 ---
 
@@ -265,27 +282,31 @@ The robots configuration allows indexing of the public site and blocks `/admin` 
 
 ![Admin Email newsletter management](public/screenshots/email-newsletter.png)
 
-
 ---
 
 ## Development Notes
 
 - The public site and admin panel live in the same codebase.
 - Localization is powered by `next-intl` and JSON message files.
-- Remote images are configured for external sources such as Cloudinary and flag CDN.
-- The admin area relies on client-side persisted auth state for protected access.
+- Remote images are configured for external sources such as Cloudinary and flag
+  CDN.
+- The admin area relies on client-side persisted auth state for protected
+  access.
 
 ---
 
 ## Repository Status
 
-This repository is the frontend application for MMSweden / Meat Machines and is actively structured around multilingual catalog management and admin content operations.
+This repository is the frontend application for MMSweden / Meat Machines and is
+actively structured around multilingual catalog management and admin content
+operations.
 
 ---
 
 ## License
 
-This project is private/internal unless you explicitly choose to publish it under a separate license.
+This project is private/internal unless you explicitly choose to publish it
+under a separate license.
 
 ---
 

@@ -63,7 +63,7 @@ export default function ProductQuickFilters() {
   };
 
   return (
-    <div className="mb-[30px] flex flex-wrap gap-[16px]">
+    <div className="mb-[30px] flex flex-wrap gap-[8px] lg:gap-[16px]">
       {filters.map(filter => {
         const isActive = activeFilter === filter.value;
 

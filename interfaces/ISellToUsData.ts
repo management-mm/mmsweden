@@ -6,4 +6,5 @@ export interface ISellToUsData {
   productName: string;
   price: string;
   description: string;
+  captchaToken: string;
 }

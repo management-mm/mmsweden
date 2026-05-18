@@ -12,4 +12,5 @@ export interface IRequestQuoteData {
   company: string;
   products: Product[];
   message: string;
+  captchaToken: string;
 }

@@ -5,4 +5,5 @@ export interface IContactUsData {
   countryPhone: string;
   subject: string;
   message: string;
+  captchaToken: string;
 }

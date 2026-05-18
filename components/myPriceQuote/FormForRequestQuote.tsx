@@ -1,5 +1,6 @@
 'use client';
 
+import { Turnstile } from '@marsidev/react-turnstile';
 import { useState } from 'react';
 
 import { requestQuote } from '@api/mailerService';
@@ -40,6 +41,7 @@ const Phone = dynamic(
 
 const FormForRequestQuote = () => {
   const t = useTranslations();
+  const [captchaToken, setCaptchaToken] = useState('');
   const [loading, setLoading] = useState(false);
 
   const requestedProducts = useAppSelector(selectRequestedProducts);
@@ -91,6 +93,7 @@ const FormForRequestQuote = () => {
                 company,
                 message,
                 products,
+                captchaToken,
               });
               pushToDataLayer({
                 event: 'request_pricing_success',
@@ -101,6 +104,7 @@ const FormForRequestQuote = () => {
               });
               notifySuccess(response[locale]);
               actions.resetForm();
+              setCaptchaToken('');
             } catch (error) {
               const normalizedError = normalizeError(error);
 
@@ -148,15 +152,26 @@ const FormForRequestQuote = () => {
                 </label>
               </div>
 
-              <button
-                className="bg-accent text-primary shadow-accent mx-auto block w-full rounded-[32px] px-[32px] py-[16px] font-semibold disabled:cursor-not-allowed disabled:opacity-70 md:w-auto"
-                type="submit"
-                disabled={loading || isSubmitting}
-              >
-                {loading || isSubmitting
-                  ? 'Sending...'
-                  : t(Button.SubmitRequest)}
-              </button>
+              <div className="mt-[28px] flex flex-col items-center gap-[22px]">
+                <div className="overflow-hidden rounded-[12px] border border-gray-200 bg-white shadow-sm">
+                  <Turnstile
+                    siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+                    onSuccess={setCaptchaToken}
+                    onExpire={() => setCaptchaToken('')}
+                    onError={() => setCaptchaToken('')}
+                  />
+                </div>
+
+                <button
+                  className="bg-accent text-primary shadow-accent block w-full rounded-[32px] px-[32px] py-[16px] font-semibold disabled:cursor-not-allowed disabled:opacity-70 md:w-auto"
+                  type="submit"
+                  disabled={loading || isSubmitting || !captchaToken}
+                >
+                  {loading || isSubmitting
+                    ? 'Sending...'
+                    : t(Button.SubmitRequest)}
+                </button>
+              </div>
             </Form>
           )}
         </Formik>

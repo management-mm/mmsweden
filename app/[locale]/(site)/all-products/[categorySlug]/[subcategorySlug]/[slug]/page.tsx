@@ -261,7 +261,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!product) {
     return {
-      title: 'Product Not Found | MMSweden',
+      title: 'Product Not Found | MM Sweden',
       description: 'The requested product could not be found.',
       robots: {
         index: false,
@@ -311,9 +311,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const localizedName = getLocalizedText(product.name, locale, slug).trim();
   const conditionLabel = getConditionLabel(product.condition);
 
-  const title = `${conditionLabel} ${localizedName} For Sale | MMSweden`;
+  const title = `${conditionLabel} ${localizedName} For Sale | MM Sweden`;
 
-  const description = `Buy a ${conditionLabel.toLowerCase()} ${localizedName} on MMSweden. We're a specialized reseller of high-quality used food processing and packing machinery`;
+  const description = `Buy a ${conditionLabel.toLowerCase()} ${localizedName} on MM Sweden. We're a specialized reseller of high-quality used food processing and packing machinery`;
 
   const ogImage = product.photos?.[0];
 

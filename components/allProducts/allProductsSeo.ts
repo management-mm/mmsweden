@@ -13,23 +13,25 @@ export type SearchParams = {
   industry?: string | string[];
 };
 
-type SeoSubcategory = {
+type SeoDocument = {
   slug: string;
+  name?: SeoText;
   updatedAt?: string;
   seo?: {
     title?: SeoText;
     description?: SeoText;
+    h1?: SeoText;
+  };
+  content?: {
+    intro?: SeoText;
   };
 };
 
-type SeoCategory = {
-  slug: string;
-  updatedAt?: string;
-  seo?: {
-    title?: SeoText;
-    description?: SeoText;
-  };
-  subcategories?: SeoSubcategory[];
+export type CategorySeoData = {
+  title: string;
+  description: string;
+  h1: string;
+  intro: string;
 };
 
 function getApiUrl() {
@@ -53,22 +55,137 @@ function getLocalizedSeoText(
   return value[locale] || value.en || Object.values(value)[0] || fallback;
 }
 
+function slugToLabel(slug: string) {
+  return slug
+    .split('-')
+    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+}
+
 export function normalizeArray(value?: string | string[]) {
   if (!value) return [];
   return Array.isArray(value) ? value : [value];
 }
 
-async function getSeoCategories(): Promise<SeoCategory[]> {
+async function getSeoCategoryBySlug(
+  categorySlug: string
+): Promise<SeoDocument | null> {
   const apiUrl = getApiUrl();
-  if (!apiUrl) return [];
+  if (!apiUrl) return null;
 
-  const res = await fetch(`${apiUrl}/seo-categories/tree?activeOnly=true`, {
-    next: { revalidate: 3600 },
+  try {
+    const res = await fetch(`${apiUrl}/seo-categories/${categorySlug}`, {
+      next: { revalidate: 3600 },
+    });
+
+    if (!res.ok) return null;
+
+    return res.json();
+  } catch {
+    return null;
+  }
+}
+
+async function getSeoSubcategoryBySlug({
+  categorySlug,
+  subcategorySlug,
+}: {
+  categorySlug: string;
+  subcategorySlug: string;
+}): Promise<SeoDocument | null> {
+  const apiUrl = getApiUrl();
+  if (!apiUrl) return null;
+
+  try {
+    const res = await fetch(
+      `${apiUrl}/seo-categories/${categorySlug}/${subcategorySlug}`,
+      {
+        next: { revalidate: 3600 },
+      }
+    );
+
+    if (!res.ok) return null;
+
+    return res.json();
+  } catch {
+    return null;
+  }
+}
+
+function buildSeoData({
+  document,
+  locale,
+  fallbackSlug,
+}: {
+  document: SeoDocument | null;
+  locale: AppLocale;
+  fallbackSlug: string;
+}): CategorySeoData {
+  const fallbackH1 = getLocalizedSeoText(
+    document?.name,
+    locale,
+    slugToLabel(fallbackSlug)
+  );
+
+  const h1 = getLocalizedSeoText(document?.seo?.h1, locale, fallbackH1);
+
+  const title = getLocalizedSeoText(
+    document?.seo?.title,
+    locale,
+    `${h1} | MM Sweden`
+  );
+
+  const description = getLocalizedSeoText(
+    document?.seo?.description,
+    locale,
+    'Used food processing and packaging equipment.'
+  );
+
+  const intro = getLocalizedSeoText(document?.content?.intro, locale, '');
+
+  return {
+    title,
+    description,
+    h1,
+    intro,
+  };
+}
+
+export async function getCategorySeoData({
+  locale,
+  categorySlug,
+}: {
+  locale: AppLocale;
+  categorySlug: string;
+}): Promise<CategorySeoData> {
+  const category = await getSeoCategoryBySlug(categorySlug);
+
+  return buildSeoData({
+    document: category,
+    locale,
+    fallbackSlug: categorySlug,
+  });
+}
+
+export async function getSubcategorySeoData({
+  locale,
+  categorySlug,
+  subcategorySlug,
+}: {
+  locale: AppLocale;
+  categorySlug: string;
+  subcategorySlug: string;
+}): Promise<CategorySeoData> {
+  const subcategory = await getSeoSubcategoryBySlug({
+    categorySlug,
+    subcategorySlug,
   });
 
-  if (!res.ok) return [];
-
-  return res.json();
+  return buildSeoData({
+    document: subcategory,
+    locale,
+    fallbackSlug: subcategorySlug,
+  });
 }
 
 export async function buildCategoryMetadata({
@@ -79,29 +196,13 @@ export async function buildCategoryMetadata({
   categorySlug: string;
 }): Promise<Metadata> {
   const siteUrl = getSiteUrl();
-  const categories = await getSeoCategories();
-  const category = categories.find(item => item.slug === categorySlug);
-
-  const fallbackTitle = 'All Products | Meat Machines';
-  const fallbackDescription = 'Used food processing and packaging equipment.';
-
-  const title = getLocalizedSeoText(
-    category?.seo?.title,
-    locale,
-    fallbackTitle
-  );
-
-  const description = getLocalizedSeoText(
-    category?.seo?.description,
-    locale,
-    fallbackDescription
-  );
+  const seo = await getCategorySeoData({ locale, categorySlug });
 
   const canonical = `${siteUrl}/${locale}/all-products/${categorySlug}`;
 
   return {
-    title,
-    description,
+    title: seo.title,
+    description: seo.description,
     alternates: {
       canonical,
       languages: Object.fromEntries([
@@ -117,15 +218,15 @@ export async function buildCategoryMetadata({
       follow: true,
     },
     openGraph: {
-      title,
-      description,
+      title: seo.title,
+      description: seo.description,
       url: canonical,
       type: 'website',
     },
     twitter: {
       card: 'summary_large_image',
-      title,
-      description,
+      title: seo.title,
+      description: seo.description,
     },
   };
 }
@@ -140,32 +241,18 @@ export async function buildSubcategoryMetadata({
   subcategorySlug: string;
 }): Promise<Metadata> {
   const siteUrl = getSiteUrl();
-  const categories = await getSeoCategories();
-  const category = categories.find(item => item.slug === categorySlug);
-  const subcategory = category?.subcategories?.find(
-    item => item.slug === subcategorySlug
-  );
 
-  const fallbackTitle = 'All Products | Meat Machines';
-  const fallbackDescription = 'Used food processing and packaging equipment.';
-
-  const title = getLocalizedSeoText(
-    subcategory?.seo?.title,
+  const seo = await getSubcategorySeoData({
     locale,
-    getLocalizedSeoText(category?.seo?.title, locale, fallbackTitle)
-  );
-
-  const description = getLocalizedSeoText(
-    subcategory?.seo?.description,
-    locale,
-    getLocalizedSeoText(category?.seo?.description, locale, fallbackDescription)
-  );
+    categorySlug,
+    subcategorySlug,
+  });
 
   const canonical = `${siteUrl}/${locale}/all-products/${categorySlug}/${subcategorySlug}`;
 
   return {
-    title,
-    description,
+    title: seo.title,
+    description: seo.description,
     alternates: {
       canonical,
       languages: Object.fromEntries([
@@ -184,15 +271,15 @@ export async function buildSubcategoryMetadata({
       follow: true,
     },
     openGraph: {
-      title,
-      description,
+      title: seo.title,
+      description: seo.description,
       url: canonical,
       type: 'website',
     },
     twitter: {
       card: 'summary_large_image',
-      title,
-      description,
+      title: seo.title,
+      description: seo.description,
     },
   };
 }

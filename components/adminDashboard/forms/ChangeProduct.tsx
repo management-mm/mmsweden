@@ -215,10 +215,6 @@ const ChangeProduct = () => {
                 await dispatch(deleteProduct({ productId })).unwrap();
                 return;
               }
-              console.log(
-                'submitIsDraftRef.current:',
-                submitIsDraftRef.current
-              );
               await dispatch(
                 updateProduct({
                   ...values,

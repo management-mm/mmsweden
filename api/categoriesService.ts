@@ -67,7 +67,7 @@ async function fetchJson<T>(url: string): Promise<T> {
           status: res.status,
           details: {
             url,
-            body: text,
+            body: text.slice(0, 2000),
           },
         }
       );
@@ -92,7 +92,7 @@ async function fetchJson<T>(url: string): Promise<T> {
         {
           details: {
             url,
-            body: text,
+            body: text.slice(0, 2000),
           },
         }
       );

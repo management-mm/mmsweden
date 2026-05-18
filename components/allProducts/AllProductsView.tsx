@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import FiltersAndSearch from './FiltersAndSearch';
 import ProductsList from './ProductsList';
 import ProductsTotalProvider from './ProductsTotalProvider';
+import SeoIntroSection from './SeoIntroSection';
 
 import ProductQuickFilters from '@components/adminDashboard/common/ProductQuickFilters';
 import Breadcrumb from '@components/common/Breadcrumb';
@@ -17,6 +18,10 @@ type ProductFilter = 'sold' | 'draft' | 'hasNotes';
 type Props = {
   mode?: 'public' | 'admin';
   locale: AppLocale;
+  seoIntro?: {
+    h1: string;
+    intro?: string | null;
+  };
   query: {
     title?: string;
     manufacturer?: string;
@@ -30,7 +35,12 @@ type Props = {
   };
 };
 
-const AllProductsView = async ({ mode = 'public', locale, query }: Props) => {
+const AllProductsView = async ({
+  mode = 'public',
+  locale,
+  query,
+  seoIntro,
+}: Props) => {
   const isAdmin = mode === 'admin';
 
   const { products, total } = await getProducts({
@@ -71,6 +81,10 @@ const AllProductsView = async ({ mode = 'public', locale, query }: Props) => {
       >
         {!isAdmin && (
           <Breadcrumb category={category} subcategory={subcategory} />
+        )}
+
+        {!isAdmin && seoIntro?.h1 && (
+          <SeoIntroSection h1={seoIntro.h1} intro={seoIntro.intro} />
         )}
 
         {isAdmin && <ProductQuickFilters />}

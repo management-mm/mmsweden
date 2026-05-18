@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 
 import AllProductsPageContent from '@components/allProducts/AllProductsPageContent';
-import { buildAllProductsMetadata } from '@components/allProducts/buildAllProductsMetadata';
+import {
+  buildAllProductsMetadata,
+  getAllProductsSeoData,
+} from '@components/allProducts/buildAllProductsMetadata';
 
 import type { AppLocale } from '@i18n/config';
 
@@ -41,6 +44,7 @@ export default async function Page({ params, searchParams }: Props) {
     <AllProductsPageContent
       locale={locale}
       searchParams={resolvedSearchParams}
+      seoIntro={getAllProductsSeoData(locale)}
     />
   );
 }

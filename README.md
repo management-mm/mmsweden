@@ -1,6 +1,6 @@
-# MMSweden Frontend
+# MM Sweden Frontend
 
-A multilingual **Next.js** frontend for **Meat Machines / MMSweden**, built for
+A multilingual **Next.js** frontend for **Meat Machines / MM Sweden**, built for
 showcasing used food processing and packaging equipment and for managing catalog
 content through an internal admin panel.
 
@@ -297,7 +297,7 @@ and `/api`.
 
 ## Repository Status
 
-This repository is the frontend application for MMSweden / Meat Machines and is
+This repository is the frontend application for MM Sweden / Meat Machines and is
 actively structured around multilingual catalog management and admin content
 operations.
 

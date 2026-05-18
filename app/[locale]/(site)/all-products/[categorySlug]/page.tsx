@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 
 import AllProductsView from '@components/allProducts/AllProductsView';
+import SeoIntroSection from '@components/allProducts/SeoIntroSection';
 import {
   type SearchParams,
   buildCategoryMetadata,
+  getCategorySeoData,
   normalizeArray,
 } from '@components/allProducts/allProductsSeo';
 
@@ -19,13 +21,6 @@ type Props = {
   searchParams: Promise<SearchParams>;
 };
 
-function slugToLabel(slug: string) {
-  return slug
-    .split('-')
-    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(' ');
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, categorySlug } = await params;
 
@@ -40,14 +35,18 @@ export default async function Page({ params, searchParams }: Props) {
   const resolvedSearchParams = await searchParams;
 
   const siteUrl = getSiteUrl();
-  const categoryName = slugToLabel(categorySlug);
   const canonicalUrl = `${siteUrl}/${locale}/all-products/${categorySlug}`;
+
+  const categorySeoData = await getCategorySeoData({
+    locale,
+    categorySlug,
+  });
 
   const collectionPageJsonLd = buildCollectionPageSchema({
     locale,
     url: canonicalUrl,
-    name: `${categoryName} | MMSweden`,
-    description: `Browse ${categoryName} machines and equipment available on MMSweden.`,
+    name: categorySeoData.h1,
+    description: categorySeoData.description,
   });
 
   return (
@@ -60,6 +59,10 @@ export default async function Page({ params, searchParams }: Props) {
       />
 
       <AllProductsView
+        seoIntro={{
+          h1: categorySeoData.h1,
+          intro: categorySeoData.intro,
+        }}
         locale={locale}
         query={{
           title: resolvedSearchParams.title,

@@ -11,11 +11,17 @@ type SearchParams = {
   industry?: string | string[];
 };
 
+type SeoIntro = {
+  h1: string;
+  intro?: string | null;
+};
+
 type Props = {
   locale: AppLocale;
   searchParams: SearchParams;
   categorySlug?: string;
   subcategorySlug?: string;
+  seoIntro?: SeoIntro;
 };
 
 const normalizeArray = (value?: string | string[]) => {
@@ -28,11 +34,13 @@ export default function AllProductsPageContent({
   searchParams,
   categorySlug,
   subcategorySlug,
+  seoIntro,
 }: Props) {
   return (
     <AllProductsView
       mode="public"
       locale={locale}
+      seoIntro={seoIntro}
       query={{
         title: searchParams.title,
         manufacturer: searchParams.manufacturer,

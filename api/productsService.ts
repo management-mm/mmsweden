@@ -190,7 +190,7 @@ export async function getProducts(
         getErrorCodeByStatus(res.status),
         {
           status: res.status,
-          details: text,
+          details: text.slice(0, 2000),
         }
       );
     }
@@ -202,13 +202,7 @@ export async function getProducts(
       );
     }
 
-    try {
-      return JSON.parse(text) as GetProductsResponse;
-    } catch {
-      throw new AppError('Failed to parse products response JSON', 'SERVER', {
-        details: text,
-      });
-    }
+    return JSON.parse(text) as GetProductsResponse;
   } catch (error) {
     throw normalizeError(error);
   }

@@ -33,7 +33,7 @@ import { useDebouncedValue } from '@hooks/useDebouncedValue';
 import { filters } from '@enums/filters';
 
 interface IFiltersGroupProps {
-  className: string;
+  className?: string;
 }
 
 const FiltersGroup: FC<IFiltersGroupProps> = ({ className }) => {

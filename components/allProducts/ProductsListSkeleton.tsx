@@ -1,6 +1,5 @@
-import type { IProduct, MultiLanguageString } from '@interfaces/IProduct';
-
 import ProductCard from '@components/common/productCard/ProductCard';
+import { skeletonProduct } from '@components/common/productCard/skeletonProduct';
 
 import { AppLocale } from '@i18n/config';
 
@@ -8,37 +7,6 @@ type Props = {
   locale: AppLocale;
   isAdmin?: boolean;
   count?: number;
-};
-
-const emptyMultiLanguageString: MultiLanguageString = {
-  en: '',
-  sv: '',
-  de: '',
-  fr: '',
-  es: '',
-  ru: '',
-  uk: '',
-  pl: '',
-};
-
-const skeletonProduct: IProduct = {
-  _id: 'skeleton',
-  slug: 'skeleton',
-  name: emptyMultiLanguageString,
-  idNumber: '',
-  description: emptyMultiLanguageString,
-  dimensions: '',
-  photos: [],
-  video: '',
-  category: emptyMultiLanguageString,
-  manufacturer: '',
-  industries: [],
-  condition: 'used',
-  deletionDate: null,
-  createdAt: new Date(),
-  seoCategorySlug: '',
-  seoSubcategorySlug: '',
-  productCategory: emptyMultiLanguageString,
 };
 
 const ProductsListSkeleton = ({

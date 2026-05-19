@@ -6,8 +6,7 @@ import type { IProduct } from '@interfaces/IProduct';
 import { useTranslations } from 'next-intl';
 
 import ProductsGroupSection from './ProductsGroupSection';
-
-import Loader from '@components/common/loaders/Loader';
+import ProductsGroupSectionSkeleton from './ProductsGroupSectionSkeleton';
 
 import { useCurrentLocale } from '@hooks/useCurrentLocale';
 import { useInfiniteLatestProducts } from '@hooks/useInfiniteLatestProducts';
@@ -64,7 +63,11 @@ export default function GroupedProductsList() {
   }, [products]);
 
   if (isFirstLoading) {
-    return <Loader />;
+    return (
+      <div aria-busy="true">
+        <ProductsGroupSectionSkeleton locale={locale} count={8} />
+      </div>
+    );
   }
 
   return (
@@ -79,11 +82,7 @@ export default function GroupedProductsList() {
         />
       ))}
 
-      {isLoading && (
-        <div className="flex justify-center py-6">
-          <Loader />
-        </div>
-      )}
+      {isLoading && <ProductsGroupSectionSkeleton locale={locale} count={4} />}
 
       {hasMore && <div ref={observerRef} className="h-10 w-full" />}
     </div>

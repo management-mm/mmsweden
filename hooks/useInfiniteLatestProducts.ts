@@ -3,6 +3,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { getProducts } from '@api/productsService';
 import type { IProduct } from '@interfaces/IProduct';
 
+import { AppError } from '@utils/errors/AppError';
+
 import { AppLocale } from '@i18n/config';
 
 const PER_PAGE = 9;
@@ -16,6 +18,10 @@ type UseInfiniteLatestProductsReturn = {
 };
 
 const isAbortError = (error: unknown): boolean => {
+  if (error instanceof AppError && error.code === 'ABORTED') {
+    return true;
+  }
+
   return error instanceof Error && error.name === 'AbortError';
 };
 
@@ -37,9 +43,12 @@ export const useInfiniteLatestProducts = (
       if (isRequestInFlightRef.current) return;
 
       controllerRef.current?.abort();
+
       const controller = new AbortController();
+
       controllerRef.current = controller;
       isRequestInFlightRef.current = true;
+
       setIsLoading(true);
 
       try {
@@ -53,15 +62,18 @@ export const useInfiniteLatestProducts = (
           { signal: controller.signal }
         );
 
+        if (controller.signal.aborted) return;
+
         const fetchedProducts = result.products ?? [];
         const newProducts = fetchedProducts.filter(
-          (product: IProduct) => !product.deletionDate
+          product => !product.deletionDate
         );
 
         setProducts(prev => {
           const existingIds = new Set(prev.map(product => product._id));
+
           const uniqueNewProducts = newProducts.filter(
-            (product: IProduct) => !existingIds.has(product._id)
+            product => !existingIds.has(product._id)
           );
 
           return [...prev, ...uniqueNewProducts];
@@ -70,18 +82,19 @@ export const useInfiniteLatestProducts = (
         setHasMore(fetchedProducts.length === PER_PAGE);
         pageRef.current = nextPage;
       } catch (error) {
-        if (!isAbortError(error)) {
-          console.error(error);
-          setHasMore(false);
+        if (isAbortError(error)) {
+          return;
         }
+
+        console.error(error);
+        setHasMore(false);
       } finally {
         if (controllerRef.current === controller) {
           controllerRef.current = null;
+          isRequestInFlightRef.current = false;
+          setIsLoading(false);
+          setIsFirstLoading(false);
         }
-
-        isRequestInFlightRef.current = false;
-        setIsLoading(false);
-        setIsFirstLoading(false);
       }
     },
     [locale]
@@ -90,7 +103,9 @@ export const useInfiniteLatestProducts = (
   useEffect(() => {
     const loadInitial = async () => {
       controllerRef.current?.abort();
+
       const controller = new AbortController();
+
       controllerRef.current = controller;
       isRequestInFlightRef.current = true;
 
@@ -98,6 +113,7 @@ export const useInfiniteLatestProducts = (
       setHasMore(true);
       setIsLoading(false);
       setIsFirstLoading(true);
+
       pageRef.current = 1;
 
       try {
@@ -111,25 +127,28 @@ export const useInfiniteLatestProducts = (
           { signal: controller.signal }
         );
 
+        if (controller.signal.aborted) return;
+
         const fetchedProducts = result.products ?? [];
         const initialProducts = fetchedProducts.filter(
-          (product: IProduct) => !product.deletionDate
+          product => !product.deletionDate
         );
 
         setProducts(initialProducts);
         setHasMore(fetchedProducts.length === PER_PAGE);
       } catch (error) {
-        if (!isAbortError(error)) {
-          console.error(error);
-          setHasMore(false);
+        if (isAbortError(error)) {
+          return;
         }
+
+        console.error(error);
+        setHasMore(false);
       } finally {
         if (controllerRef.current === controller) {
           controllerRef.current = null;
+          isRequestInFlightRef.current = false;
+          setIsFirstLoading(false);
         }
-
-        isRequestInFlightRef.current = false;
-        setIsFirstLoading(false);
       }
     };
 
@@ -142,6 +161,7 @@ export const useInfiniteLatestProducts = (
 
   useEffect(() => {
     const target = observerRef.current;
+
     if (!target) return;
 
     const observer = new IntersectionObserver(

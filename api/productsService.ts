@@ -204,6 +204,10 @@ export async function getProducts(
 
     return JSON.parse(text) as GetProductsResponse;
   } catch (error) {
+    if (error instanceof AppError) {
+      throw error;
+    }
+
     throw normalizeError(error);
   }
 }

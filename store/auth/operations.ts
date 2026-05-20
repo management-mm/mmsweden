@@ -15,9 +15,34 @@ interface LogInCredentials {
   password: string;
 }
 
-interface LogInResponse {
+export interface User {
+  name?: string | null;
+  email: string | null;
+}
+
+interface SuccessfulLogInResponse {
+  requiresTwoFactor?: false;
   token: string;
-  user: { name: string | null; email: string | null };
+  user: User;
+}
+
+interface TwoFactorRequiredResponse {
+  requiresTwoFactor: true;
+  userId: string;
+  method: 'email';
+  message: string;
+}
+
+export type LogInResponse = SuccessfulLogInResponse | TwoFactorRequiredResponse;
+
+interface VerifyTwoFactorCredentials {
+  userId: string;
+  code: string;
+}
+
+interface VerifyTwoFactorResponse {
+  token: string;
+  user: User;
 }
 
 export const logIn = createAsyncThunk<
@@ -26,13 +51,38 @@ export const logIn = createAsyncThunk<
   { rejectValue: ThunkRejectValue }
 >('auth/login', async (credentials, thunkAPI) => {
   try {
-    const response = await api.post('auth/login', credentials);
+    const response = await api.post<LogInResponse>('auth/login', credentials);
+
     return response.data;
   } catch (error) {
     logError(error, {
       scope: 'logIn',
       details: {
         email: credentials.email,
+      },
+    });
+
+    return thunkAPI.rejectWithValue(createThunkRejectValue(error));
+  }
+});
+
+export const verifyTwoFactor = createAsyncThunk<
+  VerifyTwoFactorResponse,
+  VerifyTwoFactorCredentials,
+  { rejectValue: ThunkRejectValue }
+>('auth/2fa/verify', async (credentials, thunkAPI) => {
+  try {
+    const response = await api.post<VerifyTwoFactorResponse>(
+      'auth/2fa/verify',
+      credentials
+    );
+
+    return response.data;
+  } catch (error) {
+    logError(error, {
+      scope: 'verifyTwoFactor',
+      details: {
+        userId: credentials.userId,
       },
     });
 
@@ -57,7 +107,7 @@ export const logOut = createAsyncThunk<
 });
 
 export const refreshUser = createAsyncThunk<
-  { email: string | null },
+  User,
   void,
   { state: RootState; rejectValue: ThunkRejectValue }
 >('auth/refresh', async (_, thunkAPI) => {
@@ -73,7 +123,8 @@ export const refreshUser = createAsyncThunk<
   }
 
   try {
-    const response = await api.get('auth/current');
+    const response = await api.get<User>('auth/current');
+
     return response.data;
   } catch (error) {
     logError(error, {

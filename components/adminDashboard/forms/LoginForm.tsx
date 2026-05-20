@@ -4,32 +4,64 @@ import { type FormEvent, useState } from 'react';
 import { MdEmail } from 'react-icons/md';
 import { RiEyeLine, RiEyeOffLine, RiLockPasswordFill } from 'react-icons/ri';
 
+import { useRouter } from 'next/navigation';
+
 import { logIn } from '@store/auth/operations';
-import { type AppDispatch } from '@store/store';
 
 import { useAppDispatch } from '@hooks/useAppDispatch';
+import { useNotify } from '@hooks/useNotify';
+
+import { getErrorMessage } from '@utils/errors/getErrorMessage';
+import { logError } from '@utils/errors/logError';
+import { normalizeError } from '@utils/errors/normalizeError';
 
 const LoginForm = () => {
+  const { notifyError } = useNotify();
   const [showPassword, setShowPassword] = useState(false);
-  const dispatch = useAppDispatch();
+  const [isSubmit, setIsSubmit] = useState(false);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const form = e.currentTarget;
-    const email = form.elements.namedItem('email') as HTMLInputElement;
-    const password = form.elements.namedItem('password') as HTMLInputElement;
+    const email = form.elements.namedItem('email') as HTMLInputElement | null;
+    const password = form.elements.namedItem(
+      'password'
+    ) as HTMLInputElement | null;
 
-    if (email && password) {
-      dispatch(
+    if (!email || !password) return;
+
+    setIsSubmit(true);
+
+    try {
+      const result = await dispatch(
         logIn({
           email: email.value,
           password: password.value,
         })
-      );
-    }
+      ).unwrap();
 
-    form.reset();
+      if (result.requiresTwoFactor) {
+        router.push('/verify-code');
+      }
+    } catch (error) {
+      const normalizedError = normalizeError(error);
+
+      logError(normalizedError, {
+        scope: 'logIn',
+        details: {
+          email: email.value,
+        },
+      });
+
+      notifyError(getErrorMessage(normalizedError));
+    } finally {
+      setIsSubmit(false);
+      form.reset();
+    }
   };
 
   return (
@@ -38,6 +70,7 @@ const LoginForm = () => {
         <div className="w-full max-w-[420px] rounded-3xl border border-gray-200 bg-white p-6 shadow-md md:p-8">
           <div className="mb-6">
             <h1 className="text-2xl font-semibold text-gray-900">Log in</h1>
+
             <p className="mt-2 text-sm leading-6 text-gray-500">
               Enter your email and password to access the admin panel.
             </p>
@@ -57,11 +90,12 @@ const LoginForm = () => {
 
               <div className="relative">
                 <input
-                  className="peer focus:border-secondary-accent w-full rounded-2xl border border-gray-300 bg-white py-3 pr-4 pl-11 text-sm text-gray-900 transition-colors duration-200 outline-none placeholder:text-gray-400"
+                  className="peer focus:border-secondary-accent w-full rounded-2xl border border-gray-300 bg-white py-3 pr-4 pl-11 text-sm text-gray-900 transition-colors duration-200 outline-none placeholder:text-gray-400 disabled:cursor-not-allowed disabled:bg-gray-100"
                   type="email"
                   name="email"
                   placeholder="Enter your email"
                   required
+                  disabled={isSubmit}
                 />
 
                 <MdEmail
@@ -78,11 +112,12 @@ const LoginForm = () => {
 
               <div className="relative">
                 <input
-                  className="peer focus:border-secondary-accent w-full rounded-2xl border border-gray-300 bg-white py-3 pr-12 pl-11 text-sm text-gray-900 transition-colors duration-200 outline-none placeholder:text-gray-400"
+                  className="peer focus:border-secondary-accent w-full rounded-2xl border border-gray-300 bg-white py-3 pr-12 pl-11 text-sm text-gray-900 transition-colors duration-200 outline-none placeholder:text-gray-400 disabled:cursor-not-allowed disabled:bg-gray-100"
                   type={showPassword ? 'text' : 'password'}
                   name="password"
                   placeholder="Enter your password"
                   required
+                  disabled={isSubmit}
                 />
 
                 <RiLockPasswordFill
@@ -93,7 +128,9 @@ const LoginForm = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(prev => !prev)}
-                  className="absolute top-1/2 right-4 -translate-y-1/2 text-gray-400 transition hover:text-gray-600"
+                  className="absolute top-1/2 right-4 -translate-y-1/2 text-gray-400 transition hover:text-gray-600 disabled:cursor-not-allowed disabled:opacity-60"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  disabled={isSubmit}
                 >
                   {showPassword ? (
                     <RiEyeLine size={18} />
@@ -105,10 +142,11 @@ const LoginForm = () => {
             </label>
 
             <button
-              className="bg-accent text-primary w-full rounded-2xl px-4 py-3 text-base font-semibold transition-all duration-200 hover:-translate-y-[1px] hover:shadow-md active:translate-y-0"
+              className="bg-accent text-primary w-full rounded-2xl px-4 py-3 text-base font-semibold transition-all duration-200 hover:-translate-y-[1px] hover:shadow-md active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-none"
               type="submit"
+              disabled={isSubmit}
             >
-              Log In
+              {isSubmit ? 'Logging in...' : 'Log In'}
             </button>
           </form>
         </div>

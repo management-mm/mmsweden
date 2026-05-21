@@ -23,10 +23,10 @@ export default function RequestPricingButton({ product }: Props) {
   return (
     <button
       className={clsx(
-        'text-primary flex w-full items-center justify-center rounded-[32px] py-[14px] text-[12px] font-semibold',
+        'text-primary flex w-full cursor-pointer items-center justify-center rounded-[32px] py-[14px] text-[12px] font-semibold',
         isRequested
           ? 'bg-secondary-accent text-secondary'
-          : 'bg-accent shadow-accent'
+          : 'bg-accent hover:shadow-accent transition-boxShadow shadow-none duration-250'
       )}
       type="button"
       onClick={() => handleToggleFavorites(product)}

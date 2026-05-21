@@ -57,8 +57,10 @@ const ActionsButtons: FC<IActionsButtonsProps> = ({
           {!product.deletionDate && (
             <button
               className={clsx(
-                'h-[40px] shrink-0 rounded-[32px] px-[15px] text-[12px] font-semibold',
-                isRequested ? 'bg-secondary-accent text-secondary' : 'bg-accent'
+                'h-[40px] shrink-0 cursor-pointer rounded-[32px] px-[15px] text-[12px] font-semibold',
+                isRequested
+                  ? 'bg-secondary-accent text-secondary'
+                  : 'bg-accent hover:shadow-accent transition-boxShadow shadow-none duration-250'
               )}
               onClick={() => handleToggleFavorites(product)}
               type="button"

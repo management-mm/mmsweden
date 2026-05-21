@@ -87,11 +87,13 @@ export function buildAllProductsMetadata({
     normalizeArray(searchParams.category).length > 0 ||
     normalizeArray(searchParams.industry).length > 0;
 
+  const hasPagination = Boolean(searchParams.page);
+
   return createPageMetadata({
     locale,
     path,
     title: 'Used Food Processing Machines | MM Sweden',
     description: 'Browse our catalogue of used food processing machinery.',
-    noIndex: hasFilters,
+    noIndex: hasFilters || hasPagination,
   });
 }

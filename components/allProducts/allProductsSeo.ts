@@ -32,6 +32,7 @@ export type CategorySeoData = {
   description: string;
   h1: string;
   intro: string;
+  exists: boolean;
 };
 
 function getApiUrl() {
@@ -52,6 +53,7 @@ function getLocalizedSeoText(
   fallback: string
 ) {
   if (!value) return fallback;
+
   return value[locale] || value.en || Object.values(value)[0] || fallback;
 }
 
@@ -64,6 +66,7 @@ function slugToLabel(slug: string) {
 
 export function normalizeArray(value?: string | string[]) {
   if (!value) return [];
+
   return Array.isArray(value) ? value : [value];
 }
 
@@ -71,6 +74,7 @@ async function getSeoCategoryBySlug(
   categorySlug: string
 ): Promise<SeoDocument | null> {
   const apiUrl = getApiUrl();
+
   if (!apiUrl) return null;
 
   try {
@@ -94,6 +98,7 @@ async function getSeoSubcategoryBySlug({
   subcategorySlug: string;
 }): Promise<SeoDocument | null> {
   const apiUrl = getApiUrl();
+
   if (!apiUrl) return null;
 
   try {
@@ -148,6 +153,18 @@ function buildSeoData({
     description,
     h1,
     intro,
+    exists: Boolean(document),
+  };
+}
+
+function buildNotFoundMetadata(type: 'Category' | 'Subcategory'): Metadata {
+  return {
+    title: `${type} Not Found | MM Sweden`,
+    description: `The requested ${type.toLowerCase()} could not be found.`,
+    robots: {
+      index: false,
+      follow: false,
+    },
   };
 }
 
@@ -198,6 +215,10 @@ export async function buildCategoryMetadata({
   const siteUrl = getSiteUrl();
   const seo = await getCategorySeoData({ locale, categorySlug });
 
+  if (!seo.exists) {
+    return buildNotFoundMetadata('Category');
+  }
+
   const canonical = `${siteUrl}/${locale}/all-products/${categorySlug}`;
 
   return {
@@ -247,6 +268,10 @@ export async function buildSubcategoryMetadata({
     categorySlug,
     subcategorySlug,
   });
+
+  if (!seo.exists) {
+    return buildNotFoundMetadata('Subcategory');
+  }
 
   const canonical = `${siteUrl}/${locale}/all-products/${categorySlug}/${subcategorySlug}`;
 

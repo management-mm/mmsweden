@@ -21,13 +21,17 @@ const ConditionItem: FC<IConditionItemProps> = ({ condition }) => {
   const handleSelectedOption = (event: ChangeEvent<HTMLInputElement>) => {
     const params = new URLSearchParams(searchParams.toString());
 
+    params.delete('page');
+
     if (!event.target.checked) {
       params.delete('condition');
     } else {
       params.set('condition', event.target.value);
     }
 
-    router.push(`${pathname}?${params.toString()}`);
+    const qs = params.toString();
+
+    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
   };
 
   return (
@@ -42,6 +46,7 @@ const ConditionItem: FC<IConditionItemProps> = ({ condition }) => {
         name="condition"
         value={condition}
       />
+
       <label
         className="font-openSans text-[14px] capitalize peer-disabled:text-gray-400"
         htmlFor={condition}

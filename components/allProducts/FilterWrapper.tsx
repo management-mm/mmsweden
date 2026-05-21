@@ -161,12 +161,16 @@ const FilterWrapper: FC<IFilterWrapperProps> = ({
     const checked = event.target.checked;
 
     updateSearchParams(params => {
+      params.delete('page');
+
       if (!checked) {
         subtractSearchParam(params, value, filterName);
         return;
       }
 
-      params.append(filterName, value);
+      if (!params.getAll(filterName).includes(value)) {
+        params.append(filterName, value);
+      }
     });
   };
 

@@ -2,6 +2,7 @@
 
 import { type RefObject, useEffect, useMemo, useState } from 'react';
 
+import type { ISeoCategory } from '@interfaces/ISeoCategory';
 import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
@@ -28,6 +29,18 @@ type Props = {
   triggerRef?: RefObject<HTMLElement | null>;
 };
 
+type SeoCategoryWithSubcategories = ISeoCategory & {
+  subcategories?: ISeoCategory[];
+};
+
+function getApiUrl() {
+  return (
+    process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') ??
+    process.env.API_URL?.replace(/\/$/, '') ??
+    ''
+  );
+}
+
 export default function CategoriesMenu({
   mode = 'header',
   isOpenHeaderMenu = false,
@@ -40,6 +53,13 @@ export default function CategoriesMenu({
 
   const [isOpen, setIsOpen] = useState(mode === 'filters');
   const [selectedParentId, setSelectedParentId] = useState<string | null>(null);
+  const [hasInitializedDefaultCategory, setHasInitializedDefaultCategory] =
+    useState(false);
+
+  const [categoriesTree, setCategoriesTree] = useState<
+    SeoCategoryWithSubcategories[]
+  >([]);
+  const [isCategoriesTreeLoading, setIsCategoriesTreeLoading] = useState(false);
 
   const isMobileMode = mode === 'mobile';
   const isMobileView = isMobileMode || windowWidth < 1178;
@@ -60,14 +80,69 @@ export default function CategoriesMenu({
   } = useChildCategories(selectedParentId);
 
   useEffect(() => {
-    if (selectedParentId || categories.length === 0) return;
+    const apiUrl = getApiUrl();
+
+    if (!apiUrl) return;
+
+    let cancelled = false;
+
+    const fetchCategoriesTree = async () => {
+      try {
+        setIsCategoriesTreeLoading(true);
+
+        const res = await fetch(
+          `${apiUrl}/seo-categories/tree?activeOnly=true`
+        );
+
+        if (!res.ok) return;
+
+        const data = (await res.json()) as SeoCategoryWithSubcategories[];
+
+        if (!cancelled) {
+          setCategoriesTree(data);
+        }
+      } catch {
+        if (!cancelled) {
+          setCategoriesTree([]);
+        }
+      } finally {
+        if (!cancelled) {
+          setIsCategoriesTreeLoading(false);
+        }
+      }
+    };
+
+    fetchCategoriesTree();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const displayCategories =
+    categoriesTree.length > 0 ? categoriesTree : categories;
+
+  const subcategoriesMap = useMemo(() => {
+    return categoriesTree.reduce(
+      (acc, category) => {
+        acc[String(category._id)] = category.subcategories ?? [];
+        return acc;
+      },
+      {} as Record<string, ISeoCategory[]>
+    );
+  }, [categoriesTree]);
+
+  useEffect(() => {
+    if (hasInitializedDefaultCategory || displayCategories.length === 0) return;
 
     if (isDesktopHeaderMenu) {
+      setHasInitializedDefaultCategory(true);
       return;
     }
 
-    setSelectedParentId(String(categories[0]._id));
-  }, [categories, selectedParentId, isDesktopHeaderMenu]);
+    setSelectedParentId(String(displayCategories[0]._id));
+    setHasInitializedDefaultCategory(true);
+  }, [displayCategories, hasInitializedDefaultCategory, isDesktopHeaderMenu]);
 
   useEffect(() => {
     if (isFiltersMode) {
@@ -95,11 +170,22 @@ export default function CategoriesMenu({
 
   const selectedParent = useMemo(
     () =>
-      categories.find(category => String(category._id) === selectedParentId),
-    [categories, selectedParentId]
+      displayCategories.find(
+        category => String(category._id) === selectedParentId
+      ),
+    [displayCategories, selectedParentId]
   );
 
+  const selectedSubcategories =
+    selectedParentId && subcategoriesMap[selectedParentId]
+      ? subcategoriesMap[selectedParentId]
+      : subcategories;
+
   const handleCategorySelect = (categoryId: string) => {
+    setSelectedParentId(prev => (prev === categoryId ? null : categoryId));
+  };
+
+  const handleDesktopCategorySelect = (categoryId: string) => {
     if (categoryId !== selectedParentId) {
       setSelectedParentId(categoryId);
     }
@@ -107,13 +193,14 @@ export default function CategoriesMenu({
 
   const mobileMenuContent = (
     <MobileCategoriesMenu
-      categories={categories}
-      subcategories={subcategories}
+      categories={displayCategories}
+      subcategories={selectedSubcategories}
+      subcategoriesMap={subcategoriesMap}
       selectedParentId={selectedParentId}
       setSelectedParentId={setSelectedParentId}
       locale={locale}
       mode={mode}
-      isCategoriesLoading={isCategoriesLoading}
+      isCategoriesLoading={isCategoriesLoading || isCategoriesTreeLoading}
       isSubcategoriesLoading={isSubcategoriesLoading}
     />
   );
@@ -176,14 +263,14 @@ export default function CategoriesMenu({
             {mobileMenuContent}
           </div>
         </div>
-      ) : isCategoriesLoading ? (
+      ) : isCategoriesLoading || isCategoriesTreeLoading ? (
         <div className="w-[420px] overflow-hidden rounded-[18px] border border-black/5 bg-white py-[14px] shadow-[0_18px_50px_rgba(15,23,42,0.14)]">
           <DesktopCategoriesMenuSkeleton />
         </div>
       ) : (
         <div className="relative">
           <div className="w-[420px] overflow-hidden rounded-[18px] border border-black/5 bg-white py-[14px] shadow-[0_18px_50px_rgba(15,23,42,0.14)]">
-            {categories.map(category => {
+            {displayCategories.map(category => {
               const categoryId = String(category._id);
               const isSelected = categoryId === selectedParentId;
 
@@ -192,8 +279,8 @@ export default function CategoriesMenu({
                   key={categoryId}
                   type="button"
                   onClick={() => handleCategorySelect(categoryId)}
-                  onMouseEnter={() => handleCategorySelect(categoryId)}
-                  onFocus={() => handleCategorySelect(categoryId)}
+                  onMouseEnter={() => handleDesktopCategorySelect(categoryId)}
+                  onFocus={() => handleDesktopCategorySelect(categoryId)}
                   className={clsx(
                     'text-primary flex w-full items-center justify-between px-[18px] py-[16px] text-start uppercase transition-all duration-200',
                     isSelected
@@ -237,7 +324,7 @@ export default function CategoriesMenu({
                         {t(Title.All)}
                       </Link>
 
-                      {subcategories.slice(0, 9).map(subcategory => (
+                      {selectedSubcategories.slice(0, 9).map(subcategory => (
                         <Link
                           href={`/${locale}/all-products/${selectedParent?.slug}/${subcategory.slug}`}
                           key={String(subcategory._id)}
@@ -249,7 +336,7 @@ export default function CategoriesMenu({
                     </div>
 
                     <div className="min-w-0">
-                      {subcategories.slice(9).map(subcategory => (
+                      {selectedSubcategories.slice(9).map(subcategory => (
                         <Link
                           href={`/${locale}/all-products/${selectedParent?.slug}/${subcategory.slug}`}
                           key={String(subcategory._id)}

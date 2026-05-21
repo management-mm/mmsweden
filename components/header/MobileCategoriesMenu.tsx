@@ -153,119 +153,120 @@ export default function MobileCategoriesMenu({
   }
 
   return (
-    <div
-      className={clsx(
-        'w-full overflow-x-hidden',
-        mode === 'filters' && 'h-[350px] overflow-y-auto',
-        mode === 'mobile' && 'overflow-visible'
-      )}
-    >
+    <>
       <SearchFilter keyword={keyword} setKeyword={setKeyword} />
+      <div
+        className={clsx(
+          'w-full overflow-x-hidden',
+          mode === 'filters' && 'h-[350px] overflow-y-auto',
+          mode === 'mobile' && 'overflow-visible'
+        )}
+      >
+        {filteredData.length > 0 ? (
+          filteredData.map(({ category, matchedSubcategories }) => {
+            const categoryId = String(category._id);
+            const isOpen = isSearching || categoryId === selectedParentId;
 
-      {filteredData.length > 0 ? (
-        filteredData.map(({ category, matchedSubcategories }) => {
-          const categoryId = String(category._id);
-          const isOpen = isSearching || categoryId === selectedParentId;
+            const isActiveCategory = category.slug === activeCategorySlug;
+            const isActiveCategoryPage =
+              isActiveCategory && !activeSubcategorySlug;
 
-          const isActiveCategory = category.slug === activeCategorySlug;
-          const isActiveCategoryPage =
-            isActiveCategory && !activeSubcategorySlug;
-
-          return (
-            <div key={categoryId} className="border-b border-slate-200">
-              <button
-                type="button"
-                onClick={() => handleToggleCategory(categoryId)}
-                className={clsx(
-                  'flex w-full items-center justify-between py-[18px] pr-[24px] pl-[16px] text-start text-[12px] uppercase transition-colors',
-                  isActiveCategory
-                    ? 'bg-secondary text-primary font-bold'
-                    : isOpen
-                      ? 'bg-secondary/60 text-primary font-bold'
-                      : 'text-primary bg-white font-medium'
-                )}
-              >
-                <span className="min-w-0 flex-1 pr-[12px] break-words whitespace-normal">
-                  {category.name[locale]}
-                </span>
-
-                <div
+            return (
+              <div key={categoryId} className="border-b border-slate-200">
+                <button
+                  type="button"
+                  onClick={() => handleToggleCategory(categoryId)}
                   className={clsx(
-                    'shrink-0 transition-transform duration-300 ease-in-out',
-                    isOpen ? 'rotate-0' : 'rotate-45'
+                    'flex w-full items-center justify-between py-[18px] pr-[24px] pl-[16px] text-start text-[12px] uppercase transition-colors',
+                    isActiveCategory
+                      ? 'bg-secondary text-primary font-bold'
+                      : isOpen
+                        ? 'bg-secondary/60 text-primary font-bold'
+                        : 'text-primary bg-white font-medium'
                   )}
                 >
-                  <SvgIcon
-                    iconId={IconId.OpenClose}
-                    size={{ width: 14, height: 14 }}
-                  />
-                </div>
-              </button>
+                  <span className="min-w-0 flex-1 pr-[12px] break-words whitespace-normal">
+                    {category.name[locale]}
+                  </span>
 
-              {isOpen && (
-                <div className="overflow-x-hidden bg-white px-[16px] pb-[16px]">
-                  <div className="flex flex-col">
-                    {!isSearching && (
-                      <Link
-                        href={`/${locale}/all-products/${category.slug}`}
-                        className={clsx(
-                          'block rounded-[8px] py-[8px] pl-[16px] text-[14px] break-words whitespace-normal transition-colors',
-                          isActiveCategoryPage
-                            ? 'bg-secondary text-primary font-semibold'
-                            : 'hover:bg-secondary'
-                        )}
-                      >
-                        {t(Title.All)}
-                      </Link>
+                  <div
+                    className={clsx(
+                      'shrink-0 transition-transform duration-300 ease-in-out',
+                      isOpen ? 'rotate-0' : 'rotate-45'
                     )}
-
-                    {isSubcategoriesLoading &&
-                    categoryId === selectedParentId &&
-                    !isSearching ? (
-                      <div className="py-[8px] pl-[16px]">
-                        <div className="space-y-[10px]">
-                          <div className="h-[16px] w-[70%] animate-pulse rounded bg-slate-200" />
-                          <div className="h-[16px] w-[55%] animate-pulse rounded bg-slate-200" />
-                          <div className="h-[16px] w-[65%] animate-pulse rounded bg-slate-200" />
-                        </div>
-                      </div>
-                    ) : matchedSubcategories.length > 0 ? (
-                      matchedSubcategories.map(subcategory => {
-                        const isActiveSubcategory =
-                          isActiveCategory &&
-                          subcategory.slug === activeSubcategorySlug;
-
-                        return (
-                          <Link
-                            href={`/${locale}/all-products/${category.slug}/${subcategory.slug}`}
-                            key={String(subcategory._id)}
-                            className={clsx(
-                              'block rounded-[8px] py-[8px] pl-[16px] text-[14px] break-words whitespace-normal transition-colors',
-                              isActiveSubcategory
-                                ? 'bg-primary text-secondary font-semibold'
-                                : 'hover:bg-secondary'
-                            )}
-                          >
-                            {subcategory.name[locale]}
-                          </Link>
-                        );
-                      })
-                    ) : (
-                      <p className="px-[16px] py-[8px] text-[14px] text-[rgba(0,32,52,.6)]">
-                        Nothing found
-                      </p>
-                    )}
+                  >
+                    <SvgIcon
+                      iconId={IconId.OpenClose}
+                      size={{ width: 14, height: 14 }}
+                    />
                   </div>
-                </div>
-              )}
-            </div>
-          );
-        })
-      ) : (
-        <p className="px-[16px] py-[18px] text-[14px] text-[rgba(0,32,52,.6)]">
-          Nothing found
-        </p>
-      )}
-    </div>
+                </button>
+
+                {isOpen && (
+                  <div className="overflow-x-hidden bg-white px-[16px] pb-[16px]">
+                    <div className="flex flex-col">
+                      {!isSearching && (
+                        <Link
+                          href={`/${locale}/all-products/${category.slug}`}
+                          className={clsx(
+                            'block rounded-[8px] py-[8px] pl-[16px] text-[14px] break-words whitespace-normal transition-colors',
+                            isActiveCategoryPage
+                              ? 'bg-secondary text-primary font-semibold'
+                              : 'hover:bg-secondary'
+                          )}
+                        >
+                          {t(Title.All)}
+                        </Link>
+                      )}
+
+                      {isSubcategoriesLoading &&
+                      categoryId === selectedParentId &&
+                      !isSearching ? (
+                        <div className="py-[8px] pl-[16px]">
+                          <div className="space-y-[10px]">
+                            <div className="h-[16px] w-[70%] animate-pulse rounded bg-slate-200" />
+                            <div className="h-[16px] w-[55%] animate-pulse rounded bg-slate-200" />
+                            <div className="h-[16px] w-[65%] animate-pulse rounded bg-slate-200" />
+                          </div>
+                        </div>
+                      ) : matchedSubcategories.length > 0 ? (
+                        matchedSubcategories.map(subcategory => {
+                          const isActiveSubcategory =
+                            isActiveCategory &&
+                            subcategory.slug === activeSubcategorySlug;
+
+                          return (
+                            <Link
+                              href={`/${locale}/all-products/${category.slug}/${subcategory.slug}`}
+                              key={String(subcategory._id)}
+                              className={clsx(
+                                'block rounded-[8px] py-[8px] pl-[16px] text-[14px] break-words whitespace-normal transition-colors',
+                                isActiveSubcategory
+                                  ? 'bg-primary text-secondary font-semibold'
+                                  : 'hover:bg-secondary'
+                              )}
+                            >
+                              {subcategory.name[locale]}
+                            </Link>
+                          );
+                        })
+                      ) : (
+                        <p className="px-[16px] py-[8px] text-[14px] text-[rgba(0,32,52,.6)]">
+                          Nothing found
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })
+        ) : (
+          <p className="px-[16px] py-[18px] text-[14px] text-[rgba(0,32,52,.6)]">
+            Nothing found
+          </p>
+        )}
+      </div>
+    </>
   );
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 import AllProductsView from '@components/allProducts/AllProductsView';
-import SeoIntroSection from '@components/allProducts/SeoIntroSection';
 import {
   type SearchParams,
   buildSubcategoryMetadata,
@@ -39,14 +39,18 @@ export default async function Page({ params, searchParams }: Props) {
   const { locale, categorySlug, subcategorySlug } = await params;
   const resolvedSearchParams = await searchParams;
 
-  const siteUrl = getSiteUrl();
-  const canonicalUrl = `${siteUrl}/${locale}/all-products/${categorySlug}/${subcategorySlug}`;
-
   const subcategorySeoData = await getSubcategorySeoData({
     locale,
     categorySlug,
     subcategorySlug,
   });
+
+  if (!subcategorySeoData.exists) {
+    notFound();
+  }
+
+  const siteUrl = getSiteUrl();
+  const canonicalUrl = `${siteUrl}/${locale}/all-products/${categorySlug}/${subcategorySlug}`;
 
   const collectionPageJsonLd = buildCollectionPageSchema({
     locale,

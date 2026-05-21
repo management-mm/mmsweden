@@ -35,12 +35,20 @@ const ActionsButtons: FC<IActionsButtonsProps> = ({
 
   const slug = product.slug;
 
+  const productCategorySlug = product.seoCategorySlug || categorySlug;
+  const productSubcategorySlug = product.seoSubcategorySlug || subcategorySlug;
+
+  const productHref =
+    productCategorySlug && productSubcategorySlug && slug
+      ? `/${locale}/all-products/${productCategorySlug}/${productSubcategorySlug}/${slug}`
+      : `/${locale}/all-products`;
+
   return (
     <div className="mt-auto flex w-full gap-[8px] md:gap-[16px] lg:gap-[8px]">
       {!isLoading ? (
         <>
           <Link
-            href={`/${locale}/all-products/${categorySlug ?? product.seoCategorySlug}/${subcategorySlug ?? product.seoSubcategorySlug}/${slug}`}
+            href={productHref}
             className="border-primary font-inter text-primary hover:bg-primary hover:text-secondary flex h-[40px] w-full items-center justify-center rounded-[32px] border bg-transparent text-[12px] font-semibold transition-colors duration-500"
           >
             {t(Button.ViewDetails)}

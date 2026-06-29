@@ -6,6 +6,7 @@ import Contacts from '@components/contactUs/Contacts';
 import Hero from '@components/contactUs/Hero';
 
 import type { AppLocale } from '@i18n/config';
+import { getPageSeo } from '@i18n/pageSeo';
 import { createPageMetadata } from '@i18n/seo';
 
 type Props = {
@@ -19,13 +20,14 @@ const WriteToUsForm = dynamic(
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
+  const seo = getPageSeo('contactUs', locale);
 
   return createPageMetadata({
     locale,
     path: '/contact-us',
-    title: 'Contact Us | Meat Machines',
-    description:
-      'Get in touch with Meat Machines. Our team will answer your questions about food processing machinery.',
+    title: seo.title,
+    description: seo.description,
+    keywords: seo.keywords,
   });
 }
 

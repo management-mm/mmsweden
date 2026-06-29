@@ -25,6 +25,34 @@ export interface IProductCardProps {
   interactiveImage?: boolean;
 }
 
+function isMongoObjectId(value?: string) {
+  return Boolean(value && /^[0-9a-fA-F]{24}$/.test(value));
+}
+
+function normalizeSlug(value?: string) {
+  if (!value) {
+    return undefined;
+  }
+
+  try {
+    const decodedValue = decodeURIComponent(value).trim();
+
+    if (!decodedValue || isMongoObjectId(decodedValue)) {
+      return undefined;
+    }
+
+    return decodedValue;
+  } catch {
+    const trimmedValue = value.trim();
+
+    if (!trimmedValue || isMongoObjectId(trimmedValue)) {
+      return undefined;
+    }
+
+    return trimmedValue;
+  }
+}
+
 const ProductCard: FC<IProductCardProps> = ({
   product,
   product: {
@@ -45,7 +73,8 @@ const ProductCard: FC<IProductCardProps> = ({
   priority = false,
   interactiveImage = true,
 }) => {
-  const slug = product.slug;
+  const safeCategorySlug = normalizeSlug(categorySlug);
+  const safeSubcategorySlug = normalizeSlug(subcategorySlug);
 
   return (
     <article
@@ -88,7 +117,8 @@ const ProductCard: FC<IProductCardProps> = ({
             Sold
           </span>
         )}
-        {product.isDraft && (
+
+        {!isLoading && product.isDraft && (
           <span className="text-primary bg-secondary absolute right-[8px] bottom-[8px] z-[11] inline-flex items-center rounded-full px-[8px] py-[4px] text-[12px] leading-none font-medium uppercase shadow-sm">
             Draft
           </span>
@@ -125,7 +155,7 @@ const ProductCard: FC<IProductCardProps> = ({
           </div>
         ) : isAdmin ? (
           <div className="mt-auto">
-            <AdminEditProductButton locale={locale} slug={slug} />
+            <AdminEditProductButton locale={locale} slug={product.slug} />
           </div>
         ) : (
           <div className="mt-auto">
@@ -133,8 +163,8 @@ const ProductCard: FC<IProductCardProps> = ({
               locale={locale}
               isLoading={isLoading}
               product={product}
-              categorySlug={categorySlug}
-              subcategorySlug={subcategorySlug}
+              categorySlug={safeCategorySlug}
+              subcategorySlug={safeSubcategorySlug}
             />
           </div>
         )}

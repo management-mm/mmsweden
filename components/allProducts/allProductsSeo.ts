@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
-import { type AppLocale, SUPPORTED_LOCALES } from '@i18n/config';
+import type { AppLocale } from '@i18n/config';
+import { createPageMetadata } from '@i18n/seo';
 
 type SeoText = Record<string, string>;
 
@@ -39,12 +40,24 @@ function getApiUrl() {
   return (
     process.env.API_URL?.replace(/\/$/, '') ??
     process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') ??
-    ''
+    'https://mmsweden-server.onrender.com'
   );
 }
 
-function getSiteUrl() {
-  return process.env.SITE_URL?.replace(/\/$/, '') ?? 'https://www.mmsweden.se';
+function isMongoObjectId(value: string) {
+  return /^[0-9a-fA-F]{24}$/.test(value);
+}
+
+function normalizeSlug(slug: string) {
+  try {
+    return decodeURIComponent(slug).trim();
+  } catch {
+    return slug.trim();
+  }
+}
+
+function encodeSlug(slug: string) {
+  return encodeURIComponent(normalizeSlug(slug));
 }
 
 function getLocalizedSeoText(
@@ -52,42 +65,73 @@ function getLocalizedSeoText(
   locale: AppLocale,
   fallback: string
 ) {
-  if (!value) return fallback;
+  if (!value) {
+    return fallback;
+  }
 
   return value[locale] || value.en || Object.values(value)[0] || fallback;
 }
 
 function slugToLabel(slug: string) {
-  return slug
+  return normalizeSlug(slug)
     .split('-')
+    .filter(Boolean)
     .map(part => part.charAt(0).toUpperCase() + part.slice(1))
     .join(' ');
 }
 
 export function normalizeArray(value?: string | string[]) {
-  if (!value) return [];
+  if (!value) {
+    return [];
+  }
 
   return Array.isArray(value) ? value : [value];
+}
+
+function hasNonIndexableSearchParams(searchParams?: SearchParams) {
+  if (!searchParams) {
+    return false;
+  }
+
+  return (
+    !!searchParams.title ||
+    !!searchParams.manufacturer ||
+    !!searchParams.condition ||
+    !!searchParams.page ||
+    normalizeArray(searchParams.category).length > 0 ||
+    normalizeArray(searchParams.industry).length > 0
+  );
+}
+
+async function fetchSeoDocument(url: string): Promise<SeoDocument | null> {
+  try {
+    const res = await fetch(url, {
+      next: { revalidate: 3600 },
+    });
+
+    if (!res.ok) {
+      return null;
+    }
+
+    return res.json();
+  } catch {
+    return null;
+  }
 }
 
 async function getSeoCategoryBySlug(
   categorySlug: string
 ): Promise<SeoDocument | null> {
   const apiUrl = getApiUrl();
+  const normalizedCategorySlug = normalizeSlug(categorySlug);
 
-  if (!apiUrl) return null;
-
-  try {
-    const res = await fetch(`${apiUrl}/seo-categories/${categorySlug}`, {
-      next: { revalidate: 3600 },
-    });
-
-    if (!res.ok) return null;
-
-    return res.json();
-  } catch {
+  if (!normalizedCategorySlug || isMongoObjectId(normalizedCategorySlug)) {
     return null;
   }
+
+  return fetchSeoDocument(
+    `${apiUrl}/seo-categories/${encodeSlug(normalizedCategorySlug)}`
+  );
 }
 
 async function getSeoSubcategoryBySlug({
@@ -99,22 +143,23 @@ async function getSeoSubcategoryBySlug({
 }): Promise<SeoDocument | null> {
   const apiUrl = getApiUrl();
 
-  if (!apiUrl) return null;
+  const normalizedCategorySlug = normalizeSlug(categorySlug);
+  const normalizedSubcategorySlug = normalizeSlug(subcategorySlug);
 
-  try {
-    const res = await fetch(
-      `${apiUrl}/seo-categories/${categorySlug}/${subcategorySlug}`,
-      {
-        next: { revalidate: 3600 },
-      }
-    );
-
-    if (!res.ok) return null;
-
-    return res.json();
-  } catch {
+  if (
+    !normalizedCategorySlug ||
+    !normalizedSubcategorySlug ||
+    isMongoObjectId(normalizedCategorySlug) ||
+    isMongoObjectId(normalizedSubcategorySlug)
+  ) {
     return null;
   }
+
+  return fetchSeoDocument(
+    `${apiUrl}/seo-categories/${encodeSlug(
+      normalizedCategorySlug
+    )}/${encodeSlug(normalizedSubcategorySlug)}`
+  );
 }
 
 function buildSeoData({
@@ -126,10 +171,12 @@ function buildSeoData({
   locale: AppLocale;
   fallbackSlug: string;
 }): CategorySeoData {
+  const normalizedFallbackSlug = normalizeSlug(fallbackSlug);
+
   const fallbackH1 = getLocalizedSeoText(
     document?.name,
     locale,
-    slugToLabel(fallbackSlug)
+    slugToLabel(normalizedFallbackSlug)
   );
 
   const h1 = getLocalizedSeoText(document?.seo?.h1, locale, fallbackH1);
@@ -143,7 +190,7 @@ function buildSeoData({
   const description = getLocalizedSeoText(
     document?.seo?.description,
     locale,
-    'Used food processing and packaging equipment.'
+    'Used food processing and packaging equipment from MM Sweden.'
   );
 
   const intro = getLocalizedSeoText(document?.content?.intro, locale, '');
@@ -175,12 +222,13 @@ export async function getCategorySeoData({
   locale: AppLocale;
   categorySlug: string;
 }): Promise<CategorySeoData> {
-  const category = await getSeoCategoryBySlug(categorySlug);
+  const normalizedCategorySlug = normalizeSlug(categorySlug);
+  const category = await getSeoCategoryBySlug(normalizedCategorySlug);
 
   return buildSeoData({
     document: category,
     locale,
-    fallbackSlug: categorySlug,
+    fallbackSlug: normalizedCategorySlug,
   });
 }
 
@@ -193,118 +241,94 @@ export async function getSubcategorySeoData({
   categorySlug: string;
   subcategorySlug: string;
 }): Promise<CategorySeoData> {
+  const normalizedCategorySlug = normalizeSlug(categorySlug);
+  const normalizedSubcategorySlug = normalizeSlug(subcategorySlug);
+
   const subcategory = await getSeoSubcategoryBySlug({
-    categorySlug,
-    subcategorySlug,
+    categorySlug: normalizedCategorySlug,
+    subcategorySlug: normalizedSubcategorySlug,
   });
 
   return buildSeoData({
     document: subcategory,
     locale,
-    fallbackSlug: subcategorySlug,
+    fallbackSlug: normalizedSubcategorySlug,
   });
 }
 
 export async function buildCategoryMetadata({
   locale,
   categorySlug,
+  searchParams,
 }: {
   locale: AppLocale;
   categorySlug: string;
+  searchParams?: SearchParams;
 }): Promise<Metadata> {
-  const siteUrl = getSiteUrl();
-  const seo = await getCategorySeoData({ locale, categorySlug });
+  const normalizedCategorySlug = normalizeSlug(categorySlug);
+
+  if (!normalizedCategorySlug || isMongoObjectId(normalizedCategorySlug)) {
+    return buildNotFoundMetadata('Category');
+  }
+
+  const seo = await getCategorySeoData({
+    locale,
+    categorySlug: normalizedCategorySlug,
+  });
 
   if (!seo.exists) {
     return buildNotFoundMetadata('Category');
   }
 
-  const canonical = `${siteUrl}/${locale}/all-products/${categorySlug}`;
-
-  return {
+  return createPageMetadata({
+    locale,
+    path: `/all-products/${encodeSlug(normalizedCategorySlug)}`,
     title: seo.title,
     description: seo.description,
-    alternates: {
-      canonical,
-      languages: Object.fromEntries([
-        ...SUPPORTED_LOCALES.map(l => [
-          l,
-          `${siteUrl}/${l}/all-products/${categorySlug}`,
-        ]),
-        ['x-default', `${siteUrl}/en/all-products/${categorySlug}`],
-      ]),
-    },
-    robots: {
-      index: true,
-      follow: true,
-    },
-    openGraph: {
-      title: seo.title,
-      description: seo.description,
-      url: canonical,
-      type: 'website',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: seo.title,
-      description: seo.description,
-    },
-  };
+    noIndex: hasNonIndexableSearchParams(searchParams),
+  });
 }
 
 export async function buildSubcategoryMetadata({
   locale,
   categorySlug,
   subcategorySlug,
+  searchParams,
 }: {
   locale: AppLocale;
   categorySlug: string;
   subcategorySlug: string;
+  searchParams?: SearchParams;
 }): Promise<Metadata> {
-  const siteUrl = getSiteUrl();
+  const normalizedCategorySlug = normalizeSlug(categorySlug);
+  const normalizedSubcategorySlug = normalizeSlug(subcategorySlug);
+
+  if (
+    !normalizedCategorySlug ||
+    !normalizedSubcategorySlug ||
+    isMongoObjectId(normalizedCategorySlug) ||
+    isMongoObjectId(normalizedSubcategorySlug)
+  ) {
+    return buildNotFoundMetadata('Subcategory');
+  }
 
   const seo = await getSubcategorySeoData({
     locale,
-    categorySlug,
-    subcategorySlug,
+    categorySlug: normalizedCategorySlug,
+    subcategorySlug: normalizedSubcategorySlug,
   });
 
   if (!seo.exists) {
     return buildNotFoundMetadata('Subcategory');
   }
 
-  const canonical = `${siteUrl}/${locale}/all-products/${categorySlug}/${subcategorySlug}`;
-
-  return {
+  return createPageMetadata({
+    locale,
+    path: `/all-products/${encodeSlug(normalizedCategorySlug)}/${encodeSlug(
+      normalizedSubcategorySlug
+    )}`,
     title: seo.title,
     description: seo.description,
-    alternates: {
-      canonical,
-      languages: Object.fromEntries([
-        ...SUPPORTED_LOCALES.map(l => [
-          l,
-          `${siteUrl}/${l}/all-products/${categorySlug}/${subcategorySlug}`,
-        ]),
-        [
-          'x-default',
-          `${siteUrl}/en/all-products/${categorySlug}/${subcategorySlug}`,
-        ],
-      ]),
-    },
-    robots: {
-      index: true,
-      follow: true,
-    },
-    openGraph: {
-      title: seo.title,
-      description: seo.description,
-      url: canonical,
-      type: 'website',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: seo.title,
-      description: seo.description,
-    },
-  };
+    noIndex: hasNonIndexableSearchParams(searchParams),
+  });
 }

@@ -5,6 +5,7 @@ import Loader from '@components/common/loaders/Loader';
 import Instructions from '@components/sellToUs/Instructions';
 
 import type { AppLocale } from '@i18n/config';
+import { getPageSeo } from '@i18n/pageSeo';
 import { createPageMetadata } from '@i18n/seo';
 
 type Props = {
@@ -17,11 +18,14 @@ const FormForSale = dynamic(() => import('@components/sellToUs/FormForSale'), {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
+  const seo = getPageSeo('sellToUs', locale);
 
   return createPageMetadata({
     locale,
     path: '/sell-to-us',
-    title: 'Sell to Us | Meat Machines',
+    title: seo.title,
+    description: seo.description,
+    keywords: seo.keywords,
   });
 }
 

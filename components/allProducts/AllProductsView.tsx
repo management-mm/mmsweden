@@ -35,6 +35,26 @@ type Props = {
   };
 };
 
+function normalizeSlug(slug?: string) {
+  if (!slug) {
+    return undefined;
+  }
+
+  try {
+    const decodedSlug = decodeURIComponent(slug).trim();
+
+    return decodedSlug || undefined;
+  } catch {
+    const trimmedSlug = slug.trim();
+
+    return trimmedSlug || undefined;
+  }
+}
+
+function isMongoObjectId(value?: string) {
+  return Boolean(value && /^[0-9a-fA-F]{24}$/.test(value));
+}
+
 const AllProductsView = async ({
   mode = 'public',
   locale,
@@ -43,16 +63,25 @@ const AllProductsView = async ({
 }: Props) => {
   const isAdmin = mode === 'admin';
 
+  const categorySlug = normalizeSlug(query.categorySlug);
+  const subcategorySlug = normalizeSlug(query.subcategorySlug);
+
+  const safeCategorySlug = isMongoObjectId(categorySlug)
+    ? undefined
+    : categorySlug;
+
+  const safeSubcategorySlug = isMongoObjectId(subcategorySlug)
+    ? undefined
+    : subcategorySlug;
+
   const { products, total } = await getProducts({
     ...(query.title ? { keyword: query.title } : {}),
     ...(query.manufacturer ? { manufacturer: query.manufacturer } : {}),
     ...(query.condition ? { condition: query.condition } : {}),
     ...(query.category.length ? { category: query.category } : {}),
     ...(query.industry.length ? { industry: query.industry } : {}),
-    ...(query.categorySlug ? { categorySlug: query.categorySlug } : {}),
-    ...(query.subcategorySlug
-      ? { subcategorySlug: query.subcategorySlug }
-      : {}),
+    ...(safeCategorySlug ? { categorySlug: safeCategorySlug } : {}),
+    ...(safeSubcategorySlug ? { subcategorySlug: safeSubcategorySlug } : {}),
 
     ...(query.filter === 'sold' ? { hasDeletionDate: true } : {}),
     ...(query.filter === 'draft' ? { isDraft: true } : {}),
@@ -66,8 +95,8 @@ const AllProductsView = async ({
 
   const { category, subcategory } = await getBreadcrumbCategories(
     locale,
-    query.categorySlug,
-    query.subcategorySlug
+    safeCategorySlug,
+    safeSubcategorySlug
   );
 
   return (
@@ -107,8 +136,8 @@ const AllProductsView = async ({
             initialTotal={total}
             locale={locale}
             isAdmin={isAdmin}
-            categorySlug={query.categorySlug as string}
-            subcategorySlug={query.subcategorySlug as string}
+            categorySlug={safeCategorySlug}
+            subcategorySlug={safeSubcategorySlug}
             hasSearch={Boolean(query.title?.trim())}
             hasAnyFilters={
               Boolean(query.manufacturer) ||

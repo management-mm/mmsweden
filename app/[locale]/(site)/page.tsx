@@ -7,6 +7,7 @@ import LatestArrivals from '@components/home/latestArrivals/LatestArrivals';
 import SellToUs from '@components/home/sellToUs/SellToUs';
 
 import type { AppLocale } from '@i18n/config';
+import { getPageSeo } from '@i18n/pageSeo';
 import {
   buildOrganizationSchema,
   buildWebsiteSchema,
@@ -21,20 +22,14 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
+  const seo = getPageSeo('home', locale);
 
   return createPageMetadata({
     locale,
     path: '/',
-    title: 'Used Food Processing and Packaging Equipment | Meat Machines',
-    description:
-      'Meat Machines supplies used food processing and packaging equipment for the food industry. Browse nearly 2,000 machines in stock.',
-    keywords: [
-      'used food processing equipment',
-      'used packaging equipment',
-      'food machinery',
-      'meat processing equipment',
-      'used food machinery',
-    ],
+    title: seo.title,
+    description: seo.description,
+    keywords: seo.keywords,
   });
 }
 

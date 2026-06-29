@@ -36,6 +36,20 @@ const getOptionLabel = (option: ILanguageOption) => {
   return option.language.toUpperCase();
 };
 
+const getLocalizedPathname = (pathname: string, newLocale: AppLocale) => {
+  const segments = pathname.split('/').filter(Boolean);
+
+  if (segments.length === 0) {
+    return `/${newLocale}`;
+  }
+
+  if (isAppLocale(segments[0])) {
+    return `/${[newLocale, ...segments.slice(1)].join('/')}`;
+  }
+
+  return `/${[newLocale, ...segments].join('/')}`;
+};
+
 const LanguageSelect = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -46,11 +60,13 @@ const LanguageSelect = () => {
   const searchParams = useSearchParams();
 
   const firstSegment = pathname.split('/')[1];
+
   const currentLocale = isAppLocale(firstSegment)
     ? firstSegment
     : DEFAULT_LOCALE;
 
   const segments = pathname.split('/').filter(Boolean);
+
   const isAdmin =
     segments.length > 0 &&
     (isAppLocale(segments[0])
@@ -67,6 +83,7 @@ const LanguageSelect = () => {
 
     const handlePointerDown = (event: MouseEvent) => {
       if (!rootRef.current) return;
+
       if (!rootRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
@@ -95,10 +112,7 @@ const LanguageSelect = () => {
       return;
     }
 
-    const nextSegments = pathname.split('/');
-    nextSegments[1] = newLocale;
-
-    const nextPathname = nextSegments.join('/') || `/${newLocale}`;
+    const nextPathname = getLocalizedPathname(pathname, newLocale);
     const queryString = searchParams.toString();
 
     router.push(queryString ? `${nextPathname}?${queryString}` : nextPathname);

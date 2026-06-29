@@ -30,29 +30,50 @@ const ActionsButtons: FC<IActionsButtonsProps> = ({
   subcategorySlug,
 }) => {
   const t = useTranslations();
+
   const { isRequested, handleToggleFavorites } =
     useUpdateRequestedProducts(product);
 
-  const slug = product.slug;
+  const productSlug = product.slug;
+  const productCategorySlug = product.seoCategorySlug ?? categorySlug;
+  const productSubcategorySlug = product.seoSubcategorySlug ?? subcategorySlug;
+  console.log('PRODUCT CARD LINK:', {
+    productName: product.name,
+    productSlug: product.slug,
+    categorySlug,
+    subcategorySlug,
+    seoCategorySlug: product.seoCategorySlug,
+    seoSubcategorySlug: product.seoSubcategorySlug,
+  });
+  const canOpenProduct =
+    Boolean(productSlug) &&
+    Boolean(productCategorySlug) &&
+    Boolean(productSubcategorySlug);
 
-  const productCategorySlug = product.seoCategorySlug || categorySlug;
-  const productSubcategorySlug = product.seoSubcategorySlug || subcategorySlug;
-
-  const productHref =
-    productCategorySlug && productSubcategorySlug && slug
-      ? `/${locale}/all-products/${productCategorySlug}/${productSubcategorySlug}/${slug}`
-      : `/${locale}/all-products`;
+  const productHref = canOpenProduct
+    ? `/${locale}/all-products/${productCategorySlug}/${productSubcategorySlug}/${productSlug}`
+    : `/${locale}/all-products`;
 
   return (
     <div className="mt-auto flex w-full gap-[8px] md:gap-[16px] lg:gap-[8px]">
       {!isLoading ? (
         <>
-          <Link
-            href={productHref}
-            className="border-primary font-inter text-primary hover:bg-primary hover:text-secondary flex h-[40px] w-full items-center justify-center rounded-[32px] border bg-transparent text-[12px] font-semibold transition-colors duration-500"
-          >
-            {t(Button.ViewDetails)}
-          </Link>
+          {canOpenProduct ? (
+            <Link
+              href={productHref}
+              className="border-primary font-inter text-primary hover:bg-primary hover:text-secondary flex h-[40px] w-full items-center justify-center rounded-[32px] border bg-transparent text-[12px] font-semibold transition-colors duration-500"
+            >
+              {t(Button.ViewDetails)}
+            </Link>
+          ) : (
+            <button
+              className="border-primary font-inter text-primary flex h-[40px] w-full cursor-not-allowed items-center justify-center rounded-[32px] border bg-transparent text-[12px] font-semibold opacity-50"
+              type="button"
+              disabled
+            >
+              {t(Button.ViewDetails)}
+            </button>
+          )}
 
           {!product.deletionDate && (
             <button

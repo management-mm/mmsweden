@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 import AllProductsView from '@components/allProducts/AllProductsView';
-import SeoIntroSection from '@components/allProducts/SeoIntroSection';
 import {
   type SearchParams,
   buildCategoryMetadata,
@@ -17,16 +17,45 @@ import {
 } from '@i18n/schema';
 
 type Props = {
-  params: Promise<{ locale: AppLocale; categorySlug: string }>;
+  params: Promise<{
+    locale: AppLocale;
+    categorySlug: string;
+  }>;
   searchParams: Promise<SearchParams>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+function normalizeSlug(slug: string) {
+  try {
+    return decodeURIComponent(slug).trim();
+  } catch {
+    return slug.trim();
+  }
+}
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: Props): Promise<Metadata> {
   const { locale, categorySlug } = await params;
+  const resolvedSearchParams = await searchParams;
+
+  const normalizedCategorySlug = normalizeSlug(categorySlug);
+
+  if (!normalizedCategorySlug) {
+    return {
+      title: 'Category Not Found | MM Sweden',
+      description: 'The requested category could not be found.',
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
 
   return buildCategoryMetadata({
     locale,
-    categorySlug,
+    categorySlug: normalizedCategorySlug,
+    searchParams: resolvedSearchParams,
   });
 }
 
@@ -34,12 +63,20 @@ export default async function Page({ params, searchParams }: Props) {
   const { locale, categorySlug } = await params;
   const resolvedSearchParams = await searchParams;
 
+  const normalizedCategorySlug = normalizeSlug(categorySlug);
+
+  if (!normalizedCategorySlug) {
+    notFound();
+  }
+
   const siteUrl = getSiteUrl();
-  const canonicalUrl = `${siteUrl}/${locale}/all-products/${categorySlug}`;
+  const canonicalUrl = `${siteUrl}/${locale}/all-products/${encodeURIComponent(
+    normalizedCategorySlug
+  )}`;
 
   const categorySeoData = await getCategorySeoData({
     locale,
-    categorySlug,
+    categorySlug: normalizedCategorySlug,
   });
 
   const collectionPageJsonLd = buildCollectionPageSchema({
@@ -71,7 +108,7 @@ export default async function Page({ params, searchParams }: Props) {
           page: resolvedSearchParams.page,
           category: normalizeArray(resolvedSearchParams.category),
           industry: normalizeArray(resolvedSearchParams.industry),
-          categorySlug,
+          categorySlug: normalizedCategorySlug,
         }}
       />
     </>

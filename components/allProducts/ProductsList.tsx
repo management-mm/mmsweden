@@ -13,8 +13,8 @@ type Props = {
   initialTotal: number;
   locale: AppLocale;
   isAdmin: boolean;
-  categorySlug: string;
-  subcategorySlug: string;
+  categorySlug?: string;
+  subcategorySlug?: string;
   hasAnyFilters?: boolean;
   hasSearch?: boolean;
   searchQuery?: string;

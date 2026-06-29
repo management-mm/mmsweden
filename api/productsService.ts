@@ -53,11 +53,25 @@ function getBaseUrl(): string {
 }
 
 function getErrorCodeByStatus(status: number): AppErrorCode {
-  if (status === 400 || status === 422) return 'VALIDATION';
-  if (status === 401) return 'UNAUTHORIZED';
-  if (status === 403) return 'FORBIDDEN';
-  if (status === 404) return 'NOT_FOUND';
-  if (status >= 500) return 'SERVER';
+  if (status === 400 || status === 422) {
+    return 'VALIDATION';
+  }
+
+  if (status === 401) {
+    return 'UNAUTHORIZED';
+  }
+
+  if (status === 403) {
+    return 'FORBIDDEN';
+  }
+
+  if (status === 404) {
+    return 'NOT_FOUND';
+  }
+
+  if (status >= 500) {
+    return 'SERVER';
+  }
 
   return 'UNKNOWN';
 }
@@ -70,46 +84,101 @@ function buildUrl(path: string, searchParams?: URLSearchParams): string {
     : `${getBaseUrl()}${path}`;
 }
 
+function isMongoObjectId(value: string) {
+  return /^[0-9a-fA-F]{24}$/.test(value);
+}
+
+function normalizeString(value?: string) {
+  if (!value) {
+    return undefined;
+  }
+
+  const trimmedValue = value.trim();
+
+  return trimmedValue || undefined;
+}
+
+function normalizeSlug(value?: string) {
+  const normalizedValue = normalizeString(value);
+
+  if (!normalizedValue) {
+    return undefined;
+  }
+
+  try {
+    const decodedValue = decodeURIComponent(normalizedValue).trim();
+
+    if (!decodedValue || isMongoObjectId(decodedValue)) {
+      return undefined;
+    }
+
+    return decodedValue;
+  } catch {
+    if (isMongoObjectId(normalizedValue)) {
+      return undefined;
+    }
+
+    return normalizedValue;
+  }
+}
+
+function appendStringParam(
+  searchParams: URLSearchParams,
+  key: string,
+  value?: string
+) {
+  const normalizedValue = normalizeString(value);
+
+  if (normalizedValue) {
+    searchParams.append(key, normalizedValue);
+  }
+}
+
+function appendSlugParam(
+  searchParams: URLSearchParams,
+  key: string,
+  value?: string
+) {
+  const normalizedValue = normalizeSlug(value);
+
+  if (normalizedValue) {
+    searchParams.append(key, normalizedValue);
+  }
+}
+
+function appendArrayParam(
+  searchParams: URLSearchParams,
+  key: string,
+  values?: string[]
+) {
+  values?.forEach(value => {
+    const normalizedValue = normalizeString(value);
+
+    if (normalizedValue) {
+      searchParams.append(key, normalizedValue);
+    }
+  });
+}
+
 function createProductsSearchParams(query: GetProductsParams): URLSearchParams {
   const searchParams = new URLSearchParams();
 
-  if (query.keyword) {
-    searchParams.append('keyword', query.keyword);
-  }
+  appendStringParam(searchParams, 'keyword', query.keyword);
+  appendStringParam(searchParams, 'manufacturer', query.manufacturer);
+  appendStringParam(searchParams, 'condition', query.condition);
+  appendStringParam(searchParams, 'sort', query.sort);
 
-  if (query.manufacturer) {
-    searchParams.append('manufacturer', query.manufacturer);
-  }
+  appendSlugParam(searchParams, 'categorySlug', query.categorySlug);
+  appendSlugParam(searchParams, 'subcategorySlug', query.subcategorySlug);
 
-  if (query.condition) {
-    searchParams.append('condition', query.condition);
-  }
+  appendArrayParam(searchParams, 'category', query.category);
+  appendArrayParam(searchParams, 'industry', query.industry);
 
-  if (query.categorySlug) {
-    searchParams.append('categorySlug', query.categorySlug);
-  }
-
-  if (query.subcategorySlug) {
-    searchParams.append('subcategorySlug', query.subcategorySlug);
-  }
-
-  if (query.sort) {
-    searchParams.append('sort', query.sort);
-  }
-
-  query.category?.forEach(category => {
-    searchParams.append('category', category);
-  });
-
-  query.industry?.forEach(industry => {
-    searchParams.append('industry', industry);
-  });
-
-  if (typeof query.page === 'number') {
+  if (typeof query.page === 'number' && Number.isFinite(query.page)) {
     searchParams.append('page', String(query.page));
   }
 
-  if (typeof query.perPage === 'number') {
+  if (typeof query.perPage === 'number' && Number.isFinite(query.perPage)) {
     searchParams.append('perPage', String(query.perPage));
   }
 
@@ -136,13 +205,17 @@ export const fetchRecommendedProductsBySlug = async (
   slug: string | undefined,
   options: RequestOptions = {}
 ): Promise<IProduct[]> => {
-  if (!slug) {
+  const normalizedSlug = normalizeSlug(slug);
+
+  if (!normalizedSlug) {
     return [];
   }
 
   try {
     const response = await axios.get<IProduct[]>(
-      buildUrl(`/products/${slug}/recommended-products`),
+      buildUrl(
+        `/products/${encodeURIComponent(normalizedSlug)}/recommended-products`
+      ),
       {
         signal: options.signal,
       }
@@ -196,10 +269,10 @@ export async function getProducts(
     }
 
     if (!text) {
-      throw new AppError(
-        'Failed to fetch products: empty response body',
-        'SERVER'
-      );
+      return {
+        products: [],
+        total: 0,
+      };
     }
 
     return JSON.parse(text) as GetProductsResponse;

@@ -25,13 +25,29 @@ type Props = {
   searchParams: Promise<SearchParams>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+function normalizeSlug(slug: string) {
+  try {
+    return decodeURIComponent(slug).trim();
+  } catch {
+    return slug.trim();
+  }
+}
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: Props): Promise<Metadata> {
   const { locale, categorySlug, subcategorySlug } = await params;
+  const resolvedSearchParams = await searchParams;
+
+  const normalizedCategorySlug = normalizeSlug(categorySlug);
+  const normalizedSubcategorySlug = normalizeSlug(subcategorySlug);
 
   return buildSubcategoryMetadata({
     locale,
-    categorySlug,
-    subcategorySlug,
+    categorySlug: normalizedCategorySlug,
+    subcategorySlug: normalizedSubcategorySlug,
+    searchParams: resolvedSearchParams,
   });
 }
 
@@ -39,10 +55,13 @@ export default async function Page({ params, searchParams }: Props) {
   const { locale, categorySlug, subcategorySlug } = await params;
   const resolvedSearchParams = await searchParams;
 
+  const normalizedCategorySlug = normalizeSlug(categorySlug);
+  const normalizedSubcategorySlug = normalizeSlug(subcategorySlug);
+
   const subcategorySeoData = await getSubcategorySeoData({
     locale,
-    categorySlug,
-    subcategorySlug,
+    categorySlug: normalizedCategorySlug,
+    subcategorySlug: normalizedSubcategorySlug,
   });
 
   if (!subcategorySeoData.exists) {
@@ -50,7 +69,10 @@ export default async function Page({ params, searchParams }: Props) {
   }
 
   const siteUrl = getSiteUrl();
-  const canonicalUrl = `${siteUrl}/${locale}/all-products/${categorySlug}/${subcategorySlug}`;
+
+  const canonicalUrl = `${siteUrl}/${locale}/all-products/${encodeURIComponent(
+    normalizedCategorySlug
+  )}/${encodeURIComponent(normalizedSubcategorySlug)}`;
 
   const collectionPageJsonLd = buildCollectionPageSchema({
     locale,
@@ -81,8 +103,8 @@ export default async function Page({ params, searchParams }: Props) {
           page: resolvedSearchParams.page,
           category: normalizeArray(resolvedSearchParams.category),
           industry: normalizeArray(resolvedSearchParams.industry),
-          categorySlug,
-          subcategorySlug,
+          categorySlug: normalizedCategorySlug,
+          subcategorySlug: normalizedSubcategorySlug,
         }}
       />
     </>

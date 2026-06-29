@@ -4,6 +4,7 @@ import DetailedAboutUs from '@components/aboutUs/DetailedAboutUs';
 import Hero from '@components/aboutUs/Hero';
 
 import type { AppLocale } from '@i18n/config';
+import { getPageSeo } from '@i18n/pageSeo';
 import { createPageMetadata } from '@i18n/seo';
 
 type Props = {
@@ -12,13 +13,14 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
+  const seo = getPageSeo('aboutUs', locale);
 
   return createPageMetadata({
     locale,
     path: '/about-us',
-    title: 'About Us | Meat Machines',
-    description:
-      'Learn more about Meat Machines and our experience in used food processing and packaging equipment.',
+    title: seo.title,
+    description: seo.description,
+    keywords: seo.keywords,
   });
 }
 

@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 
 import clsx from 'clsx';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 import SvgIcon from '@components/common/SvgIcon';
 
@@ -50,12 +51,22 @@ const getLocalizedPathname = (pathname: string, newLocale: AppLocale) => {
   return `/${[newLocale, ...segments].join('/')}`;
 };
 
+const buildLocalizedHref = (
+  pathname: string,
+  searchParams: URLSearchParams,
+  locale: AppLocale
+) => {
+  const nextPathname = getLocalizedPathname(pathname, locale);
+  const queryString = searchParams.toString();
+
+  return queryString ? `${nextPathname}?${queryString}` : nextPathname;
+};
+
 const LanguageSelect = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const rootRef = useRef<HTMLDivElement | null>(null);
 
-  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -104,22 +115,6 @@ const LanguageSelect = () => {
     };
   }, [isOpen]);
 
-  const handleChange = (selectedOption: ILanguageOption) => {
-    const newLocale = selectedOption.language as AppLocale;
-
-    if (newLocale === currentLocale) {
-      setIsOpen(false);
-      return;
-    }
-
-    const nextPathname = getLocalizedPathname(pathname, newLocale);
-    const queryString = searchParams.toString();
-
-    router.push(queryString ? `${nextPathname}?${queryString}` : nextPathname);
-
-    setIsOpen(false);
-  };
-
   if (!currentValue) return null;
 
   const triggerTextColor = isAdmin
@@ -160,42 +155,57 @@ const LanguageSelect = () => {
         </span>
       </button>
 
-      {isOpen && (
-        <div className="bg-main absolute right-0 z-20 mt-2 min-w-[70px] rounded-[4px] p-[8px] shadow-lg">
-          <ul className="flex flex-col gap-[2px]" role="listbox">
-            {supportedLanguageOptions.map(option => {
-              const isSelected = option.language === currentLocale;
+      <div
+        className={clsx(
+          'bg-main absolute right-0 z-20 mt-2 min-w-[70px] rounded-[4px] p-[8px] shadow-lg transition',
+          isOpen
+            ? 'visible opacity-100'
+            : 'pointer-events-none invisible opacity-0'
+        )}
+      >
+        <ul className="flex flex-col gap-[2px]" role="listbox">
+          {supportedLanguageOptions.map(option => {
+            const optionLocale = option.language as AppLocale;
+            const isSelected = optionLocale === currentLocale;
 
-              return (
-                <li
-                  key={option.language}
-                  role="option"
-                  aria-selected={isSelected}
+            const href = buildLocalizedHref(
+              pathname,
+              new URLSearchParams(searchParams.toString()),
+              optionLocale
+            );
+
+            return (
+              <li
+                key={option.language}
+                role="option"
+                aria-selected={isSelected}
+              >
+                <Link
+                  href={href}
+                  hrefLang={optionLocale}
+                  locale={false}
+                  aria-current={isSelected ? 'page' : undefined}
+                  onClick={() => setIsOpen(false)}
+                  className={clsx(
+                    'flex w-full items-center gap-2 rounded-[4px] px-3 py-[8px] text-left text-[12px] font-medium uppercase transition',
+                    isSelected
+                      ? 'bg-primary text-secondary'
+                      : 'text-primary hover:bg-gray-100 active:bg-gray-200'
+                  )}
                 >
-                  <button
-                    type="button"
-                    onClick={() => handleChange(option)}
-                    className={clsx(
-                      'flex w-full items-center gap-2 rounded-[4px] px-3 py-[8px] text-left text-[12px] font-medium uppercase transition',
-                      isSelected
-                        ? 'bg-primary text-secondary'
-                        : 'text-primary hover:bg-gray-100 active:bg-gray-200'
-                    )}
-                  >
-                    <SvgIcon
-                      iconId={option.iconId}
-                      size={{ width: 20, height: 20 }}
-                      className="fill-primary"
-                    />
+                  <SvgIcon
+                    iconId={option.iconId}
+                    size={{ width: 20, height: 20 }}
+                    className="fill-primary"
+                  />
 
-                    <span>{getOptionLabel(option)}</span>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      )}
+                  <span>{getOptionLabel(option)}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 };

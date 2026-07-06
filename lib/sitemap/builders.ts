@@ -27,12 +27,18 @@ export function buildLocalizedUrl(
 export function buildAlternateLinks(path: string) {
   const siteUrl = getSiteUrl();
 
-  return SUPPORTED_LOCALES.map(
+  const localeLinks = SUPPORTED_LOCALES.map(
     locale =>
       `<xhtml:link rel="alternate" hreflang="${escapeXml(locale)}" href="${escapeXml(
         buildLocalizedUrl(siteUrl, locale, path)
       )}" />`
-  ).join('');
+  );
+
+  const defaultLink = `<xhtml:link rel="alternate" hreflang="x-default" href="${escapeXml(
+    buildLocalizedUrl(siteUrl, 'en', path)
+  )}" />`;
+
+  return [...localeLinks, defaultLink].join('');
 }
 
 export function buildStaticPageEntries(): SitemapUrlItem[] {

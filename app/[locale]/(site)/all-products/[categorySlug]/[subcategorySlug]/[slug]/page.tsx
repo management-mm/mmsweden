@@ -30,6 +30,7 @@ type SeoRef = {
 };
 
 type ProductWithSeo = IProduct & {
+  slug?: string | null;
   seoCategorySlug?: string | null;
   seoSubcategorySlug?: string | null;
   seoCategory?: SeoRef | string | null;
@@ -220,17 +221,30 @@ function serializeJsonLd(data: unknown) {
 
 const getProduct = cache(
   async (slug: string): Promise<ProductWithSeo | null> => {
-    const baseUrl = getApiUrl();
+    const normalizedSlug = slug.trim();
 
-    const res = await fetch(`${baseUrl}/products/by-slug/${slug}`, {
-      next: { revalidate: 300 },
-    });
-
-    if (!res.ok) {
+    if (!normalizedSlug || isMongoObjectId(normalizedSlug)) {
       return null;
     }
 
-    return res.json();
+    const baseUrl = getApiUrl();
+
+    try {
+      const res = await fetch(
+        `${baseUrl}/products/by-slug/${encodeURIComponent(normalizedSlug)}`,
+        {
+          next: { revalidate: 300 },
+        }
+      );
+
+      if (!res.ok) {
+        return null;
+      }
+
+      return res.json();
+    } catch {
+      return null;
+    }
   }
 );
 
@@ -337,7 +351,8 @@ function resolveProductSeoData(
   product: ProductWithSeo,
   locale: AppLocale,
   routeCategorySlug: string,
-  routeSubcategorySlug: string
+  routeSubcategorySlug: string,
+  routeSlug: string
 ) {
   const actualCategorySlug =
     extractStringSlug(product.seoCategorySlug) ??
@@ -349,8 +364,16 @@ function resolveProductSeoData(
     extractObjectSlug(product.seoSubcategory) ??
     extractObjectSlug(product.seoSubcategoryId);
 
+  const actualProductSlug =
+    extractStringSlug(product.slug) ?? extractStringSlug(routeSlug);
+
+  const hasCanonicalPath = Boolean(
+    actualCategorySlug && actualSubcategorySlug && actualProductSlug
+  );
+
   const categorySlug = actualCategorySlug ?? routeCategorySlug;
   const subcategorySlug = actualSubcategorySlug ?? routeSubcategorySlug;
+  const productSlug = actualProductSlug ?? routeSlug;
 
   const categoryNameSource =
     extractName(product.seoCategory) ?? extractName(product.seoCategoryId);
@@ -372,15 +395,18 @@ function resolveProductSeoData(
   );
 
   const shouldRedirect =
-    Boolean(actualCategorySlug && actualSubcategorySlug) &&
+    hasCanonicalPath &&
     (routeCategorySlug !== actualCategorySlug ||
-      routeSubcategorySlug !== actualSubcategorySlug);
+      routeSubcategorySlug !== actualSubcategorySlug ||
+      routeSlug !== actualProductSlug);
 
   return {
     categorySlug,
     subcategorySlug,
+    productSlug,
     categoryLabel,
     subcategoryLabel,
+    hasCanonicalPath,
     shouldRedirect,
   };
 }
@@ -439,6 +465,17 @@ function buildProductJsonLd(params: {
   } satisfies Record<string, unknown>;
 }
 
+function buildNotFoundProductMetadata(): Metadata {
+  return {
+    title: 'Product Not Found | MM Sweden',
+    description: 'The requested product could not be found.',
+    robots: {
+      index: false,
+      follow: false,
+    },
+  };
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, categorySlug, subcategorySlug, slug } = await params;
   const siteUrl = getSiteUrl();
@@ -446,29 +483,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = await getProduct(slug);
 
   if (!product) {
-    return {
-      title: 'Product Not Found | MM Sweden',
-      description: 'The requested product could not be found.',
-      robots: {
-        index: false,
-        follow: false,
-      },
-    };
+    return buildNotFoundProductMetadata();
   }
 
   const seoData = resolveProductSeoData(
     product,
     locale,
     categorySlug,
-    subcategorySlug
+    subcategorySlug,
+    slug
   );
+
+  if (!seoData.hasCanonicalPath) {
+    return buildNotFoundProductMetadata();
+  }
 
   const canonicalUrl = buildProductUrl(
     siteUrl,
     locale,
     seoData.categorySlug,
     seoData.subcategorySlug,
-    slug
+    seoData.productSlug
   );
 
   const languages = Object.fromEntries([
@@ -479,7 +514,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         localeItem,
         seoData.categorySlug,
         seoData.subcategorySlug,
-        slug
+        seoData.productSlug
       ),
     ]),
     [
@@ -489,14 +524,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         DEFAULT_LOCALE,
         seoData.categorySlug,
         seoData.subcategorySlug,
-        slug
+        seoData.productSlug
       ),
     ],
   ]);
 
   const copy = getProductSeoCopy(locale);
 
-  const localizedName = getLocalizedText(product.name, locale, slug).trim();
+  const localizedName = getLocalizedText(
+    product.name,
+    locale,
+    seoData.productSlug
+  ).trim();
+
   const conditionLabel = getConditionLabel(product.condition, locale);
 
   const title = copy.title({
@@ -512,16 +552,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ogImage = product.photos?.[0];
 
   return {
+    metadataBase: new URL(siteUrl),
+
     title,
     description,
+
     alternates: {
       canonical: canonicalUrl,
       languages,
     },
+
     robots: {
       index: true,
       follow: true,
     },
+
     openGraph: {
       title,
       description,
@@ -538,6 +583,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           ]
         : [],
     },
+
     twitter: {
       card: 'summary_large_image',
       title,
@@ -561,15 +607,20 @@ export default async function ProductDetailsPage({ params }: Props) {
     product,
     locale,
     categorySlug,
-    subcategorySlug
+    subcategorySlug,
+    slug
   );
+
+  if (!seoData.hasCanonicalPath) {
+    notFound();
+  }
 
   if (seoData.shouldRedirect) {
     redirect(
       `/${locale}${buildProductPath(
         seoData.categorySlug,
         seoData.subcategorySlug,
-        slug
+        seoData.productSlug
       )}`
     );
   }
@@ -579,12 +630,16 @@ export default async function ProductDetailsPage({ params }: Props) {
     locale,
     seoData.categorySlug,
     seoData.subcategorySlug,
-    slug
+    seoData.productSlug
   );
 
   const copy = getProductSeoCopy(locale);
 
-  const localizedName = getLocalizedText(product.name, locale, slug);
+  const localizedName = getLocalizedText(
+    product.name,
+    locale,
+    seoData.productSlug
+  );
 
   const localizedDescription = getLocalizedText(
     product.description,
@@ -642,7 +697,7 @@ export default async function ProductDetailsPage({ params }: Props) {
       <Product
         product={product}
         locale={locale}
-        slug={slug}
+        slug={seoData.productSlug}
         categorySlug={seoData.categorySlug}
         subcategorySlug={seoData.subcategorySlug}
       />
@@ -650,7 +705,7 @@ export default async function ProductDetailsPage({ params }: Props) {
       <Suspense fallback={<div>Loading recommended products...</div>}>
         <RecommendedProducts
           locale={locale}
-          slug={slug}
+          slug={seoData.productSlug}
           categorySlug={seoData.categorySlug}
           subcategorySlug={seoData.subcategorySlug}
         />

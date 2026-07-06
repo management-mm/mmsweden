@@ -180,7 +180,8 @@ export function buildAllProductsMetadata({
     normalizeArray(searchParams.category).length > 0 ||
     normalizeArray(searchParams.industry).length > 0;
 
-  const hasPagination = Boolean(searchParams.page);
+  const pageNumber = Number(searchParams.page);
+  const hasPagination = Number.isFinite(pageNumber) && pageNumber > 1;
 
   return createPageMetadata({
     locale,

@@ -93,11 +93,14 @@ function hasNonIndexableSearchParams(searchParams?: SearchParams) {
     return false;
   }
 
+  const pageNumber = Number(searchParams.page);
+  const hasPagination = Number.isFinite(pageNumber) && pageNumber > 1;
+
   return (
     !!searchParams.title ||
     !!searchParams.manufacturer ||
     !!searchParams.condition ||
-    !!searchParams.page ||
+    hasPagination ||
     normalizeArray(searchParams.category).length > 0 ||
     normalizeArray(searchParams.industry).length > 0
   );

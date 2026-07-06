@@ -8,7 +8,6 @@ export async function GET() {
     { loc: `${siteUrl}/sitemap-pages.xml` },
     { loc: `${siteUrl}/sitemap-categories.xml` },
     { loc: `${siteUrl}/sitemap-products.xml` },
-    { loc: `${siteUrl}/sitemap-blog.xml` },
   ]);
 
   return xmlResponse(xml);

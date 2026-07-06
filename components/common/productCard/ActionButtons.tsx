@@ -22,43 +22,77 @@ interface IActionsButtonsProps {
   subcategorySlug?: string;
 }
 
+function isMongoObjectId(value: string) {
+  return /^[0-9a-fA-F]{24}$/.test(value);
+}
+
+function normalizeSlug(value?: string | null) {
+  if (typeof value !== 'string') {
+    return undefined;
+  }
+
+  const slug = value.trim();
+
+  if (!slug || isMongoObjectId(slug)) {
+    return undefined;
+  }
+
+  return slug;
+}
+
+function buildProductHref({
+  locale,
+  categorySlug,
+  subcategorySlug,
+  productSlug,
+}: {
+  locale: AppLocale;
+  categorySlug: string;
+  subcategorySlug: string;
+  productSlug: string;
+}) {
+  return `/${locale}/all-products/${encodeURIComponent(
+    categorySlug
+  )}/${encodeURIComponent(subcategorySlug)}/${encodeURIComponent(productSlug)}`;
+}
+
 const ActionsButtons: FC<IActionsButtonsProps> = ({
   isLoading,
   product,
   locale,
-  categorySlug,
-  subcategorySlug,
 }) => {
   const t = useTranslations();
 
   const { isRequested, handleToggleFavorites } =
     useUpdateRequestedProducts(product);
 
-  const productSlug = product.slug;
-  const productCategorySlug = product.seoCategorySlug ?? categorySlug;
-  const productSubcategorySlug = product.seoSubcategorySlug ?? subcategorySlug;
-  console.log('PRODUCT CARD LINK:', {
-    productName: product.name,
-    productSlug: product.slug,
-    categorySlug,
-    subcategorySlug,
-    seoCategorySlug: product.seoCategorySlug,
-    seoSubcategorySlug: product.seoSubcategorySlug,
-  });
+  const productSlug = normalizeSlug(product.slug);
+  const productCategorySlug = normalizeSlug(product.seoCategorySlug);
+  const productSubcategorySlug = normalizeSlug(product.seoSubcategorySlug);
+
   const canOpenProduct =
     Boolean(productSlug) &&
     Boolean(productCategorySlug) &&
     Boolean(productSubcategorySlug);
 
-  const productHref = canOpenProduct
-    ? `/${locale}/all-products/${productCategorySlug}/${productSubcategorySlug}/${productSlug}`
-    : `/${locale}/all-products`;
+  const productHref =
+    canOpenProduct &&
+    productSlug &&
+    productCategorySlug &&
+    productSubcategorySlug
+      ? buildProductHref({
+          locale,
+          categorySlug: productCategorySlug,
+          subcategorySlug: productSubcategorySlug,
+          productSlug,
+        })
+      : undefined;
 
   return (
     <div className="mt-auto flex w-full gap-[8px] md:gap-[16px] lg:gap-[8px]">
       {!isLoading ? (
         <>
-          {canOpenProduct ? (
+          {productHref ? (
             <Link
               href={productHref}
               className="border-primary font-inter text-primary hover:bg-primary hover:text-secondary flex h-[40px] w-full items-center justify-center rounded-[32px] border bg-transparent text-[12px] font-semibold transition-colors duration-500"

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import PublicProviders from 'app/providers/PublicProviders';
 
+import Loader from '@components/common/loaders/Loader';
 import Footer from '@components/footer/Footer';
 import Header from '@components/header/Header';
 
@@ -17,12 +18,14 @@ export default async function SiteLayout({ children, params }: Props) {
   const safeLocale = locale as AppLocale;
 
   return (
-    <PublicProviders locale={safeLocale}>
-      <div className="bg-main font-inter">
-        <Header />
-        <main>{children}</main>
-        <Footer />
-      </div>
-    </PublicProviders>
+    <Suspense fallback={<Loader />}>
+      <PublicProviders locale={safeLocale}>
+        <div className="bg-main font-inter">
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </div>
+      </PublicProviders>
+    </Suspense>
   );
 }

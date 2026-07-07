@@ -183,7 +183,6 @@ const LanguageSelect = () => {
                 <Link
                   href={href}
                   hrefLang={optionLocale}
-                  locale={false}
                   aria-current={isSelected ? 'page' : undefined}
                   onClick={() => setIsOpen(false)}
                   className={clsx(

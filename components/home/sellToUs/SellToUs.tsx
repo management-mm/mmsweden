@@ -1,4 +1,4 @@
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import SellToUsItem from './SellToUsItem';
 
@@ -12,6 +12,9 @@ import sellToUsList from '@constants/sellToUsList';
 
 const SellToUs = () => {
   const t = useTranslations();
+  const locale = useLocale();
+
+  const sellToUsHref = `/${locale}/sell-to-us`;
 
   return (
     <section className="bg-primary py-[80px] text-center lg:text-start">
@@ -35,7 +38,7 @@ const SellToUs = () => {
           <NavLinkBtn
             intent="sellToUs"
             className="hidden lg:inline-block"
-            href="/sell-to-us"
+            href={sellToUsHref}
           >
             {t(NavBar.SellToUs)}
           </NavLinkBtn>
@@ -60,7 +63,7 @@ const SellToUs = () => {
           })}
         </ul>
 
-        <NavLinkBtn intent="sellToUs" className="lg:hidden" href="/sell-to-us">
+        <NavLinkBtn intent="sellToUs" className="lg:hidden" href={sellToUsHref}>
           {t(NavBar.SellToUs)}
         </NavLinkBtn>
       </div>

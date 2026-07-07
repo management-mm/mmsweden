@@ -11,12 +11,15 @@ import SvgIcon from '@components/common/SvgIcon';
 import { selectRequestedProducts } from '@store/selectors';
 
 import { useAppSelector } from '@hooks/useAppSelector';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 import { IconId } from '@enums/iconsSpriteId';
 
 const PriceQuoteBtn = () => {
   const requestedProducts = useAppSelector(selectRequestedProducts);
   const t = useTranslations();
+  const locale = useCurrentLocale();
+
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -27,7 +30,7 @@ const PriceQuoteBtn = () => {
     <NavLinkBtn
       intent="accent"
       className="h-[38px] w-[48px] p-0 md:h-[48px] md:min-w-[145px] md:px-[14px]"
-      href="/my-price-quote"
+      href={`/${locale}/my-price-quote`}
     >
       <div className="relative">
         <SvgIcon

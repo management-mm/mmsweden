@@ -1,4 +1,4 @@
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 
 import NavLinkBtn from '@components/common/NavLinkBtn';
@@ -13,6 +13,7 @@ const heroDesktop = '/images/heros/desktop-home-bg.webp';
 
 const FirstHeroPart = () => {
   const t = useTranslations();
+  const locale = useLocale();
 
   return (
     <section
@@ -46,13 +47,13 @@ const FirstHeroPart = () => {
             <div className="gap-[30px] md:flex">
               <NavLinkBtn
                 intent="accent"
-                href="/all-products"
+                href={`/${locale}/all-products`}
                 className="mx-0 mb-[22px] shadow-none md:mb-0"
               >
                 {t(Button.AllMachines)}
               </NavLinkBtn>
 
-              <NavLinkBtn intent="allMachines" href="/new-arrivals">
+              <NavLinkBtn intent="allMachines" href={`/${locale}/new-arrivals`}>
                 {t(Button.NewArrivals)}
               </NavLinkBtn>
             </div>

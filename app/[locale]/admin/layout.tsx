@@ -1,11 +1,16 @@
+import { Suspense } from 'react';
+
 import AdminProviders from 'app/providers/AdminProviders';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import AdminSharedLayout from '@components/AdminSharedLayout';
+import Loader from '@components/common/loaders/Loader';
 import PrivateGate from '@components/routing/PrivateGate';
 
 import { type AppLocale, isAppLocale } from '@i18n/config';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   robots: {
@@ -31,9 +36,11 @@ export default async function AdminLayout({
 
   return (
     <AdminProviders locale={safeLocale}>
-      <PrivateGate redirectTo={`/${safeLocale}/login`}>
-        <AdminSharedLayout>{children}</AdminSharedLayout>
-      </PrivateGate>
+      <Suspense fallback={<Loader />}>
+        <PrivateGate redirectTo={`/${safeLocale}/login`}>
+          <AdminSharedLayout>{children}</AdminSharedLayout>
+        </PrivateGate>
+      </Suspense>
     </AdminProviders>
   );
 }

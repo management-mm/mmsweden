@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { schema } from '@schemas/editProduct';
 import clsx from 'clsx';
 import { Form, Formik } from 'formik';
+import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
@@ -46,6 +47,7 @@ import { AppLocale, SUPPORTED_LOCALES } from '@i18n/config';
 
 const ChangeProduct = () => {
   const dispatch = useAppDispatch();
+  const locale = useLocale() as AppLocale;
 
   const params = useParams<{ slug: string }>();
   const slug = params?.slug;
@@ -71,13 +73,17 @@ const ChangeProduct = () => {
 
   const { notifyError } = useNotify();
 
+  const productsListHref = `/${locale}/admin/all-products`;
+
   const editHref = useMemo(() => {
-    const productSlug = (product as { slug?: string } | null)?.slug;
+    const productSlug = (product as { slug?: string } | null)?.slug?.trim();
 
     return productSlug
-      ? `/admin/all-products/edit-product/${productSlug}`
-      : '/admin/all-products';
-  }, [product]);
+      ? `/${locale}/admin/all-products/edit-product/${encodeURIComponent(
+          productSlug
+        )}`
+      : productsListHref;
+  }, [product, locale, productsListHref]);
 
   const emptyName = useMemo(() => {
     return Object.values(SUPPORTED_LOCALES).reduce(
@@ -155,7 +161,7 @@ const ChangeProduct = () => {
 
           <Link
             className="border-primary text-primary mx-auto block w-full rounded-[32px] border px-[10px] py-[10px] text-center font-semibold"
-            href="/admin/all-products"
+            href={productsListHref}
           >
             Go to Product List
           </Link>
@@ -215,6 +221,7 @@ const ChangeProduct = () => {
                 await dispatch(deleteProduct({ productId })).unwrap();
                 return;
               }
+
               await dispatch(
                 updateProduct({
                   ...values,
@@ -244,6 +251,7 @@ const ChangeProduct = () => {
           {({ values, setFieldValue, isSubmitting, submitForm }) => (
             <>
               {product.isDraft && <DraftMessage />}
+
               <Form>
                 <div className={clsx('container', 'container--no-margin')}>
                   <div className="gap-[24px] pt-[48px] lg:flex">

@@ -1,5 +1,8 @@
+'use client';
+
 import type { FC } from 'react';
 
+import { useLocale } from 'next-intl';
 import Link from 'next/link';
 
 import StatusModal from '@components/common/StatusModal';
@@ -17,6 +20,8 @@ const SuccessModal: FC<ISuccessModalProps> = ({
   statusProduct,
   linkProduct,
 }) => {
+  const locale = useLocale();
+
   return (
     <StatusModal title={mainMessage} handleToggleMenu={handleToggleMenu}>
       <div className="flex w-full gap-[10px]">
@@ -29,7 +34,7 @@ const SuccessModal: FC<ISuccessModalProps> = ({
 
         <Link
           className="border-primary text-primary w-[calc((100%-10px)/2)] rounded-[32px] border py-[10px] text-center font-semibold"
-          href="/admin/all-products"
+          href={`/${locale}/admin/all-products`}
         >
           Go to Product List
         </Link>

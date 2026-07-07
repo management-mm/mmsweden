@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import { initGoogleAnalytics } from '@lib/analytics';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 
 import { Button, Description, Title } from '@enums/i18nConstants';
@@ -15,7 +15,9 @@ type ConsentStatus = 'accepted' | 'rejected' | null;
 export default function CookieConsent() {
   const [consent, setConsent] = useState<ConsentStatus>(null);
   const [isMounted, setIsMounted] = useState(false);
+
   const t = useTranslations();
+  const locale = useLocale();
 
   useEffect(() => {
     try {
@@ -55,7 +57,9 @@ export default function CookieConsent() {
     }
   };
 
-  if (!isMounted || consent !== null) return null;
+  if (!isMounted || consent !== null) {
+    return null;
+  }
 
   return (
     <div
@@ -70,10 +74,11 @@ export default function CookieConsent() {
           <p id="cookie-consent-title" className="font-medium text-gray-900">
             {t(Title.AnalyticsСonsent)}
           </p>
+
           <p id="cookie-consent-description" className="mt-1">
             {t(Description.AnalyticsConsent)}{' '}
             <Link
-              href="/privacy-policy"
+              href={`/${locale}/privacy-policy`}
               className="underline hover:no-underline"
             >
               {t(Description.PrivacyPolicy)}

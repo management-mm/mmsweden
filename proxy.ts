@@ -9,5 +9,5 @@ const proxy = createMiddleware({
 export default proxy;
 
 export const config = {
-  matcher: ['/((?!api|admin|_next|.*\\..*).*)'],
+  matcher: ['/((?!api|_next|.*\\..*).*)'],
 };

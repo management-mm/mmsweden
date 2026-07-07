@@ -1,4 +1,4 @@
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import IndustryItem from './IndustryItem';
 
@@ -10,18 +10,23 @@ import industriesList from '@constants/industriesList';
 
 const Industries = () => {
   const t = useTranslations();
+  const locale = useLocale();
+
   return (
     <section className="pb-[96px] text-center">
       <div className="container">
         <h2 className="text-title mb-[6px] text-[32px] leading-tight font-bold md:text-[48px]">
           {t(Title.Industries)}
         </h2>
+
         <p className="text-desc mb-[48px] text-[16px] leading-normal font-medium">
           {t(Description.Industries)}
         </p>
+
         <ul className="mb-[32px] text-center md:flex md:flex-wrap md:gap-[30px]">
           {industriesList.map(industry => {
             const { iconId, iconSize, title, desc, className } = industry;
+
             return (
               <IndustryItem
                 key={title}
@@ -34,7 +39,8 @@ const Industries = () => {
             );
           })}
         </ul>
-        <NavLinkBtn intent="shopNow" href="/all-products">
+
+        <NavLinkBtn intent="shopNow" href={`/${locale}/all-products`}>
           {t(Button.ShopNow)}
         </NavLinkBtn>
       </div>

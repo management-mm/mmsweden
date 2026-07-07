@@ -1,21 +1,27 @@
+'use client';
+
 import type { FC } from 'react';
 
 import Link from 'next/link';
 
 import SvgIcon from './SvgIcon';
 
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
+
 import { cn } from '@utils/cn';
 
 import { IconId } from '@enums/iconsSpriteId';
 
-interface ILogogProps {
+interface ILogoProps {
   className?: string;
   iconClassName?: string;
 }
 
-export const Logo: FC<ILogogProps> = ({ className, iconClassName }) => {
+export const Logo: FC<ILogoProps> = ({ className, iconClassName }) => {
+  const locale = useCurrentLocale();
+
   return (
-    <Link href="/" className={className}>
+    <Link href={`/${locale}`} className={className}>
       <SvgIcon
         iconId={IconId.Logo}
         size={{ width: 94, height: 48 }}

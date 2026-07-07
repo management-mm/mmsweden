@@ -1,12 +1,13 @@
-import { useTranslations } from 'next-intl';
+import { getLocale, getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 
 import NavLinkBtn from '@components/common/NavLinkBtn';
 
 import { Button, Description, NavBar } from '@enums/i18nConstants';
 
-const AboutUs = () => {
-  const t = useTranslations();
+const AboutUs = async () => {
+  const t = await getTranslations();
+  const locale = await getLocale();
 
   return (
     <section className="pb-[48px] md:pb-[84px]">
@@ -71,7 +72,7 @@ const AboutUs = () => {
               })}
             </div>
 
-            <NavLinkBtn intent="showMore" href="/about-us">
+            <NavLinkBtn intent="showMore" href={`/${locale}/about-us`}>
               {t(Button.ShowMore)}
             </NavLinkBtn>
           </div>

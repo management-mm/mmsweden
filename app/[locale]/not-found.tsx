@@ -4,10 +4,33 @@ import { useTranslations } from 'next-intl';
 
 import NavLinkBtn from '@components/common/NavLinkBtn';
 
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
+
 import { NotFoundText } from '@enums/i18nConstants';
 
 export default function NotFound() {
   const t = useTranslations();
+  const locale = useCurrentLocale();
+
+  const getLocalizedHref = (href: string) => {
+    if (href === '/') {
+      return `/${locale}`;
+    }
+
+    return `/${locale}${href}`;
+  };
+
+  const quickLinks = [
+    {
+      title: t(NotFoundText.Homepage),
+      href: getLocalizedHref('/'),
+    },
+    {
+      title: t(NotFoundText.AllProducts),
+      href: getLocalizedHref('/all-products'),
+    },
+  ];
+
   return (
     <section className="min-h-fallback relative mx-auto flex max-w-5xl items-center pt-[22px] pb-[42px] md:pt-[62px] md:pb-[400px]">
       <div className="container">
@@ -27,26 +50,32 @@ export default function NotFound() {
             </p>
 
             <div className="mt-8 flex flex-wrap justify-between gap-[14px]">
-              <NavLinkBtn href="/" intent="accent" className="ml-0">
+              <NavLinkBtn
+                href={getLocalizedHref('/')}
+                intent="accent"
+                className="ml-0"
+              >
                 {t(NotFoundText.GoHome)}
                 <span className="font-inter text-primary ml-2 rounded-[32px] px-[8px] text-center text-[16px] leading-tight font-semibold transition group-hover:translate-x-0.5">
                   →
                 </span>
               </NavLinkBtn>
+
               <div className="flex items-center gap-[16px]">
                 <button
                   onClick={() => window.history.back()}
                   className="inline-flex w-full items-center justify-center rounded-2xl border border-slate-200 bg-transparent px-5 py-3 text-sm font-medium text-slate-900 transition hover:bg-slate-50 hover:shadow-sm focus:ring-2 focus:ring-slate-300 focus:outline-none md:w-fit md:py-[16px]"
+                  type="button"
                 >
                   {t(NotFoundText.GoBack)}
                 </button>
 
                 <NavLinkBtn
                   className="inline-flex w-full items-center justify-center rounded-2xl border border-slate-200 bg-transparent px-5 py-3 text-sm font-medium text-slate-900 transition hover:bg-slate-50 hover:shadow-sm focus:ring-2 focus:ring-slate-300 focus:outline-none"
-                  href="/contact-us"
+                  href={getLocalizedHref('/contact-us')}
                   intent="notFound"
                 >
-                  <span>Contact&nbsp;</span>us
+                  {t('NavBar.ContactUs')}
                 </NavLinkBtn>
               </div>
             </div>
@@ -67,16 +96,14 @@ export default function NotFound() {
                   {t(NotFoundText.QuickTipText)}
                 </p>
               </div>
+
               <div className="rounded-xl bg-white px-3 py-2 font-mono text-sm text-slate-700 shadow-sm">
                 /404
               </div>
             </div>
 
             <div className="flex w-full flex-col gap-4">
-              {[
-                { title: t(NotFoundText.Homepage), href: '/' },
-                { title: t(NotFoundText.AllProducts), href: '/all-products' },
-              ].map(item => (
+              {quickLinks.map(item => (
                 <NavLinkBtn
                   key={item.href}
                   href={item.href}

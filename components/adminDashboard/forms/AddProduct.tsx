@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getNextProductId } from '@api/countersService';
 import { schema } from '@schemas/addProduct';
 import { Form, Formik } from 'formik';
+import { useLocale } from 'next-intl';
 
 import Block from '../Block';
 import Condition from '../Condition';
@@ -33,8 +34,11 @@ import { normalizeError } from '@utils/errors/normalizeError';
 
 const AddProduct = () => {
   const dispatch = useAppDispatch();
+  const locale = useLocale();
+
   const isLoading = useAppSelector(selectIsLoading);
   const product = useAppSelector(selectProductDetails);
+
   const { notifyError } = useNotify();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -43,6 +47,8 @@ const AddProduct = () => {
   const [idError, setIdError] = useState<AppError | null>(null);
 
   const handleToggleMenu = () => setIsOpen(prev => !prev);
+
+  const productsListHref = `/${locale}/admin/all-products`;
 
   useEffect(() => {
     dispatch(clearProduct());
@@ -74,12 +80,12 @@ const AddProduct = () => {
   }, [product]);
 
   const editHref = useMemo(() => {
-    const slug = (product as { slug?: string } | null)?.slug;
+    const slug = (product as { slug?: string } | null)?.slug?.trim();
 
     return slug
-      ? `/admin/all-products/edit-product/${slug}`
-      : '/admin/all-products';
-  }, [product]);
+      ? `/${locale}/admin/all-products/edit-product/${encodeURIComponent(slug)}`
+      : productsListHref;
+  }, [product, locale, productsListHref]);
 
   if (idError) {
     return (

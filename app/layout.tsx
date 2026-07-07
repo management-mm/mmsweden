@@ -92,8 +92,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning className={inter.variable}>
-      <GoogleTagManagerProvider />
       <body className={cn(inter.className, 'bg-main')}>
+        <GoogleTagManagerProvider />
         <Suspense fallback={null}>
           <Sprite />
         </Suspense>

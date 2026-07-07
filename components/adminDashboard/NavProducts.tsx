@@ -1,5 +1,6 @@
 'use client';
 
+import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -11,9 +12,36 @@ import { IconId } from '@enums/iconsSpriteId';
 
 const NavProducts = () => {
   const pathname = usePathname();
+  const locale = useLocale();
+
+  const adminBasePath = `/${locale}/admin`;
+
+  const links = [
+    {
+      href: `${adminBasePath}/all-products`,
+      icon: IconId.AllProducts,
+      iconSize: { width: 18, height: 18 },
+      label: 'Product List',
+    },
+    {
+      href: `${adminBasePath}/new-product`,
+      icon: IconId.AddProduct,
+      iconSize: { width: 18, height: 18 },
+      label: 'New Product',
+    },
+    {
+      href: `${adminBasePath}/filters-settings`,
+      icon: IconId.Filter,
+      iconSize: { width: 14, height: 14 },
+      label: 'Filters Settings',
+    },
+  ];
 
   const isActive = (href: string) => {
-    if (!pathname) return false;
+    if (!pathname) {
+      return false;
+    }
+
     return pathname === href || pathname.startsWith(`${href}/`);
   };
 
@@ -26,29 +54,12 @@ const NavProducts = () => {
 
   return (
     <>
-      <Link
-        href="/admin/all-products"
-        className={getClass('/admin/all-products')}
-      >
-        <SvgIcon iconId={IconId.AllProducts} size={{ width: 18, height: 18 }} />
-        Product List
-      </Link>
-
-      <Link
-        href="/admin/new-product"
-        className={getClass('/admin/new-product')}
-      >
-        <SvgIcon iconId={IconId.AddProduct} size={{ width: 18, height: 18 }} />
-        New Product
-      </Link>
-
-      <Link
-        href="/admin/filters-settings"
-        className={getClass('/admin/filters-settings')}
-      >
-        <SvgIcon iconId={IconId.Filter} size={{ width: 14, height: 14 }} />
-        Filters Settings
-      </Link>
+      {links.map(({ href, icon, iconSize, label }) => (
+        <Link key={href} href={href} className={getClass(href)}>
+          <SvgIcon iconId={icon} size={iconSize} />
+          {label}
+        </Link>
+      ))}
     </>
   );
 };

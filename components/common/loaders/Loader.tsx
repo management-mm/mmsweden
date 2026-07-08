@@ -1,20 +1,11 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { ThreeDots } from 'react-loader-spinner';
-
 const Loader = () => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-
   return (
-    <div className="fixed top-1/2 left-1/2 z-5 -translate-x-1/2 -translate-y-1/2">
-      <ThreeDots height="80" width="80" color="rgba(0, 32, 59, 1)" />
+    <div
+      className="fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2"
+      role="status"
+      aria-label="Loading"
+    >
+      <div className="h-20 w-20 animate-pulse rounded-full bg-[#00203B]" />
     </div>
   );
 };

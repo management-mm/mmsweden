@@ -10,11 +10,28 @@ type RouteContext = {
   }>;
 };
 
-export async function GET(_: Request, { params }: RouteContext) {
-  const { page } = await params;
-  const pageNumber = Number(page);
+const parseSitemapPage = (page: string) => {
+  const match = page.match(/^(\d+)(?:\.xml)?$/);
+
+  if (!match) {
+    return null;
+  }
+
+  const pageNumber = Number(match[1]);
 
   if (!Number.isInteger(pageNumber) || pageNumber < 1) {
+    return null;
+  }
+
+  return pageNumber;
+};
+
+export async function GET(_: Request, { params }: RouteContext) {
+  const { page } = await params;
+
+  const pageNumber = parseSitemapPage(page);
+
+  if (!pageNumber) {
     return new Response('Not Found', { status: 404 });
   }
 

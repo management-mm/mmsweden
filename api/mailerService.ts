@@ -30,10 +30,6 @@ const getBaseUrl = (): string => {
   return baseURL;
 };
 
-const rethrowMailerError = (error: unknown): never => {
-  throw normalizeError(error);
-};
-
 export const requestQuote = async (
   data: IRequestQuoteData
 ): Promise<Record<string, string>> => {

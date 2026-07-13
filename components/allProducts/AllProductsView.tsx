@@ -127,7 +127,7 @@ const AllProductsView = async ({
 
           {isAdmin && (
             <div className="shrink-0 lg:hidden">
-              <FiltersAndSearch isAdmin={isAdmin} />
+              <FiltersAndSearch />
             </div>
           )}
 
@@ -152,7 +152,7 @@ const AllProductsView = async ({
 
           {isAdmin && (
             <div className="shrink-0">
-              <FiltersAndSearch isAdmin={isAdmin} />
+              <FiltersAndSearch />
             </div>
           )}
         </div>

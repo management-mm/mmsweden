@@ -1,6 +1,6 @@
 'use client';
 
-import { type FC, useEffect, useMemo, useState } from 'react';
+import { type FC, useEffect, useState } from 'react';
 
 import { getChildren, getTopLevel } from '@api/categoriesService';
 import type { IIndustry } from '@interfaces/IIndustry';

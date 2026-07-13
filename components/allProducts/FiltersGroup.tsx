@@ -2,7 +2,6 @@
 
 import { type FC, useEffect, useState } from 'react';
 
-import type { ICategory } from 'interfaces/ICategory';
 import type { IIndustry } from 'interfaces/IIndustry';
 import type { IManufacturer } from 'interfaces/IManufacturer';
 
@@ -11,14 +10,8 @@ import FilterWrapper from './FilterWrapper';
 
 import CategoriesMenu from '@components/header/CategoriesMenu';
 
+import { fetchIndustries, fetchManufacturers } from '@store/filters/operations';
 import {
-  fetchCategories,
-  fetchIndustries,
-  fetchManufacturers,
-} from '@store/filters/operations';
-import {
-  selectCategories,
-  selectCategoriesIsLoading,
   selectIndustries,
   selectIndustriesIsLoading,
   selectManufacturers,
@@ -39,11 +32,9 @@ interface IFiltersGroupProps {
 const FiltersGroup: FC<IFiltersGroupProps> = ({ className }) => {
   const dispatch = useAppDispatch();
 
-  const [categoryKeyword, setCategoryKeyword] = useState('');
   const [manufacturerKeyword, setManufacturerKeyword] = useState('');
   const [industryKeyword, setIndustryKeyword] = useState('');
 
-  const debouncedCategoryKeyword = useDebouncedValue(categoryKeyword, 300);
   const debouncedManufacturerKeyword = useDebouncedValue(
     manufacturerKeyword,
     300
@@ -52,27 +43,11 @@ const FiltersGroup: FC<IFiltersGroupProps> = ({ className }) => {
 
   const locale = useCurrentLocale();
 
-  const categories: ICategory[] = useAppSelector(selectCategories);
   const manufacturers: IManufacturer[] = useAppSelector(selectManufacturers);
   const industries: IIndustry[] = useAppSelector(selectIndustries);
 
-  const categoriesIsLoading = useAppSelector(selectCategoriesIsLoading);
   const manufacturersIsLoading = useAppSelector(selectManufacturersIsLoading);
   const industriesIsLoading = useAppSelector(selectIndustriesIsLoading);
-
-  useEffect(() => {
-    const shouldFetch =
-      debouncedCategoryKeyword.length > 0 || categories.length === 0;
-
-    if (!shouldFetch) return;
-
-    dispatch(
-      fetchCategories({
-        keyword: debouncedCategoryKeyword,
-        lang: locale,
-      })
-    );
-  }, [dispatch, debouncedCategoryKeyword, locale, categories.length]);
 
   useEffect(() => {
     const shouldFetch =

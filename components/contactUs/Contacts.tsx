@@ -1,13 +1,10 @@
 import { useTranslations } from 'next-intl';
 
 import ContactsPart from './ContactsPart';
-import EmployeeItem from './EmployeeItem';
 import EmployeesList from './EmployeesList';
 import Info from './Info';
 
 import { ContactUs } from '@enums/i18nConstants';
-
-import employeesList from '@constants/employeesList';
 
 const Contacts = () => {
   const t = useTranslations();

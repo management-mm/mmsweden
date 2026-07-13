@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   type GetProductsResponse,
@@ -41,13 +41,19 @@ export default function AdminProductsView({ locale, query }: Props) {
   const categoryKey = query.category.join(',');
   const industryKey = query.industry.join(',');
 
-  const productsQuery = useMemo(
-    () => ({
+  useEffect(() => {
+    let ignore = false;
+
+    const categories = categoryKey ? categoryKey.split(',') : [];
+    const industries = industryKey ? industryKey.split(',') : [];
+
+    const productsQuery = {
       ...(query.title ? { keyword: query.title } : {}),
       ...(query.manufacturer ? { manufacturer: query.manufacturer } : {}),
       ...(query.condition ? { condition: query.condition } : {}),
-      ...(query.category.length ? { category: query.category } : {}),
-      ...(query.industry.length ? { industry: query.industry } : {}),
+
+      ...(categories.length ? { category: categories } : {}),
+      ...(industries.length ? { industry: industries } : {}),
 
       ...(query.filter === 'sold' ? { hasDeletionDate: true } : {}),
       ...(query.filter === 'draft' ? { isDraft: true } : {}),
@@ -56,21 +62,7 @@ export default function AdminProductsView({ locale, query }: Props) {
       page: Number(query.page || 1),
       perPage: 9,
       lang: locale,
-    }),
-    [
-      query.title,
-      query.manufacturer,
-      query.condition,
-      query.page,
-      query.filter,
-      categoryKey,
-      industryKey,
-      locale,
-    ]
-  );
-
-  useEffect(() => {
-    let ignore = false;
+    };
 
     setIsLoading(true);
 
@@ -92,7 +84,16 @@ export default function AdminProductsView({ locale, query }: Props) {
     return () => {
       ignore = true;
     };
-  }, [productsQuery]);
+  }, [
+    query.title,
+    query.manufacturer,
+    query.condition,
+    query.page,
+    query.filter,
+    categoryKey,
+    industryKey,
+    locale,
+  ]);
 
   return (
     <ProductsTotalProvider total={data.total}>
@@ -101,7 +102,7 @@ export default function AdminProductsView({ locale, query }: Props) {
 
         <div className="flex flex-col lg:flex-row lg:justify-start lg:gap-[30px]">
           <div className="shrink-0 lg:hidden">
-            <FiltersAndSearch isAdmin />
+            <FiltersAndSearch />
           </div>
 
           <div className="relative flex-1">
@@ -132,7 +133,7 @@ export default function AdminProductsView({ locale, query }: Props) {
           </div>
 
           <div className="hidden shrink-0 lg:block">
-            <FiltersAndSearch isAdmin />
+            <FiltersAndSearch />
           </div>
         </div>
       </div>

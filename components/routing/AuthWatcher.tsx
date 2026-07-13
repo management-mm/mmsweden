@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
@@ -9,15 +11,20 @@ import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 export default function AuthWatcher() {
   const router = useRouter();
+
   const error = useAppSelector((state: RootState) => state.auth.error);
+
   const isLoggedIn = useAppSelector(
     (state: RootState) => state.auth.isLoggedIn
   );
+
   const locale = useCurrentLocale();
+
   useEffect(() => {
     if (!isLoggedIn && error) {
       router.push(`/${locale}/login`);
     }
-  }, [error, isLoggedIn, router]);
+  }, [error, isLoggedIn, locale, router]);
+
   return null;
 }

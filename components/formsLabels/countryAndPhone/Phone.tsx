@@ -3,7 +3,7 @@
 import { type FC, useEffect, useMemo, useState } from 'react';
 
 import type { ICountryOption } from '@interfaces/ICountryOption';
-import { ErrorMessage, Field, useFormikContext } from 'formik';
+import { ErrorMessage, Field, FormikValues, useFormikContext } from 'formik';
 import debounce from 'lodash/debounce';
 import { useTranslations } from 'next-intl';
 
@@ -40,7 +40,7 @@ interface IPhoneProps {
 const Phone: FC<IPhoneProps> = ({ className }) => {
   const locale = useCurrentLocale();
   const t = useTranslations();
-  const { setFieldValue } = useFormikContext<any>();
+  const { setFieldValue } = useFormikContext<FormikValues>();
 
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false);
   const [hasClickedOutside, setHasClickedOutside] = useState(false);

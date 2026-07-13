@@ -77,6 +77,9 @@ const DescriptionProduct: FC<IDescriptionProductProps> = ({ description }) => {
         setIsNewDescriptionEntered(false);
       }
     }
+    // Dependencies are intentionally limited to `values.description`.
+    // Adding `description` or `previousDescriptionObject` changes the form reset behavior.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values.description]);
 
   const handleRemoveField = (event: React.MouseEvent<HTMLButtonElement>) => {

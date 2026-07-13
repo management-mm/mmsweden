@@ -35,6 +35,9 @@ const SelectedProductsList = () => {
 
   useEffect(() => {
     dynamicSwapy(swapyRef.current, items, 'id', slotItemMap, setSlotItemMap);
+    // Dependencies are intentionally limited to `items`.
+    // Adding `slotItemMap` causes Swapy state to resync incorrectly.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items]);
 
   useEffect(() => {
@@ -77,6 +80,9 @@ const SelectedProductsList = () => {
     return () => {
       swapyRef.current?.destroy();
     };
+    // Swapy instance should not be recreated on every `items` or `slotItemMap` change.
+    // Adding those dependencies breaks drag-and-drop behavior.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, products.length]);
 
   return (

@@ -6,7 +6,6 @@ import { useParams, useRouter } from 'next/navigation';
 
 import { logOut } from '@store/auth/operations';
 import { clearAuthError, resetAuthState } from '@store/auth/slice';
-import type { AppDispatch } from '@store/store';
 
 import { useAppDispatch } from '@hooks/useAppDispatch';
 
@@ -25,6 +24,7 @@ export default function LogoutButton({
     try {
       await dispatch(logOut()).unwrap();
     } catch {
+      // Ignore logout request errors and clear local auth state anyway.
     } finally {
       dispatch(resetAuthState());
       dispatch(clearAuthError());
@@ -45,7 +45,7 @@ export default function LogoutButton({
       type="button"
       onClick={handleLogout}
       className={
-        'font-inter text-primary border-primary hover:bg-primary hover:text-secondary text-primary transition-boxShadow inline-block h-[44px] rounded-[32px] border px-[16px] py-[12px] text-center text-[16px] leading-tight font-semibold shadow-none duration-500 md:h-[52px]'
+        'font-inter text-primary border-primary hover:bg-primary hover:text-secondary transition-boxShadow inline-block h-[44px] rounded-[32px] border px-[16px] py-[12px] text-center text-[16px] leading-tight font-semibold shadow-none duration-500 md:h-[52px]'
       }
     >
       {children}→

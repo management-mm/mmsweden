@@ -57,6 +57,9 @@ const PhotosList: FC<IPhotosListProps> = ({
 
   useEffect(() => {
     dynamicSwapy(swapyRef.current, items, 'id', slotItemMap, setSlotItemMap);
+    // Dependencies are intentionally limited to `items`.
+    // Adding `slotItemMap` can cause Swapy state to resync incorrectly.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items]);
 
   useEffect(() => {
@@ -93,6 +96,9 @@ const PhotosList: FC<IPhotosListProps> = ({
     return () => {
       swapyRef.current?.destroy();
     };
+    // Swapy instance should not be recreated on every `items` or `slotItemMap` change.
+    // Adding all referenced values as dependencies breaks drag-and-drop behavior.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fileAvatars, swapItems, editedAvatars, photoQueue]);
 
   useEffect(() => {

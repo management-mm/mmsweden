@@ -3,7 +3,6 @@
 import type { FC } from 'react';
 
 import { IEmployee } from '@interfaces/IEmployee';
-import { useTranslations } from 'next-intl';
 
 import DecorativeLine from '@components/common/DecorativeLine';
 import SvgIcon from '@components/common/SvgIcon';
@@ -11,8 +10,6 @@ import SvgIcon from '@components/common/SvgIcon';
 import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 import { IconId } from '@enums/iconsSpriteId';
-
-import type { IEmployeeItem } from '@constants/employeesList';
 
 interface IEmployeeItemProps {
   employee: IEmployee;

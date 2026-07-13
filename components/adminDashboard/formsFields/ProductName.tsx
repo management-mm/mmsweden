@@ -58,6 +58,9 @@ const ProductName: FC<IProductNameProps> = ({ initialValue }) => {
         setIsNewNameEntered(false);
       }
     }
+    // Dependencies are intentionally limited to `values.name`.
+    // Adding `initialValue` or `previousNameObject` changes the form reset behavior.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values.name]);
 
   const handleCheck = (shouldTranslate: boolean | string) => {
@@ -81,6 +84,9 @@ const ProductName: FC<IProductNameProps> = ({ initialValue }) => {
       setFieldValue('name', initialValue, false);
       setPreviousNameObject(initialValue);
     }
+    // Dependencies are intentionally limited to `initialValue` and `setFieldValue`.
+    // Adding `values.name` can cause the product name object to be reset while editing.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialValue, setFieldValue]);
 
   return (

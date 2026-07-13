@@ -1,6 +1,13 @@
 'use client';
 
-import { type FC, useEffect, useMemo, useState } from 'react';
+import {
+  type FC,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import ReactPaginate from 'react-paginate';
 
 import { useTranslations } from 'next-intl';
@@ -14,6 +21,7 @@ import { IconId } from '@enums/iconsSpriteId';
 
 const Next = () => {
   const t = useTranslations();
+
   return (
     <>
       <span className="mr-[8px] hidden md:block">{t('Pagination.Next')}</span>
@@ -24,6 +32,7 @@ const Next = () => {
 
 const Previous = () => {
   const t = useTranslations();
+
   return (
     <>
       <SvgIcon
@@ -47,18 +56,21 @@ const Pagination: FC<IPaginationProps> = ({ pageCount, className }) => {
   const searchParams = useSearchParams();
   const searchKey = searchParams.toString();
 
+  const latestSearchKeyRef = useRef(searchKey);
+
   const pageFromQuery = useMemo(() => {
-    const p = searchParams.get('page');
+    const params = new URLSearchParams(searchKey);
+    const p = params.get('page');
     const n = p ? Number(p) : 1;
-    if (!Number.isFinite(n) || n < 1) return 0;
+
+    if (!Number.isFinite(n) || n < 1) {
+      return 0;
+    }
+
     return n - 1;
-  }, [searchKey, searchParams]);
+  }, [searchKey]);
 
   const [currentPage, setCurrentPage] = useState(pageFromQuery);
-
-  useEffect(() => {
-    setCurrentPage(pageFromQuery);
-  }, [pageFromQuery]);
 
   const manufacturer = searchParams.get('manufacturer');
   const category = searchParams.get('category');
@@ -66,35 +78,57 @@ const Pagination: FC<IPaginationProps> = ({ pageCount, className }) => {
   const condition = searchParams.get('condition');
   const title = searchParams.get('title');
 
-  const pushParams = (params: URLSearchParams) => {
-    const qs = params.toString();
-    router.push(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
-  };
+  const pushParams = useCallback(
+    (params: URLSearchParams) => {
+      const qs = params.toString();
 
-  const handlePageClick = (page: number) => {
-    const params = new URLSearchParams(searchKey);
+      router.push(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+    },
+    [pathname, router]
+  );
 
-    if (page === 0) {
-      params.delete('page');
+  const handlePageClick = useCallback(
+    (page: number) => {
+      const params = new URLSearchParams(searchKey);
+
+      if (page === 0) {
+        params.delete('page');
+        pushParams(params);
+        setCurrentPage(0);
+        return;
+      }
+
+      params.set('page', String(page + 1));
       pushParams(params);
+      setCurrentPage(page);
+    },
+    [pushParams, searchKey]
+  );
+
+  useEffect(() => {
+    latestSearchKeyRef.current = searchKey;
+  }, [searchKey]);
+
+  useEffect(() => {
+    setCurrentPage(pageFromQuery);
+  }, [pageFromQuery]);
+
+  useEffect(() => {
+    if (!manufacturer && !category && !industry && !condition && !title) {
+      return;
+    }
+
+    const params = new URLSearchParams(latestSearchKeyRef.current);
+
+    if (!params.has('page')) {
       setCurrentPage(0);
       return;
     }
 
-    params.set('page', String(page + 1));
+    params.delete('page');
     pushParams(params);
-    setCurrentPage(page);
-  };
-
-  useEffect(() => {
-    if (manufacturer || category || industry || condition || title) {
-      const params = new URLSearchParams(searchKey);
-      params.delete('page');
-      pushParams(params);
-      setCurrentPage(0);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [manufacturer, category, industry, condition, title]);
+    setCurrentPage(0);
+  }, [manufacturer, category, industry, condition, title, pushParams]);
 
   return (
     <ReactPaginate

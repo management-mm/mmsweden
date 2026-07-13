@@ -8,7 +8,7 @@ import RequestPricingButton from './RequestPricingButton';
 
 import DecorativeLine from '@components/common/DecorativeLine';
 
-import { Filter, Product, Title } from '@enums/i18nConstants';
+import { Filter, Product } from '@enums/i18nConstants';
 
 import { AppLocale } from '@i18n/config';
 

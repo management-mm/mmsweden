@@ -1,11 +1,10 @@
 'use client';
 
 import type { ChangeEvent, FC } from 'react';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import type { IProduct } from '@interfaces/IProduct';
 import { Field, type FormikValues, useFormikContext } from 'formik';
-import * as _ from 'lodash';
 
 import Checkbox from './common/Checkbox';
 import DescriptionProduct from './formsFields/DescriptionProduct';
@@ -24,26 +23,21 @@ const GeneralInformation: FC<IGeneralInformationProps> = ({ product }) => {
   const { values, setFieldValue } = useFormikContext<FormikValues>();
   const [isChecked, setIsChecked] = useState(false);
 
-  const debouncedSetFieldValue = useMemo(
-    () =>
-      _.debounce(
-        (field: string, value: string) => setFieldValue(field, value, false),
-        1000
-      ),
-    []
-  );
-
   const handleChange = useCallback(
     (field: string) => (e: ChangeEvent<HTMLInputElement>) => {
-      e.persist();
       const value = e.target.value;
 
-      setFieldValue(field, value, false);
-
-      debouncedSetFieldValue(field, value);
+      void setFieldValue(field, value, false);
     },
-    [setFieldValue, debouncedSetFieldValue]
+    [setFieldValue]
   );
+
+  const handleManualIdToggle = useCallback(() => {
+    const newValue = !isChecked;
+
+    setIsChecked(newValue);
+    void setFieldValue('autoGenerateId', !newValue, false);
+  }, [isChecked, setFieldValue]);
 
   return (
     <div className="flex flex-col gap-[20px]">
@@ -65,12 +59,8 @@ const GeneralInformation: FC<IGeneralInformationProps> = ({ product }) => {
       <div className="flex items-center gap-2 pl-[22px]">
         <Checkbox
           isClick={isChecked}
-          onClicked={() => {
-            const newValue = !isChecked;
-            setIsChecked(newValue);
-            setFieldValue('autoGenerateId', !newValue, false);
-          }}
-          className={'rounded-[6px]'}
+          onClicked={handleManualIdToggle}
+          className="rounded-[6px]"
         />
         <span className="text-[14px]">Enter ID Number manually</span>
       </div>
@@ -88,6 +78,7 @@ const GeneralInformation: FC<IGeneralInformationProps> = ({ product }) => {
           className="border-neutral transition-border duration-primary focus:border-secondary-accent rounded-[32px] border px-[22px] py-[14px] text-[14px] outline-none focus:border"
         />
       </label>
+
       <Notes />
     </div>
   );

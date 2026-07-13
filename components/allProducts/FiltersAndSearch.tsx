@@ -1,13 +1,7 @@
-import clsx from 'clsx';
-
 import Filters from './Filters';
 import Search from './Search';
 
-type Props = {
-  isAdmin?: boolean;
-};
-
-const FiltersAndSearch = ({ isAdmin }: Props) => {
+const FiltersAndSearch = () => {
   return (
     <aside
       className={

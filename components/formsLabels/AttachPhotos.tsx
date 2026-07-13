@@ -17,7 +17,7 @@ import { IconId } from '@enums/iconsSpriteId';
 const AttachPhotos = () => {
   const t = useTranslations();
   const [editedAvatars, setEditedAvatars] = useState<string[]>([]);
-  const [fileAvatars, setFileAvatars] = useState<File[]>([]);
+  const [, setFileAvatars] = useState<File[]>([]);
   const { setFieldValue } = useFormikContext<FormikValues>();
 
   const handleChangePhoto = (e: ChangeEvent<HTMLInputElement>) => {

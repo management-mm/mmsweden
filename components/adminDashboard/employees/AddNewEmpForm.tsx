@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 import { Field, Form, Formik } from 'formik';
 
 import { IEditEmployeeFormValues } from './EditEmployeeForm';

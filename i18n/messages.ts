@@ -1,6 +1,11 @@
 import type { AppLocale } from './config';
 
-export const messagesMap: Record<AppLocale, () => Promise<{ default: any }>> = {
+type Messages = Record<string, unknown>;
+
+export const messagesMap: Record<
+  AppLocale,
+  () => Promise<{ default: Messages }>
+> = {
   en: () => import('@messages/en.json'),
   sv: () => import('@messages/sv.json'),
   de: () => import('@messages/de.json'),

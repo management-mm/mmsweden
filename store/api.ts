@@ -1,4 +1,3 @@
-import { getAuthToken } from '@api/getAuthToken';
 import axios from 'axios';
 
 import { resetAuthState, setAuthError } from '@store/auth/slice';
@@ -9,24 +8,20 @@ import { createThunkRejectValue } from '@utils/errors/createThunkRejectValue';
 
 export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
-});
-
-api.interceptors.request.use(config => {
-  const token = getAuthToken();
-
-  if (token) {
-    config.headers = config.headers ?? {};
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-
-  return config;
+  withCredentials: true,
 });
 
 let is401Handled = false;
 let responseInterceptorInitialized = false;
 
-export const setupApiInterceptors = (store: AppStore) => {
-  if (responseInterceptorInitialized) return;
+const isAuthenticationRequest = (requestUrl: string): boolean => {
+  return requestUrl.includes('/auth/');
+};
+
+export const setupApiInterceptors = (store: AppStore): void => {
+  if (responseInterceptorInitialized) {
+    return;
+  }
 
   responseInterceptorInitialized = true;
 
@@ -35,18 +30,13 @@ export const setupApiInterceptors = (store: AppStore) => {
     error => {
       const status = error.response?.status;
       const requestUrl = error.config?.url ?? '';
-      const hasToken = !!getAuthToken();
-
-      const isAuthRequest =
-        requestUrl.includes('/auth/login') ||
-        requestUrl.includes('/auth/signup') ||
-        requestUrl.includes('/auth/logout');
+      const isLoggedIn = store.getState().auth.isLoggedIn;
 
       if (
         typeof window !== 'undefined' &&
         status === 401 &&
-        hasToken &&
-        !isAuthRequest &&
+        isLoggedIn &&
+        !isAuthenticationRequest(requestUrl) &&
         !is401Handled
       ) {
         is401Handled = true;
@@ -58,15 +48,15 @@ export const setupApiInterceptors = (store: AppStore) => {
               new AppError(
                 'Session expired. Please log in again.',
                 'UNAUTHORIZED',
-                { status: 401 }
+                {
+                  status: 401,
+                }
               )
             )
           )
         );
 
-        window.localStorage.removeItem('persist:auth');
-
-        setTimeout(() => {
+        window.setTimeout(() => {
           is401Handled = false;
         }, 300);
       }

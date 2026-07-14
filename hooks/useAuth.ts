@@ -7,7 +7,8 @@ type PersistedAuthState = {
 };
 
 export const useAuth = () => {
-  const token = useAppSelector(state => state.auth.token);
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+
   const isRefreshing = useAppSelector(state => state.auth.isRefreshing);
 
   const isHydrated = useAppSelector(state => {
@@ -17,8 +18,7 @@ export const useAuth = () => {
   });
 
   return {
-    token,
-    isLoggedIn: Boolean(token),
+    isLoggedIn,
     isRefreshing,
     isHydrated,
   };

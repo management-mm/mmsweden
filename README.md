@@ -61,7 +61,7 @@ From the repository structure, the app includes:
 ## Tech Stack
 
 - **Next.js 16**
-- **React 18**
+- **React 19**
 - **TypeScript**
 - **next-intl**
 - **Redux Toolkit**

@@ -1,9 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { api } from '@store/api';
-import type { RootState } from '@store/store';
 
-import { AppError } from '@utils/errors/AppError';
 import {
   type ThunkRejectValue,
   createThunkRejectValue,
@@ -20,9 +18,13 @@ export interface User {
   email: string | null;
 }
 
+interface BackendAuthenticatedResponse {
+  authenticated: true;
+}
+
 interface SuccessfulLogInResponse {
   requiresTwoFactor?: false;
-  token: string;
+  authenticated: true;
   user: User;
 }
 
@@ -33,6 +35,9 @@ interface TwoFactorRequiredResponse {
   message: string;
 }
 
+type BackendLogInResponse =
+  BackendAuthenticatedResponse | TwoFactorRequiredResponse;
+
 export type LogInResponse = SuccessfulLogInResponse | TwoFactorRequiredResponse;
 
 interface VerifyTwoFactorCredentials {
@@ -40,10 +45,16 @@ interface VerifyTwoFactorCredentials {
   code: string;
 }
 
-interface VerifyTwoFactorResponse {
-  token: string;
+export interface VerifyTwoFactorResponse {
+  authenticated: true;
   user: User;
 }
+
+const getCurrentUser = async (): Promise<User> => {
+  const response = await api.get<User>('auth/current');
+
+  return response.data;
+};
 
 export const logIn = createAsyncThunk<
   LogInResponse,
@@ -51,9 +62,24 @@ export const logIn = createAsyncThunk<
   { rejectValue: ThunkRejectValue }
 >('auth/login', async (credentials, thunkAPI) => {
   try {
-    const response = await api.post<LogInResponse>('auth/login', credentials);
+    const response = await api.post<BackendLogInResponse>(
+      'auth/login',
+      credentials
+    );
 
-    return response.data;
+    const result = response.data;
+
+    if ('requiresTwoFactor' in result && result.requiresTwoFactor) {
+      return result;
+    }
+
+    const user = await getCurrentUser();
+
+    return {
+      authenticated: true,
+      requiresTwoFactor: false,
+      user,
+    };
   } catch (error) {
     logError(error, {
       scope: 'logIn',
@@ -72,12 +98,17 @@ export const verifyTwoFactor = createAsyncThunk<
   { rejectValue: ThunkRejectValue }
 >('auth/2fa/verify', async (credentials, thunkAPI) => {
   try {
-    const response = await api.post<VerifyTwoFactorResponse>(
+    await api.post<BackendAuthenticatedResponse>(
       'auth/2fa/verify',
       credentials
     );
 
-    return response.data;
+    const user = await getCurrentUser();
+
+    return {
+      authenticated: true,
+      user,
+    };
   } catch (error) {
     logError(error, {
       scope: 'verifyTwoFactor',
@@ -109,23 +140,10 @@ export const logOut = createAsyncThunk<
 export const refreshUser = createAsyncThunk<
   User,
   void,
-  { state: RootState; rejectValue: ThunkRejectValue }
+  { rejectValue: ThunkRejectValue }
 >('auth/refresh', async (_, thunkAPI) => {
-  const state = thunkAPI.getState();
-  const persistedToken = state.auth.token;
-
-  if (!persistedToken) {
-    return thunkAPI.rejectWithValue(
-      createThunkRejectValue(
-        new AppError('Unable to fetch user', 'UNAUTHORIZED')
-      )
-    );
-  }
-
   try {
-    const response = await api.get<User>('auth/current');
-
-    return response.data;
+    return await getCurrentUser();
   } catch (error) {
     logError(error, {
       scope: 'refreshUser',

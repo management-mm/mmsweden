@@ -3,6 +3,7 @@ import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 import {
   type LogInResponse,
   type User,
+  type VerifyTwoFactorResponse,
   logIn,
   logOut,
   refreshUser,
@@ -20,7 +21,6 @@ interface TwoFactorState {
 
 export interface AuthState {
   user: User;
-  token: string | null;
   isLoggedIn: boolean;
   isRefreshing: boolean;
   isLoading: boolean;
@@ -28,22 +28,25 @@ export interface AuthState {
   twoFactor: TwoFactorState;
 }
 
+const createEmptyUser = (): User => ({
+  email: null,
+  name: null,
+});
+
+const createEmptyTwoFactorState = (): TwoFactorState => ({
+  required: false,
+  userId: null,
+  method: null,
+  message: null,
+});
+
 const initialState: AuthState = {
-  user: {
-    email: null,
-    name: null,
-  },
-  token: null,
+  user: createEmptyUser(),
   isLoggedIn: false,
   isRefreshing: false,
   isLoading: false,
   error: null,
-  twoFactor: {
-    required: false,
-    userId: null,
-    method: null,
-    message: null,
-  },
+  twoFactor: createEmptyTwoFactorState(),
 };
 
 const createFallbackRejectValue = (message?: string): ThunkRejectValue => ({
@@ -52,12 +55,12 @@ const createFallbackRejectValue = (message?: string): ThunkRejectValue => ({
 });
 
 const resetTwoFactorState = (state: AuthState): void => {
-  state.twoFactor = {
-    required: false,
-    userId: null,
-    method: null,
-    message: null,
-  };
+  state.twoFactor = createEmptyTwoFactorState();
+};
+
+const resetAuthenticatedUser = (state: AuthState): void => {
+  state.user = createEmptyUser();
+  state.isLoggedIn = false;
 };
 
 const handleLogInPending = (state: AuthState): void => {
@@ -70,19 +73,14 @@ const handleLogInFulfilled = (
   action: PayloadAction<LogInResponse>
 ): void => {
   state.isLoading = false;
+  state.isRefreshing = false;
   state.error = null;
 
   if (
     'requiresTwoFactor' in action.payload &&
     action.payload.requiresTwoFactor
   ) {
-    state.user = {
-      email: null,
-      name: null,
-    };
-    state.token = null;
-    state.isLoggedIn = false;
-    state.isRefreshing = false;
+    resetAuthenticatedUser(state);
 
     state.twoFactor = {
       required: true,
@@ -95,9 +93,7 @@ const handleLogInFulfilled = (
   }
 
   state.user = action.payload.user;
-  state.token = action.payload.token;
   state.isLoggedIn = true;
-  state.isRefreshing = false;
 
   resetTwoFactorState(state);
 };
@@ -106,8 +102,11 @@ const handleLogInRejected = (
   state: AuthState,
   action: ReturnType<typeof logIn.rejected>
 ): void => {
+  resetAuthenticatedUser(state);
+  resetTwoFactorState(state);
+
   state.isLoading = false;
-  state.isLoggedIn = false;
+  state.isRefreshing = false;
   state.error =
     action.payload ?? createFallbackRejectValue(action.error.message);
 };
@@ -119,10 +118,9 @@ const handleVerifyTwoFactorPending = (state: AuthState): void => {
 
 const handleVerifyTwoFactorFulfilled = (
   state: AuthState,
-  action: PayloadAction<{ user: User; token: string }>
+  action: PayloadAction<VerifyTwoFactorResponse>
 ): void => {
   state.user = action.payload.user;
-  state.token = action.payload.token;
   state.isLoggedIn = true;
   state.isRefreshing = false;
   state.isLoading = false;
@@ -147,17 +145,12 @@ const handleLogOutPending = (state: AuthState): void => {
 };
 
 const handleLogOutFulfilled = (state: AuthState): void => {
-  state.user = {
-    email: null,
-    name: null,
-  };
-  state.token = null;
-  state.isLoggedIn = false;
+  resetAuthenticatedUser(state);
+  resetTwoFactorState(state);
+
   state.isRefreshing = false;
   state.isLoading = false;
   state.error = null;
-
-  resetTwoFactorState(state);
 };
 
 const handleLogOutRejected = (
@@ -188,12 +181,8 @@ const handleRefreshUserRejected = (
   state: AuthState,
   action: ReturnType<typeof refreshUser.rejected>
 ): void => {
-  state.user = {
-    email: null,
-    name: null,
-  };
-  state.token = null;
-  state.isLoggedIn = false;
+  resetAuthenticatedUser(state);
+
   state.isRefreshing = false;
 
   const error =
@@ -205,19 +194,15 @@ const handleRefreshUserRejected = (
 const authSlice = createSlice({
   name: 'auth',
   initialState,
+
   reducers: {
     resetAuthState: state => {
-      state.user = {
-        email: null,
-        name: null,
-      };
-      state.token = null;
-      state.isLoggedIn = false;
+      resetAuthenticatedUser(state);
+      resetTwoFactorState(state);
+
       state.isRefreshing = false;
       state.isLoading = false;
       state.error = null;
-
-      resetTwoFactorState(state);
     },
 
     setAuthError: (state, action: PayloadAction<ThunkRejectValue | null>) => {
@@ -232,6 +217,7 @@ const authSlice = createSlice({
       resetTwoFactorState(state);
     },
   },
+
   extraReducers: builder => {
     builder
       .addCase(logIn.pending, handleLogInPending)

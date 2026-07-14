@@ -46,7 +46,7 @@ const MobileMenu: FC<IMobileMenuProps> = ({
     <div
       ref={outsideAlerterRef}
       className={clsx(
-        'scrollbar-none fixed z-20 bg-white py-[100px] transition-all ease-in-out',
+        'fixed z-20 scrollbar-none bg-white py-[100px] transition-all ease-in-out',
         direction === 'left' &&
           'top-0 h-[100vh] w-[300px] overflow-y-auto duration-1000',
         direction === 'right' &&

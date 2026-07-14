@@ -37,9 +37,9 @@ const LightBox: FC<ILightBoxProps> = ({
 
   const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
 
-  const slideRefs = useRef<React.RefObject<ReactZoomPanPinchContentRef>[]>(
-    photos.map(() => createRef<ReactZoomPanPinchContentRef>())
-  );
+  const slideRefs = useRef<
+    React.RefObject<ReactZoomPanPinchContentRef | null>[]
+  >(photos.map(() => createRef<ReactZoomPanPinchContentRef>()));
 
   useEffect(() => {
     setModalRoot(document.getElementById('modal-root'));

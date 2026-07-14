@@ -1,6 +1,6 @@
 'use client';
 
-import { type FC, useState } from 'react';
+import { type FC, type ReactNode, useState } from 'react';
 import Select from 'react-select';
 
 import clsx from 'clsx';
@@ -15,7 +15,7 @@ interface IDescSelectorProps {
 
 type LanguageOption = {
   value: AppLocale;
-  label: JSX.Element;
+  label: ReactNode;
 };
 
 const DescSelector: FC<IDescSelectorProps> = ({ setLanguage }) => {

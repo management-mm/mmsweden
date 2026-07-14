@@ -71,13 +71,13 @@ const Selector: FC<ISelectorProps> = ({
           {selectedOption ? (
             <SelectedOption
               isOpen={isOpen}
-              name={selectedOption?.label?.props.name ?? selectedOption.value}
-              flag={selectedOption?.label?.props.flag}
+              name={selectedOption.label.props.name ?? selectedOption.value}
+              flag={selectedOption.label.props.flag ?? ''}
               labelName={labelName}
               value={
-                selectedOption?.label?.props[
+                selectedOption.label.props[
                   labelName === 'country' ? 'name' : 'callingCode'
-                ]
+                ] ?? ''
               }
             />
           ) : (

@@ -22,6 +22,11 @@ import countriesList from '@constants/countriesList';
 
 import { DEFAULT_LOCALE } from '@i18n/config';
 
+type CountryOptionLabelProps = {
+  name: string;
+  callingCode?: string;
+};
+
 const Country = () => {
   const locale = useCurrentLocale();
   const windowWidth = useWindowWidth();
@@ -77,7 +82,8 @@ const Country = () => {
 
         setFilteredOptions(
           options.filter(option => {
-            const labelElement = option.label as React.ReactElement;
+            const labelElement =
+              option.label as React.ReactElement<CountryOptionLabelProps>;
             const name = labelElement.props.name?.toLowerCase() ?? '';
             const callingCode = labelElement.props.callingCode ?? '';
 

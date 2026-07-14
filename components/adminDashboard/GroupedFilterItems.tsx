@@ -65,7 +65,7 @@ const GroupedFilterItems: FC<IGroupedFilterItemsProps> = ({
   }, [items, itemName, locale]);
 
   return (
-    <div className="scrollbar-none lg:scrollbar-thin mb-[14px] flex h-[400px] flex-col gap-[16px] overflow-y-scroll">
+    <div className="mb-[14px] flex h-[400px] scrollbar-none flex-col gap-[16px] overflow-y-scroll lg:scrollbar-thin">
       {Object.entries(groupedFilters).map(([character, items]) => (
         <div key={character}>
           <p className="text-desc mb-4 text-[12px] font-semibold">

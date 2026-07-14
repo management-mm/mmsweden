@@ -211,12 +211,19 @@ const Phone: FC<IPhoneProps> = ({ className }) => {
   const handleOptionClick = (option: ICountryOption) => {
     setSelectedOption(option);
 
-    const { phoneFormat, formatIndex } = option.label.props;
-    const code = option.label.props.callingCode as string;
+    const { phoneFormat, formatIndex, callingCode: code } = option.label.props;
+
+    if (!phoneFormat || !code) {
+      return;
+    }
 
     const rawFormat = Array.isArray(phoneFormat)
       ? phoneFormat[formatIndex ?? 0]
       : phoneFormat;
+
+    if (!rawFormat) {
+      return;
+    }
 
     const localFormat = stripCountryPrefix(rawFormat, code);
 

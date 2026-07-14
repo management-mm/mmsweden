@@ -14,7 +14,7 @@ type UseInfiniteLatestProductsReturn = {
   isLoading: boolean;
   isFirstLoading: boolean;
   hasMore: boolean;
-  observerRef: React.RefObject<HTMLDivElement>;
+  observerRef: React.RefObject<HTMLDivElement | null>;
 };
 
 const isAbortError = (error: unknown): boolean => {

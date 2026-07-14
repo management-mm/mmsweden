@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { logIn } from '@store/auth/operations';
 
 import { useAppDispatch } from '@hooks/useAppDispatch';
+import { useCurrentLocale } from '@hooks/useCurrentLocale';
 import { useNotify } from '@hooks/useNotify';
 
 import { getErrorMessage } from '@utils/errors/getErrorMessage';
@@ -19,6 +20,7 @@ const LoginForm = () => {
   const { notifyError } = useNotify();
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
+  const locale = useCurrentLocale();
 
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -45,7 +47,7 @@ const LoginForm = () => {
       ).unwrap();
 
       if (result.requiresTwoFactor) {
-        router.push('/verify-code');
+        router.push(`/${locale}/verify-code`);
       }
     } catch (error) {
       const normalizedError = normalizeError(error);

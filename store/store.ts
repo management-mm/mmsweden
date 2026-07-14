@@ -19,14 +19,18 @@ import { productsReducer } from './products/productsSlice';
 import { requestedProductsReducer } from './requestedProducts/requestedProductsSlice';
 import { selectedProductsReducer } from './selectedProductsSlice';
 
+const OLD_AUTH_STORAGE_KEY = 'persist:auth';
+
 const createNoopStorage = () => {
   return {
     getItem() {
       return Promise.resolve(null);
     },
+
     setItem(_key: string, value: unknown) {
       return Promise.resolve(value);
     },
+
     removeItem() {
       return Promise.resolve();
     },
@@ -38,14 +42,20 @@ const storage =
     ? createWebStorage('local')
     : createNoopStorage();
 
+if (typeof window !== 'undefined') {
+  window.localStorage.removeItem(OLD_AUTH_STORAGE_KEY);
+}
+
 const authPersistConfig = {
-  key: 'auth',
+  key: 'auth-cookie',
+  version: 1,
   storage,
-  whitelist: ['token'],
+  whitelist: ['twoFactor'],
 };
 
 const rootReducer = combineReducers({
   auth: persistReducer<AuthState>(authPersistConfig, authReducer),
+
   selectedProducts: selectedProductsReducer,
   products: productsReducer,
   requestedProducts: requestedProductsReducer,
@@ -56,6 +66,7 @@ const rootReducer = combineReducers({
 
 export const store = configureStore({
   reducer: rootReducer,
+
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
@@ -68,5 +79,7 @@ export const persistor =
   typeof window !== 'undefined' ? persistStore(store) : null;
 
 export type RootState = ReturnType<typeof store.getState>;
+
 export type AppDispatch = typeof store.dispatch;
+
 export type AppStore = typeof store;

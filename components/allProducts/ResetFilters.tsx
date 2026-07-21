@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 
 import { useTranslations } from 'next-intl';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -13,12 +13,73 @@ import { useAppSelector } from '@hooks/useAppSelector';
 import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 import getFilterValueTranslation from '@utils/getFilterValueTranslation';
-import subtractSearchParam from '@utils/subtractSearchParam';
 
 import { Filter } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
 type FilterName = 'category' | 'industry' | 'manufacturer' | 'condition';
+
+type ActiveFilter = {
+  value: string;
+  filterName: FilterName;
+};
+
+const FILTER_NAMES: readonly FilterName[] = [
+  'category',
+  'manufacturer',
+  'industry',
+  'condition',
+];
+
+function createCleanSearchParams(searchKey: string): URLSearchParams {
+  const sourceParams = new URLSearchParams(searchKey);
+  const cleanParams = new URLSearchParams();
+  const seenValues = new Set<string>();
+
+  for (const [key, value] of sourceParams.entries()) {
+    const normalizedKey = key.trim();
+    const normalizedValue = value.trim();
+
+    if (!normalizedKey || !normalizedValue) {
+      continue;
+    }
+
+    const uniqueKey = `${normalizedKey}\u0000${normalizedValue}`;
+
+    if (seenValues.has(uniqueKey)) {
+      continue;
+    }
+
+    seenValues.add(uniqueKey);
+    cleanParams.append(normalizedKey, normalizedValue);
+  }
+
+  return cleanParams;
+}
+
+function getActiveFilters(searchKey: string): ActiveFilter[] {
+  const params = new URLSearchParams(searchKey);
+  const uniqueFilters = new Map<string, ActiveFilter>();
+
+  for (const filterName of FILTER_NAMES) {
+    for (const rawValue of params.getAll(filterName)) {
+      const value = rawValue.trim();
+
+      if (!value) {
+        continue;
+      }
+
+      const key = `${filterName}\u0000${value}`;
+
+      uniqueFilters.set(key, {
+        value,
+        filterName,
+      });
+    }
+  }
+
+  return [...uniqueFilters.values()];
+}
 
 const ResetFilters = () => {
   const t = useTranslations();
@@ -29,62 +90,60 @@ const ResetFilters = () => {
 
   const categories = useAppSelector(selectCategories);
   const industries = useAppSelector(selectIndustries);
-
   const locale = useCurrentLocale();
 
-  const [filtersToReset, setFiltersToReset] = useState<
-    { value: string; filterName: FilterName }[]
-  >([]);
+  const filtersToReset = useMemo(
+    () => getActiveFilters(searchKey),
+    [searchKey]
+  );
 
-  const pushParams = (params: URLSearchParams) => {
-    const qs = params.toString();
-    router.push(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+  const replaceParams = (params: URLSearchParams) => {
+    const queryString = params.toString();
+    const nextUrl = queryString ? `${pathname}?${queryString}` : pathname;
+
+    router.replace(nextUrl, {
+      scroll: false,
+    });
   };
 
-  useEffect(() => {
-    const getFilterParams = (filterName: FilterName) =>
-      searchParams.getAll(filterName).map(param => ({
-        value: param,
-        filterName,
-      }));
+  const handleResetAll = () => {
+    const params = createCleanSearchParams(searchKey);
 
-    const category = getFilterParams('category');
-    const manufacturer = getFilterParams('manufacturer');
-    const industry = getFilterParams('industry');
-    const condition = getFilterParams('condition');
-
-    const merged = [...category, ...manufacturer, ...industry, ...condition];
-    const uniqMap = new Map<
-      string,
-      { value: string; filterName: FilterName }
-    >();
-
-    for (const f of merged) {
-      uniqMap.set(`${f.filterName}:${f.value}`, f);
+    for (const filterName of FILTER_NAMES) {
+      params.delete(filterName);
     }
 
-    setFiltersToReset([...uniqMap.values()]);
-  }, [searchKey, searchParams]);
+    params.delete('page');
 
-  const handleResetAll = () => {
-    const params = new URLSearchParams(searchKey);
-    params.delete('category');
-    params.delete('manufacturer');
-    params.delete('industry');
-    params.delete('condition');
-    pushParams(params);
+    replaceParams(params);
   };
 
   const handleRemoveOne = (filterName: FilterName, value: string) => {
-    const params = new URLSearchParams(searchKey);
-    subtractSearchParam(params, value, filterName);
-    pushParams(params);
+    const params = createCleanSearchParams(searchKey);
+
+    params.delete('page');
+
+    const remainingValues = params
+      .getAll(filterName)
+      .map(currentValue => currentValue.trim())
+      .filter(
+        currentValue => currentValue.length > 0 && currentValue !== value
+      );
+
+    params.delete(filterName);
+
+    for (const currentValue of [...new Set(remainingValues)]) {
+      params.append(filterName, currentValue);
+    }
+
+    replaceParams(params);
   };
 
   return (
     <div className="mb-[22px] flex flex-wrap gap-[12px]">
       {filtersToReset.length > 0 && (
         <button
+          type="button"
           onClick={handleResetAll}
           className="rounded-[32px] border border-[rgba(211,67,21,1)] bg-[rgba(211,67,21,.12)] px-[8px] py-[7px] text-[12px] text-[rgba(211,67,21,1)]"
         >
@@ -92,23 +151,37 @@ const ResetFilters = () => {
         </button>
       )}
 
-      {filtersToReset.map(filter => (
-        <button
-          key={`${filter.filterName}:${filter.value}`}
-          onClick={() => handleRemoveOne(filter.filterName, filter.value)}
-          className="border-primary bg-secondary text-primary flex items-center gap-[8px] rounded-[32px] border px-[8px] py-[7px] text-[12px]"
-        >
-          {getFilterValueTranslation(filter, categories, industries, locale)}
+      {filtersToReset.map(filter => {
+        const label = getFilterValueTranslation(
+          filter,
+          categories,
+          industries,
+          locale
+        );
 
-          <div className="bg-primary flex h-[12px] w-[12px] items-center justify-center rounded-full">
-            <SvgIcon
-              className="fill-[rgb(234,241,248)]"
-              iconId={IconId.Reset}
-              size={{ width: 6, height: 6 }}
-            />
-          </div>
-        </button>
-      ))}
+        return (
+          <button
+            type="button"
+            key={`${filter.filterName}:${filter.value}`}
+            onClick={() => handleRemoveOne(filter.filterName, filter.value)}
+            className="border-primary bg-secondary text-primary flex items-center gap-[8px] rounded-[32px] border px-[8px] py-[7px] text-[12px]"
+            aria-label={`${t(Filter.Reset)}: ${label}`}
+          >
+            {label}
+
+            <span
+              className="bg-primary flex h-[12px] w-[12px] items-center justify-center rounded-full"
+              aria-hidden="true"
+            >
+              <SvgIcon
+                className="fill-[rgb(234,241,248)]"
+                iconId={IconId.Reset}
+                size={{ width: 6, height: 6 }}
+              />
+            </span>
+          </button>
+        );
+      })}
     </div>
   );
 };

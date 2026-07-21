@@ -2,7 +2,7 @@ import { Suspense, cache } from 'react';
 
 import type { IProduct } from '@interfaces/IProduct';
 import type { Metadata } from 'next';
-import { notFound, redirect } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 
 import Product from '@components/productDetails/Product';
 import RecommendedProducts from '@components/productDetails/RecommendedProducts';
@@ -30,13 +30,8 @@ type SeoRef = {
 };
 
 type ProductWithSeo = IProduct & {
-  slug?: string | null;
-  seoCategorySlug?: string | null;
-  seoSubcategorySlug?: string | null;
   seoCategory?: SeoRef | string | null;
   seoSubcategory?: SeoRef | string | null;
-  seoCategoryId?: SeoRef | string | null;
-  seoSubcategoryId?: SeoRef | string | null;
 };
 
 type ProductConditionKey = 'new' | 'used';
@@ -191,19 +186,37 @@ const productSeoCopy: Record<AppLocale, ProductSeoCopy> = {
   },
 };
 
-function getProductSeoCopy(locale: AppLocale) {
-  return productSeoCopy[locale] || productSeoCopy[DEFAULT_LOCALE];
+function getProductSeoCopy(locale: AppLocale): ProductSeoCopy {
+  return productSeoCopy[locale] ?? productSeoCopy[DEFAULT_LOCALE];
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
 function isMultiLang(value: unknown): value is Record<string, string> {
-  return typeof value === 'object' && value !== null;
+  if (!isRecord(value)) {
+    return false;
+  }
+
+  return Object.values(value).some(item => typeof item === 'string');
 }
 
-function isMongoObjectId(value: string) {
+function getNonEmptyString(value: unknown): string | undefined {
+  if (typeof value !== 'string') {
+    return undefined;
+  }
+
+  const normalizedValue = value.trim();
+
+  return normalizedValue || undefined;
+}
+
+function isMongoObjectId(value: string): boolean {
   return /^[0-9a-fA-F]{24}$/.test(value);
 }
 
-function getApiUrl() {
+function getApiUrl(): string {
   return (
     process.env.API_URL?.replace(/\/$/, '') ??
     process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') ??
@@ -211,12 +224,15 @@ function getApiUrl() {
   );
 }
 
-function getSiteUrl() {
+function getSiteUrl(): string {
   return process.env.SITE_URL?.replace(/\/$/, '') ?? 'https://www.mmsweden.se';
 }
 
-function serializeJsonLd(data: unknown) {
-  return JSON.stringify(data).replace(/</g, '\\u003c');
+function serializeJsonLd(data: unknown): string {
+  return JSON.stringify(data)
+    .replace(/</g, '\\u003c')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029');
 }
 
 const getProduct = cache(
@@ -227,24 +243,32 @@ const getProduct = cache(
       return null;
     }
 
-    const baseUrl = getApiUrl();
-
-    try {
-      const res = await fetch(
-        `${baseUrl}/products/by-slug/${encodeURIComponent(normalizedSlug)}`,
-        {
-          next: { revalidate: 300 },
-        }
-      );
-
-      if (!res.ok) {
-        return null;
+    const response = await fetch(
+      `${getApiUrl()}/products/by-slug/${encodeURIComponent(normalizedSlug)}`,
+      {
+        next: { revalidate: 300 },
       }
+    );
 
-      return res.json();
-    } catch {
+    if (response.status === 404 || response.status === 410) {
       return null;
     }
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch product "${normalizedSlug}": ${response.status} ${response.statusText}`
+      );
+    }
+
+    const data: unknown = await response.json();
+
+    if (!isRecord(data)) {
+      throw new Error(
+        `Invalid product response for "${normalizedSlug}": expected an object`
+      );
+    }
+
+    return data as unknown as ProductWithSeo;
   }
 );
 
@@ -252,7 +276,7 @@ function buildProductPath(
   categorySlug: string,
   subcategorySlug: string,
   slug: string
-) {
+): string {
   return `/all-products/${categorySlug}/${subcategorySlug}/${slug}`;
 }
 
@@ -262,7 +286,7 @@ function buildProductUrl(
   categorySlug: string,
   subcategorySlug: string,
   slug: string
-) {
+): string {
   return `${siteUrl}/${locale}${buildProductPath(
     categorySlug,
     subcategorySlug,
@@ -271,11 +295,7 @@ function buildProductUrl(
 }
 
 function extractStringSlug(value: unknown): string | undefined {
-  if (typeof value !== 'string') {
-    return undefined;
-  }
-
-  const slug = value.trim();
+  const slug = getNonEmptyString(value);
 
   if (!slug || isMongoObjectId(slug)) {
     return undefined;
@@ -285,34 +305,24 @@ function extractStringSlug(value: unknown): string | undefined {
 }
 
 function extractObjectSlug(value: unknown): string | undefined {
-  if (
-    typeof value === 'object' &&
-    value !== null &&
-    'slug' in value &&
-    typeof value.slug === 'string'
-  ) {
-    const slug = value.slug.trim();
-
-    if (!slug || isMongoObjectId(slug)) {
-      return undefined;
-    }
-
-    return slug;
+  if (!isRecord(value)) {
+    return undefined;
   }
 
-  return undefined;
+  return extractStringSlug(value.slug);
 }
 
 function extractName(
   value: unknown
 ): string | Record<string, string> | undefined {
-  if (
-    typeof value === 'object' &&
-    value !== null &&
-    'name' in value &&
-    (typeof value.name === 'string' || isMultiLang(value.name))
-  ) {
-    return value.name;
+  if (!isRecord(value)) {
+    return undefined;
+  }
+
+  const { name } = value;
+
+  if (typeof name === 'string' || isMultiLang(name)) {
+    return name;
   }
 
   return undefined;
@@ -323,12 +333,26 @@ function getLocalizedText(
   locale: AppLocale,
   fallback: string
 ): string {
-  if (typeof value === 'string' && value.trim()) {
-    return value;
+  const directValue = getNonEmptyString(value);
+
+  if (directValue) {
+    return directValue;
   }
 
   if (isMultiLang(value)) {
-    return value[locale] || value.en || Object.values(value)[0] || fallback;
+    const candidates = [
+      value[locale],
+      value[DEFAULT_LOCALE],
+      ...Object.values(value),
+    ];
+
+    for (const candidate of candidates) {
+      const localizedValue = getNonEmptyString(candidate);
+
+      if (localizedValue) {
+        return localizedValue;
+      }
+    }
   }
 
   return fallback;
@@ -340,11 +364,7 @@ function getConditionLabel(
 ): string {
   const copy = getProductSeoCopy(locale);
 
-  if (condition === 'new') {
-    return copy.condition.new;
-  }
-
-  return copy.condition.used;
+  return condition === 'new' ? copy.condition.new : copy.condition.used;
 }
 
 function resolveProductSeoData(
@@ -364,8 +384,7 @@ function resolveProductSeoData(
     extractObjectSlug(product.seoSubcategory) ??
     extractObjectSlug(product.seoSubcategoryId);
 
-  const actualProductSlug =
-    extractStringSlug(product.slug) ?? extractStringSlug(routeSlug);
+  const actualProductSlug = extractStringSlug(product.slug);
 
   const hasCanonicalPath = Boolean(
     actualCategorySlug && actualSubcategorySlug && actualProductSlug
@@ -434,18 +453,26 @@ function buildProductJsonLd(params: {
   const { product, locale, canonicalUrl, localizedName, localizedDescription } =
     params;
 
+  const images = (product.photos ?? []).filter(
+    (photo): photo is string =>
+      typeof photo === 'string' && photo.trim().length > 0
+  );
+
+  const manufacturer = getNonEmptyString(product.manufacturer);
+  const productId = getNonEmptyString(product.idNumber);
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: localizedName,
     description: localizedDescription,
-    sku: product.idNumber,
-    productID: product.idNumber,
-    image: product.photos ?? [],
-    brand: product.manufacturer
+    sku: productId,
+    productID: productId,
+    image: images.length > 0 ? images : undefined,
+    brand: manufacturer
       ? {
           '@type': 'Brand',
-          name: product.manufacturer,
+          name: manufacturer,
         }
       : undefined,
     itemCondition:
@@ -456,12 +483,6 @@ function buildProductJsonLd(params: {
           : undefined,
     url: canonicalUrl,
     inLanguage: locale,
-    offers: {
-      '@type': 'Offer',
-      url: canonicalUrl,
-      priceCurrency: 'SEK',
-      availability: 'https://schema.org/InStock',
-    },
   } satisfies Record<string, unknown>;
 }
 
@@ -534,8 +555,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const localizedName = getLocalizedText(
     product.name,
     locale,
-    seoData.productSlug
-  ).trim();
+    slugToLabel(seoData.productSlug)
+  );
 
   const conditionLabel = getConditionLabel(product.condition, locale);
 
@@ -549,7 +570,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     productName: localizedName,
   });
 
-  const ogImage = product.photos?.[0];
+  const ogImage = product.photos?.find(
+    (photo): photo is string =>
+      typeof photo === 'string' && photo.trim().length > 0
+  );
 
   return {
     metadataBase: new URL(siteUrl),
@@ -616,7 +640,7 @@ export default async function ProductDetailsPage({ params }: Props) {
   }
 
   if (seoData.shouldRedirect) {
-    redirect(
+    permanentRedirect(
       `/${locale}${buildProductPath(
         seoData.categorySlug,
         seoData.subcategorySlug,
@@ -638,7 +662,7 @@ export default async function ProductDetailsPage({ params }: Props) {
   const localizedName = getLocalizedText(
     product.name,
     locale,
-    seoData.productSlug
+    slugToLabel(seoData.productSlug)
   );
 
   const localizedDescription = getLocalizedText(
@@ -703,12 +727,7 @@ export default async function ProductDetailsPage({ params }: Props) {
       />
 
       <Suspense fallback={<div>Loading recommended products...</div>}>
-        <RecommendedProducts
-          locale={locale}
-          slug={seoData.productSlug}
-          categorySlug={seoData.categorySlug}
-          subcategorySlug={seoData.subcategorySlug}
-        />
+        <RecommendedProducts locale={locale} slug={seoData.productSlug} />
       </Suspense>
     </>
   );

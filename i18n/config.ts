@@ -24,6 +24,9 @@ export const OG_LOCALE_BY_APP_LOCALE: Record<AppLocale, string> = {
   pl: 'pl_PL',
 };
 
-export function isAppLocale(value: string): value is AppLocale {
-  return SUPPORTED_LOCALES.includes(value as AppLocale);
+export function isAppLocale(value: unknown): value is AppLocale {
+  return (
+    typeof value === 'string' &&
+    SUPPORTED_LOCALES.some(locale => locale === value)
+  );
 }

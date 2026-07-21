@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import { type ReactNode, Suspense } from 'react';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 import type { Metadata } from 'next';
@@ -15,6 +15,7 @@ import ReactQueryProvider from '../providers/ReactQueryProvider';
 import { cn } from '@utils/cn';
 
 import { type AppLocale, SUPPORTED_LOCALES, isAppLocale } from '@i18n/config';
+import { getSiteUrl } from '@i18n/schema';
 
 const inter = localFont({
   src: [
@@ -48,8 +49,7 @@ const inter = localFont({
   variable: '--font-inter',
 });
 
-const siteUrl =
-  process.env.SITE_URL?.replace(/\/$/, '') ?? 'https://www.mmsweden.se';
+const siteUrl = getSiteUrl();
 
 const defaultTitle = 'MM Sweden';
 const defaultDescription =
@@ -57,32 +57,46 @@ const defaultDescription =
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+
   title: {
     default: defaultTitle,
     template: '%s',
   },
+
   description: defaultDescription,
   applicationName: 'MM Sweden',
+
   robots: {
     index: true,
     follow: true,
   },
+
   manifest: '/site.webmanifest',
+
   icons: {
     icon: [
       { url: '/favicon.ico' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      {
+        url: '/favicon-32x32.png',
+        sizes: '32x32',
+        type: 'image/png',
+      },
+      {
+        url: '/favicon-16x16.png',
+        sizes: '16x16',
+        type: 'image/png',
+      },
     ],
     apple: '/apple-icon.png',
   },
+
   openGraph: {
     type: 'website',
     siteName: 'MM Sweden',
     title: defaultTitle,
     description: defaultDescription,
-    url: siteUrl,
   },
+
   twitter: {
     card: 'summary_large_image',
     title: defaultTitle,
@@ -91,11 +105,15 @@ export const metadata: Metadata = {
 };
 
 type Props = {
-  children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  children: ReactNode;
+  params: Promise<{
+    locale: string;
+  }>;
 };
 
-export function generateStaticParams() {
+export const dynamicParams = false;
+
+export function generateStaticParams(): Array<{ locale: AppLocale }> {
   return SUPPORTED_LOCALES.map(locale => ({ locale }));
 }
 
@@ -106,16 +124,14 @@ export default async function LocaleLayout({ children, params }: Props) {
     notFound();
   }
 
-  const safeLocale: AppLocale = locale;
-
-  setRequestLocale(safeLocale);
+  setRequestLocale(locale);
 
   const messages = await getMessages();
 
   return (
-    <html lang={safeLocale} suppressHydrationWarning className={inter.variable}>
+    <html lang={locale} className={inter.variable} suppressHydrationWarning>
       <body className={cn(inter.className, 'bg-main')}>
-        <NextIntlClientProvider locale={safeLocale} messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <GoogleTagManagerProvider />
 
           <Suspense fallback={null}>

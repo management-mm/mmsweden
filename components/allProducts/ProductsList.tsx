@@ -1,4 +1,4 @@
-import type { IProduct } from 'interfaces/IProduct';
+import type { IProduct } from '@interfaces/IProduct';
 
 import EmptyProductsState from './EmptyProductsState';
 import ResetFilters from './ResetFilters';
@@ -6,7 +6,7 @@ import ResetFilters from './ResetFilters';
 import Pagination from '@components/common/Pagination';
 import ProductCard from '@components/common/productCard/ProductCard';
 
-import { AppLocale } from '@i18n/config';
+import type { AppLocale } from '@i18n/config';
 
 type Props = {
   initialProducts: IProduct[];
@@ -35,7 +35,10 @@ const ProductsList = ({
   searchQuery,
   categoryName,
 }: Props) => {
-  const pageCount = Math.ceil(initialTotal / PER_PAGE);
+  const safeTotal =
+    Number.isFinite(initialTotal) && initialTotal > 0 ? initialTotal : 0;
+
+  const pageCount = Math.ceil(safeTotal / PER_PAGE);
   const isEmpty = initialProducts.length === 0;
   const hasCategoryContext = Boolean(categorySlug || subcategorySlug);
 
@@ -69,8 +72,6 @@ const ProductsList = ({
                 locale={locale}
                 product={product}
                 isAdmin={isAdmin}
-                categorySlug={categorySlug}
-                subcategorySlug={subcategorySlug}
                 priority={index === 0}
               />
             </li>

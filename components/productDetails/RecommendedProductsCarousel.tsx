@@ -3,7 +3,6 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import type { IProduct } from '@interfaces/IProduct';
-import clsx from 'clsx';
 import 'swiper/css';
 
 import DecorativeLine from '@components/common/DecorativeLine';
@@ -18,17 +17,9 @@ type Props = {
   products: IProduct[];
   locale: AppLocale;
   title: string;
-  categorySlug: string;
-  subcategorySlug: string;
 };
 
-const RecommendedProductsCarousel = ({
-  products,
-  locale,
-  title,
-  categorySlug,
-  subcategorySlug,
-}: Props) => {
+const RecommendedProductsCarousel = ({ products, locale, title }: Props) => {
   const { handlePrev, handleNext, onSwiperInit } = useSwiperNavigation();
 
   return (
@@ -42,7 +33,7 @@ const RecommendedProductsCarousel = ({
             {title}
           </h2>
 
-          <DecorativeLine className={clsx()} intent="latestArrivals" />
+          <DecorativeLine intent="latestArrivals" />
 
           <div className="hidden gap-[12px] md:flex">
             <NaviArrowSlider onClick={handlePrev} iconId="ArrowLeft" />
@@ -66,8 +57,6 @@ const RecommendedProductsCarousel = ({
                 locale={locale}
                 product={product}
                 className="w-[296px] md:w-[264px]"
-                categorySlug={categorySlug}
-                subcategorySlug={subcategorySlug}
               />
             </SwiperSlide>
           ))}

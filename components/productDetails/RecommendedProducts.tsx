@@ -11,16 +11,9 @@ import type { AppLocale } from '@i18n/config';
 type Props = {
   locale: AppLocale;
   slug: string;
-  categorySlug: string;
-  subcategorySlug: string;
 };
 
-const RecommendedProducts = async ({
-  locale,
-  slug,
-  categorySlug,
-  subcategorySlug,
-}: Props) => {
+const RecommendedProducts = async ({ locale, slug }: Props) => {
   let recommendedProducts: IProduct[] = [];
 
   try {
@@ -29,7 +22,7 @@ const RecommendedProducts = async ({
     console.error('Failed to load recommended products:', error);
   }
 
-  if (!recommendedProducts?.length) {
+  if (recommendedProducts.length === 0) {
     return null;
   }
 
@@ -41,8 +34,6 @@ const RecommendedProducts = async ({
       products={recommendedProducts}
       locale={locale}
       title={title}
-      categorySlug={categorySlug}
-      subcategorySlug={subcategorySlug}
     />
   );
 };

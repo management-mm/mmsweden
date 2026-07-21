@@ -24,12 +24,23 @@ type Props = {
   searchParams: Promise<SearchParams>;
 };
 
-function normalizeSlug(slug: string) {
+function normalizeSlug(slug: string): string {
   try {
     return decodeURIComponent(slug).trim();
   } catch {
     return slug.trim();
   }
+}
+
+function getCategoryNotFoundMetadata(): Metadata {
+  return {
+    title: 'Category Not Found | MM Sweden',
+    description: 'The requested category could not be found.',
+    robots: {
+      index: false,
+      follow: false,
+    },
+  };
 }
 
 export async function generateMetadata({
@@ -42,14 +53,16 @@ export async function generateMetadata({
   const normalizedCategorySlug = normalizeSlug(categorySlug);
 
   if (!normalizedCategorySlug) {
-    return {
-      title: 'Category Not Found | MM Sweden',
-      description: 'The requested category could not be found.',
-      robots: {
-        index: false,
-        follow: false,
-      },
-    };
+    return getCategoryNotFoundMetadata();
+  }
+
+  const categorySeoData = await getCategorySeoData({
+    locale,
+    categorySlug: normalizedCategorySlug,
+  });
+
+  if (!categorySeoData.exists) {
+    return getCategoryNotFoundMetadata();
   }
 
   return buildCategoryMetadata({
@@ -69,15 +82,19 @@ export default async function Page({ params, searchParams }: Props) {
     notFound();
   }
 
-  const siteUrl = getSiteUrl();
-  const canonicalUrl = `${siteUrl}/${locale}/all-products/${encodeURIComponent(
-    normalizedCategorySlug
-  )}`;
-
   const categorySeoData = await getCategorySeoData({
     locale,
     categorySlug: normalizedCategorySlug,
   });
+
+  if (!categorySeoData.exists) {
+    notFound();
+  }
+
+  const siteUrl = getSiteUrl();
+  const canonicalUrl = `${siteUrl}/${locale}/all-products/${encodeURIComponent(
+    normalizedCategorySlug
+  )}`;
 
   const collectionPageJsonLd = buildCollectionPageSchema({
     locale,

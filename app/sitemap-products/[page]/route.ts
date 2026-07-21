@@ -1,7 +1,7 @@
 import { buildProductEntries } from '@lib/sitemap/builders';
 import { MAX_URLS_PER_SITEMAP } from '@lib/sitemap/config';
 import { getProductsForSitemap } from '@lib/sitemap/fetchers';
-import { chunkArray, uniqueByLoc } from '@lib/sitemap/utils';
+import { uniqueByLoc } from '@lib/sitemap/utils';
 import { buildUrlSetXml, xmlResponse } from '@lib/sitemap/xml';
 
 type RouteContext = {
@@ -10,8 +10,9 @@ type RouteContext = {
   }>;
 };
 
-const parseSitemapPage = (page: string) => {
-  const match = page.match(/^(\d+)(?:\.xml)?$/);
+function parseSitemapPage(value: string): number | null {
+  const normalizedValue = value.trim();
+  const match = /^(\d+)(?:\.xml)?$/.exec(normalizedValue);
 
   if (!match) {
     return null;
@@ -19,31 +20,45 @@ const parseSitemapPage = (page: string) => {
 
   const pageNumber = Number(match[1]);
 
-  if (!Number.isInteger(pageNumber) || pageNumber < 1) {
-    return null;
-  }
+  return Number.isSafeInteger(pageNumber) && pageNumber >= 1
+    ? pageNumber
+    : null;
+}
 
-  return pageNumber;
-};
+function notFoundResponse(): Response {
+  return new Response('Not Found', {
+    status: 404,
+    headers: {
+      'Content-Type': 'text/plain; charset=utf-8',
+      'Cache-Control': 'no-store',
+      'X-Content-Type-Options': 'nosniff',
+    },
+  });
+}
 
-export async function GET(_: Request, { params }: RouteContext) {
+export async function GET(
+  _request: Request,
+  { params }: RouteContext
+): Promise<Response> {
   const { page } = await params;
-
   const pageNumber = parseSitemapPage(page);
 
-  if (!pageNumber) {
-    return new Response('Not Found', { status: 404 });
+  if (pageNumber === null) {
+    return notFoundResponse();
   }
 
   const products = await getProductsForSitemap();
   const entries = uniqueByLoc(buildProductEntries(products));
 
-  const chunks = chunkArray(entries, MAX_URLS_PER_SITEMAP);
-  const chunk = chunks[pageNumber - 1];
+  const totalPages = Math.ceil(entries.length / MAX_URLS_PER_SITEMAP);
 
-  if (!chunk) {
-    return new Response('Not Found', { status: 404 });
+  if (totalPages === 0 || pageNumber > totalPages) {
+    return notFoundResponse();
   }
 
-  return xmlResponse(buildUrlSetXml(chunk));
+  const startIndex = (pageNumber - 1) * MAX_URLS_PER_SITEMAP;
+  const endIndex = startIndex + MAX_URLS_PER_SITEMAP;
+  const pageEntries = entries.slice(startIndex, endIndex);
+
+  return xmlResponse(buildUrlSetXml(pageEntries));
 }

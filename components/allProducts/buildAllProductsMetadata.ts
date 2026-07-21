@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 
-import type { AppLocale } from '@i18n/config';
+import { type AppLocale, DEFAULT_LOCALE } from '@i18n/config';
 import { createPageMetadata } from '@i18n/seo';
 
-type SearchParams = {
+export type SearchParams = {
   title?: string;
   manufacturer?: string;
   condition?: string;
@@ -20,10 +20,45 @@ export type AllProductsSeoData = {
   intro: string;
 };
 
-const normalizeArray = (value?: string | string[]) => {
-  if (!value) return [];
-  return Array.isArray(value) ? value : [value];
-};
+function normalizeString(value: unknown): string | undefined {
+  if (typeof value !== 'string') {
+    return undefined;
+  }
+
+  const normalizedValue = value.trim();
+
+  return normalizedValue || undefined;
+}
+
+function normalizeArray(value?: string | string[]): string[] {
+  const values = Array.isArray(value) ? value : value ? [value] : [];
+
+  return values
+    .map(item => item.trim())
+    .filter((item): item is string => item.length > 0);
+}
+
+function getPageNumber(value: unknown): number {
+  const normalizedValue = normalizeString(value);
+
+  if (!normalizedValue) {
+    return 1;
+  }
+
+  const pageNumber = Number(normalizedValue);
+
+  return Number.isSafeInteger(pageNumber) && pageNumber > 0 ? pageNumber : 1;
+}
+
+function hasNonIndexableFilters(searchParams: SearchParams): boolean {
+  return (
+    Boolean(normalizeString(searchParams.title)) ||
+    Boolean(normalizeString(searchParams.manufacturer)) ||
+    Boolean(normalizeString(searchParams.condition)) ||
+    normalizeArray(searchParams.category).length > 0 ||
+    normalizeArray(searchParams.industry).length > 0
+  );
+}
 
 const allProductsSeoData: Record<AppLocale, AllProductsSeoData> = {
   en: {
@@ -159,29 +194,22 @@ const allProductsSeoData: Record<AppLocale, AllProductsSeoData> = {
 type Props = {
   locale: AppLocale;
   path: string;
-  searchParams: SearchParams;
+  searchParams?: SearchParams;
 };
 
 export function getAllProductsSeoData(locale: AppLocale): AllProductsSeoData {
-  return allProductsSeoData[locale] || allProductsSeoData.en;
+  return allProductsSeoData[locale] ?? allProductsSeoData[DEFAULT_LOCALE];
 }
 
 export function buildAllProductsMetadata({
   locale,
   path,
-  searchParams,
+  searchParams = {},
 }: Props): Metadata {
   const seo = getAllProductsSeoData(locale);
 
-  const hasFilters =
-    !!searchParams.title ||
-    !!searchParams.manufacturer ||
-    !!searchParams.condition ||
-    normalizeArray(searchParams.category).length > 0 ||
-    normalizeArray(searchParams.industry).length > 0;
-
-  const pageNumber = Number(searchParams.page);
-  const hasPagination = Number.isFinite(pageNumber) && pageNumber > 1;
+  const hasFilters = hasNonIndexableFilters(searchParams);
+  const hasPagination = getPageNumber(searchParams.page) > 1;
 
   return createPageMetadata({
     locale,

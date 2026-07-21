@@ -1,4 +1,4 @@
-export function escapeXml(value: string) {
+export function escapeXml(value: string): string {
   return value
     .replace(/&/g, '&amp;')
     .replace(/"/g, '&quot;')
@@ -7,10 +7,13 @@ export function escapeXml(value: string) {
     .replace(/>/g, '&gt;');
 }
 
-export function safeDate(value?: string) {
-  if (!value) return undefined;
+export function safeDate(value?: string | Date | null): string | undefined {
+  if (!value) {
+    return undefined;
+  }
 
-  const date = new Date(value);
+  const date = value instanceof Date ? value : new Date(value);
+
   return Number.isNaN(date.getTime()) ? undefined : date.toISOString();
 }
 
@@ -18,16 +21,34 @@ export function isNonEmptyString(value: unknown): value is string {
   return typeof value === 'string' && value.trim().length > 0;
 }
 
-export function chunkArray<T>(items: T[], chunkSize: number) {
+export function chunkArray<T>(items: readonly T[], chunkSize: number): T[][] {
+  if (!Number.isInteger(chunkSize) || chunkSize <= 0) {
+    throw new RangeError('chunkSize must be a positive integer');
+  }
+
   const chunks: T[][] = [];
 
-  for (let i = 0; i < items.length; i += chunkSize) {
-    chunks.push(items.slice(i, i + chunkSize));
+  for (let index = 0; index < items.length; index += chunkSize) {
+    chunks.push(items.slice(index, index + chunkSize));
   }
 
   return chunks;
 }
 
-export function uniqueByLoc<T extends { loc: string }>(items: T[]) {
-  return Array.from(new Map(items.map(item => [item.loc, item])).values());
+export function uniqueByLoc<T extends { loc: string }>(
+  items: readonly T[]
+): T[] {
+  const uniqueItems = new Map<string, T>();
+
+  for (const item of items) {
+    const normalizedLoc = item.loc.trim();
+
+    if (!normalizedLoc) {
+      continue;
+    }
+
+    uniqueItems.set(normalizedLoc, item);
+  }
+
+  return Array.from(uniqueItems.values());
 }

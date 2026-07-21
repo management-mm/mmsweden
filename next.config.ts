@@ -3,6 +3,7 @@ import withNextIntl from 'next-intl/plugin';
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+
   images: {
     remotePatterns: [
       {
@@ -15,8 +16,19 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+
   experimental: {
     optimizePackageImports: ['swiper', 'lodash'],
+  },
+
+  async redirects() {
+    return [
+      {
+        source: '/begagnade-maskiner1.html',
+        destination: '/sv/all-products',
+        permanent: true,
+      },
+    ];
   },
 };
 

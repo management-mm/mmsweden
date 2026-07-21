@@ -5,6 +5,7 @@ import AllProductsView from '@components/allProducts/AllProductsView';
 import {
   type SearchParams,
   buildSubcategoryMetadata,
+  getCategorySeoData,
   getSubcategorySeoData,
   normalizeArray,
 } from '@components/allProducts/allProductsSeo';
@@ -25,12 +26,23 @@ type Props = {
   searchParams: Promise<SearchParams>;
 };
 
-function normalizeSlug(slug: string) {
+function normalizeSlug(slug: string): string {
   try {
     return decodeURIComponent(slug).trim();
   } catch {
     return slug.trim();
   }
+}
+
+function getSubcategoryNotFoundMetadata(): Metadata {
+  return {
+    title: 'Subcategory Not Found | MM Sweden',
+    description: 'The requested subcategory could not be found.',
+    robots: {
+      index: false,
+      follow: false,
+    },
+  };
 }
 
 export async function generateMetadata({
@@ -42,6 +54,26 @@ export async function generateMetadata({
 
   const normalizedCategorySlug = normalizeSlug(categorySlug);
   const normalizedSubcategorySlug = normalizeSlug(subcategorySlug);
+
+  if (!normalizedCategorySlug || !normalizedSubcategorySlug) {
+    return getSubcategoryNotFoundMetadata();
+  }
+
+  const [categorySeoData, subcategorySeoData] = await Promise.all([
+    getCategorySeoData({
+      locale,
+      categorySlug: normalizedCategorySlug,
+    }),
+    getSubcategorySeoData({
+      locale,
+      categorySlug: normalizedCategorySlug,
+      subcategorySlug: normalizedSubcategorySlug,
+    }),
+  ]);
+
+  if (!categorySeoData.exists || !subcategorySeoData.exists) {
+    return getSubcategoryNotFoundMetadata();
+  }
 
   return buildSubcategoryMetadata({
     locale,
@@ -58,13 +90,23 @@ export default async function Page({ params, searchParams }: Props) {
   const normalizedCategorySlug = normalizeSlug(categorySlug);
   const normalizedSubcategorySlug = normalizeSlug(subcategorySlug);
 
-  const subcategorySeoData = await getSubcategorySeoData({
-    locale,
-    categorySlug: normalizedCategorySlug,
-    subcategorySlug: normalizedSubcategorySlug,
-  });
+  if (!normalizedCategorySlug || !normalizedSubcategorySlug) {
+    notFound();
+  }
 
-  if (!subcategorySeoData.exists) {
+  const [categorySeoData, subcategorySeoData] = await Promise.all([
+    getCategorySeoData({
+      locale,
+      categorySlug: normalizedCategorySlug,
+    }),
+    getSubcategorySeoData({
+      locale,
+      categorySlug: normalizedCategorySlug,
+      subcategorySlug: normalizedSubcategorySlug,
+    }),
+  ]);
+
+  if (!categorySeoData.exists || !subcategorySeoData.exists) {
     notFound();
   }
 

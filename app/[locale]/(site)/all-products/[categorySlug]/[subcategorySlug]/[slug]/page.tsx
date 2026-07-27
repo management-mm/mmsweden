@@ -7,6 +7,10 @@ import { notFound, permanentRedirect } from 'next/navigation';
 import Product from '@components/productDetails/Product';
 import RecommendedProducts from '@components/productDetails/RecommendedProducts';
 
+import {
+  type ProductWithSeo,
+  resolveProductSeoData,
+} from '@utils/resolveProductSeoData';
 import slugToLabel from '@utils/slugToLabel';
 
 import {
@@ -22,16 +26,6 @@ type Props = {
     subcategorySlug: string;
     slug: string;
   }>;
-};
-
-type SeoRef = {
-  slug?: string;
-  name?: string | Record<string, string>;
-};
-
-type ProductWithSeo = IProduct & {
-  seoCategory?: SeoRef | string | null;
-  seoSubcategory?: SeoRef | string | null;
 };
 
 type ProductConditionKey = 'new' | 'used';
@@ -294,40 +288,6 @@ function buildProductUrl(
   )}`;
 }
 
-function extractStringSlug(value: unknown): string | undefined {
-  const slug = getNonEmptyString(value);
-
-  if (!slug || isMongoObjectId(slug)) {
-    return undefined;
-  }
-
-  return slug;
-}
-
-function extractObjectSlug(value: unknown): string | undefined {
-  if (!isRecord(value)) {
-    return undefined;
-  }
-
-  return extractStringSlug(value.slug);
-}
-
-function extractName(
-  value: unknown
-): string | Record<string, string> | undefined {
-  if (!isRecord(value)) {
-    return undefined;
-  }
-
-  const { name } = value;
-
-  if (typeof name === 'string' || isMultiLang(name)) {
-    return name;
-  }
-
-  return undefined;
-}
-
 function getLocalizedText(
   value: unknown,
   locale: AppLocale,
@@ -365,69 +325,6 @@ function getConditionLabel(
   const copy = getProductSeoCopy(locale);
 
   return condition === 'new' ? copy.condition.new : copy.condition.used;
-}
-
-function resolveProductSeoData(
-  product: ProductWithSeo,
-  locale: AppLocale,
-  routeCategorySlug: string,
-  routeSubcategorySlug: string,
-  routeSlug: string
-) {
-  const actualCategorySlug =
-    extractStringSlug(product.seoCategorySlug) ??
-    extractObjectSlug(product.seoCategory) ??
-    extractObjectSlug(product.seoCategoryId);
-
-  const actualSubcategorySlug =
-    extractStringSlug(product.seoSubcategorySlug) ??
-    extractObjectSlug(product.seoSubcategory) ??
-    extractObjectSlug(product.seoSubcategoryId);
-
-  const actualProductSlug = extractStringSlug(product.slug);
-
-  const hasCanonicalPath = Boolean(
-    actualCategorySlug && actualSubcategorySlug && actualProductSlug
-  );
-
-  const categorySlug = actualCategorySlug ?? routeCategorySlug;
-  const subcategorySlug = actualSubcategorySlug ?? routeSubcategorySlug;
-  const productSlug = actualProductSlug ?? routeSlug;
-
-  const categoryNameSource =
-    extractName(product.seoCategory) ?? extractName(product.seoCategoryId);
-
-  const subcategoryNameSource =
-    extractName(product.seoSubcategory) ??
-    extractName(product.seoSubcategoryId);
-
-  const categoryLabel = getLocalizedText(
-    categoryNameSource,
-    locale,
-    slugToLabel(categorySlug)
-  );
-
-  const subcategoryLabel = getLocalizedText(
-    subcategoryNameSource,
-    locale,
-    slugToLabel(subcategorySlug)
-  );
-
-  const shouldRedirect =
-    hasCanonicalPath &&
-    (routeCategorySlug !== actualCategorySlug ||
-      routeSubcategorySlug !== actualSubcategorySlug ||
-      routeSlug !== actualProductSlug);
-
-  return {
-    categorySlug,
-    subcategorySlug,
-    productSlug,
-    categoryLabel,
-    subcategoryLabel,
-    hasCanonicalPath,
-    shouldRedirect,
-  };
 }
 
 function buildBreadcrumbJsonLd(items: Array<{ name: string; item: string }>) {

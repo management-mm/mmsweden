@@ -3,11 +3,28 @@ import type { AppLocale } from '@i18n/config';
 type MultiLang = Record<string, string>;
 
 function isMultiLang(value: unknown): value is MultiLang {
-  return typeof value === 'object' && value !== null;
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    !Array.isArray(value) &&
+    Object.values(value).every(item => typeof item === 'string')
+  );
 }
 
-export function getSiteUrl() {
-  return process.env.SITE_URL?.replace(/\/$/, '') ?? 'https://www.mmsweden.se';
+function getNonEmptyString(value: unknown): string | undefined {
+  if (typeof value !== 'string') {
+    return undefined;
+  }
+
+  const normalizedValue = value.trim();
+
+  return normalizedValue || undefined;
+}
+
+export function getSiteUrl(): string {
+  return (
+    process.env.SITE_URL?.trim().replace(/\/$/, '') ?? 'https://www.mmsweden.se'
+  );
 }
 
 export function getLocalizedText(
@@ -15,28 +32,43 @@ export function getLocalizedText(
   locale: AppLocale,
   fallback: string
 ): string {
-  if (typeof value === 'string' && value.trim()) {
-    return value;
+  const directValue = getNonEmptyString(value);
+
+  if (directValue) {
+    return directValue;
   }
 
   if (isMultiLang(value)) {
-    return value[locale] || value.en || Object.values(value)[0] || fallback;
+    const candidates = [value[locale], value.en, ...Object.values(value)];
+
+    for (const candidate of candidates) {
+      const localizedValue = getNonEmptyString(candidate);
+
+      if (localizedValue) {
+        return localizedValue;
+      }
+    }
   }
 
   return fallback;
 }
 
-export function serializeJsonLd(data: unknown) {
-  return JSON.stringify(data).replace(/</g, '\\u003c');
+export function serializeJsonLd(data: unknown): string {
+  return JSON.stringify(data)
+    .replace(/</g, '\\u003c')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029');
 }
 
-export function buildOrganizationSchema(siteUrl: string) {
+export function buildOrganizationSchema(siteUrl: string, logoUrl?: string) {
+  const normalizedLogoUrl = getNonEmptyString(logoUrl);
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Meat Machines',
+    name: 'MM Sweden',
     url: siteUrl,
-    logo: `${siteUrl}/logo.png`,
+    logo: normalizedLogoUrl,
   };
 }
 
@@ -44,11 +76,20 @@ export function buildWebsiteSchema(siteUrl: string, locale: AppLocale) {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'Meat Machines',
+    name: 'MM Sweden',
     url: `${siteUrl}/${locale}`,
     inLanguage: locale,
   };
 }
+
+type ProductAvailability =
+  | 'InStock'
+  | 'OutOfStock'
+  | 'SoldOut'
+  | 'Discontinued'
+  | 'LimitedAvailability'
+  | 'PreOrder'
+  | 'BackOrder';
 
 type BuildProductSchemaParams = {
   locale: AppLocale;
@@ -59,6 +100,10 @@ type BuildProductSchemaParams = {
   manufacturer?: string;
   condition?: 'new' | 'used' | string;
   sku?: string;
+
+  price?: number;
+  priceCurrency?: string;
+  availability?: ProductAvailability;
 };
 
 export function buildProductSchema({
@@ -70,35 +115,58 @@ export function buildProductSchema({
   manufacturer,
   condition,
   sku,
+  price,
+  priceCurrency,
+  availability = 'InStock',
 }: BuildProductSchemaParams) {
+  const normalizedImages = images.map(image => image.trim()).filter(Boolean);
+
+  const normalizedManufacturer = getNonEmptyString(manufacturer);
+
+  const normalizedSku = getNonEmptyString(sku);
+  const normalizedCurrency = getNonEmptyString(priceCurrency)?.toUpperCase();
+
+  const hasValidOffer =
+    typeof price === 'number' &&
+    Number.isFinite(price) &&
+    price > 0 &&
+    Boolean(normalizedCurrency);
+
+  const itemCondition =
+    condition === 'new'
+      ? 'https://schema.org/NewCondition'
+      : condition === 'used'
+        ? 'https://schema.org/UsedCondition'
+        : undefined;
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name,
     description,
-    sku,
-    productID: sku,
-    image: images,
-    brand: manufacturer
+    sku: normalizedSku,
+    productID: normalizedSku,
+    image: normalizedImages.length > 0 ? normalizedImages : undefined,
+    brand: normalizedManufacturer
       ? {
           '@type': 'Brand',
-          name: manufacturer,
+          name: normalizedManufacturer,
         }
       : undefined,
-    itemCondition:
-      condition === 'new'
-        ? 'https://schema.org/NewCondition'
-        : condition === 'used'
-          ? 'https://schema.org/UsedCondition'
-          : undefined,
+    itemCondition,
     url: canonicalUrl,
     inLanguage: locale,
-    offers: {
-      '@type': 'Offer',
-      url: canonicalUrl,
-      priceCurrency: 'SEK',
-      availability: 'https://schema.org/InStock',
-    },
+
+    offers: hasValidOffer
+      ? {
+          '@type': 'Offer',
+          url: canonicalUrl,
+          price,
+          priceCurrency: normalizedCurrency,
+          availability: `https://schema.org/${availability}`,
+          itemCondition,
+        }
+      : undefined,
   } satisfies Record<string, unknown>;
 }
 

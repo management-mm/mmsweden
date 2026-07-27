@@ -9,7 +9,7 @@
     "format": "prettier --write .",
     "prod": "next build --webpack && next start",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest",
     "test:run": "vitest run",
     "check": "npm run typecheck && npm run lint && npm run test:run && npm run build"

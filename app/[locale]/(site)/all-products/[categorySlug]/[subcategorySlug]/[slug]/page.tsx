@@ -9,15 +9,15 @@ import RecommendedProducts from '@components/productDetails/RecommendedProducts'
 import {
   buildNotFoundProductMetadata,
   buildProductMetadata,
-  buildProductUrl,
-  getLocalizedText,
-  getProductSeoCopy,
 } from '@utils/buildProductMetadata';
+import {
+  buildProductStructuredData,
+  serializeJsonLd,
+} from '@utils/buildProductStructuredData';
 import {
   type ProductWithSeo,
   resolveProductSeoData,
 } from '@utils/resolveProductSeoData';
-import slugToLabel from '@utils/slugToLabel';
 
 import type { AppLocale } from '@i18n/config';
 
@@ -34,16 +34,6 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
-function getNonEmptyString(value: unknown): string | undefined {
-  if (typeof value !== 'string') {
-    return undefined;
-  }
-
-  const normalizedValue = value.trim();
-
-  return normalizedValue || undefined;
-}
-
 function isMongoObjectId(value: string): boolean {
   return /^[0-9a-fA-F]{24}$/.test(value);
 }
@@ -58,13 +48,6 @@ function getApiUrl(): string {
 
 function getSiteUrl(): string {
   return process.env.SITE_URL?.replace(/\/$/, '') ?? 'https://www.mmsweden.se';
-}
-
-function serializeJsonLd(data: unknown): string {
-  return JSON.stringify(data)
-    .replace(/</g, '\\u003c')
-    .replace(/\u2028/g, '\\u2028')
-    .replace(/\u2029/g, '\\u2029');
 }
 
 const getProduct = cache(
@@ -110,62 +93,6 @@ function buildProductPath(
   slug: string
 ): string {
   return `/all-products/${categorySlug}/${subcategorySlug}/${slug}`;
-}
-
-function buildBreadcrumbJsonLd(items: Array<{ name: string; item: string }>) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: items.map((entry, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: entry.name,
-      item: entry.item,
-    })),
-  };
-}
-
-function buildProductJsonLd(params: {
-  product: ProductWithSeo;
-  locale: AppLocale;
-  canonicalUrl: string;
-  localizedName: string;
-  localizedDescription: string;
-}) {
-  const { product, locale, canonicalUrl, localizedName, localizedDescription } =
-    params;
-
-  const images = (product.photos ?? []).filter(
-    (photo): photo is string =>
-      typeof photo === 'string' && photo.trim().length > 0
-  );
-
-  const manufacturer = getNonEmptyString(product.manufacturer);
-  const productId = getNonEmptyString(product.idNumber);
-
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: localizedName,
-    description: localizedDescription,
-    sku: productId,
-    productID: productId,
-    image: images.length > 0 ? images : undefined,
-    brand: manufacturer
-      ? {
-          '@type': 'Brand',
-          name: manufacturer,
-        }
-      : undefined,
-    itemCondition:
-      product.condition === 'new'
-        ? 'https://schema.org/NewCondition'
-        : product.condition === 'used'
-          ? 'https://schema.org/UsedCondition'
-          : undefined,
-    url: canonicalUrl,
-    inLanguage: locale,
-  } satisfies Record<string, unknown>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -228,56 +155,12 @@ export default async function ProductDetailsPage({ params }: Props) {
     );
   }
 
-  const canonicalUrl = buildProductUrl(
-    siteUrl,
-    locale,
-    seoData.categorySlug,
-    seoData.subcategorySlug,
-    seoData.productSlug
-  );
-
-  const copy = getProductSeoCopy(locale);
-  const localizedName = getLocalizedText(
-    product.name,
-    locale,
-    slugToLabel(seoData.productSlug)
-  );
-  const localizedDescription = getLocalizedText(
-    product.description,
-    locale,
-    copy.fallbackDescription
-  );
-
-  const productJsonLd = buildProductJsonLd({
+  const { productJsonLd, breadcrumbJsonLd } = buildProductStructuredData({
     product,
+    seoData,
     locale,
-    canonicalUrl,
-    localizedName,
-    localizedDescription,
+    siteUrl,
   });
-
-  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
-    {
-      name: copy.breadcrumbs.home,
-      item: `${siteUrl}/${locale}`,
-    },
-    {
-      name: copy.breadcrumbs.allProducts,
-      item: `${siteUrl}/${locale}/all-products`,
-    },
-    {
-      name: seoData.categoryLabel,
-      item: `${siteUrl}/${locale}/all-products/${seoData.categorySlug}`,
-    },
-    {
-      name: seoData.subcategoryLabel,
-      item: `${siteUrl}/${locale}/all-products/${seoData.categorySlug}/${seoData.subcategorySlug}`,
-    },
-    {
-      name: localizedName,
-      item: canonicalUrl,
-    },
-  ]);
 
   return (
     <>

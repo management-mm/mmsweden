@@ -25,4 +25,5 @@ export const schema = Yup.object().shape({
       photo: Yup.string().required(Error.Required),
     })
   ),
+  marketingConsent: Yup.boolean().default(false).notRequired(),
 });

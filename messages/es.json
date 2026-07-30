@@ -145,7 +145,8 @@
     "IDNumber": "Número de ID",
     "Condition": "Estado",
     "Dimensions": "Dimensiones",
-    "Video": "Video"
+    "Video": "Video",
+    "MarketingConsent": "Me gustaría recibir por correo electrónico información sobre nuevos productos."
   },
   "Placeholder": {
     "Name": "Juan Pérez",

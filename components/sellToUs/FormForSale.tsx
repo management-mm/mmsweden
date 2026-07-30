@@ -12,6 +12,7 @@ import Loader from '@components/common/loaders/Loader';
 import AttachPhotos from '@components/formsLabels/AttachPhotos';
 import Description from '@components/formsLabels/Description';
 import Email from '@components/formsLabels/Email';
+import MarketingConsentField from '@components/formsLabels/MarketingConsentField';
 import Name from '@components/formsLabels/Name';
 import Price from '@components/formsLabels/Price';
 import ProductName from '@components/formsLabels/ProductName';
@@ -56,6 +57,7 @@ const FormForSale = () => {
               price: '',
               description: '',
               photos: [],
+              marketingConsent: false,
             }}
             validationSchema={schema}
             onSubmit={async (values, actions) => {
@@ -72,6 +74,7 @@ const FormForSale = () => {
                   price,
                   description,
                   photos,
+                  marketingConsent,
                 } = values;
 
                 const formData = new FormData();
@@ -84,6 +87,10 @@ const FormForSale = () => {
                 formData.append('price', price);
                 formData.append('description', description);
                 formData.append('captchaToken', captchaToken);
+                formData.append(
+                  'marketingConsent',
+                  marketingConsent ? 'true' : 'false'
+                );
 
                 for (let i = 0; i < photos.length; i++) {
                   formData.append('photos', photos[i]);
@@ -133,6 +140,7 @@ const FormForSale = () => {
                 </div>
 
                 <AttachPhotos />
+                <MarketingConsentField />
 
                 <div className="mt-[28px] flex flex-col items-center gap-[22px]">
                   <div className="overflow-hidden rounded-[12px] border border-gray-200 bg-white shadow-sm">

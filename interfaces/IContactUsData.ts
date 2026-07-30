@@ -6,4 +6,5 @@ export interface IContactUsData {
   subject: string;
   message: string;
   captchaToken: string;
+  marketingConsent: boolean;
 }

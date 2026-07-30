@@ -145,7 +145,8 @@
     "IDNumber": "Numer ID",
     "Condition": "Stan",
     "Dimensions": "Wymiary",
-    "Video": "Wideo"
+    "Video": "Wideo",
+    "MarketingConsent": "Chcę otrzymywać e-mailem informacje o nowych produktach."
   },
   "Placeholder": {
     "Name": "Jan Kowalski",

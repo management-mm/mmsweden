@@ -19,4 +19,5 @@ export const schema = Yup.object().shape({
   productName: Yup.string().trim().required(Error.Required),
   price: Yup.string().trim().required(Error.Required),
   photos: Yup.array().notRequired(),
+  marketingConsent: Yup.boolean().default(false).notRequired(),
 });

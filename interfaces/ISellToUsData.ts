@@ -7,4 +7,5 @@ export interface ISellToUsData {
   price: string;
   description: string;
   captchaToken: string;
+  marketingConsent: boolean;
 }

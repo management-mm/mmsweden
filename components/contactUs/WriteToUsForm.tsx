@@ -10,6 +10,7 @@ import { useTranslations } from 'next-intl';
 
 import Loader from '@components/common/loaders/Loader';
 import Email from '@components/formsLabels/Email';
+import MarketingConsentField from '@components/formsLabels/MarketingConsentField';
 import Message from '@components/formsLabels/Message';
 import Name from '@components/formsLabels/Name';
 import Subject from '@components/formsLabels/Subject';
@@ -56,6 +57,7 @@ const WriteToUsForm = () => {
               countryPhone: '',
               subject: '',
               message: '',
+              marketingConsent: false,
             }}
             validationSchema={schema}
             onSubmit={async (values, actions) => {
@@ -63,7 +65,14 @@ const WriteToUsForm = () => {
                 setLoading(true);
 
                 const phone = values.callingCode + values.phone;
-                const { name, email, countryPhone, subject, message } = values;
+                const {
+                  name,
+                  email,
+                  countryPhone,
+                  subject,
+                  message,
+                  marketingConsent,
+                } = values;
 
                 const response = await contactUs({
                   name,
@@ -73,6 +82,7 @@ const WriteToUsForm = () => {
                   subject,
                   message,
                   captchaToken,
+                  marketingConsent,
                 });
                 pushToDataLayer({
                   event: 'contact_success',
@@ -113,6 +123,7 @@ const WriteToUsForm = () => {
 
                   <Message />
                 </div>
+                <MarketingConsentField />
                 <div className="mt-[28px] flex flex-col items-center gap-[22px]">
                   <div className="overflow-hidden rounded-[12px] border border-gray-200 bg-white shadow-sm">
                     <Turnstile

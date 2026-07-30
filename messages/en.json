@@ -145,7 +145,8 @@
     "IDNumber": "ID Number",
     "Condition": "Condition",
     "Dimensions": "Dimensions",
-    "Video": "Video"
+    "Video": "Video",
+    "MarketingConsent": "I would like to receive email updates about new products."
   },
   "Placeholder": {
     "Name": "John Doe",

@@ -145,7 +145,8 @@
     "IDNumber": "ID-nummer",
     "Condition": "Skick",
     "Dimensions": "Mått (L × B × H)",
-    "Video": "Video"
+    "Video": "Video",
+    "MarketingConsent": "Jag vill få information om nya produkter via e-post."
   },
   "Placeholder": {
     "Name": "Erik Johansson",

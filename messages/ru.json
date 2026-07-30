@@ -145,7 +145,8 @@
     "IDNumber": "Номер ID",
     "Condition": "Состояние",
     "Dimensions": "Габариты",
-    "Video": "Видео"
+    "Video": "Видео",
+    "MarketingConsent": "Я хочу получать по электронной почте информацию о новых товарах."
   },
   "Placeholder": {
     "Name": "Иван Иванов",

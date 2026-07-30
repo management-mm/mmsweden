@@ -14,6 +14,7 @@ import LabelTitle from '@components/common/LabelTitle';
 import Loader from '@components/common/loaders/Loader';
 import Company from '@components/formsLabels/Company';
 import Email from '@components/formsLabels/Email';
+import MarketingConsentField from '@components/formsLabels/MarketingConsentField';
 import Name from '@components/formsLabels/Name';
 
 import { selectRequestedProducts } from '@store/selectors';
@@ -65,6 +66,7 @@ const FormForRequestQuote = () => {
             products: [],
             company: '',
             message: '',
+            marketingConsent: false,
           }}
           validationSchema={schema}
           onSubmit={async (values, actions) => {
@@ -81,8 +83,15 @@ const FormForRequestQuote = () => {
 
               const phone = values.callingCode + values.phone;
 
-              const { name, email, country, countryPhone, company, message } =
-                values;
+              const {
+                name,
+                email,
+                country,
+                countryPhone,
+                company,
+                message,
+                marketingConsent,
+              } = values;
 
               const response = await requestQuote({
                 name,
@@ -94,6 +103,7 @@ const FormForRequestQuote = () => {
                 message,
                 products,
                 captchaToken,
+                marketingConsent,
               });
               pushToDataLayer({
                 event: 'request_pricing_success',
@@ -151,6 +161,7 @@ const FormForRequestQuote = () => {
                   </ErrorMessage>
                 </label>
               </div>
+              <MarketingConsentField />
 
               <div className="mt-[28px] flex flex-col items-center gap-[22px]">
                 <div className="overflow-hidden rounded-[12px] border border-gray-200 bg-white shadow-sm">

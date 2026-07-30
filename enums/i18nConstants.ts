@@ -156,6 +156,7 @@ export enum Label {
   Condition = 'Label.Condition',
   Dimensions = 'Label.Dimensions',
   Video = 'Label.Video',
+  MarketingConsent = 'Label.MarketingConsent',
 }
 
 export enum Placeholder {

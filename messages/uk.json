@@ -145,7 +145,8 @@
     "IDNumber": "Номер ID",
     "Condition": "Стан",
     "Dimensions": "Габарити",
-    "Video": "Відео"
+    "Video": "Відео",
+    "MarketingConsent": "Я хочу отримувати електронною поштою інформацію про нові товари."
   },
   "Placeholder": {
     "Name": "Марія Іваненко",

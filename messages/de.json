@@ -145,7 +145,8 @@
     "IDNumber": "ID-Nummer",
     "Condition": "Zustand",
     "Dimensions": "Abmessungen",
-    "Video": "Video"
+    "Video": "Video",
+    "MarketingConsent": "Ich möchte per E-Mail über neue Produkte informiert werden."
   },
   "Placeholder": {
     "Name": "Max Mustermann",

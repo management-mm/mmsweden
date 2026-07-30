@@ -26,6 +26,13 @@ const NavGeneral = () => {
         Id Number Management
       </NavItem>
 
+      <NavItem
+        href={`/${locale}/admin/email-subscibers`}
+        icon={IconId.EmailSubscribers}
+      >
+        Email subscibers
+      </NavItem>
+
       <NavItem href={`/${locale}/admin/settings`} icon={IconId.Settings}>
         Settings
       </NavItem>

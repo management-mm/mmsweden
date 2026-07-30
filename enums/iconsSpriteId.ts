@@ -63,4 +63,5 @@ export enum IconId {
   Employees = '#employees',
   Categories = '#categories',
   OpenClose = '#open-close',
+  EmailSubscribers = '#email-subscribers',
 }

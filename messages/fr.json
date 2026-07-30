@@ -21,8 +21,7 @@
     "GoToProducts": "Aller aux produits",
     "Reject": "Refuser",
     "Accept": "Accepter",
-    "Categories": "Catégories",
-    "MarketingConsent": "Je souhaite recevoir par e-mail des informations sur les nouveaux produits."
+    "Categories": "Catégories"
   },
   "Title": {
     "Industries": "Industries",
@@ -146,7 +145,8 @@
     "IDNumber": "Numéro d’ID",
     "Condition": "État",
     "Dimensions": "Dimensions",
-    "Video": "Vidéo"
+    "Video": "Vidéo",
+    "MarketingConsent": "Je souhaite recevoir par e-mail des informations sur les nouveaux produits."
   },
   "Placeholder": {
     "Name": "Jean Dupont",

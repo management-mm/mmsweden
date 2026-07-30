@@ -27,7 +27,7 @@ const NavGeneral = () => {
       </NavItem>
 
       <NavItem
-        href={`/${locale}/admin/email-subscibers`}
+        href={`/${locale}/admin/email-subscribers`}
         icon={IconId.EmailSubscribers}
       >
         Email subscibers

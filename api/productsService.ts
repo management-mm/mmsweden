@@ -8,9 +8,6 @@ import { normalizeError } from '@utils/errors/normalizeError';
 
 import type { AppLocale } from '@i18n/config';
 
-const rawBaseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL;
-const baseUrl = rawBaseUrl?.replace(/\/$/, '');
-
 export interface GetProductsParams {
   lang?: AppLocale;
   sort?: string;
@@ -38,7 +35,17 @@ interface RequestOptions {
   signal?: AbortSignal;
 }
 
+function normalizeBaseUrl(value: string | undefined): string | undefined {
+  const normalizedValue = value?.trim().replace(/\/+$/, '');
+
+  return normalizedValue || undefined;
+}
+
 function getBaseUrl(): string {
+  const baseUrl =
+    normalizeBaseUrl(process.env.API_URL) ??
+    normalizeBaseUrl(process.env.NEXT_PUBLIC_API_URL);
+
   if (!baseUrl) {
     throw new AppError(
       'API URL is not configured. Set API_URL or NEXT_PUBLIC_API_URL.',
@@ -50,6 +57,27 @@ function getBaseUrl(): string {
   }
 
   return baseUrl;
+}
+
+function appendPositiveIntegerParam(
+  searchParams: URLSearchParams,
+  key: string,
+  value: number | undefined,
+  max?: number
+) {
+  if (
+    typeof value !== 'number' ||
+    !Number.isFinite(value) ||
+    !Number.isInteger(value) ||
+    value < 1
+  ) {
+    return;
+  }
+
+  const normalizedValue =
+    typeof max === 'number' ? Math.min(value, max) : value;
+
+  searchParams.append(key, String(normalizedValue));
 }
 
 function getErrorCodeByStatus(status: number): AppErrorCode {
@@ -174,13 +202,8 @@ function createProductsSearchParams(query: GetProductsParams): URLSearchParams {
   appendArrayParam(searchParams, 'category', query.category);
   appendArrayParam(searchParams, 'industry', query.industry);
 
-  if (typeof query.page === 'number' && Number.isFinite(query.page)) {
-    searchParams.append('page', String(query.page));
-  }
-
-  if (typeof query.perPage === 'number' && Number.isFinite(query.perPage)) {
-    searchParams.append('perPage', String(query.perPage));
-  }
+  appendPositiveIntegerParam(searchParams, 'page', query.page);
+  appendPositiveIntegerParam(searchParams, 'perPage', query.perPage, 100);
 
   if (query.lang) {
     searchParams.append('lang', query.lang);

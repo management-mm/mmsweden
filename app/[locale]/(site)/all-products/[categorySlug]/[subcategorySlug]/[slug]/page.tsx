@@ -1,5 +1,6 @@
 import { Suspense, cache } from 'react';
 
+import { getProductBySlug } from '@api/getProductBySlug';
 import type { Metadata } from 'next';
 import { notFound, permanentRedirect } from 'next/navigation';
 
@@ -14,10 +15,7 @@ import {
   buildProductStructuredData,
   serializeJsonLd,
 } from '@utils/buildProductStructuredData';
-import {
-  type ProductWithSeo,
-  resolveProductSeoData,
-} from '@utils/resolveProductSeoData';
+import { resolveProductSeoData } from '@utils/resolveProductSeoData';
 
 import type { AppLocale } from '@i18n/config';
 
@@ -30,62 +28,11 @@ type Props = {
   }>;
 };
 
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
-}
-
-function isMongoObjectId(value: string): boolean {
-  return /^[0-9a-fA-F]{24}$/.test(value);
-}
-
-function getApiUrl(): string {
-  return (
-    process.env.API_URL?.replace(/\/$/, '') ??
-    process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') ??
-    'https://mmsweden-server.onrender.com'
-  );
-}
+const getProduct = cache(getProductBySlug);
 
 function getSiteUrl(): string {
-  return process.env.SITE_URL?.replace(/\/$/, '') ?? 'https://www.mmsweden.se';
+  return process.env.SITE_URL?.replace(/\/+$/, '') ?? 'https://www.mmsweden.se';
 }
-
-const getProduct = cache(
-  async (slug: string): Promise<ProductWithSeo | null> => {
-    const normalizedSlug = slug.trim();
-
-    if (!normalizedSlug || isMongoObjectId(normalizedSlug)) {
-      return null;
-    }
-
-    const response = await fetch(
-      `${getApiUrl()}/products/by-slug/${encodeURIComponent(normalizedSlug)}`,
-      {
-        next: { revalidate: 300 },
-      }
-    );
-
-    if (response.status === 404 || response.status === 410) {
-      return null;
-    }
-
-    if (!response.ok) {
-      throw new Error(
-        `Failed to fetch product "${normalizedSlug}": ${response.status} ${response.statusText}`
-      );
-    }
-
-    const data: unknown = await response.json();
-
-    if (!isRecord(data)) {
-      throw new Error(
-        `Invalid product response for "${normalizedSlug}": expected an object`
-      );
-    }
-
-    return data as unknown as ProductWithSeo;
-  }
-);
 
 function buildProductPath(
   categorySlug: string,
@@ -97,7 +44,7 @@ function buildProductPath(
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, categorySlug, subcategorySlug, slug } = await params;
-  const siteUrl = getSiteUrl();
+
   const product = await getProduct(slug);
 
   if (!product) {
@@ -120,13 +67,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     product,
     seoData,
     locale,
-    siteUrl,
+    siteUrl: getSiteUrl(),
   });
 }
 
 export default async function ProductDetailsPage({ params }: Props) {
   const { locale, categorySlug, subcategorySlug, slug } = await params;
-  const siteUrl = getSiteUrl();
+
   const product = await getProduct(slug);
 
   if (!product) {
@@ -159,7 +106,7 @@ export default async function ProductDetailsPage({ params }: Props) {
     product,
     seoData,
     locale,
-    siteUrl,
+    siteUrl: getSiteUrl(),
   });
 
   return (

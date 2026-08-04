@@ -266,6 +266,20 @@ export async function getAdminProducts(
   }
 }
 
+function isGetProductsResponse(value: unknown): value is GetProductsResponse {
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) {
+    return false;
+  }
+
+  const response = value as Record<string, unknown>;
+
+  return (
+    Array.isArray(response.products) &&
+    typeof response.total === 'number' &&
+    Number.isFinite(response.total)
+  );
+}
+
 export async function getProducts(
   query: GetProductsParams,
   options: RequestOptions = {}
@@ -298,7 +312,19 @@ export async function getProducts(
       };
     }
 
-    return JSON.parse(text) as GetProductsResponse;
+    const data: unknown = JSON.parse(text);
+
+    if (!isGetProductsResponse(data)) {
+      throw new AppError(
+        'Invalid products response: expected products array and total number.',
+        'SERVER',
+        {
+          details: text.slice(0, 2000),
+        }
+      );
+    }
+
+    return data;
   } catch (error) {
     if (error instanceof AppError) {
       throw error;

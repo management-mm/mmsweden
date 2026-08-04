@@ -184,4 +184,28 @@ describe('getProducts', () => {
       }
     }
   );
+  it('throws a server error when the response has an invalid structure', async () => {
+    fetchMock.mockResolvedValue(
+      createResponse({
+        products: 'not-an-array',
+        total: 'not-a-number',
+      })
+    );
+
+    try {
+      await getProducts({});
+
+      throw new Error('Expected getProducts to reject');
+    } catch (error) {
+      expect(error).toBeInstanceOf(AppError);
+
+      expect(error).toMatchObject({
+        code: 'SERVER',
+      });
+
+      expect((error as Error).message).toBe(
+        'Invalid products response: expected products array and total number.'
+      );
+    }
+  });
 });

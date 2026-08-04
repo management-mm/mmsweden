@@ -208,4 +208,24 @@ describe('getProducts', () => {
       );
     }
   });
+  it('returns an empty result when the API response body is empty', async () => {
+    fetchMock.mockResolvedValue({
+      ok: true,
+      status: 204,
+      statusText: 'No Content',
+      text: vi.fn().mockResolvedValue(''),
+    } as unknown as Response);
+
+    await expect(getProducts({})).resolves.toEqual({
+      products: [],
+      total: 0,
+    });
+
+    expect(fetchMock).toHaveBeenCalledWith('https://api.example.com/products', {
+      signal: undefined,
+      next: {
+        revalidate: 60,
+      },
+    });
+  });
 });

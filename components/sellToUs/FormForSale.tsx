@@ -57,7 +57,7 @@ const FormForSale = () => {
               price: '',
               description: '',
               photos: [],
-              marketingConsent: false,
+              marketingConsent: true,
             }}
             validationSchema={schema}
             onSubmit={async (values, actions) => {

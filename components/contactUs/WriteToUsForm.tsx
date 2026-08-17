@@ -57,7 +57,7 @@ const WriteToUsForm = () => {
               countryPhone: '',
               subject: '',
               message: '',
-              marketingConsent: false,
+              marketingConsent: true,
             }}
             validationSchema={schema}
             onSubmit={async (values, actions) => {

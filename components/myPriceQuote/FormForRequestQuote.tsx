@@ -66,7 +66,7 @@ const FormForRequestQuote = () => {
             products: [],
             company: '',
             message: '',
-            marketingConsent: false,
+            marketingConsent: true,
           }}
           validationSchema={schema}
           onSubmit={async (values, actions) => {

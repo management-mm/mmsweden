@@ -9,8 +9,11 @@ import { notFound } from 'next/navigation';
 
 import Sprite from '../Sprite';
 import '../globals.css';
+import BaseProviders from '../providers/BaseProviders';
 import GoogleTagManagerProvider from '../providers/GoogleTagManagerProvider';
 import ReactQueryProvider from '../providers/ReactQueryProvider';
+
+import { AiAssistant } from '@components/ai-assistant/AiAssistant';
 
 import { cn } from '@utils/cn';
 
@@ -52,6 +55,7 @@ const inter = localFont({
 const siteUrl = getSiteUrl();
 
 const defaultTitle = 'MM Sweden';
+
 const defaultDescription =
   'Used food processing and packaging equipment from MM Sweden. Browse machinery for the food industry.';
 
@@ -64,6 +68,7 @@ export const metadata: Metadata = {
   },
 
   description: defaultDescription,
+
   applicationName: 'MM Sweden',
 
   robots: {
@@ -75,7 +80,9 @@ export const metadata: Metadata = {
 
   icons: {
     icon: [
-      { url: '/favicon.ico' },
+      {
+        url: '/favicon.ico',
+      },
       {
         url: '/favicon-32x32.png',
         sizes: '32x32',
@@ -87,6 +94,7 @@ export const metadata: Metadata = {
         type: 'image/png',
       },
     ],
+
     apple: '/apple-icon.png',
   },
 
@@ -106,6 +114,7 @@ export const metadata: Metadata = {
 
 type Props = {
   children: ReactNode;
+
   params: Promise<{
     locale: string;
   }>;
@@ -113,8 +122,12 @@ type Props = {
 
 export const dynamicParams = false;
 
-export function generateStaticParams(): Array<{ locale: AppLocale }> {
-  return SUPPORTED_LOCALES.map(locale => ({ locale }));
+export function generateStaticParams(): Array<{
+  locale: AppLocale;
+}> {
+  return SUPPORTED_LOCALES.map(locale => ({
+    locale,
+  }));
 }
 
 export default async function LocaleLayout({ children, params }: Props) {
@@ -138,7 +151,13 @@ export default async function LocaleLayout({ children, params }: Props) {
             <Sprite />
           </Suspense>
 
-          <ReactQueryProvider>{children}</ReactQueryProvider>
+          <BaseProviders locale={locale}>
+            <ReactQueryProvider>
+              {children}
+
+              <AiAssistant />
+            </ReactQueryProvider>
+          </BaseProviders>
 
           <div id="modal-root" />
         </NextIntlClientProvider>

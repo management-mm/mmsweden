@@ -64,4 +64,8 @@ export enum IconId {
   Categories = '#categories',
   OpenClose = '#open-close',
   EmailSubscribers = '#email-subscribers',
+  MainBot = '#main-bot',
+  ChatBot = '#chat-bot',
+  Send = '#send',
+  User = '#user',
 }

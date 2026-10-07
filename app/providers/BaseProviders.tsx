@@ -33,6 +33,7 @@ export default function BaseProviders({ children, locale }: Props) {
     <LocaleContext.Provider value={locale}>
       <ReduxProvider store={store}>
         <InterceptorsInitializer />
+
         {children}
       </ReduxProvider>
     </LocaleContext.Provider>

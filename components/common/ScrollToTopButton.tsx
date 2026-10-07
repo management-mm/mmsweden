@@ -30,7 +30,7 @@ export default function ScrollToTopButton() {
   return (
     <button
       onClick={handleClick}
-      className="bg-secondary fixed right-6 bottom-6 z-50 cursor-pointer rounded-full p-3 shadow-lg transition"
+      className="bg-secondary fixed right-6 bottom-34 z-50 cursor-pointer rounded-full p-3 shadow-lg transition"
     >
       <SvgIcon
         iconId={IconId.ArrowTop}

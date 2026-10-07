@@ -125,6 +125,12 @@ export default async function ProductDetailsPage({ params }: Props) {
         }}
       />
 
+      <div
+        data-ai-current-product-id={String(product._id)}
+        className="hidden"
+        aria-hidden="true"
+      />
+
       <Product
         product={product}
         locale={locale}

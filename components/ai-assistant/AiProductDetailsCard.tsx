@@ -273,9 +273,9 @@ export const AiProductDetailsCard = ({
 
   const image = getProductImage(product);
 
-  const name = getLocalizedText(product.name) ?? 'Machine';
+  const name = getLocalizedText(product.name, language) ?? 'Machine';
 
-  const description = getLocalizedText(product.description);
+  const description = getLocalizedText(product.description, language);
 
   const manufacturer =
     typeof product.manufacturer === 'string' ? product.manufacturer : null;

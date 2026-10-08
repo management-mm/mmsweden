@@ -241,7 +241,7 @@ export const AiAssistant = () => {
   // =========================================================
 
   return (
-    <div className="fixed right-6 bottom-6 isolate z-[9999] flex h-[680px] max-h-[calc(100vh-32px)] w-[420px] max-w-[calc(100vw-24px)] flex-col overflow-hidden rounded-[28px] border border-black/5 bg-white shadow-[0_24px_80px_rgba(0,0,0,0.18)]">
+    <div className="fixed bottom-4 left-1/2 isolate z-[9999] flex h-[680px] max-h-[calc(100vh-32px)] w-[calc(100vw-24px)] -translate-x-1/2 flex-col overflow-hidden rounded-[28px] border border-black/5 bg-white shadow-[0_24px_80px_rgba(0,0,0,0.18)] sm:right-6 sm:bottom-6 sm:left-auto sm:w-[420px] sm:translate-x-0">
       {/* ===================================================
           HEADER
       =================================================== */}

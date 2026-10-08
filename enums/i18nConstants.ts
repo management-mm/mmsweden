@@ -255,4 +255,74 @@ export enum AiAssistantText {
   NudgeProductTitle = 'AiAssistant.NudgeProductTitle',
   NudgeProductText = 'AiAssistant.NudgeProductText',
   NudgeButton = 'AiAssistant.NudgeButton',
+
+  ProductListMachineFallback = 'AiAssistant.ProductList.MachineFallback',
+
+  ProductListConditionUsed = 'AiAssistant.ProductList.ConditionUsed',
+
+  ProductListConditionNew = 'AiAssistant.ProductList.ConditionNew',
+
+  ProductListNoImage = 'AiAssistant.ProductList.NoImage',
+
+  ProductListShowMore = 'AiAssistant.ProductList.ShowMore',
+
+  ProductListShowLess = 'AiAssistant.ProductList.ShowLess',
+
+  ProductListShowingResults = 'AiAssistant.ProductList.ShowingResults',
+
+  ProductListShowingMatchingMachines = 'AiAssistant.ProductList.ShowingMatchingMachines',
+
+  ProductDetailsMachineFallback = 'AiAssistant.ProductDetails.MachineFallback',
+
+  ProductDetailsConditionUsed = 'AiAssistant.ProductDetails.ConditionUsed',
+
+  ProductDetailsConditionNew = 'AiAssistant.ProductDetails.ConditionNew',
+
+  ProductDetailsNoImage = 'AiAssistant.ProductDetails.NoImage',
+
+  ProductDetailsVideo = 'AiAssistant.ProductDetails.Video',
+
+  ProductDetailsVideoUnavailable = 'AiAssistant.ProductDetails.VideoUnavailable',
+
+  ProductDetailsAboutMachine = 'AiAssistant.ProductDetails.AboutMachine',
+
+  ProductDetailsViewMachine = 'AiAssistant.ProductDetails.ViewMachine',
+
+  MessagesUploadedMachine = 'AiAssistant.Messages.UploadedMachine',
+
+  MessagesPossibleMatches = 'AiAssistant.Messages.PossibleMatches',
+
+  MessagesMatchingMachines = 'AiAssistant.Messages.MatchingMachines',
+
+  InputPlaceholder = 'AiAssistant.Input.Placeholder',
+
+  InputPhotoPlaceholder = 'AiAssistant.Input.PhotoPlaceholder',
+
+  InputSelectedMachine = 'AiAssistant.Input.SelectedMachine',
+
+  InputRemoveImage = 'AiAssistant.Input.RemoveImage',
+
+  InputAttachImage = 'AiAssistant.Input.AttachImage',
+
+  InputSendMessage = 'AiAssistant.Input.SendMessage',
+
+  HeaderOnline = 'AiAssistant.Header.Online',
+
+  HeaderClose = 'AiAssistant.Header.Close',
+
+  CategoryBrowserCategories = 'AiAssistant.CategoryBrowser.Categories',
+
+  CategoryBrowserSubcategories = 'AiAssistant.CategoryBrowser.Subcategories',
+
+  CategoryBrowserMachines = 'AiAssistant.CategoryBrowser.Machines',
+
+  CategoryBrowserMachinesCount = 'AiAssistant.CategoryBrowser.MachinesCount',
+
+  CategoryBrowserLoading = 'AiAssistant.CategoryBrowser.Loading',
+
+  CategoryBrowserEmpty = 'AiAssistant.CategoryBrowser.Empty',
+
+  CategoryBrowserError = 'AiAssistant.CategoryBrowser.Error',
+
+  CategoryBrowserBack = 'AiAssistant.CategoryBrowser.Back',
 }

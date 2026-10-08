@@ -238,6 +238,59 @@
     "NudgeProductTitle": "Fragen zu dieser Maschine?",
     "NudgeProductText": "Ich kann dieses Modell erklären, ähnliche Maschinen finden oder online recherchieren.",
 
-    "NudgeButton": "KI fragen"
+    "NudgeButton": "KI fragen",
+
+    "ProductList": {
+      "MachineFallback": "Maschine",
+      "ConditionUsed": "Gebraucht",
+      "ConditionNew": "Neu",
+      "NoImage": "Kein Bild",
+      "ShowMore": "{count} weitere anzeigen",
+      "ShowLess": "Weniger anzeigen",
+      "ShowingResults": "<strong>{count}</strong> Ergebnisse werden angezeigt",
+      "ShowingMatchingMachines": "<strong>{visible}</strong> von <strong>{total}</strong> passenden Maschinen werden angezeigt"
+    },
+
+    "ProductDetails": {
+      "MachineFallback": "Maschine",
+      "ConditionUsed": "Gebraucht",
+      "ConditionNew": "Neu",
+      "NoImage": "Kein Bild verfügbar",
+      "Video": "Video",
+      "VideoUnavailable": "Für diese Maschine ist kein Video verfügbar.",
+      "AboutMachine": "Über diese Maschine",
+      "ViewMachine": "Maschine ansehen"
+    },
+
+    "Messages": {
+      "UploadedMachine": "Hochgeladene Maschine",
+      "PossibleMatches": "{count, plural, one {Ich habe <strong>#</strong> möglichen Treffer gefunden:} other {Ich habe <strong>#</strong> mögliche Treffer gefunden:}}",
+      "MatchingMachines": "{count, plural, one {Ich habe <strong>#</strong> passende Maschine gefunden.} other {Ich habe <strong>#</strong> passende Maschinen gefunden.}}"
+    },
+
+    "Input": {
+      "Placeholder": "Stellen Sie eine Frage...",
+      "PhotoPlaceholder": "Fragen Sie nach dieser Maschine...",
+      "SelectedMachine": "Ausgewählte Maschine",
+      "RemoveImage": "Bild entfernen",
+      "AttachImage": "Bild anhängen",
+      "SendMessage": "Nachricht senden"
+    },
+
+    "Header": {
+      "Online": "Online",
+      "Close": "Assistent schließen"
+    },
+
+    "CategoryBrowser": {
+      "Categories": "Kategorien durchsuchen",
+      "Subcategories": "Unterkategorie wählen",
+      "Machines": "Maschinen",
+      "MachinesCount": "{count, plural, one {# Maschine} other {# Maschinen}}",
+      "Loading": "Wird geladen...",
+      "Empty": "Nichts gefunden.",
+      "Error": "Kategorien konnten nicht geladen werden.",
+      "Back": "Zurück"
+    }
   }
 }

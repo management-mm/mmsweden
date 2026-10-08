@@ -238,6 +238,59 @@
     "NudgeProductTitle": "Questions about this machine?",
     "NudgeProductText": "I can explain this model, find similar equipment or research it online.",
 
-    "NudgeButton": "Ask AI"
+    "NudgeButton": "Ask AI",
+
+    "ProductList": {
+      "MachineFallback": "Machine",
+      "ConditionUsed": "Used",
+      "ConditionNew": "New",
+      "NoImage": "No image",
+      "ShowMore": "Show {count} more",
+      "ShowLess": "Show less",
+      "ShowingResults": "Showing <strong>{count}</strong> results",
+      "ShowingMatchingMachines": "Showing <strong>{visible}</strong> of <strong>{total}</strong> matching machines"
+    },
+
+    "ProductDetails": {
+      "MachineFallback": "Machine",
+      "ConditionUsed": "Used",
+      "ConditionNew": "New",
+      "NoImage": "No image available",
+      "Video": "Video",
+      "VideoUnavailable": "Video is not available for this machine.",
+      "AboutMachine": "About this machine",
+      "ViewMachine": "View machine"
+    },
+
+    "Messages": {
+      "UploadedMachine": "Uploaded machine",
+      "PossibleMatches": "{count, plural, one {I found <strong>#</strong> possible match:} other {I found <strong>#</strong> possible matches:}}",
+      "MatchingMachines": "{count, plural, one {I found <strong>#</strong> matching machine.} other {I found <strong>#</strong> matching machines.}}"
+    },
+
+    "Input": {
+      "Placeholder": "Ask a question...",
+      "PhotoPlaceholder": "Ask about this machine...",
+      "SelectedMachine": "Selected machine",
+      "RemoveImage": "Remove image",
+      "AttachImage": "Attach image",
+      "SendMessage": "Send message"
+    },
+
+    "Header": {
+      "Online": "Online",
+      "Close": "Close assistant"
+    },
+
+    "CategoryBrowser": {
+      "Categories": "Browse categories",
+      "Subcategories": "Choose a subcategory",
+      "Machines": "Machines",
+      "MachinesCount": "{count, plural, one {# machine} other {# machines}}",
+      "Loading": "Loading...",
+      "Empty": "Nothing found.",
+      "Error": "Could not load categories.",
+      "Back": "Back"
+    }
   }
 }

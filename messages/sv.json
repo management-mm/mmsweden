@@ -237,6 +237,59 @@
     "NudgeProductTitle": "Frågor om den här maskinen?",
     "NudgeProductText": "Jag kan berätta mer om modellen, hitta liknande maskiner eller söka information online.",
 
-    "NudgeButton": "Fråga AI"
+    "NudgeButton": "Fråga AI",
+
+    "ProductList": {
+      "MachineFallback": "Maskin",
+      "ConditionUsed": "Begagnad",
+      "ConditionNew": "Ny",
+      "NoImage": "Ingen bild",
+      "ShowMore": "Visa {count} till",
+      "ShowLess": "Visa mindre",
+      "ShowingResults": "Visar <strong>{count}</strong> resultat",
+      "ShowingMatchingMachines": "Visar <strong>{visible}</strong> av <strong>{total}</strong> matchande maskiner"
+    },
+
+    "ProductDetails": {
+      "MachineFallback": "Maskin",
+      "ConditionUsed": "Begagnad",
+      "ConditionNew": "Ny",
+      "NoImage": "Ingen bild tillgänglig",
+      "Video": "Video",
+      "VideoUnavailable": "Det finns ingen video tillgänglig för den här maskinen.",
+      "AboutMachine": "Om den här maskinen",
+      "ViewMachine": "Visa maskinen"
+    },
+
+    "Messages": {
+      "UploadedMachine": "Uppladdad maskin",
+      "PossibleMatches": "{count, plural, one {Jag hittade <strong>#</strong> möjlig träff:} other {Jag hittade <strong>#</strong> möjliga träffar:}}",
+      "MatchingMachines": "{count, plural, one {Jag hittade <strong>#</strong> matchande maskin.} other {Jag hittade <strong>#</strong> matchande maskiner.}}"
+    },
+
+    "Input": {
+      "Placeholder": "Ställ en fråga...",
+      "PhotoPlaceholder": "Fråga om den här maskinen...",
+      "SelectedMachine": "Vald maskin",
+      "RemoveImage": "Ta bort bild",
+      "AttachImage": "Bifoga bild",
+      "SendMessage": "Skicka meddelande"
+    },
+
+    "Header": {
+      "Online": "Online",
+      "Close": "Stäng assistenten"
+    },
+
+    "CategoryBrowser": {
+      "Categories": "Bläddra bland kategorier",
+      "Subcategories": "Välj en underkategori",
+      "Machines": "Maskiner",
+      "MachinesCount": "{count, plural, one {# maskin} other {# maskiner}}",
+      "Loading": "Laddar...",
+      "Empty": "Inget hittades.",
+      "Error": "Kunde inte ladda kategorier.",
+      "Back": "Tillbaka"
+    }
   }
 }

@@ -1,5 +1,10 @@
+'use client';
+
+import { useTranslations } from 'next-intl';
+
 import SvgIcon from '@components/common/SvgIcon';
 
+import { AiAssistantText } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
 interface Props {
@@ -7,6 +12,8 @@ interface Props {
 }
 
 export const AiAssistantHeader = ({ onClose }: Props) => {
+  const t = useTranslations();
+
   return (
     <div className="flex items-center justify-between border-b border-black/5 px-5 py-4">
       <div className="flex items-center gap-3">
@@ -22,18 +29,20 @@ export const AiAssistantHeader = ({ onClose }: Props) => {
 
         <div>
           <div className="text-sm font-semibold text-neutral-900">
-            AI Assistant
+            {t(AiAssistantText.AssistantLabel)}
           </div>
 
           <div className="mt-0.5 flex items-center gap-1.5 text-xs text-neutral-500">
             <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-            Online
+
+            {t(AiAssistantText.HeaderOnline)}
           </div>
         </div>
       </div>
 
       <button
         type="button"
+        aria-label={t(AiAssistantText.HeaderClose)}
         onClick={onClose}
         className="flex h-9 w-9 items-center justify-center rounded-full text-xl text-neutral-400 transition hover:bg-neutral-100 hover:text-neutral-900"
       >

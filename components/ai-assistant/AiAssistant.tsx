@@ -32,7 +32,11 @@ export const AiAssistant = () => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const [isBrowsingCategories, setIsBrowsingCategories] = useState(false);
+  type AssistantView = 'welcome' | 'categories' | 'chat';
+
+  const [activeView, setActiveView] = useState<AssistantView>('welcome');
+
+  const previousViewRef = useRef<'welcome' | 'chat'>('welcome');
 
   // =========================================================
   // CURRENT PRODUCT PAGE
@@ -109,8 +113,26 @@ export const AiAssistant = () => {
   // SEND MESSAGE
   // =========================================================
 
+  const openWelcome = () => {
+    setActiveView('welcome');
+  };
+
+  const openChat = () => {
+    setActiveView('chat');
+  };
+
+  const openCategories = () => {
+    previousViewRef.current = activeView === 'chat' ? 'chat' : 'welcome';
+
+    setActiveView('categories');
+  };
+
+  const closeCategories = () => {
+    setActiveView(previousViewRef.current);
+  };
+
   const handleSendMessage = (message: string, productId?: string) => {
-    setIsBrowsingCategories(false);
+    setActiveView('chat');
 
     return sendMessage(message, productId);
   };
@@ -247,25 +269,63 @@ export const AiAssistant = () => {
 
       <AiAssistantHeader onClose={() => setIsOpen(false)} />
 
+      <div className="flex items-center gap-1.5 border-b border-black/[0.05] bg-white px-3 py-2">
+        <button
+          type="button"
+          onClick={openWelcome}
+          className={`rounded-full px-3 py-1.5 text-[11px] font-medium transition-colors ${
+            activeView === 'welcome'
+              ? 'bg-secondary-accent text-white'
+              : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+          } `}
+        >
+          Home
+        </button>
+
+        <button
+          type="button"
+          onClick={openCategories}
+          className={`rounded-full px-3 py-1.5 text-[11px] font-medium transition-colors ${
+            activeView === 'categories'
+              ? 'bg-secondary-accent text-white'
+              : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+          } `}
+        >
+          Categories
+        </button>
+
+        {messages.length > 0 && (
+          <button
+            type="button"
+            onClick={openChat}
+            className={`rounded-full px-3 py-1.5 text-[11px] font-medium transition-colors ${
+              activeView === 'chat'
+                ? 'bg-secondary-accent text-white'
+                : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+            } `}
+          >
+            Chat
+          </button>
+        )}
+      </div>
+
       {/* ===================================================
           CONTENT
       =================================================== */}
 
       <div className="flex min-h-0 flex-1 flex-col">
-        {isBrowsingCategories ? (
+        {activeView === 'categories' ? (
           <AiCategoryBrowser
             language={currentLanguage}
-            onClose={() => setIsBrowsingCategories(false)}
+            onClose={closeCategories}
             onSelectProduct={product => {
-              setIsBrowsingCategories(false);
-
               void handleSendMessage(getProductDetailsPrompt(), product._id);
             }}
           />
-        ) : messages.length === 0 ? (
+        ) : activeView === 'welcome' ? (
           <AiWelcomeActions
             onFindEquipment={() => handleSendMessage('Help me find equipment')}
-            onBrowseCategories={() => setIsBrowsingCategories(true)}
+            onBrowseCategories={openCategories}
             onCompanyQuestion={() =>
               handleSendMessage('Tell me about Meat Machines Sweden')
             }

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import type { Language } from 'types/aiAssistant.types';
 
@@ -17,6 +17,7 @@ import SvgIcon from '@components/common/SvgIcon';
 
 import { useAiAssistant } from '@hooks/useAiAssistant';
 
+import { AiAssistantText } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
 export const AiAssistant = () => {
@@ -25,6 +26,8 @@ export const AiAssistant = () => {
   // =========================================================
 
   const locale = useLocale() as Language;
+
+  const t = useTranslations();
 
   // =========================================================
   // STATE
@@ -138,32 +141,6 @@ export const AiAssistant = () => {
   };
 
   // =========================================================
-  // PRODUCT DETAILS PROMPT
-  // =========================================================
-
-  const getProductDetailsPrompt = () => {
-    const prompts: Record<Language, string> = {
-      en: 'Tell me about this machine',
-
-      sv: 'Berätta om den här maskinen',
-
-      de: 'Erzähle mir mehr über diese Maschine',
-
-      fr: 'Parlez-moi de cette machine',
-
-      es: 'Cuéntame sobre esta máquina',
-
-      ru: 'Расскажи об этой машине',
-
-      uk: 'Розкажи про цю машину',
-
-      pl: 'Opowiedz mi o tej maszynie',
-    };
-
-    return prompts[currentLanguage] ?? prompts.en;
-  };
-
-  // =========================================================
   // MARK USER INTERACTION
   // =========================================================
 
@@ -190,7 +167,10 @@ export const AiAssistant = () => {
 
     contextualProductRef.current = currentProductId;
 
-    void handleSendMessage(getProductDetailsPrompt(), currentProductId);
+    void handleSendMessage(
+      t(AiAssistantText.ProductDetailsPrompt),
+      currentProductId
+    );
   };
 
   // =========================================================
@@ -228,14 +208,13 @@ export const AiAssistant = () => {
       <>
         <AiAssistantNudge
           isOpen={isOpen}
-          language={currentLanguage}
           productId={currentProductId}
           onOpen={handleOpenAssistant}
         />
 
         <button
           type="button"
-          aria-label="Open AI Assistant"
+          aria-label={t(AiAssistantText.OpenAssistant)}
           onClick={handleToggleAssistant}
           className="bg-secondary-accent fixed right-8 bottom-8 z-[9999] flex h-20 w-20 items-center justify-center rounded-full border-2 border-white shadow-[0_14px_45px_rgba(0,0,0,0.20)] transition-all duration-200 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_18px_55px_rgba(0,0,0,0.25)] active:scale-95"
         >
@@ -279,7 +258,7 @@ export const AiAssistant = () => {
               : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
           } `}
         >
-          Home
+          {t(AiAssistantText.Home)}
         </button>
 
         <button
@@ -291,7 +270,7 @@ export const AiAssistant = () => {
               : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
           } `}
         >
-          Categories
+          {t(AiAssistantText.Categories)}
         </button>
 
         {messages.length > 0 && (
@@ -304,7 +283,7 @@ export const AiAssistant = () => {
                 : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
             } `}
           >
-            Chat
+            {t(AiAssistantText.Chat)}
           </button>
         )}
       </div>
@@ -319,15 +298,20 @@ export const AiAssistant = () => {
             language={currentLanguage}
             onClose={closeCategories}
             onSelectProduct={product => {
-              void handleSendMessage(getProductDetailsPrompt(), product._id);
+              void handleSendMessage(
+                t(AiAssistantText.ProductDetailsPrompt),
+                product._id
+              );
             }}
           />
         ) : activeView === 'welcome' ? (
           <AiWelcomeActions
-            onFindEquipment={() => handleSendMessage('Help me find equipment')}
+            onFindEquipment={() =>
+              handleSendMessage(t(AiAssistantText.FindEquipmentPrompt))
+            }
             onBrowseCategories={openCategories}
             onCompanyQuestion={() =>
-              handleSendMessage('Tell me about Meat Machines Sweden')
+              handleSendMessage(t(AiAssistantText.CompanyPrompt))
             }
           />
         ) : (
@@ -335,7 +319,10 @@ export const AiAssistant = () => {
             messages={messages}
             isLoading={isLoading}
             onSelectProduct={product =>
-              handleSendMessage(getProductDetailsPrompt(), product._id)
+              handleSendMessage(
+                t(AiAssistantText.ProductDetailsPrompt),
+                product._id
+              )
             }
           />
         )}

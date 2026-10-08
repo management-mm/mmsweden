@@ -1,5 +1,10 @@
+'use client';
+
+import { useTranslations } from 'next-intl';
+
 import SvgIcon from '@components/common/SvgIcon';
 
+import { AiAssistantText } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
 interface Props {
@@ -13,6 +18,8 @@ export const AiWelcomeActions = ({
   onBrowseCategories,
   onCompanyQuestion,
 }: Props) => {
+  const t = useTranslations();
+
   return (
     <div className="flex flex-col items-center px-5 py-7 text-center">
       {/* BOT */}
@@ -29,13 +36,14 @@ export const AiWelcomeActions = ({
 
       {/* TITLE */}
 
-      <h2 className="text-lg font-semibold text-gray-900">How can I help?</h2>
+      <h2 className="text-lg font-semibold text-gray-900">
+        {t(AiAssistantText.WelcomeTitle)}
+      </h2>
 
       {/* DESCRIPTION */}
 
       <p className="mt-2 max-w-[300px] text-sm leading-5 text-gray-500">
-        I can help you find equipment, browse our catalogue or answer questions
-        about Meat Machines Sweden.
+        {t(AiAssistantText.WelcomeDescription)}
       </p>
 
       {/* ACTIONS */}
@@ -46,7 +54,7 @@ export const AiWelcomeActions = ({
           onClick={onFindEquipment}
           className="rounded-xl border border-gray-200 px-4 py-3 text-left text-sm font-medium transition hover:border-gray-300 hover:bg-gray-50"
         >
-          Find equipment
+          {t(AiAssistantText.FindEquipment)}
         </button>
 
         <button
@@ -54,7 +62,7 @@ export const AiWelcomeActions = ({
           onClick={onBrowseCategories}
           className="rounded-xl border border-gray-200 px-4 py-3 text-left text-sm font-medium transition hover:border-gray-300 hover:bg-gray-50"
         >
-          Browse categories
+          {t(AiAssistantText.BrowseCategories)}
         </button>
 
         <button
@@ -62,7 +70,7 @@ export const AiWelcomeActions = ({
           onClick={onCompanyQuestion}
           className="rounded-xl border border-gray-200 px-4 py-3 text-left text-sm font-medium transition hover:border-gray-300 hover:bg-gray-50"
         >
-          About Meat Machines Sweden
+          {t(AiAssistantText.AboutCompany)}
         </button>
       </div>
     </div>

@@ -211,5 +211,33 @@
     "NoProductsAvailableDesc": "В настоящее время нет товаров для отображения.",
     "SearchQuery": "Поисковый запрос",
     "Category": "Категория"
+  },
+
+  "AiAssistant": {
+    "WelcomeTitle": "Чем я могу помочь?",
+    "WelcomeDescription": "Я могу помочь подобрать оборудование, просмотреть наш каталог или ответить на вопросы о Meat Machines Sweden.",
+    "FindEquipment": "Подобрать оборудование",
+    "BrowseCategories": "Просмотреть категории",
+    "AboutCompany": "О Meat Machines Sweden",
+
+    "Home": "Главная",
+    "Categories": "Категории",
+    "Chat": "Чат",
+
+    "ProductDetailsPrompt": "Расскажи об этой машине",
+    "FindEquipmentPrompt": "Помоги мне подобрать оборудование",
+    "CompanyPrompt": "Расскажи о Meat Machines Sweden",
+
+    "OpenAssistant": "Открыть AI-ассистента",
+    "AssistantLabel": "AI-ассистент",
+    "Close": "Закрыть",
+
+    "NudgeWelcomeTitle": "Ищете оборудование?",
+    "NudgeWelcomeText": "Я могу найти машину в каталоге, определить оборудование по фото или ответить на ваши вопросы.",
+
+    "NudgeProductTitle": "Есть вопросы об этой машине?",
+    "NudgeProductText": "Могу рассказать об этой модели, найти похожие машины или поискать информацию в интернете.",
+
+    "NudgeButton": "Спросить AI"
   }
 }

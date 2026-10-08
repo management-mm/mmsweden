@@ -290,6 +290,10 @@
       "Empty": "No se encontró nada.",
       "Error": "No se pudieron cargar las categorías.",
       "Back": "Atrás"
-    }
+    },
+
+    "FindEquipmentDescription": "Describa lo que necesita y le ayudaré a encontrarlo",
+    "BrowseCategoriesDescription": "Explore rápidamente los equipos disponibles",
+    "AboutCompanyDescription": "Entrega, contactos, servicios e información de la empresa"
   }
 }

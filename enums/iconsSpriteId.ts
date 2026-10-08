@@ -68,4 +68,5 @@ export enum IconId {
   ChatBot = '#chat-bot',
   Send = '#send',
   User = '#user',
+  Building = '#building',
 }

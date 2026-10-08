@@ -291,6 +291,10 @@
       "Empty": "Nothing found.",
       "Error": "Could not load categories.",
       "Back": "Back"
-    }
+    },
+
+    "FindEquipmentDescription": "Describe what you need — I’ll help you find it",
+    "BrowseCategoriesDescription": "Quickly browse available equipment",
+    "AboutCompanyDescription": "Delivery, contacts, services and company information"
   }
 }

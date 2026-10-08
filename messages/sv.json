@@ -290,6 +290,10 @@
       "Empty": "Inget hittades.",
       "Error": "Kunde inte ladda kategorier.",
       "Back": "Tillbaka"
-    }
+    },
+
+    "FindEquipmentDescription": "Beskriv vad du behöver så hjälper jag dig att hitta rätt",
+    "BrowseCategoriesDescription": "Bläddra snabbt bland tillgänglig utrustning",
+    "AboutCompanyDescription": "Leverans, kontaktuppgifter, tjänster och företagsinformation"
   }
 }

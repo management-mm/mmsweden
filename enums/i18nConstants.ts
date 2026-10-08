@@ -325,4 +325,10 @@ export enum AiAssistantText {
   CategoryBrowserError = 'AiAssistant.CategoryBrowser.Error',
 
   CategoryBrowserBack = 'AiAssistant.CategoryBrowser.Back',
+
+  FindEquipmentDescription = 'AiAssistant.FindEquipmentDescription',
+
+  BrowseCategoriesDescription = 'AiAssistant.BrowseCategoriesDescription',
+
+  AboutCompanyDescription = 'AiAssistant.AboutCompanyDescription',
 }

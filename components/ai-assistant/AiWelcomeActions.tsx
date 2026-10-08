@@ -13,6 +13,56 @@ interface Props {
   onCompanyQuestion: () => void;
 }
 
+interface WelcomeActionProps {
+  iconId: IconId;
+  title: string;
+  description: string;
+  onClick: () => void;
+}
+
+const WelcomeAction = ({
+  iconId,
+  title,
+  description,
+  onClick,
+}: WelcomeActionProps) => {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="group flex w-full items-center gap-3 rounded-2xl border border-black/[0.08] bg-white px-3 py-2.5 text-left transition-all duration-200 hover:border-black/[0.14] hover:bg-neutral-50 active:scale-[0.99]"
+    >
+      <div className="bg-secondary-accent flex h-10 w-10 shrink-0 items-center justify-center rounded-full">
+        <SvgIcon
+          iconId={iconId}
+          size={{
+            width: 20,
+            height: 20,
+          }}
+          className="fill-white text-white"
+        />
+      </div>
+
+      <div className="min-w-0 flex-1">
+        <div className="text-[13px] leading-5 font-semibold text-neutral-900">
+          {title}
+        </div>
+
+        <div className="mt-0.5 text-[10px] leading-[1.35] text-neutral-500">
+          {description}
+        </div>
+      </div>
+
+      <span
+        aria-hidden="true"
+        className="text-secondary-accent shrink-0 text-[23px] leading-none transition-transform group-hover:translate-x-0.5"
+      >
+        ›
+      </span>
+    </button>
+  );
+};
+
 export const AiWelcomeActions = ({
   onFindEquipment,
   onBrowseCategories,
@@ -21,57 +71,54 @@ export const AiWelcomeActions = ({
   const t = useTranslations();
 
   return (
-    <div className="flex flex-col items-center px-5 py-7 text-center">
+    <div className="flex w-full flex-col items-center px-4 py-4 text-center">
       {/* BOT */}
 
-      <div className="bg-secondary-accent mb-4 flex h-16 w-16 items-center justify-center rounded-full">
+      <div className="bg-secondary-accent mb-3 flex h-14 w-14 items-center justify-center rounded-full">
         <SvgIcon
           iconId={IconId.MainBot}
           size={{
-            width: 44,
-            height: 44,
+            width: 38,
+            height: 38,
           }}
         />
       </div>
 
       {/* TITLE */}
 
-      <h2 className="text-lg font-semibold text-gray-900">
+      <h2 className="text-[17px] font-semibold text-neutral-900">
         {t(AiAssistantText.WelcomeTitle)}
       </h2>
 
       {/* DESCRIPTION */}
 
-      <p className="mt-2 max-w-[300px] text-sm leading-5 text-gray-500">
+      <p className="mt-1.5 max-w-[300px] text-[12px] leading-[1.45] text-neutral-500">
         {t(AiAssistantText.WelcomeDescription)}
       </p>
 
       {/* ACTIONS */}
 
-      <div className="mt-6 grid w-full gap-2">
-        <button
-          type="button"
+      <div className="mt-4 flex w-full flex-col gap-2.5">
+        <WelcomeAction
+          iconId={IconId.Search}
+          title={t(AiAssistantText.FindEquipment)}
+          description={t(AiAssistantText.FindEquipmentDescription)}
           onClick={onFindEquipment}
-          className="rounded-xl border border-gray-200 px-4 py-3 text-left text-sm font-medium transition hover:border-gray-300 hover:bg-gray-50"
-        >
-          {t(AiAssistantText.FindEquipment)}
-        </button>
+        />
 
-        <button
-          type="button"
+        <WelcomeAction
+          iconId={IconId.Categories}
+          title={t(AiAssistantText.BrowseCategories)}
+          description={t(AiAssistantText.BrowseCategoriesDescription)}
           onClick={onBrowseCategories}
-          className="rounded-xl border border-gray-200 px-4 py-3 text-left text-sm font-medium transition hover:border-gray-300 hover:bg-gray-50"
-        >
-          {t(AiAssistantText.BrowseCategories)}
-        </button>
+        />
 
-        <button
-          type="button"
+        <WelcomeAction
+          iconId={IconId.Building}
+          title={t(AiAssistantText.AboutCompany)}
+          description={t(AiAssistantText.AboutCompanyDescription)}
           onClick={onCompanyQuestion}
-          className="rounded-xl border border-gray-200 px-4 py-3 text-left text-sm font-medium transition hover:border-gray-300 hover:bg-gray-50"
-        >
-          {t(AiAssistantText.AboutCompany)}
-        </button>
+        />
       </div>
     </div>
   );

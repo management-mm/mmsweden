@@ -291,6 +291,10 @@
       "Empty": "Nichts gefunden.",
       "Error": "Kategorien konnten nicht geladen werden.",
       "Back": "Zurück"
-    }
+    },
+
+    "FindEquipmentDescription": "Beschreiben Sie Ihren Bedarf – ich helfe Ihnen bei der Suche",
+    "BrowseCategoriesDescription": "Verfügbare Maschinen schnell nach Kategorien durchsuchen",
+    "AboutCompanyDescription": "Lieferung, Kontakte, Services und Unternehmensinformationen"
   }
 }

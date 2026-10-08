@@ -290,6 +290,10 @@
       "Empty": "Aucun résultat.",
       "Error": "Impossible de charger les catégories.",
       "Back": "Retour"
-    }
+    },
+
+    "FindEquipmentDescription": "Décrivez votre besoin et je vous aiderai à trouver l’équipement adapté",
+    "BrowseCategoriesDescription": "Parcourez rapidement les équipements disponibles",
+    "AboutCompanyDescription": "Livraison, contacts, services et informations sur l’entreprise"
   }
 }

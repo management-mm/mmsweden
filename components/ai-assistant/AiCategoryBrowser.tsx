@@ -7,9 +7,12 @@ import {
   getAiCategoryProducts,
   getAiSubcategories,
 } from '@api/aiAssistantService';
-import { AiCategory, AiProduct, Language } from 'types/aiAssistant.types';
+import { useTranslations } from 'next-intl';
+import type { AiCategory, AiProduct, Language } from 'types/aiAssistant.types';
 
 import { AiProductList } from './AiProductList';
+
+import { AiAssistantText } from '@enums/i18nConstants';
 
 interface Props {
   language?: Language;
@@ -21,104 +24,13 @@ interface Props {
 
 type View = 'categories' | 'subcategories' | 'products';
 
-const labels: Record<
-  Language,
-  {
-    categories: string;
-    subcategories: string;
-    machines: string;
-    loading: string;
-    empty: string;
-    error: string;
-    back: string;
-  }
-> = {
-  en: {
-    categories: 'Browse categories',
-    subcategories: 'Choose a subcategory',
-    machines: 'Machines',
-    loading: 'Loading...',
-    empty: 'Nothing found.',
-    error: 'Could not load categories.',
-    back: 'Back',
-  },
-
-  sv: {
-    categories: 'Bläddra bland kategorier',
-    subcategories: 'Välj en underkategori',
-    machines: 'Maskiner',
-    loading: 'Laddar...',
-    empty: 'Inget hittades.',
-    error: 'Kunde inte ladda kategorier.',
-    back: 'Tillbaka',
-  },
-
-  de: {
-    categories: 'Kategorien durchsuchen',
-    subcategories: 'Unterkategorie wählen',
-    machines: 'Maschinen',
-    loading: 'Wird geladen...',
-    empty: 'Nichts gefunden.',
-    error: 'Kategorien konnten nicht geladen werden.',
-    back: 'Zurück',
-  },
-
-  fr: {
-    categories: 'Parcourir les catégories',
-    subcategories: 'Choisir une sous-catégorie',
-    machines: 'Machines',
-    loading: 'Chargement...',
-    empty: 'Aucun résultat.',
-    error: 'Impossible de charger les catégories.',
-    back: 'Retour',
-  },
-
-  es: {
-    categories: 'Explorar categorías',
-    subcategories: 'Elige una subcategoría',
-    machines: 'Máquinas',
-    loading: 'Cargando...',
-    empty: 'No se encontró nada.',
-    error: 'No se pudieron cargar las categorías.',
-    back: 'Atrás',
-  },
-
-  ru: {
-    categories: 'Категории оборудования',
-    subcategories: 'Выберите подкатегорию',
-    machines: 'Оборудование',
-    loading: 'Загрузка...',
-    empty: 'Ничего не найдено.',
-    error: 'Не удалось загрузить категории.',
-    back: 'Назад',
-  },
-
-  uk: {
-    categories: 'Категорії обладнання',
-    subcategories: 'Оберіть підкатегорію',
-    machines: 'Обладнання',
-    loading: 'Завантаження...',
-    empty: 'Нічого не знайдено.',
-    error: 'Не вдалося завантажити категорії.',
-    back: 'Назад',
-  },
-
-  pl: {
-    categories: 'Kategorie urządzeń',
-    subcategories: 'Wybierz podkategorię',
-    machines: 'Maszyny',
-    loading: 'Ładowanie...',
-    empty: 'Nic nie znaleziono.',
-    error: 'Nie udało się załadować kategorii.',
-    back: 'Wstecz',
-  },
-};
-
 export const AiCategoryBrowser = ({
   language = 'en',
   onClose,
   onSelectProduct,
 }: Props) => {
+  const t = useTranslations();
+
   const [view, setView] = useState<View>('categories');
 
   const [categories, setCategories] = useState<AiCategory[]>([]);
@@ -140,7 +52,7 @@ export const AiCategoryBrowser = ({
 
   const [error, setError] = useState<string | null>(null);
 
-  const text = labels[language];
+  const errorMessage = t(AiAssistantText.CategoryBrowserError);
 
   // =========================================================
   // LOAD ROOT CATEGORIES
@@ -149,6 +61,7 @@ export const AiCategoryBrowser = ({
   useEffect(() => {
     const load = async () => {
       setIsLoading(true);
+
       setError(null);
 
       try {
@@ -158,14 +71,14 @@ export const AiCategoryBrowser = ({
       } catch (error) {
         console.error('AI categories error:', error);
 
-        setError(text.error);
+        setError(errorMessage);
       } finally {
         setIsLoading(false);
       }
     };
 
-    load();
-  }, [language, text.error]);
+    void load();
+  }, [language, errorMessage]);
 
   // =========================================================
   // SELECT CATEGORY
@@ -177,6 +90,7 @@ export const AiCategoryBrowser = ({
     setSelectedSubcategory(null);
 
     setError(null);
+
     setIsLoading(true);
 
     try {
@@ -196,7 +110,7 @@ export const AiCategoryBrowser = ({
     } catch (error) {
       console.error('AI subcategories error:', error);
 
-      setError(text.error);
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -225,6 +139,7 @@ export const AiCategoryBrowser = ({
     subcategory?: AiCategory
   ) => {
     setIsLoading(true);
+
     setError(null);
 
     try {
@@ -241,7 +156,7 @@ export const AiCategoryBrowser = ({
     } catch (error) {
       console.error('AI category products error:', error);
 
-      setError(text.error);
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -281,14 +196,21 @@ export const AiCategoryBrowser = ({
 
   const title = (() => {
     if (view === 'categories') {
-      return text.categories;
+      return t(AiAssistantText.CategoryBrowserCategories);
     }
 
     if (view === 'subcategories') {
-      return selectedCategory?.name ?? text.subcategories;
+      return (
+        selectedCategory?.name ??
+        t(AiAssistantText.CategoryBrowserSubcategories)
+      );
     }
 
-    return selectedSubcategory?.name ?? selectedCategory?.name ?? text.machines;
+    return (
+      selectedSubcategory?.name ??
+      selectedCategory?.name ??
+      t(AiAssistantText.CategoryBrowserMachines)
+    );
   })();
 
   return (
@@ -299,7 +221,7 @@ export const AiCategoryBrowser = ({
         <button
           type="button"
           onClick={handleBack}
-          aria-label={text.back}
+          aria-label={t(AiAssistantText.CategoryBrowserBack)}
           className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-lg text-neutral-500 transition hover:bg-neutral-100 hover:text-neutral-900"
         >
           ←
@@ -312,7 +234,7 @@ export const AiCategoryBrowser = ({
 
           {view === 'subcategories' && (
             <div className="mt-0.5 text-[11px] text-neutral-400">
-              {text.subcategories}
+              {t(AiAssistantText.CategoryBrowserSubcategories)}
             </div>
           )}
         </div>
@@ -321,11 +243,15 @@ export const AiCategoryBrowser = ({
       {/* CONTENT */}
 
       <div className="min-h-0 flex-1 overflow-y-auto px-3 py-4">
+        {/* LOADING */}
+
         {isLoading && (
           <div className="flex h-32 items-center justify-center text-sm text-neutral-400">
-            {text.loading}
+            {t(AiAssistantText.CategoryBrowserLoading)}
           </div>
         )}
+
+        {/* ERROR */}
 
         {!isLoading && error && (
           <div className="rounded-xl bg-red-50 p-3 text-sm text-red-600">
@@ -356,7 +282,7 @@ export const AiCategoryBrowser = ({
 
             {categories.length === 0 && (
               <div className="py-10 text-center text-sm text-neutral-400">
-                {text.empty}
+                {t(AiAssistantText.CategoryBrowserEmpty)}
               </div>
             )}
           </div>
@@ -382,6 +308,12 @@ export const AiCategoryBrowser = ({
                 </span>
               </button>
             ))}
+
+            {subcategories.length === 0 && (
+              <div className="py-10 text-center text-sm text-neutral-400">
+                {t(AiAssistantText.CategoryBrowserEmpty)}
+              </div>
+            )}
           </div>
         )}
 
@@ -390,7 +322,9 @@ export const AiCategoryBrowser = ({
         {!isLoading && !error && view === 'products' && (
           <>
             <div className="mb-2 px-1 text-[13px] text-neutral-500">
-              {total} {text.machines.toLowerCase()}
+              {t(AiAssistantText.CategoryBrowserMachinesCount, {
+                count: total,
+              })}
             </div>
 
             <AiProductList
@@ -402,7 +336,7 @@ export const AiCategoryBrowser = ({
 
             {products.length === 0 && (
               <div className="py-10 text-center text-sm text-neutral-400">
-                {text.empty}
+                {t(AiAssistantText.CategoryBrowserEmpty)}
               </div>
             )}
           </>

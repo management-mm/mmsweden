@@ -10,8 +10,11 @@ import {
   useState,
 } from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import SvgIcon from '@components/common/SvgIcon';
 
+import { AiAssistantText } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
 interface Props {
@@ -28,6 +31,8 @@ export interface AiInputHandle {
 
 export const AiInput = forwardRef<AiInputHandle, Props>(
   ({ disabled = false, onSend, onPhoto }, ref) => {
+    const t = useTranslations();
+
     const [value, setValue] = useState('');
 
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -83,6 +88,10 @@ export const AiInput = forwardRef<AiInputHandle, Props>(
 
       setSelectedFile(file);
 
+      /*
+       * Allow selecting the same
+       * file again later.
+       */
       event.target.value = '';
     };
 
@@ -111,13 +120,15 @@ export const AiInput = forwardRef<AiInputHandle, Props>(
         return;
       }
 
-      /*
-       * PHOTO MESSAGE
-       */
+      // =================================================
+      // PHOTO MESSAGE
+      // =================================================
+
       if (selectedFile) {
         const file = selectedFile;
 
         setValue('');
+
         setSelectedFile(null);
 
         await onPhoto(file, text || undefined);
@@ -125,9 +136,10 @@ export const AiInput = forwardRef<AiInputHandle, Props>(
         return;
       }
 
-      /*
-       * NORMAL TEXT MESSAGE
-       */
+      // =================================================
+      // NORMAL TEXT MESSAGE
+      // =================================================
+
       setValue('');
 
       await onSend(text);
@@ -145,11 +157,7 @@ export const AiInput = forwardRef<AiInputHandle, Props>(
         <input
           ref={fileInputRef}
           type="file"
-          accept="
-              image/jpeg,
-              image/png,
-              image/webp
-            "
+          accept="image/jpeg,image/png,image/webp"
           className="hidden"
           onChange={handleFileChange}
         />
@@ -162,7 +170,7 @@ export const AiInput = forwardRef<AiInputHandle, Props>(
               <div className="relative overflow-hidden rounded-xl border border-black/[0.06] bg-neutral-100">
                 <img
                   src={previewUrl}
-                  alt="Selected machine"
+                  alt={t(AiAssistantText.InputSelectedMachine)}
                   className="h-[88px] w-[110px] object-cover"
                 />
 
@@ -170,7 +178,7 @@ export const AiInput = forwardRef<AiInputHandle, Props>(
 
                 <button
                   type="button"
-                  aria-label="Remove image"
+                  aria-label={t(AiAssistantText.InputRemoveImage)}
                   onClick={handleRemovePhoto}
                   className="absolute top-1 right-1 flex h-6 w-6 items-center justify-center rounded-full bg-black/70 text-[16px] leading-none text-white transition hover:bg-black"
                 >
@@ -189,8 +197,8 @@ export const AiInput = forwardRef<AiInputHandle, Props>(
               disabled={disabled}
               placeholder={
                 selectedFile
-                  ? 'Ask about this machine...'
-                  : 'Write a question...'
+                  ? t(AiAssistantText.InputPhotoPlaceholder)
+                  : t(AiAssistantText.InputPlaceholder)
               }
               onChange={event => setValue(event.target.value)}
               className="min-w-0 flex-1 border-none bg-transparent px-2 text-[14px] text-neutral-900 outline-none placeholder:text-neutral-400 disabled:cursor-not-allowed"
@@ -200,7 +208,7 @@ export const AiInput = forwardRef<AiInputHandle, Props>(
 
             <button
               type="button"
-              aria-label="Attach image"
+              aria-label={t(AiAssistantText.InputAttachImage)}
               disabled={disabled}
               onClick={() => fileInputRef.current?.click()}
               className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-neutral-500 transition hover:bg-neutral-100 hover:text-neutral-800 disabled:opacity-40"
@@ -218,7 +226,7 @@ export const AiInput = forwardRef<AiInputHandle, Props>(
 
             <button
               type="submit"
-              aria-label="Send message"
+              aria-label={t(AiAssistantText.InputSendMessage)}
               disabled={disabled || !canSend}
               className="bg-secondary-accent flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-white shadow-[0_3px_10px_rgba(0,0,0,0.12)] transition-all duration-150 hover:scale-[1.03] active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100"
             >

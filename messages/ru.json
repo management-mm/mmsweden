@@ -238,6 +238,59 @@
     "NudgeProductTitle": "Есть вопросы об этой машине?",
     "NudgeProductText": "Могу рассказать об этой модели, найти похожие машины или поискать информацию в интернете.",
 
-    "NudgeButton": "Спросить AI"
+    "NudgeButton": "Спросить AI",
+
+    "ProductList": {
+      "MachineFallback": "Машина",
+      "ConditionUsed": "Б/у",
+      "ConditionNew": "Новая",
+      "NoImage": "Нет фото",
+      "ShowMore": "Показать ещё {count}",
+      "ShowLess": "Скрыть",
+      "ShowingResults": "Показано результатов: <strong>{count}</strong>",
+      "ShowingMatchingMachines": "Показано <strong>{visible}</strong> из <strong>{total}</strong> подходящих машин"
+    },
+
+    "ProductDetails": {
+      "MachineFallback": "Машина",
+      "ConditionUsed": "Б/у",
+      "ConditionNew": "Новая",
+      "NoImage": "Изображение недоступно",
+      "Video": "Видео",
+      "VideoUnavailable": "Видео для этой машины недоступно.",
+      "AboutMachine": "Об этой машине",
+      "ViewMachine": "Посмотреть машину"
+    },
+
+    "Messages": {
+      "UploadedMachine": "Загруженная машина",
+      "PossibleMatches": "{count, plural, one {Я нашёл <strong>#</strong> возможное совпадение:} few {Я нашёл <strong>#</strong> возможных совпадения:} many {Я нашёл <strong>#</strong> возможных совпадений:} other {Я нашёл <strong>#</strong> возможных совпадений:}}",
+      "MatchingMachines": "{count, plural, one {Я нашёл <strong>#</strong> подходящую машину.} few {Я нашёл <strong>#</strong> подходящие машины.} many {Я нашёл <strong>#</strong> подходящих машин.} other {Я нашёл <strong>#</strong> подходящих машин.}}"
+    },
+
+    "Input": {
+      "Placeholder": "Задайте вопрос...",
+      "PhotoPlaceholder": "Спросите об этой машине...",
+      "SelectedMachine": "Выбранная машина",
+      "RemoveImage": "Удалить изображение",
+      "AttachImage": "Прикрепить изображение",
+      "SendMessage": "Отправить сообщение"
+    },
+
+    "Header": {
+      "Online": "В сети",
+      "Close": "Закрыть ассистента"
+    },
+
+    "CategoryBrowser": {
+      "Categories": "Категории оборудования",
+      "Subcategories": "Выберите подкатегорию",
+      "Machines": "Оборудование",
+      "MachinesCount": "{count, plural, one {# машина} few {# машины} many {# машин} other {# машины}}",
+      "Loading": "Загрузка...",
+      "Empty": "Ничего не найдено.",
+      "Error": "Не удалось загрузить категории.",
+      "Back": "Назад"
+    }
   }
 }

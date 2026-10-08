@@ -2,10 +2,14 @@
 
 import { useState } from 'react';
 
-import { AiProduct, Language } from 'types/aiAssistant.types';
+import { useTranslations } from 'next-intl';
+import type { AiProduct, Language } from 'types/aiAssistant.types';
+
+import { AiAssistantText } from '@enums/i18nConstants';
 
 interface Props {
   products: AiProduct[];
+
   language?: Language;
 
   total?: number;
@@ -49,7 +53,8 @@ const getProductImage = (product: AiProduct): string | null => {
 
 const getProductName = (
   product: AiProduct,
-  language: Language = 'en'
+  language: Language,
+  fallback: string
 ): string => {
   if (typeof product.name === 'string') {
     return product.name;
@@ -65,133 +70,11 @@ const getProductName = (
     return product.name.en;
   }
 
-  const fallback = Object.values(product.name ?? {}).find(
+  const fallbackName = Object.values(product.name ?? {}).find(
     value => typeof value === 'string'
   );
 
-  return typeof fallback === 'string' ? fallback : 'Machine';
-};
-
-// =========================================================
-// CONDITION
-// =========================================================
-
-const formatCondition = (
-  condition?: string,
-  language: Language = 'en'
-): string | null => {
-  if (!condition) {
-    return null;
-  }
-
-  const normalized = condition.toLowerCase();
-
-  const labels: Record<
-    Language,
-    {
-      used: string;
-      new: string;
-    }
-  > = {
-    en: {
-      used: 'Used',
-      new: 'New',
-    },
-
-    sv: {
-      used: 'Begagnad',
-      new: 'Ny',
-    },
-
-    de: {
-      used: 'Gebraucht',
-      new: 'Neu',
-    },
-
-    fr: {
-      used: 'Occasion',
-      new: 'Neuf',
-    },
-
-    es: {
-      used: 'Usada',
-      new: 'Nueva',
-    },
-
-    ru: {
-      used: 'Б/у',
-      new: 'Новая',
-    },
-
-    uk: {
-      used: 'Б/в',
-      new: 'Нова',
-    },
-
-    pl: {
-      used: 'Używana',
-      new: 'Nowa',
-    },
-  };
-
-  if (normalized === 'used') {
-    return labels[language].used;
-  }
-
-  if (normalized === 'new') {
-    return labels[language].new;
-  }
-
-  return condition;
-};
-
-// =========================================================
-// UI LABELS
-// =========================================================
-
-const getShowMoreLabel = (count: number, language: Language): string => {
-  const labels: Record<Language, string> = {
-    en: `Show ${count} more`,
-    sv: `Visa ${count} till`,
-    de: `${count} weitere anzeigen`,
-    fr: `Afficher ${count} de plus`,
-    es: `Mostrar ${count} más`,
-    ru: `Показать ещё ${count}`,
-    uk: `Показати ще ${count}`,
-    pl: `Pokaż jeszcze ${count}`,
-  };
-
-  return labels[language];
-};
-
-const getShowLessLabel = (language: Language): string => {
-  const labels: Record<Language, string> = {
-    en: 'Show less',
-    sv: 'Visa mindre',
-    de: 'Weniger anzeigen',
-    fr: 'Afficher moins',
-    es: 'Mostrar menos',
-    ru: 'Скрыть',
-    uk: 'Сховати',
-    pl: 'Pokaż mniej',
-  };
-
-  return labels[language];
-};
-
-const getNoImageLabel = (language: Language): string => {
-  const labels: Record<Language, string> = {
-    en: 'No image',
-    sv: 'Ingen bild',
-    de: 'Kein Bild',
-    fr: 'Pas d’image',
-    es: 'Sin imagen',
-    ru: 'Нет фото',
-    uk: 'Немає фото',
-    pl: 'Brak zdjęcia',
-  };
-
-  return labels[language];
+  return typeof fallbackName === 'string' ? fallbackName : fallback;
 };
 
 // =========================================================
@@ -204,6 +87,8 @@ export const AiProductList = ({
   total,
   onSelectProduct,
 }: Props) => {
+  const t = useTranslations();
+
   const [isExpanded, setIsExpanded] = useState(false);
 
   const visibleProducts = isExpanded
@@ -218,35 +103,54 @@ export const AiProductList = ({
 
   const currentlyVisible = visibleProducts.length;
 
+  const machineFallback = t(AiAssistantText.ProductListMachineFallback);
+
   return (
     <div className="mt-3 flex flex-col gap-2">
+      {/* =====================================================
+          RESULTS INFO
+      ===================================================== */}
+
       <div className="mb-1 text-[13px] leading-5 text-neutral-500">
-        {isExpanded ? (
-          <>
-            Showing{' '}
-            <span className="font-medium text-neutral-800">
-              {currentlyVisible}
-            </span>{' '}
-            of{' '}
-            <span className="font-medium text-neutral-800">{totalFound}</span>{' '}
-            matching machines
-          </>
-        ) : (
-          <>
-            Showing{' '}
-            <span className="font-medium text-neutral-800">
-              {currentlyVisible}
-            </span>{' '}
-            results
-          </>
-        )}
+        {isExpanded
+          ? t.rich(AiAssistantText.ProductListShowingMatchingMachines, {
+              visible: currentlyVisible,
+
+              total: totalFound,
+
+              strong: chunks => (
+                <span className="font-medium text-neutral-800">{chunks}</span>
+              ),
+            })
+          : t.rich(AiAssistantText.ProductListShowingResults, {
+              count: currentlyVisible,
+
+              strong: chunks => (
+                <span className="font-medium text-neutral-800">{chunks}</span>
+              ),
+            })}
       </div>
+
+      {/* =====================================================
+          PRODUCTS
+      ===================================================== */}
+
       {visibleProducts.map(product => {
         const image = getProductImage(product);
 
-        const name = getProductName(product, language);
+        const name = getProductName(product, language, machineFallback);
 
-        const condition = formatCondition(product.condition, language);
+        const normalizedCondition =
+          typeof product.condition === 'string'
+            ? product.condition.toLowerCase()
+            : null;
+
+        const condition =
+          normalizedCondition === 'used'
+            ? t(AiAssistantText.ProductListConditionUsed)
+            : normalizedCondition === 'new'
+              ? t(AiAssistantText.ProductListConditionNew)
+              : null;
 
         return (
           <button
@@ -266,7 +170,7 @@ export const AiProductList = ({
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center px-2 text-center text-[10px] text-neutral-400">
-                  {getNoImageLabel(language)}
+                  {t(AiAssistantText.ProductListNoImage)}
                 </div>
               )}
             </div>
@@ -308,7 +212,9 @@ export const AiProductList = ({
         );
       })}
 
-      {/* SHOW MORE / SHOW LESS */}
+      {/* =====================================================
+          SHOW MORE / SHOW LESS
+      ===================================================== */}
 
       {canExpand && (
         <button
@@ -317,8 +223,10 @@ export const AiProductList = ({
           className="mt-2 rounded-xl py-2.5 text-center text-xs font-medium text-neutral-500 transition-colors hover:bg-neutral-50 hover:text-neutral-900"
         >
           {isExpanded
-            ? getShowLessLabel(language)
-            : getShowMoreLabel(remainingCount, language)}
+            ? t(AiAssistantText.ProductListShowLess)
+            : t(AiAssistantText.ProductListShowMore, {
+                count: remainingCount,
+              })}
         </button>
       )}
     </div>

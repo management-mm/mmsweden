@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 
+import { useTranslations } from 'next-intl';
 import { AiChatMessage, AiProduct } from 'types/aiAssistant.types';
 
 import { AiProductDetailsCard } from './AiProductDetailsCard';
@@ -9,10 +10,12 @@ import { AiProductList } from './AiProductList';
 
 import SvgIcon from '@components/common/SvgIcon';
 
+import { AiAssistantText } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
 interface Props {
   messages: AiChatMessage[];
+
   isLoading: boolean;
 
   onSelectProduct?: (product: AiProduct) => void;
@@ -25,7 +28,7 @@ interface Props {
 const cleanMessageText = (text: string): string => {
   return (
     text
-
+      // Markdown links
       .replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/gi, '$1')
 
       // Markdown bold
@@ -99,6 +102,8 @@ const AssistantText = ({ text }: { text: string }) => {
 // =========================================================
 
 const AiMessageHeader = () => {
+  const t = useTranslations();
+
   return (
     <div className="mb-2 flex items-center gap-2">
       <div className="bg-secondary mb-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-black/[0.05]">
@@ -112,7 +117,7 @@ const AiMessageHeader = () => {
       </div>
 
       <span className="text-[11px] font-medium text-neutral-400">
-        AI Assistant
+        {t(AiAssistantText.AssistantLabel)}
       </span>
     </div>
   );
@@ -123,6 +128,8 @@ const AiMessageHeader = () => {
 // =========================================================
 
 export const AiMessages = ({ messages, isLoading, onSelectProduct }: Props) => {
+  const t = useTranslations();
+
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -152,7 +159,7 @@ export const AiMessages = ({ messages, isLoading, onSelectProduct }: Props) => {
                     <div className="mb-2 overflow-hidden rounded-2xl rounded-br-md border border-black/[0.05] bg-neutral-100">
                       <img
                         src={message.imagePreview}
-                        alt="Uploaded machine"
+                        alt={t(AiAssistantText.MessagesUploadedMachine)}
                         className="max-h-64 w-full object-cover"
                       />
                     </div>
@@ -204,8 +211,6 @@ export const AiMessages = ({ messages, isLoading, onSelectProduct }: Props) => {
 
           // =================================================
           // PRODUCT DETAILS / PRODUCT LIST
-          //
-
           // =================================================
 
           if (hasProducts || hasProductDetails) {
@@ -230,23 +235,25 @@ export const AiMessages = ({ messages, isLoading, onSelectProduct }: Props) => {
                 {hasProducts && (
                   <div className="w-full px-0">
                     <div className="mb-2 px-1 text-[14px] leading-[1.55] text-neutral-700">
-                      {isPhotoCandidates ? (
-                        <>
-                          I found{' '}
-                          <span className="font-medium text-neutral-900">
-                            {products.length}
-                          </span>{' '}
-                          possible matches:
-                        </>
-                      ) : (
-                        <>
-                          I found{' '}
-                          <span className="font-medium text-neutral-900">
-                            {response?.total ?? products.length}
-                          </span>{' '}
-                          matching machines.
-                        </>
-                      )}
+                      {isPhotoCandidates
+                        ? t.rich(AiAssistantText.MessagesPossibleMatches, {
+                            count: products.length,
+
+                            strong: chunks => (
+                              <span className="font-medium text-neutral-900">
+                                {chunks}
+                              </span>
+                            ),
+                          })
+                        : t.rich(AiAssistantText.MessagesMatchingMachines, {
+                            count: response?.total ?? products.length,
+
+                            strong: chunks => (
+                              <span className="font-medium text-neutral-900">
+                                {chunks}
+                              </span>
+                            ),
+                          })}
                     </div>
 
                     <AiProductList
@@ -279,7 +286,7 @@ export const AiMessages = ({ messages, isLoading, onSelectProduct }: Props) => {
 
               <div className="min-w-0 flex-1">
                 <div className="mb-1.5 text-[11px] font-medium text-neutral-400">
-                  AI Assistant
+                  {t(AiAssistantText.AssistantLabel)}
                 </div>
 
                 <div className="max-w-[92%] min-w-0 overflow-hidden rounded-2xl rounded-tl-md border border-black/[0.04] bg-neutral-50 px-4 py-3 text-[14px] leading-[1.6] [overflow-wrap:anywhere] break-words text-neutral-800">
@@ -308,7 +315,7 @@ export const AiMessages = ({ messages, isLoading, onSelectProduct }: Props) => {
 
             <div>
               <div className="mb-1.5 text-[11px] font-medium text-neutral-400">
-                AI Assistant
+                {t(AiAssistantText.AssistantLabel)}
               </div>
 
               <div className="flex h-11 items-center gap-1.5 rounded-2xl rounded-tl-md bg-neutral-50 px-4">

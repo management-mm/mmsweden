@@ -237,6 +237,59 @@
     "NudgeProductTitle": "¿Preguntas sobre esta máquina?",
     "NudgeProductText": "Puedo explicar este modelo, encontrar máquinas similares o investigarlo en Internet.",
 
-    "NudgeButton": "Preguntar a la IA"
+    "NudgeButton": "Preguntar a la IA",
+
+    "ProductList": {
+      "MachineFallback": "Máquina",
+      "ConditionUsed": "Usada",
+      "ConditionNew": "Nueva",
+      "NoImage": "Sin imagen",
+      "ShowMore": "Mostrar {count} más",
+      "ShowLess": "Mostrar menos",
+      "ShowingResults": "Mostrando <strong>{count}</strong> resultados",
+      "ShowingMatchingMachines": "Mostrando <strong>{visible}</strong> de <strong>{total}</strong> máquinas coincidentes"
+    },
+
+    "ProductDetails": {
+      "MachineFallback": "Máquina",
+      "ConditionUsed": "Usada",
+      "ConditionNew": "Nueva",
+      "NoImage": "No hay imagen disponible",
+      "Video": "Vídeo",
+      "VideoUnavailable": "No hay ningún vídeo disponible para esta máquina.",
+      "AboutMachine": "Acerca de esta máquina",
+      "ViewMachine": "Ver máquina"
+    },
+
+    "Messages": {
+      "UploadedMachine": "Máquina subida",
+      "PossibleMatches": "{count, plural, one {He encontrado <strong>#</strong> posible coincidencia:} other {He encontrado <strong>#</strong> posibles coincidencias:}}",
+      "MatchingMachines": "{count, plural, one {He encontrado <strong>#</strong> máquina coincidente.} other {He encontrado <strong>#</strong> máquinas coincidentes.}}"
+    },
+
+    "Input": {
+      "Placeholder": "Haga una pregunta...",
+      "PhotoPlaceholder": "Pregunte sobre esta máquina...",
+      "SelectedMachine": "Máquina seleccionada",
+      "RemoveImage": "Eliminar imagen",
+      "AttachImage": "Adjuntar imagen",
+      "SendMessage": "Enviar mensaje"
+    },
+
+    "Header": {
+      "Online": "En línea",
+      "Close": "Cerrar asistente"
+    },
+
+    "CategoryBrowser": {
+      "Categories": "Explorar categorías",
+      "Subcategories": "Elige una subcategoría",
+      "Machines": "Máquinas",
+      "MachinesCount": "{count, plural, one {# máquina} other {# máquinas}}",
+      "Loading": "Cargando...",
+      "Empty": "No se encontró nada.",
+      "Error": "No se pudieron cargar las categorías.",
+      "Back": "Atrás"
+    }
   }
 }

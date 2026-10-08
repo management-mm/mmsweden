@@ -1,16 +1,25 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { AiProduct, Language } from 'types/aiAssistant.types';
 
 import VideoPlayer from '@components/common/VideoPlayer';
 import RequestPricingButton from '@components/productDetails/RequestPricingButton';
 
+import { AiAssistantText } from '@enums/i18nConstants';
+
 interface Props {
   product: AiProduct;
+
   message?: string;
+
   language?: Language;
 }
+
+// =========================================================
+// LOCALIZED TEXT
+// =========================================================
 
 const getLocalizedText = (
   value: unknown,
@@ -43,6 +52,10 @@ const getLocalizedText = (
   return null;
 };
 
+// =========================================================
+// PRODUCT IMAGE
+// =========================================================
+
 const getProductImage = (product: AiProduct): string | null => {
   if (!Array.isArray(product.photos) || product.photos.length === 0) {
     return null;
@@ -67,6 +80,10 @@ const getProductImage = (product: AiProduct): string | null => {
   return null;
 };
 
+// =========================================================
+// URL FROM MESSAGE
+// =========================================================
+
 const getUrlFromText = (text?: string): string | null => {
   if (!text) {
     return null;
@@ -81,13 +98,17 @@ const getUrlFromText = (text?: string): string | null => {
   return match[0].replace(/[),.;]+$/, '').trim();
 };
 
+// =========================================================
+// CLEAN AI TEXT
+// =========================================================
+
 const cleanText = (text: string): string => {
   return (
     text
       // Markdown bold
       .replace(/\*\*(.*?)\*\*/g, '$1')
 
-      // Markdown underline/bold
+      // Markdown underline / bold
       .replace(/__(.*?)__/g, '$1')
 
       // Markdown code
@@ -96,15 +117,23 @@ const cleanText = (text: string): string => {
       // URLs
       .replace(/https?:\/\/[^\s]+/gi, '')
 
+      /*
+       * Remove possible video headings generated
+       * by older AI responses.
+       */
       .replace(/^Видео этой машины:\s*$/gim, '')
-
-      // English variant
+      .replace(/^Відео цієї машини:\s*$/gim, '')
       .replace(/^Video(?: of this machine)?:\s*$/gim, '')
+      .replace(/^Video dieser Maschine:\s*$/gim, '')
+      .replace(/^Vidéo de cette machine\s*:\s*$/gim, '')
+      .replace(/^Vídeo de esta máquina\s*:\s*$/gim, '')
+      .replace(/^Video av den här maskinen:\s*$/gim, '')
+      .replace(/^Film tej maszyny:\s*$/gim, '')
 
-      // markdown headings
+      // Markdown headings
       .replace(/^#{1,6}\s+/gm, '')
 
-      // bullets
+      // Bullets
       .replace(/^\s*[-*]\s+/gm, '• ')
 
       .replace(/\n{3,}/g, '\n\n')
@@ -113,30 +142,16 @@ const cleanText = (text: string): string => {
   );
 };
 
-const formatCondition = (condition: unknown): string | null => {
-  if (typeof condition !== 'string') {
-    return null;
-  }
-
-  if (condition.toLowerCase() === 'used') {
-    return 'Used';
-  }
-
-  if (condition.toLowerCase() === 'new') {
-    return 'New';
-  }
-
-  return condition;
-};
+// =========================================================
+// VIDEO URL
+// =========================================================
 
 const getVideoUrl = (value: unknown): string | null => {
   if (!value) {
     return null;
   }
 
-  // -----------------------------------------
   // STRING
-  // -----------------------------------------
 
   if (typeof value === 'string') {
     const trimmed = value.trim();
@@ -148,9 +163,7 @@ const getVideoUrl = (value: unknown): string | null => {
     return null;
   }
 
-  // -----------------------------------------
   // ARRAY
-  // -----------------------------------------
 
   if (Array.isArray(value)) {
     for (const item of value) {
@@ -164,9 +177,7 @@ const getVideoUrl = (value: unknown): string | null => {
     return null;
   }
 
-  // -----------------------------------------
   // OBJECT
-  // -----------------------------------------
 
   if (typeof value === 'object') {
     const item = value as Record<string, unknown>;
@@ -214,6 +225,10 @@ const getVideoUrl = (value: unknown): string | null => {
   return null;
 };
 
+// =========================================================
+// DIMENSIONS
+// =========================================================
+
 const formatDimensions = (dimensions: unknown): string | null => {
   if (!dimensions) {
     return null;
@@ -244,6 +259,10 @@ const formatDimensions = (dimensions: unknown): string | null => {
   return null;
 };
 
+// =========================================================
+// SEO SLUG
+// =========================================================
+
 const getSeoSlug = (value: unknown): string | null => {
   if (!value) {
     return null;
@@ -264,6 +283,10 @@ const getSeoSlug = (value: unknown): string | null => {
   return null;
 };
 
+// =========================================================
+// COMPONENT
+// =========================================================
+
 export const AiProductDetailsCard = ({
   product,
   message,
@@ -271,9 +294,13 @@ export const AiProductDetailsCard = ({
 }: Props) => {
   const router = useRouter();
 
+  const t = useTranslations();
+
   const image = getProductImage(product);
 
-  const name = getLocalizedText(product.name, language) ?? 'Machine';
+  const name =
+    getLocalizedText(product.name, language) ??
+    t(AiAssistantText.ProductDetailsMachineFallback);
 
   const description = getLocalizedText(product.description, language);
 
@@ -283,7 +310,19 @@ export const AiProductDetailsCard = ({
   const idNumber =
     typeof product.idNumber === 'string' ? product.idNumber : null;
 
-  const condition = formatCondition(product.condition);
+  const normalizedCondition =
+    typeof product.condition === 'string'
+      ? product.condition.toLowerCase()
+      : null;
+
+  const condition =
+    normalizedCondition === 'used'
+      ? t(AiAssistantText.ProductDetailsConditionUsed)
+      : normalizedCondition === 'new'
+        ? t(AiAssistantText.ProductDetailsConditionNew)
+        : typeof product.condition === 'string'
+          ? product.condition
+          : null;
 
   const dimensions = formatDimensions(product.dimensions);
 
@@ -322,38 +361,6 @@ export const AiProductDetailsCard = ({
     );
   };
 
-  // const handleAskHampus = () => {
-  //   const machineName =
-  //     name;
-
-  //   const machineId =
-  //     idNumber
-  //       ? `#${idNumber}`
-  //       : '';
-
-  //   const subject =
-  //     `Question about ${machineName} ${machineId}`.trim();
-
-  //   const body = `
-  // Hi Hampus,
-
-  // I would like to know more about this machine:
-
-  // ${machineName}
-  // ${machineId ? `Machine ID: ${machineId}` : ''}
-
-  // Thank you.
-  //   `.trim();
-
-  //   const mailto =
-  //     `mailto:hampus@mmsweden.se` +
-  //     `?subject=${encodeURIComponent(subject)}` +
-  //     `&body=${encodeURIComponent(body)}`;
-
-  //   window.location.href =
-  //     mailto;
-  // };
-
   const cleanedMessage = message ? cleanText(message) : '';
 
   return (
@@ -365,7 +372,7 @@ export const AiProductDetailsCard = ({
           <img src={image} alt={name} className="h-full w-full object-cover" />
         ) : (
           <div className="flex h-full w-full items-center justify-center text-xs text-neutral-400">
-            No image available
+            {t(AiAssistantText.ProductDetailsNoImage)}
           </div>
         )}
 
@@ -415,7 +422,7 @@ export const AiProductDetailsCard = ({
 
         <div className="mt-4 w-full min-w-0 border-t border-black/[0.06] pt-4">
           <div className="mb-3 text-[11px] font-semibold tracking-wide text-neutral-400 uppercase">
-            Video
+            {t(AiAssistantText.ProductDetailsVideo)}
           </div>
 
           {videoUrl ? (
@@ -424,14 +431,14 @@ export const AiProductDetailsCard = ({
                 video={videoUrl}
                 className="!h-full !max-h-[180px] !w-full lg:!h-full lg:!max-h-[180px]"
                 containerIconClassName="
-          !h-11
-          !w-11
-        "
+                  !h-11
+                  !w-11
+                "
               />
             </div>
           ) : (
             <div className="rounded-xl bg-neutral-50 px-4 py-3 text-[13px] leading-5 text-neutral-500">
-              Video is not available for this machine.
+              {t(AiAssistantText.ProductDetailsVideoUnavailable)}
             </div>
           )}
         </div>
@@ -441,7 +448,7 @@ export const AiProductDetailsCard = ({
         {cleanedMessage && (
           <div className="mt-4 border-t border-black/[0.06] pt-4">
             <div className="mb-2 text-[11px] font-semibold tracking-wide text-neutral-400 uppercase">
-              About this machine
+              {t(AiAssistantText.ProductDetailsAboutMachine)}
             </div>
 
             <div className="text-[13px] leading-[1.6] whitespace-pre-line text-neutral-700">
@@ -459,7 +466,7 @@ export const AiProductDetailsCard = ({
             onClick={handleViewMachine}
             className="border-primary font-inter text-primary flex cursor-pointer items-center justify-center rounded-[32px] border bg-transparent px-5 py-[14px] text-[12px] font-semibold"
           >
-            View machine
+            {t(AiAssistantText.ProductDetailsViewMachine)}
           </button>
 
           <div className="flex-1">

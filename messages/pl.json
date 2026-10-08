@@ -237,6 +237,59 @@
     "NudgeProductTitle": "Masz pytania o tę maszynę?",
     "NudgeProductText": "Mogę opisać ten model, znaleźć podobne maszyny lub wyszukać informacje w internecie.",
 
-    "NudgeButton": "Zapytaj AI"
+    "NudgeButton": "Zapytaj AI",
+
+    "ProductList": {
+      "MachineFallback": "Maszyna",
+      "ConditionUsed": "Używana",
+      "ConditionNew": "Nowa",
+      "NoImage": "Brak zdjęcia",
+      "ShowMore": "Pokaż jeszcze {count}",
+      "ShowLess": "Pokaż mniej",
+      "ShowingResults": "Wyświetlono <strong>{count}</strong> wyników",
+      "ShowingMatchingMachines": "Wyświetlono <strong>{visible}</strong> z <strong>{total}</strong> pasujących maszyn"
+    },
+
+    "ProductDetails": {
+      "MachineFallback": "Maszyna",
+      "ConditionUsed": "Używana",
+      "ConditionNew": "Nowa",
+      "NoImage": "Brak dostępnego zdjęcia",
+      "Video": "Wideo",
+      "VideoUnavailable": "Wideo dla tej maszyny nie jest dostępne.",
+      "AboutMachine": "O tej maszynie",
+      "ViewMachine": "Zobacz maszynę"
+    },
+
+    "Messages": {
+      "UploadedMachine": "Przesłana maszyna",
+      "PossibleMatches": "{count, plural, one {Znalazłem <strong>#</strong> możliwe dopasowanie:} few {Znalazłem <strong>#</strong> możliwe dopasowania:} many {Znalazłem <strong>#</strong> możliwych dopasowań:} other {Znalazłem <strong>#</strong> możliwych dopasowań:}}",
+      "MatchingMachines": "{count, plural, one {Znalazłem <strong>#</strong> pasującą maszynę.} few {Znalazłem <strong>#</strong> pasujące maszyny.} many {Znalazłem <strong>#</strong> pasujących maszyn.} other {Znalazłem <strong>#</strong> pasujących maszyn.}}"
+    },
+
+    "Input": {
+      "Placeholder": "Zadaj pytanie...",
+      "PhotoPlaceholder": "Zapytaj o tę maszynę...",
+      "SelectedMachine": "Wybrana maszyna",
+      "RemoveImage": "Usuń obraz",
+      "AttachImage": "Dołącz obraz",
+      "SendMessage": "Wyślij wiadomość"
+    },
+
+    "Header": {
+      "Online": "Online",
+      "Close": "Zamknij asystenta"
+    },
+
+    "CategoryBrowser": {
+      "Categories": "Kategorie urządzeń",
+      "Subcategories": "Wybierz podkategorię",
+      "Machines": "Maszyny",
+      "MachinesCount": "{count, plural, one {# maszyna} few {# maszyny} many {# maszyn} other {# maszyny}}",
+      "Loading": "Ładowanie...",
+      "Empty": "Nic nie znaleziono.",
+      "Error": "Nie udało się załadować kategorii.",
+      "Back": "Wstecz"
+    }
   }
 }

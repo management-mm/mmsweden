@@ -228,3 +228,31 @@ export enum NotFoundText {
   SearchQuery = 'NotFoundText.SearchQuery',
   Category = 'NotFoundText.Category',
 }
+
+export enum AiAssistantText {
+  WelcomeTitle = 'AiAssistant.WelcomeTitle',
+  WelcomeDescription = 'AiAssistant.WelcomeDescription',
+
+  FindEquipment = 'AiAssistant.FindEquipment',
+  BrowseCategories = 'AiAssistant.BrowseCategories',
+  AboutCompany = 'AiAssistant.AboutCompany',
+
+  Home = 'AiAssistant.Home',
+  Categories = 'AiAssistant.Categories',
+  Chat = 'AiAssistant.Chat',
+
+  ProductDetailsPrompt = 'AiAssistant.ProductDetailsPrompt',
+  FindEquipmentPrompt = 'AiAssistant.FindEquipmentPrompt',
+  CompanyPrompt = 'AiAssistant.CompanyPrompt',
+
+  OpenAssistant = 'AiAssistant.OpenAssistant',
+  Close = 'AiAssistant.Close',
+
+  AssistantLabel = 'AiAssistant.AssistantLabel',
+
+  NudgeWelcomeTitle = 'AiAssistant.NudgeWelcomeTitle',
+  NudgeWelcomeText = 'AiAssistant.NudgeWelcomeText',
+  NudgeProductTitle = 'AiAssistant.NudgeProductTitle',
+  NudgeProductText = 'AiAssistant.NudgeProductText',
+  NudgeButton = 'AiAssistant.NudgeButton',
+}

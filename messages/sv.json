@@ -210,5 +210,33 @@
     "NoProductsAvailableDesc": "Det finns för närvarande inga produkter att visa.",
     "SearchQuery": "Sökfråga",
     "Category": "Kategori"
+  },
+
+  "AiAssistant": {
+    "WelcomeTitle": "Hur kan jag hjälpa dig?",
+    "WelcomeDescription": "Jag kan hjälpa dig att hitta utrustning, bläddra i vår katalog eller svara på frågor om Meat Machines Sweden.",
+    "FindEquipment": "Hitta utrustning",
+    "BrowseCategories": "Bläddra bland kategorier",
+    "AboutCompany": "Om Meat Machines Sweden",
+
+    "Home": "Hem",
+    "Categories": "Kategorier",
+    "Chat": "Chatt",
+
+    "ProductDetailsPrompt": "Berätta om den här maskinen",
+    "FindEquipmentPrompt": "Hjälp mig hitta utrustning",
+    "CompanyPrompt": "Berätta om Meat Machines Sweden",
+
+    "OpenAssistant": "Öppna AI-assistenten",
+    "AssistantLabel": "AI-assistent",
+    "Close": "Stäng",
+
+    "NudgeWelcomeTitle": "Letar du efter utrustning?",
+    "NudgeWelcomeText": "Jag kan hjälpa dig att söka i vår katalog, identifiera en maskin från ett foto eller svara på frågor.",
+
+    "NudgeProductTitle": "Frågor om den här maskinen?",
+    "NudgeProductText": "Jag kan berätta mer om modellen, hitta liknande maskiner eller söka information online.",
+
+    "NudgeButton": "Fråga AI"
   }
 }

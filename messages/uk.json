@@ -210,5 +210,33 @@
     "NoProductsAvailableDesc": "Наразі немає товарів для відображення.",
     "SearchQuery": "Пошуковий запит",
     "Category": "Категорія"
+  },
+
+  "AiAssistant": {
+    "WelcomeTitle": "Чим я можу допомогти?",
+    "WelcomeDescription": "Я можу допомогти підібрати обладнання, переглянути наш каталог або відповісти на запитання про Meat Machines Sweden.",
+    "FindEquipment": "Підібрати обладнання",
+    "BrowseCategories": "Переглянути категорії",
+    "AboutCompany": "Про Meat Machines Sweden",
+
+    "Home": "Головна",
+    "Categories": "Категорії",
+    "Chat": "Чат",
+
+    "ProductDetailsPrompt": "Розкажи про цю машину",
+    "FindEquipmentPrompt": "Допоможи мені підібрати обладнання",
+    "CompanyPrompt": "Розкажи про Meat Machines Sweden",
+
+    "OpenAssistant": "Відкрити AI-асистента",
+    "AssistantLabel": "AI-асистент",
+    "Close": "Закрити",
+
+    "NudgeWelcomeTitle": "Шукаєте обладнання?",
+    "NudgeWelcomeText": "Я можу знайти машину в каталозі, визначити обладнання за фото або відповісти на ваші запитання.",
+
+    "NudgeProductTitle": "Є питання про цю машину?",
+    "NudgeProductText": "Можу розповісти про цю модель, знайти схоже обладнання або пошукати інформацію в інтернеті.",
+
+    "NudgeButton": "Запитати AI"
   }
 }

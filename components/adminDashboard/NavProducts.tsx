@@ -35,6 +35,12 @@ const NavProducts = () => {
       iconSize: { width: 14, height: 14 },
       label: 'Filters Settings',
     },
+    {
+      href: `${adminBasePath}/seo-category-assistant`,
+      icon: IconId.SeoCategories,
+      iconSize: { width: 14, height: 14 },
+      label: 'SEO Category Assistant',
+    },
   ];
 
   const isActive = (href: string) => {

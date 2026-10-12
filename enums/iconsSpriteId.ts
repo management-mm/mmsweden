@@ -69,4 +69,5 @@ export enum IconId {
   Send = '#send',
   User = '#user',
   Building = '#building',
+  SeoCategories = '#seo-categories',
 }

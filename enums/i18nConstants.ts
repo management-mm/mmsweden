@@ -332,3 +332,9 @@ export enum AiAssistantText {
 
   AboutCompanyDescription = 'AiAssistant.AboutCompanyDescription',
 }
+
+export enum ReleaseFinans {
+  Title = 'ReleaseFinans.Title',
+  Description = 'ReleaseFinans.Description',
+  Highlight = 'ReleaseFinans.Highlight',
+}

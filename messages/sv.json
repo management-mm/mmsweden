@@ -295,5 +295,10 @@
     "FindEquipmentDescription": "Beskriv vad du behöver så hjälper jag dig att hitta rätt",
     "BrowseCategoriesDescription": "Bläddra snabbt bland tillgänglig utrustning",
     "AboutCompanyDescription": "Leverans, kontaktuppgifter, tjänster och företagsinformation"
+  },
+
+  "ReleaseFinans": {
+    "Title": "En <accent>smidig</accent> <end>affär</end>",
+    "Description": "Vi ger företag förutsättningar att utvecklas genom <accent>smidig finansiering</accent>."
   }
 }

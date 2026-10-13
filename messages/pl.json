@@ -295,5 +295,10 @@
     "FindEquipmentDescription": "Opisz swoje potrzeby — pomogę znaleźć odpowiedni sprzęt",
     "BrowseCategoriesDescription": "Szybko przeglądaj dostępne urządzenia",
     "AboutCompanyDescription": "Dostawa, kontakt, usługi i informacje o firmie"
+  },
+
+  "ReleaseFinans": {
+    "Title": "<accent>Proste</accent> <end>rozwiązanie</end>",
+    "Description": "Pomagamy firmom rozwijać się dzięki <accent>elastycznym rozwiązaniom finansowym</accent>."
   }
 }

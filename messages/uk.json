@@ -295,5 +295,10 @@
     "FindEquipmentDescription": "Опишіть завдання — я допоможу підібрати обладнання",
     "BrowseCategoriesDescription": "Швидкий перехід до потрібного обладнання",
     "AboutCompanyDescription": "Доставка, контакти, послуги та інформація про компанію"
+  },
+
+  "ReleaseFinans": {
+    "Title": "<accent>Просте</accent> <end>рішення</end>",
+    "Description": "Допомагаємо компаніям розвиватися завдяки <accent>гнучким рішенням із фінансування</accent>."
   }
 }

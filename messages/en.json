@@ -296,5 +296,10 @@
     "FindEquipmentDescription": "Describe what you need — I’ll help you find it",
     "BrowseCategoriesDescription": "Quickly browse available equipment",
     "AboutCompanyDescription": "Delivery, contacts, services and company information"
+  },
+
+  "ReleaseFinans": {
+    "Title": "A <accent>simple</accent> business <end>solution</end>",
+    "Description": "We help businesses grow through <accent>flexible financing</accent>."
   }
 }

@@ -296,5 +296,10 @@
     "FindEquipmentDescription": "Опишите задачу — я помогу подобрать оборудование",
     "BrowseCategoriesDescription": "Быстрый переход к нужному оборудованию",
     "AboutCompanyDescription": "Доставка, контакты, услуги и информация о компании"
+  },
+
+  "ReleaseFinans": {
+    "Title": "<accent>Простое</accent> <end>решение</end>",
+    "Description": "Помогаем компаниям развиваться благодаря <accent>гибким решениям по финансированию</accent>."
   }
 }

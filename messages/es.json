@@ -295,5 +295,10 @@
     "FindEquipmentDescription": "Describa lo que necesita y le ayudaré a encontrarlo",
     "BrowseCategoriesDescription": "Explore rápidamente los equipos disponibles",
     "AboutCompanyDescription": "Entrega, contactos, servicios e información de la empresa"
+  },
+
+  "ReleaseFinans": {
+    "Title": "Una solución <end><accent>sencilla</accent></end>",
+    "Description": "Ayudamos a las empresas a crecer mediante <accent>una financiación flexible</accent>."
   }
 }

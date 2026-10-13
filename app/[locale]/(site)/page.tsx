@@ -4,6 +4,7 @@ import AboutUs from '@components/home/aboutUs/AboutUs';
 import Hero from '@components/home/hero/Hero';
 import Industries from '@components/home/industries/Industries';
 import LatestArrivals from '@components/home/latestArrivals/LatestArrivals';
+import ReleaseFinans from '@components/home/releaseFinans/ReleaseFinans';
 import SellToUs from '@components/home/sellToUs/SellToUs';
 
 import type { AppLocale } from '@i18n/config';
@@ -58,6 +59,7 @@ const HomePage = async ({ params }: Props) => {
       <Hero />
       <Industries />
       <AboutUs />
+      <ReleaseFinans />
       <SellToUs />
       <LatestArrivals locale={locale} />
     </>

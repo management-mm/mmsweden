@@ -298,7 +298,7 @@
   },
 
   "ReleaseFinans": {
-    "Title": "Una solución <end><accent>sencilla</accent></end>",
+    "Title": "Una <accent>solución</accent> <end>sencilla</end>",
     "Description": "Ayudamos a las empresas a crecer mediante <accent>una financiación flexible</accent>."
   }
 }

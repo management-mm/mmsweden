@@ -38,14 +38,21 @@ const ReleaseFinansSection = () => {
     >
       <ReleaseFinansIcon className="h-[38px] w-auto shrink-0" />
 
-      <div className="flex flex-col gap-[3px] text-white">
-        <span className="text-[12px] leading-none tracking-[0.3em]">
-          RELEASE
-        </span>
+      <div
+        aria-hidden="true"
+        className="grid grid-cols-7 gap-x-[4px] gap-y-[3px] text-[12px] leading-none font-normal text-white"
+      >
+        {'RELEASE'.split('').map((letter, index) => (
+          <span key={`release-${index}`} className="text-center">
+            {letter}
+          </span>
+        ))}
 
-        <span className="text-[12px] leading-none tracking-[0.45em]">
-          FINANS
-        </span>
+        {'FINANS'.split('').map((letter, index) => (
+          <span key={`finans-${index}`} className="text-center">
+            {letter}
+          </span>
+        ))}
       </div>
     </a>
   );

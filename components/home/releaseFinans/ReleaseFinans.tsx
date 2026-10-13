@@ -1,24 +1,27 @@
 import { ReactNode } from 'react';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import ReleaseFinansIcon from '@components/icons/ReleaseFinansIcon';
 
 const ReleaseFinansSection = () => {
   const t = useTranslations('ReleaseFinans');
+  const locale = useLocale();
 
-  const titleAccent = (chunks: ReactNode) => (
-    <span className="block w-fit font-extrabold text-[#E9A02D] italic [-webkit-text-stroke:0.1px_#8B5A2B]">
+  const titleAccent = (chunks: React.ReactNode) => (
+    <span
+      className={`font-extrabold text-[#E9A02D] italic [-webkit-text-stroke:0.1px_#8B5A2B] ${locale === 'en' ? 'inline' : 'block w-fit'} `}
+    >
       {chunks}
     </span>
   );
 
-  const titleEnd = (chunks: ReactNode) => (
-    <span className="whitespace-nowrap">
+  const titleEnd = (chunks: React.ReactNode) => (
+    <span className="inline-block whitespace-nowrap">
       {chunks}
       <span
         aria-hidden="true"
-        className="ml-[2px] inline-block size-[0.12em] bg-[#E9A02D]"
+        className="ml-[2px] inline-block size-[0.11em] bg-[#E9A02D]"
       />
     </span>
   );
@@ -54,8 +57,9 @@ const ReleaseFinansSection = () => {
       <div className="container">
         {/* Mobile */}
         <div className="overflow-hidden rounded-[4px] md:hidden">
+          {/* Image with title */}
           <div
-            className="relative h-[190px] bg-cover bg-[position:15%_center]"
+            className="relative h-[210px] bg-cover bg-[position:15%_center] sm:h-[250px]"
             style={{
               backgroundImage: "url('/images/home/release-finans.webp')",
             }}
@@ -64,12 +68,14 @@ const ReleaseFinansSection = () => {
               {t.rich('Title', {
                 accent: titleAccent,
                 end: titleEnd,
+                break: () => <br />,
               })}
             </h2>
           </div>
 
-          <div className="flex flex-col items-end gap-5 bg-[#062E49] px-6 py-6 text-right">
-            <p className="text-[16px] leading-[1.4] text-white">
+          {/* Description and logo */}
+          <div className="flex flex-col items-end gap-6 bg-[#062E49] px-5 py-7 text-right">
+            <p className="max-w-[310px] text-[15px] leading-[1.5] text-white">
               {t.rich('Description', {
                 accent: descriptionAccent,
               })}
@@ -89,10 +95,11 @@ const ReleaseFinansSection = () => {
           }}
         >
           <div className="absolute inset-0 flex items-center justify-between px-[3%]">
-            <h2 className="w-fit max-w-[40%] min-w-0 text-left text-[clamp(18px,2.2vw,32px)] leading-[1.05] font-light text-[#072F49]">
+            <h2 className="w-fit max-w-[45%] min-w-0 text-left text-[clamp(18px,2.2vw,32px)] leading-[1.05] font-light text-[#072F49]">
               {t.rich('Title', {
                 accent: titleAccent,
                 end: titleEnd,
+                break: () => <br />,
               })}
             </h2>
 

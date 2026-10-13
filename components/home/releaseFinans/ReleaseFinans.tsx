@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 import { useLocale, useTranslations } from 'next-intl';
 
 import ReleaseFinansIcon from '@components/icons/ReleaseFinansIcon';

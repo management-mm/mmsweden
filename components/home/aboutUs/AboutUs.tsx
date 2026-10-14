@@ -10,7 +10,7 @@ const AboutUs = async () => {
   const locale = await getLocale();
 
   return (
-    <section className="pb-[48px] md:pb-[84px]">
+    <section>
       <div className="container">
         {/* Section heading */}
         <div className="text-center">

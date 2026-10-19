@@ -70,4 +70,12 @@ export enum IconId {
   User = '#user',
   Building = '#building',
   SeoCategories = '#seo-categories',
+  Dashboard = '#dashboard',
+  Leads = '#leads',
+  Sales = '#sales',
+  Deals = '#deals',
+  Quotations = '#quotations',
+  Tasks = '#tasks',
+  Statistic = '#statistic',
+  Communications = '#communications',
 }

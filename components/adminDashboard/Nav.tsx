@@ -1,4 +1,5 @@
 import Block from './Block';
+import NavCrm from './NavCrm';
 import NavGeneral from './NavGeneral';
 import NavProducts from './NavProducts';
 
@@ -7,6 +8,9 @@ const Nav = () => {
     <div className="mb-[32px]">
       <Block intent="nav" title="Products">
         <NavProducts />
+      </Block>
+      <Block intent="nav" title="CRM">
+        <NavCrm />
       </Block>
       <Block intent="nav" title="General">
         <NavGeneral />

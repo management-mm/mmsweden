@@ -290,7 +290,7 @@ export default function LeadDetailsDrawer({ id, onClose, onChanged }: Props) {
       window.clearTimeout(timer);
       controller.abort();
     };
-  }, [id, lead?._id, lead?.assignedToId, managerSearch, tab]);
+  }, [id, lead, managerSearch, tab]);
 
   // -------------------------------
   // Close with Escape

@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  type ChangeEvent,
-  type FocusEvent,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { type ChangeEvent, useEffect, useRef, useState } from 'react';
 
 interface DecimalInputProps {
   value: number;
@@ -77,7 +71,7 @@ export default function DecimalInput({
     }
   }
 
-  function handleBlur(_event: FocusEvent<HTMLInputElement>) {
+  function handleBlur() {
     isEditing.current = false;
 
     const parsed = Number(draft.replace(',', '.'));

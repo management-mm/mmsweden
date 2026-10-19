@@ -23,8 +23,6 @@ import {
 
 import type { LeadStatus, LeadType } from '../leads/crm-api';
 
-const NAVY = '#002b49';
-
 const STATUS_ITEMS: {
   key: LeadStatus;
   label: string;

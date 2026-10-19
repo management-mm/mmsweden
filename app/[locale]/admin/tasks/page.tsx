@@ -398,7 +398,7 @@ export default function TasksPage() {
     setPage(1);
   };
 
-  const onSaved = (_task: CrmTask) => {
+  const onSaved = () => {
     setEditorOpen(false);
     setEditingTask(null);
 

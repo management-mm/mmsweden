@@ -14,9 +14,11 @@ const MobileMenuDrawer = dynamic(() => import('./MobileMenuDrawer'), {
 
 const MobileHeaderShell = () => {
   const [isOpen, setIsOpen] = useState(false);
+
   const { searchValue, setSearchValue, clearSearch, commitSearch } =
     useSearchKeyword({
       enabled: true,
+      syncOnChange: false,
     });
 
   const openMobileMenu = useCallback(() => {
@@ -39,9 +41,7 @@ const MobileHeaderShell = () => {
         />
       </div>
 
-      {isOpen ? (
-        <MobileMenuDrawer isOpen={isOpen} onClose={closeMobileMenu} />
-      ) : null}
+      {isOpen && <MobileMenuDrawer isOpen={isOpen} onClose={closeMobileMenu} />}
     </div>
   );
 };

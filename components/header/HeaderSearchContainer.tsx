@@ -10,6 +10,7 @@ const HeaderSearchContainer = () => {
 
   const { searchValue, setSearchValue, commitSearch } = useSearchKeyword({
     enabled: isDesktop,
+    syncOnChange: false,
   });
 
   return (

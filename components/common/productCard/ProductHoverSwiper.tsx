@@ -6,6 +6,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import Image from 'next/image';
 import 'swiper/css';
 
+import styles from './ProductHoverSwiper.module.css';
+
 import NaviArrowSlider from '../NaviArrowSlider';
 
 import useSwiperNavigation from '@hooks/useSwiperNavigation';
@@ -22,18 +24,18 @@ const ProductHoverSwiper: FC<Props> = ({ photos, alt, onImageClick }) => {
   const { handlePrev, handleNext, onSwiperInit } = useSwiperNavigation();
 
   return (
-    <div className="absolute inset-0 z-10">
+    <div className="absolute inset-0 z-10 max-w-full min-w-0 overflow-hidden">
       <Swiper
         onSwiper={onSwiperInit}
         slidesPerView={1}
         spaceBetween={0}
-        className="h-[218px]"
+        className={`h-[218px] w-full max-w-full min-w-0 ${styles.swiper}`}
       >
         {photos.map((photo, index) => (
-          <SwiperSlide key={`${photo}-${index}`} className="photo-slide">
+          <SwiperSlide key={`${photo}-${index}`} className={styles.slide}>
             <button
               type="button"
-              className="relative block h-[218px] w-full overflow-hidden rounded-[4px]"
+              className="relative block h-[218px] w-full min-w-0 overflow-hidden rounded-[4px]"
               onClick={() => onImageClick(index)}
             >
               <Image

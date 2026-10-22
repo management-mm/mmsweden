@@ -4,6 +4,7 @@ import { memo } from 'react';
 
 import type { IProduct } from '@interfaces/IProduct';
 import clsx from 'clsx';
+import Image from 'next/image';
 
 import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
@@ -33,13 +34,15 @@ const ProductMenuItem = ({ product }: IProductMenuItemProps) => {
         'border-gray-200 bg-white hover:border-gray-300'
       )}
     >
-      <div className="flex h-[88px] w-[88px] shrink-0 items-center justify-center overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
-        <img
+      <div className="relative flex h-[88px] w-[88px] shrink-0 items-center justify-center overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
+        <Image
           src={imageSrc}
           alt={productName}
           width={88}
           height={88}
-          loading="lazy"
+          sizes="88px"
+          quality={75}
+          loading="eager"
           decoding="async"
           className="h-full w-full object-contain p-2"
         />

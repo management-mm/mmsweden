@@ -41,16 +41,24 @@ const Product = async ({
       <Breadcrumb
         category={category}
         subcategory={subcategory}
-        product={productName ? { label: productName } : undefined}
+        product={
+          productName
+            ? {
+                label: productName,
+              }
+            : undefined
+        }
       />
 
       <article className="w-full min-w-0 pb-[48px]">
-        <h1 className="mb-[22px] max-w-full text-center text-[22px] font-bold break-words md:text-start">
+        <h1 className="mb-[22px] max-w-full text-center text-[22px] font-bold break-words lg:text-start">
           {productName}
         </h1>
 
-        <div className="w-full min-w-0 gap-[30px] pb-[22px] md:flex md:items-start">
-          <div className="mb-[22px] w-full max-w-full min-w-0 md:w-auto">
+        {/* MAIN PRODUCT CONTENT */}
+        <div className="w-full min-w-0 pb-[22px] lg:flex lg:items-start lg:gap-[30px]">
+          {/* PRODUCT GALLERY */}
+          <div className="mb-[22px] w-full max-w-full min-w-0 lg:mb-0 lg:w-[754px] lg:shrink-0">
             {photos && photos.length > 1 ? (
               <Slider alt={productName} photos={photos} />
             ) : (
@@ -63,20 +71,23 @@ const Product = async ({
               )
             )}
 
+            {/* DESKTOP VIDEO */}
             {video && (
-              <div className="hidden max-w-full min-w-0 md:block">
+              <div className="hidden max-w-full min-w-0 lg:block">
                 <Video video={video} />
               </div>
             )}
           </div>
 
-          <div className="max-w-full min-w-0">
+          {/* PRODUCT DETAILS */}
+          <div className="w-full max-w-full min-w-0 lg:flex-1">
             <Details isLoading={false} locale={locale} product={product} />
           </div>
         </div>
 
+        {/* MOBILE AND TABLET VIDEO */}
         {video && (
-          <div className="w-full min-w-0 md:hidden">
+          <div className="w-full max-w-full min-w-0 lg:hidden">
             <Video video={video} />
           </div>
         )}

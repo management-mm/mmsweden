@@ -5,6 +5,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import type { IProduct } from '@interfaces/IProduct';
 import 'swiper/css';
 
+import styles from './LatestArrivalsCarousel.module.css';
+
 import DecorativeLine from '@components/common/DecorativeLine';
 import SvgIcon from '@components/common/SvgIcon';
 import ProductCard from '@components/common/productCard/ProductCard';
@@ -65,10 +67,12 @@ const LatestArrivalsCarousel = ({ products, locale, title }: Props) => {
 
         <Swiper
           onSwiper={onSwiperInit}
-          style={{ width: 'calc(49% + 50vw)' }}
+          style={{
+            width: 'calc(49% + 50vw)',
+          }}
           slidesPerView="auto"
           spaceBetween={10}
-          className="slider"
+          className={`slider ${styles.carousel}`}
           breakpoints={{
             768: {
               spaceBetween: 30,
@@ -76,11 +80,11 @@ const LatestArrivalsCarousel = ({ products, locale, title }: Props) => {
           }}
         >
           {products.map(product => (
-            <SwiperSlide key={product._id}>
+            <SwiperSlide key={product._id} className={styles.slide}>
               <ProductCard
                 locale={locale}
                 product={product}
-                className="w-[296px] md:w-[264px] lg:w-[264px]"
+                className="w-full"
               />
             </SwiperSlide>
           ))}

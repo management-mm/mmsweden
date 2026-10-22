@@ -1,0 +1,13 @@
+.swiper {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.swiper :global(.swiper-slide) {
+  width: 100% !important;
+  min-width: 0;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}

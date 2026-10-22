@@ -1,0 +1,29 @@
+/* Main product gallery */
+
+.mainSwiper {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.mainSwiper :global(.swiper-slide) {
+  width: 100% !important;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Product thumbnails */
+
+.thumbsSwiper {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.thumbsSwiper :global(.swiper-slide) {
+  width: calc((100% - 30px) / 4) !important;
+  min-width: 0;
+  box-sizing: border-box;
+}

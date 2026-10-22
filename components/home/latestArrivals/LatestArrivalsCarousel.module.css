@@ -1,0 +1,19 @@
+.carousel {
+  min-width: 0;
+  max-width: none;
+  overflow: hidden;
+}
+
+/* Only outer product slides */
+.slide {
+  width: min(296px, 100%) !important;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+/* Tablet and desktop */
+@media (min-width: 768px) {
+  .slide {
+    width: 264px !important;
+  }
+}

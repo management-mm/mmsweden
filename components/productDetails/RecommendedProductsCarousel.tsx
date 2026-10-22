@@ -5,6 +5,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import type { IProduct } from '@interfaces/IProduct';
 import 'swiper/css';
 
+import styles from './RecommendedProductsCarousel.module.css';
+
 import DecorativeLine from '@components/common/DecorativeLine';
 import NaviArrowSlider from '@components/common/NaviArrowSlider';
 import ProductCard from '@components/common/productCard/ProductCard';
@@ -23,7 +25,7 @@ const RecommendedProductsCarousel = ({ products, locale, title }: Props) => {
   const { handlePrev, handleNext, onSwiperInit } = useSwiperNavigation();
 
   return (
-    <section aria-labelledby="recommended-products-heading">
+    <section aria-labelledby="recommended-products-heading" className="min-w-0">
       <div className="container">
         <div className="relative mb-[22px] flex flex-wrap items-end justify-between gap-[12px] md:flex-nowrap">
           <h2
@@ -43,20 +45,24 @@ const RecommendedProductsCarousel = ({ products, locale, title }: Props) => {
 
         <Swiper
           onSwiper={onSwiperInit}
-          style={{ width: 'calc(49% + 50vw)' }}
+          style={{
+            width: 'calc(49% + 50vw)',
+          }}
           slidesPerView="auto"
           spaceBetween={10}
-          className="slider"
+          className={`slider ${styles.carousel}`}
           breakpoints={{
-            768: { spaceBetween: 30 },
+            768: {
+              spaceBetween: 30,
+            },
           }}
         >
           {products.map(product => (
-            <SwiperSlide key={product._id}>
+            <SwiperSlide key={product._id} className={styles.slide}>
               <ProductCard
                 locale={locale}
                 product={product}
-                className="w-[296px] md:w-[264px]"
+                className="w-full"
               />
             </SwiperSlide>
           ))}

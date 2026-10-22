@@ -37,51 +37,46 @@ const Product = async ({
   );
 
   return (
-    <div className={cn('container', 'pt-[12px] md:pt-[22px]')}>
+    <div className={cn('container w-full min-w-0', 'pt-[12px] md:pt-[22px]')}>
       <Breadcrumb
         category={category}
         subcategory={subcategory}
-        product={
-          productName
-            ? {
-                label: productName,
-              }
-            : undefined
-        }
+        product={productName ? { label: productName } : undefined}
       />
 
-      <article className="pb-[48px]">
-        <h1 className="mb-[22px] text-center text-[22px] font-bold md:text-start">
+      <article className="w-full min-w-0 pb-[48px]">
+        <h1 className="mb-[22px] max-w-full text-center text-[22px] font-bold break-words md:text-start">
           {productName}
         </h1>
 
-        <div className="gap-[30px] pb-[22px] md:flex md:items-start">
-          <div className="mb-[22px]">
+        <div className="w-full min-w-0 gap-[30px] pb-[22px] md:flex md:items-start">
+          <div className="mb-[22px] w-full max-w-full min-w-0 md:w-auto">
             {photos && photos.length > 1 ? (
               <Slider alt={productName} photos={photos} />
             ) : (
               photos?.[0] && (
                 <img
-                  className="rounded-[4px]"
+                  className="block h-auto w-full max-w-full rounded-[4px] object-contain"
                   src={photos[0]}
                   alt={productName}
-                  width="100%"
                 />
               )
             )}
 
             {video && (
-              <div className="hidden md:block">
+              <div className="hidden max-w-full min-w-0 md:block">
                 <Video video={video} />
               </div>
             )}
           </div>
 
-          <Details isLoading={false} locale={locale} product={product} />
+          <div className="max-w-full min-w-0">
+            <Details isLoading={false} locale={locale} product={product} />
+          </div>
         </div>
 
         {video && (
-          <div className="md:hidden">
+          <div className="w-full min-w-0 md:hidden">
             <Video video={video} />
           </div>
         )}

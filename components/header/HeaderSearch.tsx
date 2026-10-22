@@ -3,8 +3,9 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
-import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
+
+import ProductsListMenu from './ProductsListMenu';
 
 import SvgIcon from '@components/common/SvgIcon';
 
@@ -12,10 +13,6 @@ import useOutsideAlerter from '@hooks/useOutsideAlerter';
 
 import { Placeholder } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
-
-const ProductsListMenu = dynamic(() => import('./ProductsListMenu'), {
-  ssr: false,
-});
 
 type HeaderSearchProps = {
   value: string;
@@ -61,6 +58,7 @@ export default function HeaderSearch({
     if (value.trim()) {
       setIsMenuOpen(true);
     }
+
     onFocus?.();
   };
 
@@ -103,6 +101,7 @@ export default function HeaderSearch({
         onKeyDown={handleKeyDown}
         placeholder={t(Placeholder.Search)}
         className={inputClassName}
+        autoComplete="off"
       />
 
       <button
@@ -121,7 +120,7 @@ export default function HeaderSearch({
 
       {isMenuOpen && value.trim().length > 0 && (
         <div ref={menuRef}>
-          <ProductsListMenu className={productsMenuClassName} />
+          <ProductsListMenu keyword={value} className={productsMenuClassName} />
         </div>
       )}
     </div>

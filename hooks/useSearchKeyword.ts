@@ -1,52 +1,65 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+'use client';
+
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 type UseSearchKeywordOptions = {
   enabled?: boolean;
   debounceMs?: number;
+  syncOnChange?: boolean;
 };
 
 export default function useSearchKeyword({
   enabled = true,
   debounceMs = 400,
+  syncOnChange = true,
 }: UseSearchKeywordOptions = {}) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const searchParamsString = useMemo(
-    () => searchParams.toString(),
-    [searchParams]
-  );
   const keywordFromUrl = searchParams.get('keyword') ?? '';
+
+  const searchParamsString = searchParams.toString();
+
   const [searchValue, setSearchValue] = useState(keywordFromUrl);
 
-  const skipNextDebounceRef = useRef(false);
-  const lastSyncedValueRef = useRef(keywordFromUrl);
+  const pendingUrlKeywordRef = useRef<string | null>(null);
 
+  // Keep input synchronized with external URL changes,
+  // without overwriting newer user input after a commit.
   useEffect(() => {
     if (!enabled) return;
 
-    if (keywordFromUrl === lastSyncedValueRef.current) {
-      return;
+    const pendingKeyword = pendingUrlKeywordRef.current;
+
+    if (pendingKeyword !== null) {
+      pendingUrlKeywordRef.current = null;
+
+      if (pendingKeyword === keywordFromUrl) {
+        return;
+      }
     }
 
     setSearchValue(prev => (prev === keywordFromUrl ? prev : keywordFromUrl));
   }, [keywordFromUrl, enabled]);
 
+  // Update URL only when explicitly requested,
+  // or when legacy syncOnChange mode is enabled.
   const syncToUrl = useCallback(
     (rawValue: string) => {
       if (!enabled) return;
 
       const trimmedValue = rawValue.trim();
-      const currentKeyword = searchParams.get('keyword') ?? '';
-
-      if (trimmedValue === currentKeyword) return;
-
-      lastSyncedValueRef.current = trimmedValue;
 
       const params = new URLSearchParams(searchParamsString);
+
+      const currentKeyword = params.get('keyword') ?? '';
+
+      if (trimmedValue === currentKeyword) {
+        return;
+      }
 
       if (trimmedValue) {
         params.set('keyword', trimmedValue);
@@ -55,18 +68,22 @@ export default function useSearchKeyword({
       }
 
       const queryString = params.toString();
+
       const nextUrl = queryString ? `${pathname}?${queryString}` : pathname;
 
-      router.replace(nextUrl, { scroll: false });
+      pendingUrlKeywordRef.current = trimmedValue;
+
+      router.replace(nextUrl, {
+        scroll: false,
+      });
     },
-    [enabled, pathname, router, searchParams, searchParamsString]
+    [enabled, pathname, router, searchParamsString]
   );
 
+  // Optional legacy behavior:
+  // synchronize URL while typing.
   useEffect(() => {
-    if (!enabled) return;
-
-    if (skipNextDebounceRef.current) {
-      skipNextDebounceRef.current = false;
+    if (!enabled || !syncOnChange) {
       return;
     }
 
@@ -77,16 +94,16 @@ export default function useSearchKeyword({
     return () => {
       window.clearTimeout(timeoutId);
     };
-  }, [searchValue, syncToUrl, debounceMs, enabled]);
+  }, [searchValue, syncToUrl, debounceMs, enabled, syncOnChange]);
 
+  // Clear both input and URL.
   const clearSearch = useCallback(() => {
-    skipNextDebounceRef.current = true;
     setSearchValue('');
     syncToUrl('');
   }, [syncToUrl]);
 
+  // Submit search immediately on Enter or button click.
   const commitSearch = useCallback(() => {
-    skipNextDebounceRef.current = true;
     syncToUrl(searchValue);
   }, [searchValue, syncToUrl]);
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { type FC } from 'react';
+import { memo } from 'react';
 
 import type { IProduct } from '@interfaces/IProduct';
 import clsx from 'clsx';
@@ -13,31 +13,41 @@ interface IProductMenuItemProps {
   product: IProduct;
 }
 
-const ProductMenuItem: FC<IProductMenuItemProps> = ({ product }) => {
+const ProductMenuItem = ({ product }: IProductMenuItemProps) => {
   const locale = useCurrentLocale();
+
   const { name, photos, idNumber, description } = product;
 
+  const productName = name ? getProductName(name, locale) : 'Product';
+
+  const imageSrc = photos?.[0] || '/placeholder-image.png';
+
+  const productDescription =
+    description?.[locale] || 'No description available';
+
   return (
-    <button
-      type="button"
+    <div
       className={clsx(
         'group relative flex w-full items-start gap-4 rounded-2xl border p-4 text-left transition-all duration-200',
         'hover:-translate-y-[1px] hover:shadow-md',
-
         'border-gray-200 bg-white hover:border-gray-300'
       )}
     >
       <div className="flex h-[88px] w-[88px] shrink-0 items-center justify-center overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
         <img
-          src={photos?.[0] || '/placeholder-image.png'}
-          alt={name ? getProductName(name, locale) : 'Product image'}
+          src={imageSrc}
+          alt={productName}
+          width={88}
+          height={88}
+          loading="lazy"
+          decoding="async"
           className="h-full w-full object-contain p-2"
         />
       </div>
 
       <div className="min-w-0 flex-1 md:pr-10">
         <h3 className="line-clamp-2 text-sm font-semibold tracking-[0.02em] text-gray-900 uppercase md:text-base">
-          {name && getProductName(name, locale)}
+          {productName}
         </h3>
 
         <p className="mt-2 text-sm text-gray-600">
@@ -46,11 +56,11 @@ const ProductMenuItem: FC<IProductMenuItemProps> = ({ product }) => {
         </p>
 
         <p className="mt-2 line-clamp-2 text-sm leading-5 text-gray-500">
-          {description?.[locale] || 'No description available'}
+          {productDescription}
         </p>
       </div>
-    </button>
+    </div>
   );
 };
 
-export default ProductMenuItem;
+export default memo(ProductMenuItem);

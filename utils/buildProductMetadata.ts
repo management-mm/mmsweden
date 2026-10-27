@@ -26,6 +26,52 @@ export type ProductSeoCopy = {
   };
 };
 
+const soldProductSeoCopy: Record<
+  AppLocale,
+  { titlePrefix: string; description: string }
+> = {
+  en: {
+    titlePrefix: 'Sold:',
+    description:
+      'This machine has been sold. Explore similar used food processing machinery at MM Sweden.',
+  },
+  sv: {
+    titlePrefix: 'Såld:',
+    description:
+      'Den här maskinen är såld. Se liknande begagnade livsmedelsmaskiner hos MM Sweden.',
+  },
+  de: {
+    titlePrefix: 'Verkauft:',
+    description:
+      'Diese Maschine ist verkauft. Entdecken Sie ähnliche gebrauchte Lebensmittelmaschinen bei MM Sweden.',
+  },
+  fr: {
+    titlePrefix: 'Vendu :',
+    description:
+      'Cette machine a été vendue. Découvrez des équipements alimentaires d’occasion similaires chez MM Sweden.',
+  },
+  es: {
+    titlePrefix: 'Vendido:',
+    description:
+      'Esta máquina ya se ha vendido. Descubra maquinaria alimentaria usada similar en MM Sweden.',
+  },
+  ru: {
+    titlePrefix: 'Продано:',
+    description:
+      'Эта машина продана. Посмотрите аналогичное оборудование для пищевой промышленности в MM Sweden.',
+  },
+  uk: {
+    titlePrefix: 'Продано:',
+    description:
+      'Цю машину продано. Перегляньте схоже обладнання для харчової промисловості в MM Sweden.',
+  },
+  pl: {
+    titlePrefix: 'Sprzedano:',
+    description:
+      'Ta maszyna została sprzedana. Zobacz podobne używane maszyny spożywcze w MM Sweden.',
+  },
+};
+
 const productSeoCopy: Record<AppLocale, ProductSeoCopy> = {
   en: {
     condition: {
@@ -314,6 +360,12 @@ export function buildProductMetadata({
     conditionLabel,
     productName: localizedName,
   });
+  const sold = Boolean(product.deletionDate);
+  const soldCopy = soldProductSeoCopy[locale];
+  const seoTitle = sold
+    ? `${soldCopy.titlePrefix} ${localizedName} | MM Sweden`
+    : title;
+  const seoDescription = sold ? soldCopy.description : description;
   const ogImage = product.photos?.find(
     (photo): photo is string =>
       typeof photo === 'string' && photo.trim().length > 0
@@ -321,8 +373,8 @@ export function buildProductMetadata({
 
   return {
     metadataBase: new URL(normalizedSiteUrl),
-    title,
-    description,
+    title: seoTitle,
+    description: seoDescription,
     alternates: {
       canonical: canonicalUrl,
       languages,
@@ -332,8 +384,8 @@ export function buildProductMetadata({
       follow: true,
     },
     openGraph: {
-      title,
-      description,
+      title: seoTitle,
+      description: seoDescription,
       url: canonicalUrl,
       type: 'website',
       images: ogImage
@@ -349,8 +401,8 @@ export function buildProductMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      title,
-      description,
+      title: seoTitle,
+      description: seoDescription,
       images: ogImage ? [ogImage] : [],
     },
   };

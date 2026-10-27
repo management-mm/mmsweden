@@ -20,16 +20,6 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['swiper', 'lodash'],
   },
-
-  async redirects() {
-    return [
-      {
-        source: '/begagnade-maskiner1.html',
-        destination: '/sv/all-products',
-        permanent: true,
-      },
-    ];
-  },
 };
 
 export default withNextIntl('./i18n/request.ts')(nextConfig);

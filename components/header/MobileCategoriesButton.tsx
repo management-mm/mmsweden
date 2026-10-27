@@ -2,27 +2,26 @@
 
 import { useEffect, useRef, useState } from 'react';
 
+import type { CategoryNavigationNode } from '@lib/serverCategoryNavigation';
 import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
-import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
 
 import CategoriesBurgerMenu from './CategoriesBurgerMenu';
+import CategoriesMenu from './CategoriesMenu';
 
 import useLockBodyScroll from '@hooks/useLockBodyScroll';
 
 import { Button } from '@enums/i18nConstants';
 
-const CategoriesMenu = dynamic(() => import('./CategoriesMenu'), {
-  ssr: false,
-});
-
 type MobileCategoriesButtonProps = {
+  categories: CategoryNavigationNode[];
   isSearchActive: boolean;
   onToggleBeforeOpen?: () => void;
 };
 
 export default function MobileCategoriesButton({
+  categories,
   isSearchActive,
   onToggleBeforeOpen,
 }: MobileCategoriesButtonProps) {
@@ -69,14 +68,15 @@ export default function MobileCategoriesButton({
         </span>
       </button>
 
-      {isOpen && (
+      <div className={isOpen ? undefined : 'hidden'}>
         <CategoriesMenu
+          initialCategories={categories}
           mode="header"
           isOpenHeaderMenu={isOpen}
           onCloseHeaderMenu={() => setIsOpen(false)}
           triggerRef={triggerRef}
         />
-      )}
+      </div>
     </div>
   );
 }

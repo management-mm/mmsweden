@@ -1,5 +1,6 @@
 import { cache } from 'react';
 
+import { getServerCategoryNavigation } from '@lib/serverCategoryNavigation';
 import type { Metadata } from 'next';
 
 import type { AppLocale } from '@i18n/config';
@@ -224,6 +225,35 @@ async function fetchSeoDocument(url: string): Promise<SeoDocument | null> {
   return parseSeoDocument(data, url);
 }
 
+/**
+ * The navigation and category pages must agree on what constitutes a live
+ * category. Some backend environments expose the category tree before the
+ * individual SEO endpoints are populated, resulting in a 404 for a category
+ * that is already linked from the navigation.
+ *
+ * Only fall back when the detail endpoint says 404 (or 410), never for a
+ * timeout or 5xx: genuine infrastructure failures must remain visible.
+ */
+async function getSeoDocumentFromTree(
+  categorySlug: string,
+  subcategorySlug?: string
+): Promise<SeoDocument | null> {
+  const tree = await getServerCategoryNavigation();
+  const category = tree.find(item => item.slug === categorySlug);
+
+  if (!category) return null;
+
+  const node = subcategorySlug
+    ? category.subcategories?.find(item => item.slug === subcategorySlug)
+    : category;
+
+  if (!node) return null;
+
+  // Tree nodes can include translated SEO and intro fields. parseSeoDocument
+  // keeps those fields when present and falls back to the category name when not.
+  return parseSeoDocument(node, 'seo-categories/tree');
+}
+
 const getSeoCategoryBySlug = cache(
   async (categorySlug: string): Promise<SeoDocument | null> => {
     const normalizedCategorySlug = normalizeSlug(categorySlug);
@@ -232,9 +262,11 @@ const getSeoCategoryBySlug = cache(
       return null;
     }
 
-    return fetchSeoDocument(
+    const category = await fetchSeoDocument(
       `${getApiUrl()}/seo-categories/${encodeSlug(normalizedCategorySlug)}`
     );
+
+    return category ?? getSeoDocumentFromTree(normalizedCategorySlug);
   }
 );
 
@@ -255,10 +287,15 @@ const getSeoSubcategoryBySlug = cache(
       return null;
     }
 
-    return fetchSeoDocument(
+    const subcategory = await fetchSeoDocument(
       `${getApiUrl()}/seo-categories/${encodeSlug(
         normalizedCategorySlug
       )}/${encodeSlug(normalizedSubcategorySlug)}`
+    );
+
+    return (
+      subcategory ??
+      getSeoDocumentFromTree(normalizedCategorySlug, normalizedSubcategorySlug)
     );
   }
 );

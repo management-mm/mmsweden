@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -62,7 +62,7 @@ const buildLocalizedHref = (
   return queryString ? `${nextPathname}?${queryString}` : nextPathname;
 };
 
-const LanguageSelect = () => {
+const LanguageSelectContent = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -208,5 +208,16 @@ const LanguageSelect = () => {
     </div>
   );
 };
+
+// Keep the query-dependent language options inside a narrow Suspense boundary.
+// This allows other header content (including server-rendered categories) to
+// stay in the initial HTML when Next.js pre-renders public routes.
+const LanguageSelect = () => (
+  <Suspense
+    fallback={<div aria-hidden="true" className="h-[28px] min-w-[88px]" />}
+  >
+    <LanguageSelectContent />
+  </Suspense>
+);
 
 export default LanguageSelect;

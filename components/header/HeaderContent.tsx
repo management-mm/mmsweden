@@ -1,15 +1,21 @@
+import { getServerCategoryNavigation } from '@lib/serverCategoryNavigation';
+
 import DesktopHeader from './DesktopHeader';
 import MobileHeaderShell from './MobileHeaderShell';
 
-const HeaderContent = () => {
+import type { AppLocale } from '@i18n/config';
+
+const HeaderContent = async ({ locale }: { locale: AppLocale }) => {
+  const categories = await getServerCategoryNavigation();
+
   return (
     <>
       <div className="hidden lg:block">
-        <DesktopHeader />
+        <DesktopHeader locale={locale} categories={categories} />
       </div>
 
       <div className="lg:hidden">
-        <MobileHeaderShell />
+        <MobileHeaderShell categories={categories} />
       </div>
     </>
   );

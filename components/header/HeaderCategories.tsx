@@ -2,19 +2,20 @@
 
 import { useEffect, useRef, useState } from 'react';
 
+import type { CategoryNavigationNode } from '@lib/serverCategoryNavigation';
 import { useTranslations } from 'next-intl';
-import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
 
 import CategoriesBurgerMenu from './CategoriesBurgerMenu';
+import CategoriesMenu from './CategoriesMenu';
 
 import { Button } from '@enums/i18nConstants';
 
-const CategoriesMenu = dynamic(() => import('./CategoriesMenu'), {
-  ssr: false,
-});
-
-const HeaderCategories = () => {
+const HeaderCategories = ({
+  categories,
+}: {
+  categories: CategoryNavigationNode[];
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const t = useTranslations();
@@ -42,14 +43,15 @@ const HeaderCategories = () => {
         {t(Button.Categories)}
       </button>
 
-      {isOpen && (
+      <div className={isOpen ? undefined : 'hidden'}>
         <CategoriesMenu
+          initialCategories={categories}
           mode="header"
           isOpenHeaderMenu={isOpen}
           onCloseHeaderMenu={() => setIsOpen(false)}
           triggerRef={triggerRef}
         />
-      )}
+      </div>
     </div>
   );
 };

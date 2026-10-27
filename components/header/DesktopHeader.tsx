@@ -1,10 +1,16 @@
+import type { CategoryNavigationNode } from '@lib/serverCategoryNavigation';
+
 import HeaderCategories from './HeaderCategories';
 import HeaderSearchContainer from './HeaderSearchContainer';
 import PriceQuoteBtn from './PriceQuoteBtn';
 
 import { Logo } from '@components/common/Logo';
 
-const DesktopHeader = () => {
+import type { AppLocale } from '@i18n/config';
+
+type Props = { locale: AppLocale; categories: CategoryNavigationNode[] };
+
+const DesktopHeader = ({ locale, categories }: Props) => {
   return (
     <div className="hidden bg-white lg:block">
       <div className="container">
@@ -13,7 +19,7 @@ const DesktopHeader = () => {
             <Logo />
           </div>
 
-          <HeaderCategories />
+          <HeaderCategories categories={categories} />
 
           <div className="w-full">
             <HeaderSearchContainer />

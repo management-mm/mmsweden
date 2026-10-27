@@ -1,5 +1,9 @@
 import { cache } from 'react';
 
+import {
+  getCatalogCanonicalPath,
+  hasCatalogFilters,
+} from '@lib/catalogPagination';
 import { getServerCategoryNavigation } from '@lib/serverCategoryNavigation';
 import type { Metadata } from 'next';
 
@@ -12,6 +16,7 @@ export type SearchParams = {
   title?: string;
   manufacturer?: string;
   condition?: string;
+  sort?: string;
   page?: string;
   category?: string | string[];
   industry?: string | string[];
@@ -185,24 +190,6 @@ export function normalizeArray(value?: string | string[]): string[] {
   return values
     .map(item => item.trim())
     .filter((item): item is string => item.length > 0);
-}
-
-function hasNonIndexableSearchParams(searchParams?: SearchParams): boolean {
-  if (!searchParams) {
-    return false;
-  }
-
-  const pageNumber = Number(searchParams.page);
-  const hasPagination = Number.isFinite(pageNumber) && pageNumber > 1;
-
-  return (
-    Boolean(getNonEmptyString(searchParams.title)) ||
-    Boolean(getNonEmptyString(searchParams.manufacturer)) ||
-    Boolean(getNonEmptyString(searchParams.condition)) ||
-    hasPagination ||
-    normalizeArray(searchParams.category).length > 0 ||
-    normalizeArray(searchParams.industry).length > 0
-  );
 }
 
 async function fetchSeoDocument(url: string): Promise<SeoDocument | null> {
@@ -420,10 +407,13 @@ export async function buildCategoryMetadata({
 
   return createPageMetadata({
     locale,
-    path: `/all-products/${encodeSlug(normalizedCategorySlug)}`,
+    path: getCatalogCanonicalPath(
+      `/all-products/${encodeSlug(normalizedCategorySlug)}`,
+      searchParams
+    ),
     title: seo.title,
     description: seo.description,
-    noIndex: hasNonIndexableSearchParams(searchParams),
+    noIndex: hasCatalogFilters(searchParams ?? {}),
   });
 }
 
@@ -462,11 +452,12 @@ export async function buildSubcategoryMetadata({
 
   return createPageMetadata({
     locale,
-    path: `/all-products/${encodeSlug(normalizedCategorySlug)}/${encodeSlug(
-      normalizedSubcategorySlug
-    )}`,
+    path: getCatalogCanonicalPath(
+      `/all-products/${encodeSlug(normalizedCategorySlug)}/${encodeSlug(normalizedSubcategorySlug)}`,
+      searchParams
+    ),
     title: seo.title,
     description: seo.description,
-    noIndex: hasNonIndexableSearchParams(searchParams),
+    noIndex: hasCatalogFilters(searchParams ?? {}),
   });
 }

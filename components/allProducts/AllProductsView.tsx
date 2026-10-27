@@ -1,4 +1,8 @@
 import { getProducts } from '@api/productsService';
+import {
+  getCatalogFilterQuery,
+  getCatalogPageNumber,
+} from '@lib/catalogPagination';
 import clsx from 'clsx';
 
 import FiltersAndSearch from './FiltersAndSearch';
@@ -26,6 +30,7 @@ type Props = {
     title?: string;
     manufacturer?: string;
     condition?: string;
+    sort?: string;
     page?: string;
     category: string[];
     industry: string[];
@@ -78,6 +83,7 @@ const AllProductsView = async ({
     ...(query.title ? { keyword: query.title } : {}),
     ...(query.manufacturer ? { manufacturer: query.manufacturer } : {}),
     ...(query.condition ? { condition: query.condition } : {}),
+    ...(query.sort ? { sort: query.sort } : {}),
     ...(query.category.length ? { category: query.category } : {}),
     ...(query.industry.length ? { industry: query.industry } : {}),
     ...(safeCategorySlug ? { categorySlug: safeCategorySlug } : {}),
@@ -87,11 +93,15 @@ const AllProductsView = async ({
     ...(query.filter === 'draft' ? { isDraft: true } : {}),
     ...(query.filter === 'hasNotes' ? { hasNotes: true } : {}),
 
-    page: Number(query.page || 1),
+    page: getCatalogPageNumber(query.page),
     perPage: 9,
     lang: locale,
     isAdmin,
   });
+
+  const paginationPath = `/${locale}/all-products${
+    safeCategorySlug ? `/${encodeURIComponent(safeCategorySlug)}` : ''
+  }${safeSubcategorySlug ? `/${encodeURIComponent(safeSubcategorySlug)}` : ''}`;
 
   const { category, subcategory } = await getBreadcrumbCategories(
     locale,
@@ -148,6 +158,9 @@ const AllProductsView = async ({
             }
             searchQuery={query.title}
             categoryName={subcategory?.label || category?.label || ''}
+            paginationPath={paginationPath}
+            paginationQuery={getCatalogFilterQuery(query)}
+            currentPage={getCatalogPageNumber(query.page)}
           />
 
           {isAdmin && (

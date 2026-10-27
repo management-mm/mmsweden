@@ -1,3 +1,4 @@
+import { getCatalogCanonicalPath } from '@lib/catalogPagination';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
@@ -112,9 +113,10 @@ export default async function Page({ params, searchParams }: Props) {
 
   const siteUrl = getSiteUrl();
 
-  const canonicalUrl = `${siteUrl}/${locale}/all-products/${encodeURIComponent(
-    normalizedCategorySlug
-  )}/${encodeURIComponent(normalizedSubcategorySlug)}`;
+  const canonicalUrl = `${siteUrl}/${locale}${getCatalogCanonicalPath(
+    `/all-products/${encodeURIComponent(normalizedCategorySlug)}/${encodeURIComponent(normalizedSubcategorySlug)}`,
+    resolvedSearchParams
+  )}`;
 
   const collectionPageJsonLd = buildCollectionPageSchema({
     locale,
@@ -142,6 +144,7 @@ export default async function Page({ params, searchParams }: Props) {
           title: resolvedSearchParams.title,
           manufacturer: resolvedSearchParams.manufacturer,
           condition: resolvedSearchParams.condition,
+          sort: resolvedSearchParams.sort,
           page: resolvedSearchParams.page,
           category: normalizeArray(resolvedSearchParams.category),
           industry: normalizeArray(resolvedSearchParams.industry),

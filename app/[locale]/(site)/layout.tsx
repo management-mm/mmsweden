@@ -19,7 +19,7 @@ export default async function SiteLayout({ children, params }: Props) {
   return (
     <PublicProviders locale={safeLocale}>
       <div className="bg-main font-inter">
-        <Header locale={safeLocale} />
+        <Header />
         <main>{children}</main>
         <Footer />
       </div>

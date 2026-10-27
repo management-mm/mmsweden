@@ -2,6 +2,8 @@
 
 import React, { memo } from 'react';
 
+import type { CategoryNavigationNode } from '@lib/serverCategoryNavigation';
+
 import BurgerMenu from './BurgerMenu';
 import MobileSearchBar from './MobileSearchBar';
 import PriceQuoteBtn from './PriceQuoteBtn';
@@ -10,6 +12,7 @@ import { Logo } from '@components/common/Logo';
 import LanguageSelect from '@components/common/languageSelector/LanguageSelect';
 
 type MobileHeaderProps = {
+  categories: CategoryNavigationNode[];
   openMobileMenu: () => void;
   searchValue: string;
   setSearchValue: (value: string) => void;
@@ -18,6 +21,7 @@ type MobileHeaderProps = {
 };
 
 function MobileHeader({
+  categories,
   openMobileMenu,
   searchValue,
   setSearchValue,
@@ -41,6 +45,7 @@ function MobileHeader({
       </div>
 
       <MobileSearchBar
+        categories={categories}
         value={searchValue}
         onChange={setSearchValue}
         clearSearch={clearSearch}

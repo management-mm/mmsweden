@@ -1,8 +1,15 @@
 'use client';
 
-import { type RefObject, useEffect, useMemo, useState } from 'react';
+import {
+  type RefObject,
+  useEffect,
+  useMemo,
+  useState,
+  useSyncExternalStore,
+} from 'react';
 
 import type { ISeoCategory } from '@interfaces/ISeoCategory';
+import type { CategoryNavigationNode } from '@lib/serverCategoryNavigation';
 import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
@@ -23,11 +30,16 @@ import { Filter, Title } from '@enums/i18nConstants';
 import { IconId } from '@enums/iconsSpriteId';
 
 type Props = {
+  initialCategories?: CategoryNavigationNode[];
   mode?: 'filters' | 'header' | 'mobile';
   isOpenHeaderMenu?: boolean;
   onCloseHeaderMenu?: () => void;
   triggerRef?: RefObject<HTMLElement | null>;
 };
+
+const noSubscribe = () => () => {};
+const clientSnapshot = () => true;
+const serverSnapshot = () => false;
 
 type SeoCategoryWithSubcategories = ISeoCategory & {
   subcategories?: ISeoCategory[];
@@ -46,9 +58,16 @@ export default function CategoriesMenu({
   isOpenHeaderMenu = false,
   onCloseHeaderMenu,
   triggerRef,
+  initialCategories = [],
 }: Props) {
   const locale = useCurrentLocale();
   const windowWidth = useWindowWidth();
+  // Match the server's mobile-friendly initial markup on first hydration.
+  const isHydrated = useSyncExternalStore(
+    noSubscribe,
+    clientSnapshot,
+    serverSnapshot
+  );
   const t = useTranslations();
 
   const [isOpen, setIsOpen] = useState(mode === 'filters');
@@ -56,13 +75,12 @@ export default function CategoriesMenu({
   const [hasInitializedDefaultCategory, setHasInitializedDefaultCategory] =
     useState(false);
 
-  const [categoriesTree, setCategoriesTree] = useState<
-    SeoCategoryWithSubcategories[]
-  >([]);
+  const [categoriesTree, setCategoriesTree] =
+    useState<SeoCategoryWithSubcategories[]>(initialCategories);
   const [isCategoriesTreeLoading, setIsCategoriesTreeLoading] = useState(false);
 
   const isMobileMode = mode === 'mobile';
-  const isMobileView = isMobileMode || windowWidth < 1178;
+  const isMobileView = isMobileMode || !isHydrated || windowWidth < 1178;
   const isHeaderMode = mode === 'header';
   const isFiltersMode = mode === 'filters';
   const isDesktopHeaderMenu = isHeaderMode && !isMobileView;
@@ -82,7 +100,7 @@ export default function CategoriesMenu({
   useEffect(() => {
     const apiUrl = getApiUrl();
 
-    if (!apiUrl) return;
+    if (!apiUrl || initialCategories.length > 0) return;
 
     let cancelled = false;
 
@@ -117,7 +135,7 @@ export default function CategoriesMenu({
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [initialCategories.length]);
 
   const displayCategories =
     categoriesTree.length > 0 ? categoriesTree : categories;
@@ -133,7 +151,13 @@ export default function CategoriesMenu({
   }, [categoriesTree]);
 
   useEffect(() => {
-    if (hasInitializedDefaultCategory || displayCategories.length === 0) return;
+    if (
+      !isHydrated ||
+      hasInitializedDefaultCategory ||
+      displayCategories.length === 0
+    ) {
+      return;
+    }
 
     if (isDesktopHeaderMenu) {
       setHasInitializedDefaultCategory(true);
@@ -142,7 +166,12 @@ export default function CategoriesMenu({
 
     setSelectedParentId(String(displayCategories[0]._id));
     setHasInitializedDefaultCategory(true);
-  }, [displayCategories, hasInitializedDefaultCategory, isDesktopHeaderMenu]);
+  }, [
+    displayCategories,
+    hasInitializedDefaultCategory,
+    isDesktopHeaderMenu,
+    isHydrated,
+  ]);
 
   useEffect(() => {
     if (isFiltersMode) {
@@ -168,14 +197,6 @@ export default function CategoriesMenu({
     triggerRef ? [triggerRef] : []
   );
 
-  const selectedParent = useMemo(
-    () =>
-      displayCategories.find(
-        category => String(category._id) === selectedParentId
-      ),
-    [displayCategories, selectedParentId]
-  );
-
   const selectedSubcategories =
     selectedParentId && subcategoriesMap[selectedParentId]
       ? subcategoriesMap[selectedParentId]
@@ -191,6 +212,8 @@ export default function CategoriesMenu({
     }
   };
 
+  const hasServerCategories = categoriesTree.length > 0;
+
   const mobileMenuContent = (
     <MobileCategoriesMenu
       categories={displayCategories}
@@ -200,17 +223,17 @@ export default function CategoriesMenu({
       setSelectedParentId={setSelectedParentId}
       locale={locale}
       mode={mode}
-      isCategoriesLoading={isCategoriesLoading || isCategoriesTreeLoading}
-      isSubcategoriesLoading={isSubcategoriesLoading}
+      isCategoriesLoading={
+        !hasServerCategories && (isCategoriesLoading || isCategoriesTreeLoading)
+      }
+      isSubcategoriesLoading={
+        isSubcategoriesLoading && !subcategoriesMap[selectedParentId ?? '']
+      }
     />
   );
 
-  if (categoriesError || subcategoriesError) {
+  if (!hasServerCategories && (categoriesError || subcategoriesError)) {
     return <div>Failed to load categories</div>;
-  }
-
-  if (isHeaderMode && !isOpenHeaderMenu) {
-    return null;
   }
 
   if (isFiltersMode) {
@@ -263,7 +286,8 @@ export default function CategoriesMenu({
             {mobileMenuContent}
           </div>
         </div>
-      ) : isCategoriesLoading || isCategoriesTreeLoading ? (
+      ) : !hasServerCategories &&
+        (isCategoriesLoading || isCategoriesTreeLoading) ? (
         <div className="w-[420px] overflow-hidden rounded-[18px] border border-black/5 bg-white py-[14px] shadow-[0_18px_50px_rgba(15,23,42,0.14)]">
           <DesktopCategoriesMenuSkeleton />
         </div>
@@ -305,52 +329,70 @@ export default function CategoriesMenu({
             })}
           </div>
 
-          {selectedParentId && (
-            <div className="absolute top-0 left-[calc(100%+16px)] w-[460px] overflow-hidden rounded-[18px] border border-black/5 bg-white p-[24px] shadow-[0_18px_50px_rgba(15,23,42,0.14)]">
-              {isSubcategoriesLoading ? (
-                <DesktopCategoriesContentSkeleton />
-              ) : (
-                <div className="min-w-0">
-                  <p className="mb-[24px] text-[24px] font-semibold">
-                    {selectedParent?.name[locale]}
-                  </p>
+          {displayCategories.map(category => {
+            const categoryId = String(category._id);
+            const isSelected = categoryId === selectedParentId;
+            const categorySubcategories =
+              subcategoriesMap[categoryId] ??
+              (isSelected ? selectedSubcategories : []);
+            const showLoading =
+              isSelected &&
+              isSubcategoriesLoading &&
+              !subcategoriesMap[categoryId];
 
-                  <div className="grid grid-cols-2 gap-x-[24px] gap-y-[2px]">
-                    <div className="min-w-0">
-                      <Link
-                        href={`/${locale}/all-products/${selectedParent?.slug}`}
-                        className="hover:bg-secondary block rounded-[8px] py-[8px] pl-[12px] break-words transition-colors duration-200"
-                      >
-                        {t(Title.All)}
-                      </Link>
+            return (
+              <div
+                key={categoryId}
+                className={clsx(
+                  'absolute top-0 left-[calc(100%+16px)] w-[460px] overflow-hidden rounded-[18px] border border-black/5 bg-white p-[24px] shadow-[0_18px_50px_rgba(15,23,42,0.14)]',
+                  !isSelected && 'hidden'
+                )}
+              >
+                {showLoading ? (
+                  <DesktopCategoriesContentSkeleton />
+                ) : (
+                  <div className="min-w-0">
+                    <p className="mb-[24px] text-[24px] font-semibold">
+                      {category.name[locale]}
+                    </p>
 
-                      {selectedSubcategories.slice(0, 9).map(subcategory => (
+                    <div className="grid grid-cols-2 gap-x-[24px] gap-y-[2px]">
+                      <div className="min-w-0">
                         <Link
-                          href={`/${locale}/all-products/${selectedParent?.slug}/${subcategory.slug}`}
-                          key={String(subcategory._id)}
+                          href={`/${locale}/all-products/${category.slug}`}
                           className="hover:bg-secondary block rounded-[8px] py-[8px] pl-[12px] break-words transition-colors duration-200"
                         >
-                          {subcategory.name[locale]}
+                          {t(Title.All)}
                         </Link>
-                      ))}
-                    </div>
 
-                    <div className="min-w-0">
-                      {selectedSubcategories.slice(9).map(subcategory => (
-                        <Link
-                          href={`/${locale}/all-products/${selectedParent?.slug}/${subcategory.slug}`}
-                          key={String(subcategory._id)}
-                          className="hover:bg-secondary block rounded-[8px] py-[8px] pl-[12px] break-words transition-colors duration-200"
-                        >
-                          {subcategory.name[locale]}
-                        </Link>
-                      ))}
+                        {categorySubcategories.slice(0, 9).map(subcategory => (
+                          <Link
+                            href={`/${locale}/all-products/${category.slug}/${subcategory.slug}`}
+                            key={String(subcategory._id)}
+                            className="hover:bg-secondary block rounded-[8px] py-[8px] pl-[12px] break-words transition-colors duration-200"
+                          >
+                            {subcategory.name[locale]}
+                          </Link>
+                        ))}
+                      </div>
+
+                      <div className="min-w-0">
+                        {categorySubcategories.slice(9).map(subcategory => (
+                          <Link
+                            href={`/${locale}/all-products/${category.slug}/${subcategory.slug}`}
+                            key={String(subcategory._id)}
+                            className="hover:bg-secondary block rounded-[8px] py-[8px] pl-[12px] break-words transition-colors duration-200"
+                          >
+                            {subcategory.name[locale]}
+                          </Link>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-            </div>
-          )}
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

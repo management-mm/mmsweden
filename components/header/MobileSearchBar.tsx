@@ -2,10 +2,13 @@
 
 import { useState } from 'react';
 
+import type { CategoryNavigationNode } from '@lib/serverCategoryNavigation';
+
 import HeaderSearch from './HeaderSearch';
 import MobileCategoriesButton from './MobileCategoriesButton';
 
 type Props = {
+  categories: CategoryNavigationNode[];
   value: string;
   onChange: (value: string) => void;
   clearSearch: () => void;
@@ -13,6 +16,7 @@ type Props = {
 };
 
 const MobileSearchBar = ({
+  categories,
   value,
   onChange,
   clearSearch,
@@ -24,6 +28,7 @@ const MobileSearchBar = ({
     <div className="mt-3">
       <div className="relative flex w-full items-center gap-2">
         <MobileCategoriesButton
+          categories={categories}
           isSearchActive={isSearchActive}
           onToggleBeforeOpen={() => {
             setIsSearchActive(false);

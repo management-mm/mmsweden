@@ -1,10 +1,14 @@
+import type { CategoryNavigationNode } from '@lib/serverCategoryNavigation';
+
 import HeaderCategories from './HeaderCategories';
 import HeaderSearchContainer from './HeaderSearchContainer';
 import PriceQuoteBtn from './PriceQuoteBtn';
 
 import { Logo } from '@components/common/Logo';
 
-const DesktopHeader = () => {
+type Props = { categories: CategoryNavigationNode[] };
+
+const DesktopHeader = ({ categories }: Props) => {
   return (
     <div className="hidden bg-white lg:block">
       <div className="container">
@@ -13,7 +17,7 @@ const DesktopHeader = () => {
             <Logo />
           </div>
 
-          <HeaderCategories />
+          <HeaderCategories categories={categories} />
 
           <div className="w-full">
             <HeaderSearchContainer />

@@ -153,7 +153,7 @@ export default function MobileCategoriesMenu({
   }
 
   return (
-    <>
+    <div className="pt-[24px]">
       <SearchFilter keyword={keyword} setKeyword={setKeyword} />
       <div
         className={clsx(
@@ -202,62 +202,65 @@ export default function MobileCategoriesMenu({
                   </div>
                 </button>
 
-                {isOpen && (
-                  <div className="overflow-x-hidden bg-white px-[16px] pb-[16px]">
-                    <div className="flex flex-col">
-                      {!isSearching && (
-                        <Link
-                          href={`/${locale}/all-products/${category.slug}`}
-                          className={clsx(
-                            'block rounded-[8px] py-[8px] pl-[16px] text-[14px] break-words whitespace-normal transition-colors',
-                            isActiveCategoryPage
-                              ? 'bg-secondary text-primary font-semibold'
-                              : 'hover:bg-secondary'
-                          )}
-                        >
-                          {t(Title.All)}
-                        </Link>
-                      )}
+                <div
+                  className={clsx(
+                    'overflow-x-hidden bg-white px-[16px] pb-[16px]',
+                    !isOpen && 'hidden'
+                  )}
+                >
+                  <div className="flex flex-col">
+                    {!isSearching && (
+                      <Link
+                        href={`/${locale}/all-products/${category.slug}`}
+                        className={clsx(
+                          'block rounded-[8px] py-[8px] pl-[16px] text-[14px] break-words whitespace-normal transition-colors',
+                          isActiveCategoryPage
+                            ? 'bg-secondary text-primary font-semibold'
+                            : 'hover:bg-secondary'
+                        )}
+                      >
+                        {t(Title.All)}
+                      </Link>
+                    )}
 
-                      {isSubcategoriesLoading &&
-                      categoryId === selectedParentId &&
-                      !isSearching ? (
-                        <div className="py-[8px] pl-[16px]">
-                          <div className="space-y-[10px]">
-                            <div className="h-[16px] w-[70%] animate-pulse rounded bg-slate-200" />
-                            <div className="h-[16px] w-[55%] animate-pulse rounded bg-slate-200" />
-                            <div className="h-[16px] w-[65%] animate-pulse rounded bg-slate-200" />
-                          </div>
+                    {isSubcategoriesLoading &&
+                    categoryId === selectedParentId &&
+                    !isSearching ? (
+                      <div className="py-[8px] pl-[16px]">
+                        <div className="space-y-[10px]">
+                          <div className="h-[16px] w-[70%] animate-pulse rounded bg-slate-200" />
+                          <div className="h-[16px] w-[55%] animate-pulse rounded bg-slate-200" />
+                          <div className="h-[16px] w-[65%] animate-pulse rounded bg-slate-200" />
                         </div>
-                      ) : matchedSubcategories.length > 0 ? (
-                        matchedSubcategories.map(subcategory => {
-                          const isActiveSubcategory =
-                            isActiveCategory &&
-                            subcategory.slug === activeSubcategorySlug;
+                      </div>
+                    ) : matchedSubcategories.length > 0 ? (
+                      matchedSubcategories.map(subcategory => {
+                        const isActiveSubcategory =
+                          isActiveCategory &&
+                          subcategory.slug === activeSubcategorySlug;
 
-                          return (
-                            <Link
-                              href={`/${locale}/all-products/${category.slug}/${subcategory.slug}`}
-                              key={String(subcategory._id)}
-                              className={clsx(
-                                'block rounded-[8px] py-[8px] pl-[16px] text-[14px] break-words whitespace-normal transition-colors',
-                                isActiveSubcategory
-                                  ? 'bg-primary text-secondary font-semibold'
-                                  : 'hover:bg-secondary'
-                              )}
-                            >
-                              {subcategory.name[locale]}
-                            </Link>
-                          );
-                        })
-                      ) : (
-                        <p className="px-[16px] py-[8px] text-[14px] text-[rgba(0,32,52,.6)]">
-                          Nothing found
-                        </p>
-                      )}
-                    </div>
+                        return (
+                          <Link
+                            href={`/${locale}/all-products/${category.slug}/${subcategory.slug}`}
+                            key={String(subcategory._id)}
+                            className={clsx(
+                              'block rounded-[8px] py-[8px] pl-[16px] text-[14px] break-words whitespace-normal transition-colors',
+                              isActiveSubcategory
+                                ? 'bg-primary text-secondary font-semibold'
+                                : 'hover:bg-secondary'
+                            )}
+                          >
+                            {subcategory.name[locale]}
+                          </Link>
+                        );
+                      })
+                    ) : (
+                      <p className="px-[16px] py-[8px] text-[14px] text-[rgba(0,32,52,.6)]">
+                        Nothing found
+                      </p>
+                    )}
                   </div>
-                )}
+                </div>
               </div>
             );
           })
@@ -267,6 +270,6 @@ export default function MobileCategoriesMenu({
           </p>
         )}
       </div>
-    </>
+    </div>
   );
 }

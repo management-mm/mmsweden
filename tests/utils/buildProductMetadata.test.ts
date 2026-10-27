@@ -107,6 +107,20 @@ describe('buildProductMetadata', () => {
     ]);
   });
 
+  it('keeps sold equipment indexed but does not advertise it for sale', () => {
+    const metadata = buildProductMetadata({
+      product: createProduct({ deletionDate: new Date('2026-10-01') }),
+      seoData,
+      locale: 'en',
+      siteUrl: 'https://www.mmsweden.se',
+    });
+
+    expect(metadata.title).toBe('Sold: Hobart H600 Mixer | MM Sweden');
+    expect(metadata.description).toContain('has been sold');
+    expect(metadata.openGraph?.title).toBe(metadata.title);
+    expect(metadata.robots).toMatchObject({ index: true, follow: true });
+  });
+
   it('returns noindex metadata for a missing product', () => {
     const metadata = buildNotFoundProductMetadata();
 

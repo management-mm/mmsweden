@@ -1,3 +1,7 @@
+import {
+  getCatalogCanonicalPath,
+  hasCatalogFilters,
+} from '@lib/catalogPagination';
 import type { Metadata } from 'next';
 
 import { type AppLocale, DEFAULT_LOCALE } from '@i18n/config';
@@ -7,6 +11,7 @@ export type SearchParams = {
   title?: string;
   manufacturer?: string;
   condition?: string;
+  sort?: string;
   page?: string;
   category?: string | string[];
   industry?: string | string[];
@@ -19,46 +24,6 @@ export type AllProductsSeoData = {
   h1: string;
   intro: string;
 };
-
-function normalizeString(value: unknown): string | undefined {
-  if (typeof value !== 'string') {
-    return undefined;
-  }
-
-  const normalizedValue = value.trim();
-
-  return normalizedValue || undefined;
-}
-
-function normalizeArray(value?: string | string[]): string[] {
-  const values = Array.isArray(value) ? value : value ? [value] : [];
-
-  return values
-    .map(item => item.trim())
-    .filter((item): item is string => item.length > 0);
-}
-
-function getPageNumber(value: unknown): number {
-  const normalizedValue = normalizeString(value);
-
-  if (!normalizedValue) {
-    return 1;
-  }
-
-  const pageNumber = Number(normalizedValue);
-
-  return Number.isSafeInteger(pageNumber) && pageNumber > 0 ? pageNumber : 1;
-}
-
-function hasNonIndexableFilters(searchParams: SearchParams): boolean {
-  return (
-    Boolean(normalizeString(searchParams.title)) ||
-    Boolean(normalizeString(searchParams.manufacturer)) ||
-    Boolean(normalizeString(searchParams.condition)) ||
-    normalizeArray(searchParams.category).length > 0 ||
-    normalizeArray(searchParams.industry).length > 0
-  );
-}
 
 const allProductsSeoData: Record<AppLocale, AllProductsSeoData> = {
   en: {
@@ -208,15 +173,12 @@ export function buildAllProductsMetadata({
 }: Props): Metadata {
   const seo = getAllProductsSeoData(locale);
 
-  const hasFilters = hasNonIndexableFilters(searchParams);
-  const hasPagination = getPageNumber(searchParams.page) > 1;
-
   return createPageMetadata({
     locale,
-    path,
+    path: getCatalogCanonicalPath(path, searchParams),
     title: seo.title,
     description: seo.description,
     keywords: seo.keywords,
-    noIndex: hasFilters || hasPagination,
+    noIndex: hasCatalogFilters(searchParams),
   });
 }

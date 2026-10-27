@@ -6,6 +6,7 @@ type SearchParams = {
   title?: string;
   manufacturer?: string;
   condition?: string;
+  sort?: string;
   page?: string;
   category?: string | string[];
   industry?: string | string[];
@@ -45,6 +46,7 @@ export default function AllProductsPageContent({
         title: searchParams.title,
         manufacturer: searchParams.manufacturer,
         condition: searchParams.condition,
+        sort: searchParams.sort,
         page: searchParams.page,
         category: normalizeArray(searchParams.category),
         industry: normalizeArray(searchParams.industry),

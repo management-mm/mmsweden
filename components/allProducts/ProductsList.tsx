@@ -4,6 +4,7 @@ import EmptyProductsState from './EmptyProductsState';
 import ResetFilters from './ResetFilters';
 
 import Pagination from '@components/common/Pagination';
+import SeoPagination from '@components/common/SeoPagination';
 import ProductCard from '@components/common/productCard/ProductCard';
 
 import type { AppLocale } from '@i18n/config';
@@ -19,6 +20,9 @@ type Props = {
   hasSearch?: boolean;
   searchQuery?: string;
   categoryName?: string;
+  paginationPath?: string;
+  paginationQuery?: string;
+  currentPage?: number;
 };
 
 const PER_PAGE = 9;
@@ -34,6 +38,9 @@ const ProductsList = ({
   hasSearch = false,
   searchQuery,
   categoryName,
+  paginationPath,
+  paginationQuery = '',
+  currentPage = 1,
 }: Props) => {
   const safeTotal =
     Number.isFinite(initialTotal) && initialTotal > 0 ? initialTotal : 0;
@@ -79,7 +86,18 @@ const ProductsList = ({
         </ul>
       )}
 
-      {!isEmpty && pageCount > 1 && <Pagination pageCount={pageCount} />}
+      {!isEmpty &&
+        pageCount > 1 &&
+        (isAdmin || !paginationPath ? (
+          <Pagination pageCount={pageCount} />
+        ) : (
+          <SeoPagination
+            pageCount={pageCount}
+            currentPage={currentPage}
+            pathname={paginationPath}
+            filterQuery={paginationQuery}
+          />
+        ))}
     </section>
   );
 };

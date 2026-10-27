@@ -12,6 +12,7 @@ type SearchParams = {
   title?: string;
   manufacturer?: string;
   condition?: string;
+  sort?: string;
   page?: string;
   category?: string | string[];
   industry?: string | string[];

@@ -6,11 +6,9 @@ import PriceQuoteBtn from './PriceQuoteBtn';
 
 import { Logo } from '@components/common/Logo';
 
-import type { AppLocale } from '@i18n/config';
+type Props = { categories: CategoryNavigationNode[] };
 
-type Props = { locale: AppLocale; categories: CategoryNavigationNode[] };
-
-const DesktopHeader = ({ locale, categories }: Props) => {
+const DesktopHeader = ({ categories }: Props) => {
   return (
     <div className="hidden bg-white lg:block">
       <div className="container">

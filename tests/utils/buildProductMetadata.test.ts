@@ -89,7 +89,7 @@ describe('buildProductMetadata', () => {
     });
 
     expect(metadata.title).toBe('Used Hobart H600 Mixer For Sale | MM Sweden');
-    expect(metadata.description).toContain('Hobart H600 Mixer');
+    expect(metadata.description).toBe('Industrial mixer');
     expect(metadata.robots).toMatchObject({
       index: true,
       follow: true,
@@ -119,6 +119,91 @@ describe('buildProductMetadata', () => {
     expect(metadata.description).toContain('has been sold');
     expect(metadata.openGraph?.title).toBe(metadata.title);
     expect(metadata.robots).toMatchObject({ index: true, follow: true });
+  });
+
+  it('uses the actual description instead of generic sales copy', () => {
+    const product = createProduct({
+      description: {
+        ...multilingual('Industrial mixer'),
+        en: 'Industrial mixer with a stainless-steel bowl and variable speeds.',
+      },
+    });
+    const metadata = buildProductMetadata({
+      product,
+      seoData,
+      locale: 'en',
+      siteUrl: 'https://www.mmsweden.se',
+    });
+    expect(metadata.description).toBe(
+      'Industrial mixer with a stainless-steel bowl and variable speeds.'
+    );
+  });
+
+  it('adds verified brand, model, year and capacity without guessing missing data', () => {
+    const product = createProduct({
+      name: multilingual('Angle grinder'),
+      manufacturer: 'Seydelmann',
+      model: 'AE 130',
+      yearOfManufacture: 2007,
+      capacity: '4,500 kg/h',
+    });
+    const metadata = buildProductMetadata({
+      product,
+      seoData,
+      locale: 'en',
+      siteUrl: 'https://www.mmsweden.se',
+    });
+    expect(metadata.title).toBe(
+      'Used Seydelmann AE 130 Angle grinder, 2007, 4,500 kg/h For Sale | MM Sweden'
+    );
+  });
+
+  it('does not repeat existing model or brand in title', () => {
+    const product = createProduct({
+      model: 'H600',
+      yearOfManufacture: 'unknown',
+    });
+    const metadata = buildProductMetadata({
+      product,
+      seoData,
+      locale: 'en',
+      siteUrl: 'https://www.mmsweden.se',
+    });
+    expect(metadata.title).toBe('Used Hobart H600 Mixer For Sale | MM Sweden');
+  });
+
+  it('avoids gender-specific adjectives for German and Polish equipment names', () => {
+    const product = createProduct({
+      name: multilingual('Stainless steel table'),
+    });
+    const german = buildProductMetadata({
+      product,
+      seoData,
+      locale: 'de',
+      siteUrl: 'https://www.mmsweden.se',
+    });
+    const polish = buildProductMetadata({
+      product,
+      seoData,
+      locale: 'pl',
+      siteUrl: 'https://www.mmsweden.se',
+    });
+    expect(german.title).toContain('gebraucht kaufen');
+    expect(polish.title).toContain('sprzęt używany');
+  });
+
+  it('uses a localized fallback when an individual description translation is missing', () => {
+    const product = createProduct({
+      description: { ...multilingual('Industrial mixer'), sv: '' },
+    });
+    const metadata = buildProductMetadata({
+      product,
+      seoData,
+      locale: 'sv',
+      siteUrl: 'https://www.mmsweden.se',
+    });
+    expect(metadata.description).toContain('Se');
+    expect(metadata.description).not.toContain('Industrial mixer.');
   });
 
   it('returns noindex metadata for a missing product', () => {

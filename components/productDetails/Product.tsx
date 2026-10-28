@@ -6,9 +6,9 @@ import Video from './Video';
 
 import Breadcrumb from '@components/common/Breadcrumb';
 
+import { getProductSearchName } from '@utils/buildProductMetadata';
 import { cn } from '@utils/cn';
 import { getBreadcrumbCategories } from '@utils/getBreadcrumbCategoryData';
-import getProductName from '@utils/getProductName';
 
 import type { AppLocale } from '@i18n/config';
 
@@ -23,12 +23,13 @@ type Props = {
 const Product = async ({
   product,
   locale,
+  slug,
   categorySlug,
   subcategorySlug,
 }: Props) => {
-  const { name, photos, video } = product;
+  const { photos, video } = product;
 
-  const productName = name ? getProductName(name, locale) : '';
+  const productName = getProductSearchName(product, locale, slug);
 
   const { category, subcategory } = await getBreadcrumbCategories(
     locale,

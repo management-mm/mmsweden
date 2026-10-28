@@ -153,7 +153,7 @@ export default function MobileCategoriesMenu({
   }
 
   return (
-    <div className="pt-[24px]">
+    <>
       <SearchFilter keyword={keyword} setKeyword={setKeyword} />
       <div
         className={clsx(
@@ -270,6 +270,6 @@ export default function MobileCategoriesMenu({
           </p>
         )}
       </div>
-    </div>
+    </>
   );
 }

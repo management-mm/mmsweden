@@ -13,6 +13,10 @@ export interface IProduct {
   video: string;
   category: MultiLanguageString;
   manufacturer: string;
+  // Optional structured specifications. Only output when provided by the API.
+  model?: string | null;
+  yearOfManufacture?: number | string | null;
+  capacity?: string | null;
   industries: MultiLanguageString[];
   condition: 'used' | 'new';
   createdAt: Date;

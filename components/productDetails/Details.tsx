@@ -12,6 +12,51 @@ import { Filter, Product } from '@enums/i18nConstants';
 
 import { AppLocale } from '@i18n/config';
 
+// Optional fields appear only if the API provides a verified value.
+const technicalLabels: Record<
+  AppLocale,
+  {
+    model: string;
+    year: string;
+    capacity: string;
+    sold: string;
+  }
+> = {
+  en: { model: 'Model', year: 'Year', capacity: 'Capacity', sold: 'Sold' },
+  sv: {
+    model: 'Modell',
+    year: 'Årsmodell',
+    capacity: 'Kapacitet',
+    sold: 'Såld',
+  },
+  de: {
+    model: 'Modell',
+    year: 'Baujahr',
+    capacity: 'Leistung',
+    sold: 'Verkauft',
+  },
+  fr: { model: 'Modèle', year: 'Année', capacity: 'Capacité', sold: 'Vendu' },
+  es: { model: 'Modelo', year: 'Año', capacity: 'Capacidad', sold: 'Vendido' },
+  ru: {
+    model: 'Модель',
+    year: 'Год выпуска',
+    capacity: 'Производительность',
+    sold: 'Продано',
+  },
+  uk: {
+    model: 'Модель',
+    year: 'Рік випуску',
+    capacity: 'Продуктивність',
+    sold: 'Продано',
+  },
+  pl: {
+    model: 'Model',
+    year: 'Rok produkcji',
+    capacity: 'Wydajność',
+    sold: 'Sprzedano',
+  },
+};
+
 interface IDetailsProps {
   product: IProduct;
   locale: AppLocale;
@@ -26,11 +71,22 @@ const Details: FC<IDetailsProps> = ({ product, locale, isLoading }) => {
     description,
     productCategory,
     manufacturer,
+    model,
+    yearOfManufacture,
+    capacity,
     industries,
     condition,
     dimensions,
     deletionDate,
   } = product;
+
+  const labels = technicalLabels[locale] ?? technicalLabels.en;
+  const yearText =
+    typeof yearOfManufacture === 'string' ||
+    typeof yearOfManufacture === 'number'
+      ? String(yearOfManufacture).trim()
+      : '';
+  const validYear = /^(18|19|20)\d{2}$/.test(yearText);
 
   return (
     <section className="bg-secondary flex min-h-[450px] w-full min-w-0 shrink-0 flex-col overflow-hidden rounded-[4px] px-[14px] pt-[14px] pb-[32px] md:w-[300px] lg:w-[390px]">
@@ -74,6 +130,27 @@ const Details: FC<IDetailsProps> = ({ product, locale, isLoading }) => {
             )}
           </dd>
         </div>
+
+        {model?.trim() && (
+          <div className="font-openSans mb-[12px] flex min-w-0 gap-[8px] text-[14px]">
+            <dt className="text-desc shrink-0">{labels.model}:</dt>
+            <dd className="text-title min-w-0 flex-1">{model.trim()}</dd>
+          </div>
+        )}
+
+        {validYear && (
+          <div className="font-openSans mb-[12px] flex min-w-0 gap-[8px] text-[14px]">
+            <dt className="text-desc shrink-0">{labels.year}:</dt>
+            <dd className="text-title min-w-0 flex-1">{yearText}</dd>
+          </div>
+        )}
+
+        {capacity?.trim() && (
+          <div className="font-openSans mb-[12px] flex min-w-0 gap-[8px] text-[14px]">
+            <dt className="text-desc shrink-0">{labels.capacity}:</dt>
+            <dd className="text-title min-w-0 flex-1">{capacity.trim()}</dd>
+          </div>
+        )}
 
         <div className="font-openSans mb-[12px] flex min-w-0 gap-[8px] text-[14px]">
           <dt className="text-desc shrink-0">{t(Filter.Category)}:</dt>
@@ -133,7 +210,7 @@ const Details: FC<IDetailsProps> = ({ product, locale, isLoading }) => {
         <Skeleton className="!block w-full" height={40} borderRadius={32} />
       ) : deletionDate ? (
         <span className="text-secondary flex w-full items-center justify-center rounded-[32px] bg-red-900 py-[14px] text-[12px] font-semibold">
-          Sold
+          {labels.sold}
         </span>
       ) : (
         <RequestPricingButton product={product} />

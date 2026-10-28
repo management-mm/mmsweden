@@ -287,6 +287,28 @@ const getSeoSubcategoryBySlug = cache(
   }
 );
 
+// Fallback only: manually written category SEO fields from the API always win.
+// Do not pretend we know brands, capacities or live inventory in a category.
+const categoryDescriptionFallback: Record<AppLocale, (name: string) => string> =
+  {
+    en: name =>
+      `Explore ${name} at MM Sweden. Find equipment details and request information about available machines.`,
+    sv: name =>
+      `Upptäck ${name} hos MM Sweden. Se maskinernas specifikationer och kontakta oss för mer information.`,
+    de: name =>
+      `Entdecken Sie ${name} bei MM Sweden. Vergleichen Sie Maschinendaten und fragen Sie verfügbare Anlagen an.`,
+    fr: name =>
+      `Découvrez ${name} chez MM Sweden. Consultez les caractéristiques des machines et demandez des renseignements.`,
+    es: name =>
+      `Descubra ${name} en MM Sweden. Consulte las características de los equipos y solicite información.`,
+    ru: name =>
+      `Ознакомьтесь с оборудованием категории «${name}» в MM Sweden. Смотрите характеристики и отправляйте запросы.`,
+    uk: name =>
+      `Ознайомтеся з обладнанням категорії «${name}» в MM Sweden. Переглядайте характеристики та надсилайте запити.`,
+    pl: name =>
+      `Poznaj ofertę ${name} w MM Sweden. Sprawdź parametry urządzeń i zapytaj o dostępność.`,
+  };
+
 function buildSeoData({
   document,
   locale,
@@ -315,7 +337,7 @@ function buildSeoData({
   const description = getLocalizedSeoText(
     document?.seo?.description,
     locale,
-    'Used food processing and packaging equipment from MM Sweden.'
+    categoryDescriptionFallback[locale](h1)
   );
 
   const intro = getLocalizedSeoText(document?.content?.intro, locale, '');

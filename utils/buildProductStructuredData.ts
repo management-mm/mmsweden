@@ -1,10 +1,10 @@
 import {
   buildProductUrl,
   getLocalizedText,
+  getProductSearchName,
   getProductSeoCopy,
 } from './buildProductMetadata';
 import type { ProductSeoData, ProductWithSeo } from './resolveProductSeoData';
-import slugToLabel from './slugToLabel';
 
 import type { AppLocale } from '@i18n/config';
 
@@ -60,6 +60,22 @@ export function buildProductJsonLd(params: {
 
   const manufacturer = getNonEmptyString(product.manufacturer);
   const productId = getNonEmptyString(product.idNumber);
+  const model = getNonEmptyString(product.model);
+  const capacity = getNonEmptyString(product.capacity);
+  const yearValue = product.yearOfManufacture;
+  const year =
+    (typeof yearValue === 'string' || typeof yearValue === 'number') &&
+    /^(18|19|20)\d{2}$/.test(String(yearValue))
+      ? String(yearValue)
+      : undefined;
+  const additionalProperty = [
+    ...(year
+      ? [{ '@type': 'PropertyValue', name: 'Year of manufacture', value: year }]
+      : []),
+    ...(capacity
+      ? [{ '@type': 'PropertyValue', name: 'Capacity', value: capacity }]
+      : []),
+  ];
 
   return {
     '@context': 'https://schema.org',
@@ -68,6 +84,8 @@ export function buildProductJsonLd(params: {
     description: localizedDescription,
     sku: productId,
     productID: productId,
+    ...(model ? { model } : {}),
+    ...(additionalProperty.length > 0 ? { additionalProperty } : {}),
     image: images.length > 0 ? images : undefined,
     brand: manufacturer
       ? {
@@ -116,10 +134,10 @@ export function buildProductStructuredData({
   );
 
   const copy = getProductSeoCopy(locale);
-  const localizedName = getLocalizedText(
-    product.name,
+  const localizedName = getProductSearchName(
+    product,
     locale,
-    slugToLabel(seoData.productSlug)
+    seoData.productSlug
   );
   const localizedDescription = getLocalizedText(
     product.description,

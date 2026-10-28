@@ -96,9 +96,9 @@ const productSeoCopy: Record<AppLocale, ProductSeoCopy> = {
       used: 'Begagnad',
     },
     title: ({ conditionLabel, productName }) =>
-      `${conditionLabel} ${productName} till salu | MM Sweden`,
-    description: ({ conditionLabel, productName }) =>
-      `Köp en ${conditionLabel.toLowerCase()} ${productName} från MM Sweden. Vi levererar begagnade livsmedels- och förpackningsmaskiner för industriell livsmedelsproduktion.`,
+      `${productName} – ${conditionLabel === 'Ny' ? 'ny maskin' : 'begagnad maskin'} | MM Sweden`,
+    description: ({ productName }) =>
+      `Se ${productName} hos MM Sweden. Läs om specifikationer och kontakta oss för mer information.`,
     fallbackDescription:
       'Begagnad livsmedels- och förpackningsutrustning från MM Sweden.',
     breadcrumbs: {
@@ -113,9 +113,9 @@ const productSeoCopy: Record<AppLocale, ProductSeoCopy> = {
       used: 'Gebrauchte',
     },
     title: ({ conditionLabel, productName }) =>
-      `${conditionLabel} ${productName} kaufen | MM Sweden`,
-    description: ({ conditionLabel, productName }) =>
-      `Kaufen Sie eine ${conditionLabel.toLowerCase()} ${productName} bei MM Sweden. Wir liefern gebrauchte Lebensmittel- und Verpackungsmaschinen für die industrielle Lebensmittelproduktion.`,
+      `${productName} ${conditionLabel === 'Neue' ? 'neu' : 'gebraucht'} kaufen | MM Sweden`,
+    description: ({ productName }) =>
+      `Entdecken Sie ${productName} bei MM Sweden. Vergleichen Sie die technischen Daten und fragen Sie das Gerät an.`,
     fallbackDescription:
       'Gebrauchte Lebensmittel- und Verpackungsmaschinen von MM Sweden.',
     breadcrumbs: {
@@ -130,9 +130,9 @@ const productSeoCopy: Record<AppLocale, ProductSeoCopy> = {
       used: 'd’occasion',
     },
     title: ({ conditionLabel, productName }) =>
-      `${productName} ${conditionLabel} à vendre | MM Sweden`,
-    description: ({ conditionLabel, productName }) =>
-      `Achetez ${productName} ${conditionLabel} chez MM Sweden. Nous fournissons des machines alimentaires et d’emballage d’occasion pour la production industrielle.`,
+      `${productName} – équipement ${conditionLabel === 'neuf' ? 'neuf' : 'd’occasion'} | MM Sweden`,
+    description: ({ productName }) =>
+      `Découvrez ${productName} chez MM Sweden. Consultez les caractéristiques et demandez plus d’informations.`,
     fallbackDescription:
       'Machines alimentaires et d’emballage d’occasion de MM Sweden.',
     breadcrumbs: {
@@ -147,9 +147,9 @@ const productSeoCopy: Record<AppLocale, ProductSeoCopy> = {
       used: 'usada',
     },
     title: ({ conditionLabel, productName }) =>
-      `${productName} ${conditionLabel} en venta | MM Sweden`,
-    description: ({ conditionLabel, productName }) =>
-      `Compre ${productName} ${conditionLabel} en MM Sweden. Suministramos maquinaria alimentaria y de envasado usada para producción industrial.`,
+      `${productName} – maquinaria ${conditionLabel === 'nueva' ? 'nueva' : 'usada'} | MM Sweden`,
+    description: ({ productName }) =>
+      `Consulte ${productName} en MM Sweden. Vea las características del equipo y solicite más información.`,
     fallbackDescription:
       'Maquinaria alimentaria y de envasado usada de MM Sweden.',
     breadcrumbs: {
@@ -164,9 +164,9 @@ const productSeoCopy: Record<AppLocale, ProductSeoCopy> = {
       used: 'б/у',
     },
     title: ({ conditionLabel, productName }) =>
-      `${productName}: ${conditionLabel} в продаже | MM Sweden`,
-    description: ({ conditionLabel, productName }) =>
-      `Купить ${conditionLabel} ${productName} в MM Sweden. Мы поставляем б/у пищевое и упаковочное оборудование для промышленного производства.`,
+      `${productName} — ${conditionLabel === 'новое' ? 'новое оборудование' : 'оборудование б/у'} | MM Sweden`,
+    description: ({ productName }) =>
+      `Оборудование ${productName} в MM Sweden. Ознакомьтесь с техническими характеристиками и отправьте запрос.`,
     fallbackDescription: 'Б/у пищевое и упаковочное оборудование от MM Sweden.',
     breadcrumbs: {
       home: 'Главная',
@@ -180,9 +180,9 @@ const productSeoCopy: Record<AppLocale, ProductSeoCopy> = {
       used: 'вживане',
     },
     title: ({ conditionLabel, productName }) =>
-      `${productName}: ${conditionLabel} у продажу | MM Sweden`,
-    description: ({ conditionLabel, productName }) =>
-      `Купити ${conditionLabel} ${productName} у MM Sweden. Ми постачаємо вживане харчове та пакувальне обладнання для промислового виробництва.`,
+      `${productName} — ${conditionLabel === 'нове' ? 'нове обладнання' : 'вживане обладнання'} | MM Sweden`,
+    description: ({ productName }) =>
+      `Обладнання ${productName} у MM Sweden. Ознайомтеся з технічними характеристиками та надішліть запит.`,
     fallbackDescription:
       'Вживане харчове та пакувальне обладнання від MM Sweden.',
     breadcrumbs: {
@@ -197,9 +197,9 @@ const productSeoCopy: Record<AppLocale, ProductSeoCopy> = {
       used: 'Używana',
     },
     title: ({ conditionLabel, productName }) =>
-      `${conditionLabel} ${productName} na sprzedaż | MM Sweden`,
-    description: ({ conditionLabel, productName }) =>
-      `Kup ${conditionLabel.toLowerCase()} ${productName} w MM Sweden. Dostarczamy używane maszyny spożywcze i pakujące do produkcji przemysłowej.`,
+      `${productName} – ${conditionLabel === 'Nowa' ? 'nowy sprzęt' : 'sprzęt używany'} | MM Sweden`,
+    description: ({ productName }) =>
+      `Sprawdź ${productName} w MM Sweden. Zobacz dane techniczne urządzenia i zapytaj o szczegóły.`,
     fallbackDescription: 'Używane maszyny spożywcze i pakujące od MM Sweden.',
     breadcrumbs: {
       home: 'Strona główna',
@@ -266,6 +266,110 @@ export function getLocalizedText(
   }
 
   return fallback;
+}
+
+/**
+ * Build a meaningful equipment name using ONLY verified fields returned by
+ * the product API. Never infer a model, year or output from the free text.
+ * Missing structured fields simply do not appear in the public title.
+ */
+export function getProductSearchName(
+  product: ProductWithSeo,
+  locale: AppLocale,
+  fallbackSlug: string
+): string {
+  const localizedName = getLocalizedText(
+    product.name,
+    locale,
+    slugToLabel(fallbackSlug)
+  )
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  const manufacturer = getNonEmptyString(product.manufacturer);
+  const model = getNonEmptyString(product.model);
+  const year =
+    typeof product.yearOfManufacture === 'number' ||
+    typeof product.yearOfManufacture === 'string'
+      ? String(product.yearOfManufacture).trim()
+      : '';
+  const capacity = getNonEmptyString(product.capacity);
+
+  const nameParts: string[] = [];
+  for (const part of [manufacturer, model]) {
+    if (
+      part &&
+      part.length <= 80 &&
+      !localizedName.toLocaleLowerCase().includes(part.toLocaleLowerCase())
+    ) {
+      nameParts.push(part);
+    }
+  }
+
+  let result = [...nameParts, localizedName].join(' ');
+  // Only a genuinely populated, four-digit manufacture year is useful.
+  // Do not mistake internal identifiers or stock numbers for a year.
+  if (/^(18|19|20)\d{2}$/.test(year)) {
+    const numericYear = Number(year);
+    if (
+      numericYear <= new Date().getUTCFullYear() + 1 &&
+      !new RegExp(`\\b${year}\\b`).test(result)
+    ) {
+      result += `, ${year}`;
+    }
+  }
+
+  if (
+    capacity &&
+    capacity.length <= 35 &&
+    !result.toLocaleLowerCase().includes(capacity.toLocaleLowerCase())
+  ) {
+    result += `, ${capacity}`;
+  }
+
+  return result;
+}
+
+function cleanDescription(value: string): string {
+  return value
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/** Use the actual text for this machine instead of identical catalogue copy. */
+export function getProductSeoDescription(
+  product: ProductWithSeo,
+  locale: AppLocale,
+  productName: string
+): string {
+  const source = product.description;
+  const exactTranslation =
+    typeof source === 'string'
+      ? locale === DEFAULT_LOCALE
+        ? source
+        : undefined
+      : source && typeof source === 'object'
+        ? source[locale]
+        : undefined;
+  const specificDescription = exactTranslation
+    ? cleanDescription(exactTranslation)
+    : '';
+
+  if (specificDescription) {
+    // Search snippets are short. Cut at a word boundary, never in the middle
+    // of a specification, and do not silently translate unreviewed source text.
+    if (specificDescription.length <= 160) return specificDescription;
+    const boundary = specificDescription.lastIndexOf(' ', 157);
+    return `${specificDescription.slice(0, boundary > 100 ? boundary : 157).trimEnd()}…`;
+  }
+
+  const copy = getProductSeoCopy(locale);
+  return copy.description({
+    conditionLabel:
+      product.condition === 'new' ? copy.condition.new : copy.condition.used,
+    productName,
+  });
 }
 
 function getConditionLabel(
@@ -346,20 +450,17 @@ export function buildProductMetadata({
   );
 
   const copy = getProductSeoCopy(locale);
-  const localizedName = getLocalizedText(
-    product.name,
+  const localizedName = getProductSearchName(
+    product,
     locale,
-    slugToLabel(seoData.productSlug)
+    seoData.productSlug
   );
   const conditionLabel = getConditionLabel(product.condition, locale);
   const title = copy.title({
     conditionLabel,
     productName: localizedName,
   });
-  const description = copy.description({
-    conditionLabel,
-    productName: localizedName,
-  });
+  const description = getProductSeoDescription(product, locale, localizedName);
   const sold = Boolean(product.deletionDate);
   const soldCopy = soldProductSeoCopy[locale];
   const seoTitle = sold

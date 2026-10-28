@@ -127,6 +127,31 @@ describe('buildProductStructuredData', () => {
     expect(serializedProduct).not.toHaveProperty('image');
   });
 
+  it('publishes verified model, year and capacity as Product specifications', () => {
+    const product = createProduct({
+      model: 'H600',
+      yearOfManufacture: 2012,
+      capacity: '400 kg/h',
+    });
+    const result = buildProductStructuredData({
+      product,
+      seoData,
+      locale: 'en',
+      siteUrl: 'https://www.mmsweden.se',
+    });
+    expect(result.productJsonLd).toMatchObject({
+      model: 'H600',
+      additionalProperty: [
+        {
+          '@type': 'PropertyValue',
+          name: 'Year of manufacture',
+          value: '2012',
+        },
+        { '@type': 'PropertyValue', name: 'Capacity', value: '400 kg/h' },
+      ],
+    });
+  });
+
   it('builds ordered BreadcrumbList JSON-LD', () => {
     const result = buildProductStructuredData({
       product: createProduct(),

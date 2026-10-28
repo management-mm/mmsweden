@@ -6,7 +6,9 @@ import PriceQuoteBtn from './PriceQuoteBtn';
 
 import { Logo } from '@components/common/Logo';
 
-type Props = { categories: CategoryNavigationNode[] };
+import type { AppLocale } from '@i18n/config';
+
+type Props = { locale: AppLocale; categories: CategoryNavigationNode[] };
 
 const DesktopHeader = ({ categories }: Props) => {
   return (

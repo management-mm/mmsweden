@@ -9,6 +9,7 @@
  * The function is dependency-free so it can be tested without Next.js.
  */
 const LEGACY_PATHS: Record<string, string> = {
+  '/index.html': '/sv',
   '/engelska.html': '/en',
   '/nyinkommit.html': '/sv/new-arrivals',
   '/begagnade-maskiner1.html': '/sv/all-products',
@@ -363,7 +364,51 @@ function getRenamedProductDestination(path: string): string | null {
   return newPath ? `/sv${newPath}` : null;
 }
 
+/**
+ * Historical pages sometimes linked to `all-products/...` relative to an
+ * obsolete `.html` route, producing paths such as
+ * `/index.html/all-products/...` or `/de/engelska.html/all-products/...`.
+ *
+ * Resolve only known page structures. Do NOT redirect every 404 or assets:
+ * unknown paths should remain 404 and hashed `_next` resources are not pages.
+ */
+function getNestedHtmlLegacyDestination(path: string): string | null {
+  const matched = path.match(
+    /^\/(?:(en|sv|de|fr|es|ru|uk|pl)\/)?(index\.html|engelska\.html|begagnade-maskiner1\.html)(\/.*)?$/i
+  );
+  if (!matched) return null;
+
+  const [, localeInPath, legacyPage, suffix = ''] = matched;
+  const locale =
+    localeInPath?.toLowerCase() ||
+    (legacyPage.toLowerCase() === 'engelska.html' ? 'en' : 'sv');
+
+  // Root-level legacy documents have an explicit mapping in LEGACY_PATHS.
+  if (!suffix) return localeInPath ? `/${locale}` : null;
+
+  const staticPages = new Set([
+    '/about-us',
+    '/contact-us',
+    '/sell-to-us',
+    '/new-arrivals',
+    '/privacy-policy',
+    '/my-price-quote',
+  ]);
+  const validSuffix =
+    suffix === '/all-products' ||
+    suffix.startsWith('/all-products/') ||
+    staticPages.has(suffix.toLowerCase());
+  if (!validSuffix) return null;
+
+  const localizedPath = `/${locale}${suffix}`;
+  // Combine with the 156 existing product-rename redirects in one hop.
+  return getRenamedProductDestination(localizedPath) || localizedPath;
+}
+
 function getLegacyDestination(path: string): string | null {
+  const nestedHtml = getNestedHtmlLegacyDestination(path);
+  if (nestedHtml) return nestedHtml;
+
   const renamed = getRenamedProductDestination(path);
   if (renamed) return renamed;
 

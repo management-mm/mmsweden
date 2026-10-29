@@ -38,5 +38,14 @@ export const config = {
     '/engelska.html',
     '/nyinkommit.html',
     '/begagnade-maskiner1.html',
+    '/index.html',
+    // `.*\..*` in the general matcher excludes ALL dot-containing URLs.
+    // These specific matchers include old `.html` documents and their children.
+    '/index.html/:path*',
+    '/engelska.html/:path*',
+    '/begagnade-maskiner1.html/:path*',
+    '/:locale/index.html/:path*',
+    '/:locale/engelska.html/:path*',
+    '/:locale/begagnade-maskiner1.html/:path*',
   ],
 };

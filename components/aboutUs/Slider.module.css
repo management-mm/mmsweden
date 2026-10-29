@@ -1,0 +1,294 @@
+/* ========================================
+   SLIDER WRAPPER
+======================================== */
+
+.wrapper {
+  position: relative;
+
+  display: block;
+
+  width: 100%;
+  max-width: 100vw;
+  min-width: 0;
+
+  margin-inline: auto;
+
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   SWIPER CONTAINER
+======================================== */
+
+.slider {
+  position: relative;
+
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0;
+
+  margin: 0 auto !important;
+
+  padding: 0 0 28px;
+
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Swiper track */
+
+.slider :global(.swiper-wrapper) {
+  display: flex;
+  align-items: center;
+}
+
+/* ========================================
+   MOBILE SLIDES
+======================================== */
+
+.slide {
+  position: relative;
+
+  flex: 0 0 auto;
+
+  width: min(330px, calc(100% - 32px)) !important;
+
+  height: auto !important;
+  aspect-ratio: 330 / 200;
+
+  overflow: hidden;
+
+  border-radius: 6px;
+
+  box-sizing: border-box;
+}
+
+/* ========================================
+   RESPONSIVE IMAGE CONTAINERS
+======================================== */
+
+.mobileImage,
+.tabletImage,
+.desktopImage {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.mobileImage {
+  display: block;
+}
+
+.tabletImage,
+.desktopImage {
+  display: none;
+}
+
+/* ========================================
+   IMAGE STYLES
+======================================== */
+
+.image {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  border-radius: 6px;
+
+  background-color: #e2e8f0;
+}
+
+/* ========================================
+   SCROLLBAR
+======================================== */
+
+.slider :global(.swiper-scrollbar.swiper-scrollbar-horizontal) {
+  position: absolute !important;
+
+  left: 50% !important;
+  right: auto !important;
+
+  bottom: 8px !important;
+  top: auto !important;
+
+  transform: translateX(-50%) !important;
+
+  width: 150px !important;
+  height: 3px !important;
+
+  background-color: rgba(0, 43, 73, 0.12);
+
+  border-radius: 999px;
+
+  opacity: 1;
+  z-index: 5;
+}
+
+/* Moving indicator */
+
+.slider :global(.swiper-scrollbar-drag) {
+  height: 100%;
+
+  background-color: #00528b;
+
+  border-radius: 999px;
+
+  cursor: grab;
+
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.slider :global(.swiper-scrollbar-drag:hover) {
+  background-color: #002b49;
+
+  box-shadow: 0 0 6px rgba(0, 43, 73, 0.15);
+}
+
+.slider :global(.swiper-scrollbar-drag:active) {
+  cursor: grabbing;
+
+  background-color: #002b49;
+}
+
+/* ========================================
+   SMALL MOBILE
+   0px - 374px
+======================================== */
+
+@media (max-width: 374px) {
+  .slider {
+    padding-bottom: 23px;
+  }
+
+  .slide {
+    width: calc(100% - 24px) !important;
+
+    aspect-ratio: 330 / 200;
+  }
+
+  .slider :global(.swiper-scrollbar.swiper-scrollbar-horizontal) {
+    width: 90px !important;
+    height: 2px !important;
+
+    bottom: 6px !important;
+  }
+}
+
+/* ========================================
+   MOBILE
+   375px - 767px
+======================================== */
+
+@media (min-width: 375px) and (max-width: 767px) {
+  .slide {
+    width: min(330px, calc(100% - 32px)) !important;
+
+    aspect-ratio: 330 / 200;
+  }
+
+  .slider :global(.swiper-scrollbar.swiper-scrollbar-horizontal) {
+    width: 110px !important;
+    height: 3px !important;
+  }
+}
+
+/* ========================================
+   TABLET
+   768px - 1023px
+======================================== */
+
+@media (min-width: 768px) {
+  .slider {
+    padding-bottom: 30px;
+  }
+
+  .slide {
+    width: min(580px, calc(100% - 48px)) !important;
+
+    aspect-ratio: 580 / 362;
+  }
+
+  .mobileImage {
+    display: none;
+  }
+
+  .tabletImage {
+    display: block;
+  }
+
+  .desktopImage {
+    display: none;
+  }
+
+  .slider :global(.swiper-scrollbar.swiper-scrollbar-horizontal) {
+    width: 140px !important;
+    height: 3px !important;
+  }
+}
+
+/* ========================================
+   DESKTOP
+   1024px+
+======================================== */
+
+@media (min-width: 1024px) {
+  .slider {
+    padding-bottom: 32px;
+  }
+
+  .slide {
+    width: min(754px, calc(100% - 64px)) !important;
+
+    aspect-ratio: 754 / 480;
+  }
+
+  .mobileImage,
+  .tabletImage {
+    display: none;
+  }
+
+  .desktopImage {
+    display: block;
+  }
+
+  .slider :global(.swiper-scrollbar.swiper-scrollbar-horizontal) {
+    width: 160px !important;
+    height: 3px !important;
+
+    bottom: 9px !important;
+  }
+}
+
+/* ========================================
+   LARGE DESKTOP
+   1440px+
+======================================== */
+
+@media (min-width: 1440px) {
+  .slide {
+    width: 754px !important;
+
+    aspect-ratio: 754 / 480;
+  }
+
+  .slider :global(.swiper-scrollbar.swiper-scrollbar-horizontal) {
+    width: 180px !important;
+  }
+}
+
+/* ========================================
+   ACCESSIBILITY
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .slider :global(.swiper-scrollbar-drag) {
+    transition: none;
+  }
+}

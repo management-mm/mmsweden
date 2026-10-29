@@ -7,65 +7,81 @@ import 'swiper/css';
 import 'swiper/css/scrollbar';
 import { Autoplay, Scrollbar } from 'swiper/modules';
 
+import styles from './Slider.module.css';
+
 import photosAboutUsList from '@constants/photosAboutUsList';
 
 const Slider = () => {
   return (
-    <Swiper
-      style={{ width: 'calc(49% + 50vw)' }}
-      slidesPerView="auto"
-      spaceBetween={10}
-      className="slider"
-      loop
-      modules={[Scrollbar, Autoplay]}
-      scrollbar
-      autoplay={{
-        delay: 2000,
-        disableOnInteraction: true,
-      }}
-      breakpoints={{
-        768: { spaceBetween: 30 },
-      }}
-      centeredSlides
-    >
-      {photosAboutUsList.map((photo, index) => {
-        const { mobile, tablet, desktop, alt } = photo;
+    <div className={styles.wrapper}>
+      <Swiper
+        modules={[Scrollbar, Autoplay]}
+        className={styles.slider}
+        slidesPerView="auto"
+        centeredSlides
+        spaceBetween={10}
+        loop={photosAboutUsList.length >= 3}
+        speed={600}
+        scrollbar={{
+          draggable: true,
+          hide: false,
+        }}
+        autoplay={{
+          delay: 2000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
+        breakpoints={{
+          768: {
+            spaceBetween: 30,
+          },
+        }}
+      >
+        {photosAboutUsList.map((photo, index) => {
+          const { mobile, tablet, desktop, alt } = photo;
 
-        return (
-          <SwiperSlide key={`${alt}-${index}`}>
-            <div className="md:hidden">
-              <Image
-                src={mobile}
-                alt={alt}
-                width={330}
-                height={200}
-                className="block h-[200px] w-[330px] rounded-[4px] bg-slate-500 object-cover"
-              />
-            </div>
+          return (
+            <SwiperSlide key={`${alt}-${index}`} className={styles.slide}>
+              {/* Mobile */}
+              <div className={styles.mobileImage}>
+                <Image
+                  src={mobile}
+                  alt={alt}
+                  width={330}
+                  height={200}
+                  sizes="(max-width: 767px) 100vw, 330px"
+                  className={styles.image}
+                />
+              </div>
 
-            <div className="hidden md:block lg:hidden">
-              <Image
-                src={tablet}
-                alt={alt}
-                width={580}
-                height={362}
-                className="block h-[362px] w-[580px] rounded-[4px] bg-slate-500 object-cover"
-              />
-            </div>
+              {/* Tablet */}
+              <div className={styles.tabletImage}>
+                <Image
+                  src={tablet}
+                  alt={alt}
+                  width={580}
+                  height={362}
+                  sizes="(min-width: 768px) and (max-width: 1023px) 580px, 100vw"
+                  className={styles.image}
+                />
+              </div>
 
-            <div className="hidden lg:block">
-              <Image
-                src={desktop}
-                alt={alt}
-                width={754}
-                height={480}
-                className="block h-[480px] w-[754px] rounded-[4px] bg-slate-500 object-cover"
-              />
-            </div>
-          </SwiperSlide>
-        );
-      })}
-    </Swiper>
+              {/* Desktop */}
+              <div className={styles.desktopImage}>
+                <Image
+                  src={desktop}
+                  alt={alt}
+                  width={754}
+                  height={480}
+                  sizes="(min-width: 1024px) 754px, 100vw"
+                  className={styles.image}
+                />
+              </div>
+            </SwiperSlide>
+          );
+        })}
+      </Swiper>
+    </div>
   );
 };
 

@@ -1,0 +1,1259 @@
+{
+  "purpose": "Review old product slugs after SEO Step 4 renames; not an executable MongoDB update",
+  "generatedFrom": [
+    "meatMachinesDB.products(2).json",
+    "meatMachinesDB.products(3).json"
+  ],
+  "count": 156,
+  "important": "Product URL path includes locale/category/subcategory in addition to slug. Verify old URL -> new canonical URL with HTTP 301 or 308. Never assume a slug map by itself creates redirect.",
+  "redirectCandidates": [
+    {
+      "mongoId": "66fe5c6b74056a825db11399",
+      "idNumber": "0542",
+      "oldSlug": "nimo-kg-2",
+      "newSlug": "nimo-kg-mobile-buggy-lift",
+      "oldEnglishName": "Nimo KG",
+      "newEnglishName": "Nimo-KG mobile buggy lift"
+    },
+    {
+      "mongoId": "66fe5c4b74056a825db11391",
+      "idNumber": "0544",
+      "oldSlug": "kg-lift-3",
+      "newSlug": "nimo-kg-pneumatic-lift-for-plastic-bins",
+      "oldEnglishName": "KG Lift",
+      "newEnglishName": "Nimo-KG pneumatic lift for plastic bins"
+    },
+    {
+      "mongoId": "66fe5bcc74056a825db11389",
+      "idNumber": "0545",
+      "oldSlug": "kg-lift-2",
+      "newSlug": "nimo-kg-lift-for-double-buggies-tip-height-43-m",
+      "oldEnglishName": "KG Lift",
+      "newEnglishName": "Nimo-KG lift for double buggies, tip height 4.3 m"
+    },
+    {
+      "mongoId": "66fe5bb974056a825db1137f",
+      "idNumber": "0546",
+      "oldSlug": "kg-lift-1",
+      "newSlug": "nimo-kg-lift-with-safety-cage-tip-height-34-m",
+      "oldEnglishName": "KG Lift",
+      "newEnglishName": "Nimo-KG lift with safety cage, tip height 3.4 m"
+    },
+    {
+      "mongoId": "66fe5b9774056a825db1136f",
+      "idNumber": "0548",
+      "oldSlug": "nimo-kg-1",
+      "newSlug": "nimo-kg-buggy-lift",
+      "oldEnglishName": "Nimo KG",
+      "newEnglishName": "Nimo-KG buggy lift"
+    },
+    {
+      "mongoId": "66fe5ba674056a825db11377",
+      "idNumber": "0549",
+      "oldSlug": "nimo-kg-lift",
+      "newSlug": "nimo-kg-lift-with-safety-cage-3-m-tipping-height",
+      "oldEnglishName": "Nimo KG Lift",
+      "newEnglishName": "Nimo-KG lift with safety cage, 3 m tipping height"
+    },
+    {
+      "mongoId": "6710db17cf654db8c8c0c096",
+      "idNumber": "0566",
+      "oldSlug": "rietschle-booster-pump",
+      "newSlug": "rietschle-booster-vacuum-pump-250-cc",
+      "oldEnglishName": "Rietschle Booster pump",
+      "newEnglishName": "Rietschle booster vacuum pump, 250 cc"
+    },
+    {
+      "mongoId": "66fe5b7774056a825db11367",
+      "idNumber": "0633",
+      "oldSlug": "kg-lift",
+      "newSlug": "nimo-kg-bin-lift-tip-height-approximately-155-cm",
+      "oldEnglishName": "KG-Lift",
+      "newEnglishName": "Nimo-KG bin lift, tip height approximately 155 cm"
+    },
+    {
+      "mongoId": "670fa9ff89daaab87caa702f",
+      "idNumber": "1254",
+      "oldSlug": "fryer",
+      "newSlug": "industrial-fryer-1200-750-mm-internal-dimensions",
+      "oldEnglishName": "Fryer",
+      "newEnglishName": "Industrial fryer, 1,200 × 750 mm internal dimensions"
+    },
+    {
+      "mongoId": "66fe5ced74056a825db113b9",
+      "idNumber": "1361",
+      "oldSlug": "nimo-kg-skv-200-mkrt",
+      "newSlug": "nimo-kg-skv-200-mkrt-motorized-meat-bin-lifter",
+      "oldEnglishName": "Nimo-KG SKV 200 MKRT",
+      "newEnglishName": "Nimo-KG SKV 200 MKRT motorized meat-bin lifter"
+    },
+    {
+      "mongoId": "6705149302df1efea6a32ef1",
+      "idNumber": "1383",
+      "oldSlug": "roscher-matic",
+      "newSlug": "roscher-matic-vacuum-ready-mixertumbler-approximately-150-l",
+      "oldEnglishName": "Röscher Matic",
+      "newEnglishName": "Röscher Matic vacuum-ready mixer/tumbler, approximately 150 L"
+    },
+    {
+      "mongoId": "6710f365cf654db8c8c0c3ac",
+      "idNumber": "1432",
+      "oldSlug": "table",
+      "newSlug": "work-table-on-wheels-107-x-75-x-93-cm",
+      "oldEnglishName": "Table",
+      "newEnglishName": "Work table on wheels, 107 x 75 x 93 cm"
+    },
+    {
+      "mongoId": "671031fbcf654db8c8c0b784",
+      "idNumber": "1927",
+      "oldSlug": "cabinplant",
+      "newSlug": "cabinplant-transport-conveyor-belt-200-x-40-x-115-cm",
+      "oldEnglishName": "Cabinplant",
+      "newEnglishName": "Cabinplant transport conveyor belt, 200 x 40 x 115 cm"
+    },
+    {
+      "mongoId": "671031cdcf654db8c8c0b77b",
+      "idNumber": "2071",
+      "oldSlug": "conveyor-belt-3",
+      "newSlug": "conveyor-belt-210-x-43-x-87-cm",
+      "oldEnglishName": "Conveyor belt",
+      "newEnglishName": "Conveyor belt, 210 x 43 x 87 cm"
+    },
+    {
+      "mongoId": "6710311dcf654db8c8c0b75b",
+      "idNumber": "2112",
+      "oldSlug": "conveyor-belt-2",
+      "newSlug": "conveyor-belt-with-intralox-belt-on-wheels-190-x-80-x-90-cm",
+      "oldEnglishName": "Conveyor belt",
+      "newEnglishName": "Conveyor belt with Intralox belt on wheels, 190 x 80 x 90 cm"
+    },
+    {
+      "mongoId": "671030fdcf654db8c8c0b754",
+      "idNumber": "2113",
+      "oldSlug": "conveyor-belt-1",
+      "newSlug": "conveyor-belt-with-intralox-belt-on-wheels-300-x-55-x-77-cm",
+      "oldEnglishName": "Conveyor belt",
+      "newEnglishName": "Conveyor belt with Intralox belt on wheels, 300 x 55 x 77 cm"
+    },
+    {
+      "mongoId": "670e2ee789daaab87caa6025",
+      "idNumber": "2200",
+      "oldSlug": "multivac-r-530",
+      "newSlug": "multivac-r-530-packaging-machine-2004",
+      "oldEnglishName": "MULTIVAC R-530",
+      "newEnglishName": "Multivac R-530 packaging machine, 2004"
+    },
+    {
+      "mongoId": "670513ab02df1efea6a32ebd",
+      "idNumber": "2204",
+      "oldSlug": "lydotec",
+      "newSlug": "lydotec-mixing-tank-approximately-400-l",
+      "oldEnglishName": "Lydotec",
+      "newEnglishName": "Lydotec mixing tank, approximately 400 L"
+    },
+    {
+      "mongoId": "670e454289daaab87caa6251",
+      "idNumber": "2256",
+      "oldSlug": "rational-cm-6",
+      "newSlug": "rational-cm-6-combi-oven-for-six-gn-containers",
+      "oldEnglishName": "Rational CM-6",
+      "newEnglishName": "Rational CM-6 combi oven for six GN containers"
+    },
+    {
+      "mongoId": "67050b1e02df1efea6a32def",
+      "idNumber": "2296",
+      "oldSlug": "bankeryd-os-20-1",
+      "newSlug": "bankeryd-os-20-cake-and-cheese-slicer-140-x-65-x-120-cm",
+      "oldEnglishName": "Bankeryd OS-20",
+      "newEnglishName": "Bankeryd OS-20 cake and cheese slicer, 140 x 65 x 120 cm"
+    },
+    {
+      "mongoId": "6705133602df1efea6a32ea3",
+      "idNumber": "2324",
+      "oldSlug": "pss-sm-700-pss-g-250-a-1",
+      "newSlug": "pss-sm-700-paddle-mixer-g-250-a-screw-conveyor-2014",
+      "oldEnglishName": "PSS SM 700 + PSS G 250 A",
+      "newEnglishName": "PSS SM 700 paddle mixer + G 250 A screw conveyor, 2014"
+    },
+    {
+      "mongoId": "670504da02df1efea6a32d74",
+      "idNumber": "2326",
+      "oldSlug": "baader-185",
+      "newSlug": "baader-185-whitefish-filleting-and-skinning-machine",
+      "oldEnglishName": "Baader 185",
+      "newEnglishName": "Baader 185 whitefish filleting and skinning machine"
+    },
+    {
+      "mongoId": "670512f702df1efea6a32e97",
+      "idNumber": "2336",
+      "oldSlug": "pss-sm-700-pss-g-250-a",
+      "newSlug": "pss-sm-700-paddle-mixer-g-250-a-screw-conveyor-20142016",
+      "oldEnglishName": "PSS SM 700 + PSS G 250 A",
+      "newEnglishName": "PSS SM 700 paddle mixer + G 250 A screw conveyor, 2014/2016"
+    },
+    {
+      "mongoId": "670fad7589daaab87caa70be",
+      "idNumber": "2343",
+      "oldSlug": "pss-sg-200",
+      "newSlug": "pss-sg-200-meat-grinder-2013-4000-8000-kgh",
+      "oldEnglishName": "PSS SG-200",
+      "newEnglishName": "PSS SG-200 meat grinder, 2013, 4,000–8,000 kg/h"
+    },
+    {
+      "mongoId": "67103095cf654db8c8c0b73e",
+      "idNumber": "2376",
+      "oldSlug": "nylon-conveyor-belt-1",
+      "newSlug": "plastic-belt-conveyor-275-x-75-x-75-cm",
+      "oldEnglishName": "Nylon conveyor belt",
+      "newEnglishName": "Plastic-belt conveyor, 275 x 75 x 75 cm"
+    },
+    {
+      "mongoId": "6710306ccf654db8c8c0b737",
+      "idNumber": "2378",
+      "oldSlug": "nylon-conveyor-belt",
+      "newSlug": "plastic-belt-conveyor-370-x-65-x-80-cm",
+      "oldEnglishName": "Nylon conveyor belt",
+      "newEnglishName": "Plastic-belt conveyor, 370 x 65 x 80 cm"
+    },
+    {
+      "mongoId": "66c0765ac61eb059901b3828",
+      "idNumber": "2416",
+      "oldSlug": "glass-vas-vsm-1000",
+      "newSlug": "glass-vas-vsm-1000-food-processing-cutter-1000-l-2008",
+      "oldEnglishName": "Glass VAS VSM 1000",
+      "newEnglishName": "Glass VAS VSM 1000 food-processing cutter, 1,000 L, 2008"
+    },
+    {
+      "mongoId": "66fe5ed90cc0c190213eb55c",
+      "idNumber": "2470",
+      "oldSlug": "nimo-kg-skv200-mk",
+      "newSlug": "nimo-kg-skv-200-mk-lifter-for-200-l-meat-bins",
+      "oldEnglishName": "Nimo-KG SKV200 MK",
+      "newEnglishName": "Nimo-KG SKV 200 MK lifter for 200 L meat bins"
+    },
+    {
+      "mongoId": "66fe5efd0cc0c190213eb564",
+      "idNumber": "2484",
+      "oldSlug": "nimo-kg-4",
+      "newSlug": "nimo-kg-side-trolley-lift-with-safety-cage",
+      "oldEnglishName": "Nimo-KG",
+      "newEnglishName": "Nimo-KG side trolley lift with safety cage"
+    },
+    {
+      "mongoId": "66fc5aa6b3bbcbeef2855f5c",
+      "idNumber": "2510",
+      "oldSlug": "dixie-union-495-sl",
+      "newSlug": "dixie-union-495-sl-slicer-with-discharge-conveyor-1994",
+      "oldEnglishName": "Dixie union 495-SL",
+      "newEnglishName": "Dixie Union 495-SL slicer with discharge conveyor, 1994"
+    },
+    {
+      "mongoId": "670fa46289daaab87caa6f73",
+      "idNumber": "2540",
+      "oldSlug": "elektro-termo",
+      "newSlug": "elektro-termo-electric-cooker-four-hotplates-6-kw",
+      "oldEnglishName": "Elektro Termo",
+      "newEnglishName": "Elektro Termo electric cooker, four hotplates, 6 kW"
+    },
+    {
+      "mongoId": "66fc5a39b3bbcbeef2855f4e",
+      "idNumber": "2544",
+      "oldSlug": "berkel",
+      "newSlug": "berkel-manual-slicer-with-built-in-sharpener",
+      "oldEnglishName": "Berkel",
+      "newEnglishName": "Berkel manual slicer with built-in sharpener"
+    },
+    {
+      "mongoId": "670e44c289daaab87caa622b",
+      "idNumber": "2550",
+      "oldSlug": "knight-oven",
+      "newSlug": "knight-benchtop-hot-air-oven",
+      "oldEnglishName": "Knight oven",
+      "newEnglishName": "Knight benchtop hot-air oven"
+    },
+    {
+      "mongoId": "67066d26bd5374fd29c7b853",
+      "idNumber": "2553",
+      "oldSlug": "weber-msg-460-5",
+      "newSlug": "weber-msg-460-5-circular-blade-sharpener",
+      "oldEnglishName": "Weber MSG 460-5",
+      "newEnglishName": "Weber MSG 460-5 circular-blade sharpener"
+    },
+    {
+      "mongoId": "67050a9302df1efea6a32dd7",
+      "idNumber": "2560",
+      "oldSlug": "maja-fps-40",
+      "newSlug": "maja-fps-40-meat-portioning-machine",
+      "oldEnglishName": "Maja FPS-40",
+      "newEnglishName": "Maja FPS-40 meat portioning machine"
+    },
+    {
+      "mongoId": "66fc59f2b3bbcbeef2855f40",
+      "idNumber": "2570",
+      "oldSlug": "hallde-rg-100",
+      "newSlug": "hallde-rg-100-vegetable-slicer-2016",
+      "oldEnglishName": "Hällde RG-100",
+      "newEnglishName": "Hällde RG-100 vegetable slicer, 2016"
+    },
+    {
+      "mongoId": "67c6fd96e8830369c1fd766d",
+      "idNumber": "2607",
+      "oldSlug": "conveyor-belt-5",
+      "newSlug": "conveyor-belt-with-variable-speed-drive-on-wheels",
+      "oldEnglishName": "Conveyor belt",
+      "newEnglishName": "Conveyor belt with variable-speed drive on wheels"
+    },
+    {
+      "mongoId": "67102f76cf654db8c8c0b70e",
+      "idNumber": "2617",
+      "oldSlug": "conveyor-belt",
+      "newSlug": "conveyor-belt-with-variable-speed-drive-on-wheels-350-x-60-x-160-cm",
+      "oldEnglishName": "Conveyor belt",
+      "newEnglishName": "Conveyor belt with variable-speed drive on wheels, 350 x 60 x 160 cm"
+    },
+    {
+      "mongoId": "67050a1f02df1efea6a32dc1",
+      "idNumber": "2619",
+      "oldSlug": "bankeryd-os-20",
+      "newSlug": "bankeryd-os-20-cake-and-cheese-slicer-130-x-65-x-120-cm",
+      "oldEnglishName": "Bankeryd OS-20",
+      "newEnglishName": "Bankeryd OS-20 cake and cheese slicer, 130 x 65 x 120 cm"
+    },
+    {
+      "mongoId": "670e2b2689daaab87caa5f5b",
+      "idNumber": "2620",
+      "oldSlug": "meca-plastic-meca",
+      "newSlug": "meca-plastic-tray-sealer-for-vacuummap-packaging-430-x-115-x-160-cm",
+      "oldEnglishName": "Meca plastic meca",
+      "newEnglishName": "Meca Plastic tray sealer for vacuum/MAP packaging, 430 x 115 x 160 cm"
+    },
+    {
+      "mongoId": "66f99a2742a8643f7d162265",
+      "idNumber": "2636",
+      "oldSlug": "kilia-65-lit",
+      "newSlug": "kilia-65-l-bowl-cutter",
+      "oldEnglishName": "Kilia 65 LIT",
+      "newEnglishName": "Kilia 65 L bowl cutter"
+    },
+    {
+      "mongoId": "67066a14bd5374fd29c7b7e1",
+      "idNumber": "2653",
+      "oldSlug": "olve-industrier",
+      "newSlug": "olve-industrier-twistomatic-2000-casing-twisting-machine",
+      "oldEnglishName": "Ølve industrier",
+      "newEnglishName": "Ølve Industrier Twistomatic 2000 casing twisting machine"
+    },
+    {
+      "mongoId": "66fe5f800cc0c190213eb588",
+      "idNumber": "2712",
+      "oldSlug": "nimo-kg-skv",
+      "newSlug": "nimo-kg-skv-trolley-lift-with-safety-cage-2019",
+      "oldEnglishName": "Nimo-KG SKV",
+      "newEnglishName": "Nimo-KG SKV trolley lift with safety cage, 2019"
+    },
+    {
+      "mongoId": "670e29d089daaab87caa5f1f",
+      "idNumber": "2723",
+      "oldSlug": "ulma-alaska",
+      "newSlug": "ulma-alaska-flow-wrapper-with-gas-mixer-1999",
+      "oldEnglishName": "ULMA Alaska",
+      "newEnglishName": "ULMA Alaska flow-wrapper with gas mixer, 1999"
+    },
+    {
+      "mongoId": "66fe60040cc0c190213eb5a5",
+      "idNumber": "2730",
+      "oldSlug": "edmo-lift-tcr-500",
+      "newSlug": "edmo-lift-tcr-500-lifting-table-500-kg-2011",
+      "oldEnglishName": "Edmo lift TCR 500",
+      "newEnglishName": "Edmo Lift TCR 500 lifting table, 500 kg, 2011"
+    },
+    {
+      "mongoId": "67102e29cf654db8c8c0b6d7",
+      "idNumber": "2750",
+      "oldSlug": "conveyor",
+      "newSlug": "conveyor-belt-with-drum-motor-180-x-80-x-110-cm",
+      "oldEnglishName": "Conveyor",
+      "newEnglishName": "Conveyor belt with drum motor, 180 x 80 x 110 cm"
+    },
+    {
+      "mongoId": "67103247cf654db8c8c0b794",
+      "idNumber": "2783",
+      "oldSlug": "conveyor-belt-4",
+      "newSlug": "conveyor-belt-with-intralox-belt-on-wheels-640-x-53-cm",
+      "oldEnglishName": "Conveyor Belt",
+      "newEnglishName": "Conveyor belt with Intralox belt on wheels, 640 x 53 cm"
+    },
+    {
+      "mongoId": "670fa72989daaab87caa6fe7",
+      "idNumber": "2795",
+      "oldSlug": "stalam-rf-20-kw",
+      "newSlug": "stalam-rf-20-kw-meat-and-fish-defrosting-oven",
+      "oldEnglishName": "STALAM RF 20 KW",
+      "newEnglishName": "Stalam RF 20 kW meat and fish defrosting oven"
+    },
+    {
+      "mongoId": "67066db3bd5374fd29c7b85f",
+      "idNumber": "2800",
+      "oldSlug": "weber-msg-460",
+      "newSlug": "weber-msg-460-circular-blade-sharpener",
+      "oldEnglishName": "WEBER MSG 460",
+      "newEnglishName": "Weber MSG 460 circular-blade sharpener"
+    },
+    {
+      "mongoId": "670fa6b989daaab87caa6fdb",
+      "idNumber": "2801",
+      "oldSlug": "amtek-amt7510u",
+      "newSlug": "amtek-amt7510u-industrial-microwaveoven-2010",
+      "oldEnglishName": "AMTEK AMT7510U",
+      "newEnglishName": "Amtek AMT7510U industrial microwave/oven, 2010"
+    },
+    {
+      "mongoId": "670fb82c89daaab87caa71ce",
+      "idNumber": "2831",
+      "oldSlug": "arenco-sl",
+      "newSlug": "arenco-sl-portioning-machine-for-fish-fillets",
+      "oldEnglishName": "ARENCO SL",
+      "newEnglishName": "Arenco SL portioning machine for fish fillets"
+    },
+    {
+      "mongoId": "670e6cc489daaab87caa6310",
+      "idNumber": "2834",
+      "oldSlug": "kronen-k-50-4",
+      "newSlug": "kronen-k-50-4-salad-centrifuge-up-to-1200-kgh",
+      "oldEnglishName": "KRONEN K 50-4",
+      "newEnglishName": "Kronen K 50-4 salad centrifuge, up to 1,200 kg/h"
+    },
+    {
+      "mongoId": "67c6fe69e8830369c1fd76cd",
+      "idNumber": "2859",
+      "oldSlug": "conveyor-belt-6",
+      "newSlug": "conveyor-belt-with-intralox-belt-275-x-55-x-75-cm",
+      "oldEnglishName": "CONVEYOR belt",
+      "newEnglishName": "Conveyor belt with Intralox belt, 275 x 55 x 75 cm"
+    },
+    {
+      "mongoId": "67c70dbce8830369c1fd77a5",
+      "idNumber": "2885",
+      "oldSlug": "conveyor-belt-7",
+      "newSlug": "conveyor-belt-with-intralox-belt-340-x-70-x-105-cm",
+      "oldEnglishName": "Conveyor belt",
+      "newEnglishName": "Conveyor belt with Intralox belt, 340 x 70 x 105 cm"
+    },
+    {
+      "mongoId": "67c97887e8830369c1fd7d3d",
+      "idNumber": "2893",
+      "oldSlug": "grasselli-t30-f",
+      "newSlug": "grasselli-t30-f-fish-skinning-machine-1998",
+      "oldEnglishName": "GRASSELLI T30-F",
+      "newEnglishName": "Grasselli T30-F fish skinning machine, 1998"
+    },
+    {
+      "mongoId": "67c97904e8830369c1fd7d56",
+      "idNumber": "2894",
+      "oldSlug": "grasselli-t30-f-1",
+      "newSlug": "grasselli-t30-f-fish-skinning-machine-2000",
+      "oldEnglishName": "GRASSELLI T30-F",
+      "newEnglishName": "Grasselli T30-F fish skinning machine, 2000"
+    },
+    {
+      "mongoId": "67c9799fe8830369c1fd7d76",
+      "idNumber": "2895",
+      "oldSlug": "grasselli-t30-f-2",
+      "newSlug": "grasselli-t30-f-fish-skinning-machine-30-cm-roller",
+      "oldEnglishName": "GRASSELLI T30-F",
+      "newEnglishName": "Grasselli T30-F fish skinning machine, 30 cm roller"
+    },
+    {
+      "mongoId": "67c95fa8e8830369c1fd784b",
+      "idNumber": "2904",
+      "oldSlug": "inter-system",
+      "newSlug": "inter-system-conveyor-belt-with-sew-motor-600-x-80-x-40-cm",
+      "oldEnglishName": "INTER SYSTEM",
+      "newEnglishName": "Inter System conveyor belt with SEW motor, 600 x 80 x 40 cm"
+    },
+    {
+      "mongoId": "67c960a8e8830369c1fd7872",
+      "idNumber": "2905",
+      "oldSlug": "inter-system-conveyor-belt",
+      "newSlug": "inter-system-conveyor-belt-with-sew-motor-600-x-80-x-40-cm-1",
+      "oldEnglishName": "INTER SYSTEM conveyor belt",
+      "newEnglishName": "Inter System conveyor belt with SEW motor, 600 x 80 x 40 cm"
+    },
+    {
+      "mongoId": "67c96193e8830369c1fd7890",
+      "idNumber": "2906",
+      "oldSlug": "inter-system-1",
+      "newSlug": "inter-system-conveyor-belt-with-drum-motor-320-x-90-x-50-cm",
+      "oldEnglishName": "INTER SYSTEM",
+      "newEnglishName": "Inter System conveyor belt with drum motor, 320 x 90 x 50 cm"
+    },
+    {
+      "mongoId": "67c962a5e8830369c1fd78ae",
+      "idNumber": "2907",
+      "oldSlug": "inter-system-conveyor-belt-1",
+      "newSlug": "inter-system-conveyor-belt-with-drum-motor-320-x-85-x-50-cm",
+      "oldEnglishName": "INTER SYSTEM conveyor belt",
+      "newEnglishName": "Inter System conveyor belt with drum motor, 320 x 85 x 50 cm"
+    },
+    {
+      "mongoId": "67c9638be8830369c1fd78d1",
+      "idNumber": "2908",
+      "oldSlug": "inter-system-conveyor-belt-2",
+      "newSlug": "inter-system-conveyor-belt-with-sew-motor-225-x-90-x-60-cm",
+      "oldEnglishName": "INTER SYSTEM conveyor belt",
+      "newEnglishName": "Inter System conveyor belt with SEW motor, 225 x 90 x 60 cm"
+    },
+    {
+      "mongoId": "67c96461e8830369c1fd78f1",
+      "idNumber": "2909",
+      "oldSlug": "inter-system-conveyor-belt-3",
+      "newSlug": "inter-system-conveyor-belt-with-drum-motor-320-x-90-x-50-cm-1",
+      "oldEnglishName": "INTER SYSTEM conveyor belt",
+      "newEnglishName": "Inter System conveyor belt with drum motor, 320 x 90 x 50 cm"
+    },
+    {
+      "mongoId": "67c9654be8830369c1fd7921",
+      "idNumber": "2910",
+      "oldSlug": "inter-system-conveyor-belt-4",
+      "newSlug": "inter-system-conveyor-belt-with-drum-motor-320-x-90-x-50-cm-2",
+      "oldEnglishName": "INTER SYSTEM conveyor belt",
+      "newEnglishName": "Inter System conveyor belt with drum motor, 320 x 90 x 50 cm"
+    },
+    {
+      "mongoId": "67c965cee8830369c1fd794d",
+      "idNumber": "2911",
+      "oldSlug": "inter-system-conveyor-belt-5",
+      "newSlug": "inter-system-conveyor-belt-with-drum-motor-320-x-90-x-50-cm-3",
+      "oldEnglishName": "INTER SYSTEM conveyor belt",
+      "newEnglishName": "Inter System conveyor belt with drum motor, 320 x 90 x 50 cm"
+    },
+    {
+      "mongoId": "67c96674e8830369c1fd7971",
+      "idNumber": "2912",
+      "oldSlug": "inter-system-conveyor-belt-6",
+      "newSlug": "inter-system-conveyor-belt-with-sew-motor",
+      "oldEnglishName": "INTER SYSTEM conveyor belt",
+      "newEnglishName": "Inter System conveyor belt with SEW motor"
+    },
+    {
+      "mongoId": "67c96702e8830369c1fd7990",
+      "idNumber": "2913",
+      "oldSlug": "inter-system-conveyor-belt-7",
+      "newSlug": "inter-system-conveyor-belt-with-sew-motor-230-x-85-x-60-cm",
+      "oldEnglishName": "INTER SYSTEM conveyor belt",
+      "newEnglishName": "Inter System conveyor belt with SEW motor, 230 x 85 x 60 cm"
+    },
+    {
+      "mongoId": "67c96763e8830369c1fd79b0",
+      "idNumber": "2914",
+      "oldSlug": "inter-system-conveyor-belt-8",
+      "newSlug": "inter-system-conveyor-belt-with-sew-motor-225-x-85-x-60-cm",
+      "oldEnglishName": "INTER SYSTEM conveyor belt",
+      "newEnglishName": "Inter System conveyor belt with SEW motor, 225 x 85 x 60 cm"
+    },
+    {
+      "mongoId": "67c96849e8830369c1fd79f9",
+      "idNumber": "2915",
+      "oldSlug": "inter-system-conveyor-belt-9",
+      "newSlug": "inter-system-conveyor-belt-with-sew-motor-170-x-85-x-60-cm",
+      "oldEnglishName": "INTER SYSTEM conveyor belt",
+      "newEnglishName": "Inter System conveyor belt with SEW motor, 170 x 85 x 60 cm"
+    },
+    {
+      "mongoId": "67e134a2c7033f61ce1e1172",
+      "idNumber": "2940",
+      "oldSlug": "meca-plastic-meca-1",
+      "newSlug": "meca-plastic-tray-sealer-for-vacuummap-packaging-430-x-100-x-190-cm",
+      "oldEnglishName": "MECA PLASTIC MECA",
+      "newEnglishName": "Meca Plastic tray sealer for vacuum/MAP packaging, 430 x 100 x 190 cm"
+    },
+    {
+      "mongoId": "67e12a7bc7033f61ce1e0fb1",
+      "idNumber": "2943",
+      "oldSlug": "milk-tank",
+      "newSlug": "milk-cooling-tank-with-agitator-1870-l",
+      "oldEnglishName": "Milk tank",
+      "newEnglishName": "Milk cooling tank with agitator, 1,870 L"
+    },
+    {
+      "mongoId": "68b03642ddac07176c18c08c",
+      "idNumber": "2960",
+      "oldSlug": "cutting-table",
+      "newSlug": "food-processing-cutting-table-with-plastic-boards-and-central-chute-340-x-135-x-95-cm",
+      "oldEnglishName": "Cutting Table",
+      "newEnglishName": "Food-processing cutting table with plastic boards and central chute, 340 x 135 x 95 cm"
+    },
+    {
+      "mongoId": "68c28e6bddac07176c190497",
+      "idNumber": "2967",
+      "oldSlug": "foodco",
+      "newSlug": "foodco-hot-air-tunnel-450-x-140-x-300-cm",
+      "oldEnglishName": "FOODCO",
+      "newEnglishName": "Foodco hot-air tunnel, 450 x 140 x 300 cm"
+    },
+    {
+      "mongoId": "68c2ce82ddac07176c190a84",
+      "idNumber": "2974",
+      "oldSlug": "nn-table",
+      "newSlug": "stainless-steel-work-table",
+      "oldEnglishName": "NN TABLE",
+      "newEnglishName": "Stainless steel work table"
+    },
+    {
+      "mongoId": "68c2cf0bddac07176c190aa1",
+      "idNumber": "2975",
+      "oldSlug": "table-1",
+      "newSlug": "stainless-steel-work-table-with-shelf-100-x-70-x-85-cm",
+      "oldEnglishName": "TABLE",
+      "newEnglishName": "Stainless steel work table with shelf, 100 x 70 x 85 cm"
+    },
+    {
+      "mongoId": "68c2cf69ddac07176c190abb",
+      "idNumber": "2976",
+      "oldSlug": "table-2",
+      "newSlug": "stainless-steel-work-table-with-shelf-100-x-60-x-87-cm",
+      "oldEnglishName": "TABLE",
+      "newEnglishName": "Stainless steel work table with shelf, 100 x 60 x 87 cm"
+    },
+    {
+      "mongoId": "68c7d35777958aaf769de7c7",
+      "idNumber": "2981",
+      "oldSlug": "korvbord",
+      "newSlug": "stainless-steel-sausage-table-with-angled-corner",
+      "oldEnglishName": "KORVBORD",
+      "newEnglishName": "Stainless steel sausage table with angled corner"
+    },
+    {
+      "mongoId": "68c7dd2a77958aaf769de81a",
+      "idNumber": "2982",
+      "oldSlug": "packing-table-1",
+      "newSlug": "stainless-steel-packing-table-290-x-140-x-90-cm",
+      "oldEnglishName": "Packing Table",
+      "newEnglishName": "Stainless steel packing table, 290 x 140 x 90 cm"
+    },
+    {
+      "mongoId": "68c7ddcd77958aaf769de841",
+      "idNumber": "2983",
+      "oldSlug": "table-3",
+      "newSlug": "stainless-steel-work-table-for-weighing-station-63-x-52-x-90-cm",
+      "oldEnglishName": "Table",
+      "newEnglishName": "Stainless steel work table for weighing station, 63 x 52 x 90 cm"
+    },
+    {
+      "mongoId": "68c7deba77958aaf769de865",
+      "idNumber": "2984",
+      "oldSlug": "sausage-table",
+      "newSlug": "stainless-steel-sausage-table-with-adjustable-feet-180-x-80-x-90-cm",
+      "oldEnglishName": "SAUSAGE TABLE",
+      "newEnglishName": "Stainless steel sausage table with adjustable feet, 180 x 80 x 90 cm"
+    },
+    {
+      "mongoId": "68c7df3077958aaf769de883",
+      "idNumber": "2985",
+      "oldSlug": "cutting-table-1",
+      "newSlug": "stainless-steel-cutting-table-185-x-117-x-90-cm",
+      "oldEnglishName": "Cutting Table",
+      "newEnglishName": "Stainless steel cutting table, 185 x 117 x 90 cm"
+    },
+    {
+      "mongoId": "68c7df9977958aaf769de8a1",
+      "idNumber": "2986",
+      "oldSlug": "packing-table-2",
+      "newSlug": "stainless-steel-packing-table-with-undershelf-265-x-100-x-90-cm",
+      "oldEnglishName": "PACKING TABLE",
+      "newEnglishName": "Stainless steel packing table with undershelf, 265 x 100 x 90 cm"
+    },
+    {
+      "mongoId": "68c7e0d977958aaf769de8e7",
+      "idNumber": "2988",
+      "oldSlug": "cutting-table-2",
+      "newSlug": "stainless-steel-cutting-table-200-x-105-x-90-cm",
+      "oldEnglishName": "Cutting table",
+      "newEnglishName": "Stainless steel cutting table, 200 x 105 x 90 cm"
+    },
+    {
+      "mongoId": "68c7e22977958aaf769de91d",
+      "idNumber": "2990",
+      "oldSlug": "cutting-table-3",
+      "newSlug": "stainless-steel-cutting-table",
+      "oldEnglishName": "Cutting table",
+      "newEnglishName": "Stainless steel cutting table"
+    },
+    {
+      "mongoId": "68c7e28977958aaf769de93d",
+      "idNumber": "2991",
+      "oldSlug": "packing-table-3",
+      "newSlug": "stainless-steel-packing-table-200-x-100-x-85-cm",
+      "oldEnglishName": "Packing table",
+      "newEnglishName": "Stainless steel packing table, 200 x 100 x 85 cm"
+    },
+    {
+      "mongoId": "68c7e32877958aaf769de954",
+      "idNumber": "2992",
+      "oldSlug": "cutting-table-4",
+      "newSlug": "mobile-4-station-cutting-table-for-meat-and-fish-340-x-135-x-95-cm",
+      "oldEnglishName": "Cutting table",
+      "newEnglishName": "Mobile 4-station cutting table for meat and fish, 340 x 135 x 95 cm"
+    },
+    {
+      "mongoId": "68c7e3aa77958aaf769de96f",
+      "idNumber": "2993",
+      "oldSlug": "cutting-table-5",
+      "newSlug": "large-cutting-table-with-plastic-cutting-boards-300-x-145-x-90-cm",
+      "oldEnglishName": "Cutting Table",
+      "newEnglishName": "Large cutting table with plastic cutting boards, 300 x 145 x 90 cm"
+    },
+    {
+      "mongoId": "68c7f2ed77958aaf769de9a9",
+      "idNumber": "2994",
+      "oldSlug": "cutting-table-6",
+      "newSlug": "cutting-table-with-adjustable-legs-290-x-150-x-80-cm",
+      "oldEnglishName": "Cutting table",
+      "newEnglishName": "Cutting table with adjustable legs, 290 x 150 x 80 cm"
+    },
+    {
+      "mongoId": "68c7f43d77958aaf769de9c5",
+      "idNumber": "2995",
+      "oldSlug": "cutting-table-7",
+      "newSlug": "heavy-duty-cutting-table-80-x-65-x-80-cm",
+      "oldEnglishName": "Cutting Table",
+      "newEnglishName": "Heavy-duty cutting table, 80 x 65 x 80 cm"
+    },
+    {
+      "mongoId": "68c7f5b277958aaf769de9df",
+      "idNumber": "2996",
+      "oldSlug": "cutting-table-8",
+      "newSlug": "cutting-table-with-adjustable-legs-290-x-150-x-80-cm-1",
+      "oldEnglishName": "Cutting table",
+      "newEnglishName": "Cutting table with adjustable legs, 290 x 150 x 80 cm"
+    },
+    {
+      "mongoId": "68c7f6b777958aaf769dea01",
+      "idNumber": "2997",
+      "oldSlug": "cutting-table-9",
+      "newSlug": "height-adjustable-cutting-table-with-plastic-boards-290-x-150-x-90-cm",
+      "oldEnglishName": "Cutting table",
+      "newEnglishName": "Height-adjustable cutting table with plastic boards, 290 x 150 x 90 cm"
+    },
+    {
+      "mongoId": "68c8004077958aaf769deb2d",
+      "idNumber": "3002",
+      "oldSlug": "packing-table-5",
+      "newSlug": "stainless-steel-packing-table-with-undershelf-175-x-80-x-90-cm",
+      "oldEnglishName": "Packing Table",
+      "newEnglishName": "Stainless steel packing table with undershelf, 175 x 80 x 90 cm"
+    },
+    {
+      "mongoId": "68c7ff2277958aaf769deafa",
+      "idNumber": "3003",
+      "oldSlug": "stainless-table",
+      "newSlug": "stainless-steel-work-table-with-undershelf-60-x-50-x-62-cm",
+      "oldEnglishName": "Stainless steel table",
+      "newEnglishName": "Stainless steel work table with undershelf, 60 x 50 x 62 cm"
+    },
+    {
+      "mongoId": "68c800b677958aaf769deb47",
+      "idNumber": "3005",
+      "oldSlug": "sausage-table-1",
+      "newSlug": "stainless-steel-sausage-table-with-central-drain-180-x-90-x-90-cm",
+      "oldEnglishName": "SAUSAGE TABLE",
+      "newEnglishName": "Stainless steel sausage table with central drain, 180 x 90 x 90 cm"
+    },
+    {
+      "mongoId": "68d158b27e1e92f762f7cb64",
+      "idNumber": "3020",
+      "oldSlug": "label-trolley",
+      "newSlug": "stainless-steel-label-holder-trolley-75-x-70-x-120-cm",
+      "oldEnglishName": "Label trolley",
+      "newEnglishName": "Stainless steel label holder trolley, 75 x 70 x 120 cm"
+    },
+    {
+      "mongoId": "68d2bd0f7e1e92f762f7d2a5",
+      "idNumber": "3024",
+      "oldSlug": "label-trolley-1",
+      "newSlug": "stainless-steel-label-trolley-on-wheels",
+      "oldEnglishName": "Label Trolley",
+      "newEnglishName": "Stainless steel label trolley on wheels"
+    },
+    {
+      "mongoId": "68e3d5a0d0d386063ddb07b8",
+      "idNumber": "3054",
+      "oldSlug": "ss-table",
+      "newSlug": "stainless-steel-work-table-132-x-108-x-78-cm",
+      "oldEnglishName": "Stainless Steel Table",
+      "newEnglishName": "Stainless steel work table, 132 x 108 x 78 cm"
+    },
+    {
+      "mongoId": "68e3d65cd0d386063ddb07f6",
+      "idNumber": "3056",
+      "oldSlug": "ss-table-1",
+      "newSlug": "stainless-steel-work-table-with-back-panel-180-x-80-x-90-cm",
+      "oldEnglishName": "Stainless Steel Table",
+      "newEnglishName": "Stainless steel work table with back panel, 180 x 80 x 90 cm"
+    },
+    {
+      "mongoId": "68e659bad0d386063ddb17ad",
+      "idNumber": "3059",
+      "oldSlug": "mixer",
+      "newSlug": "stainless-steel-tilting-food-mixer",
+      "oldEnglishName": "MIXER",
+      "newEnglishName": "Stainless steel tilting food mixer"
+    },
+    {
+      "mongoId": "6967a351d8bb380b258d5375",
+      "idNumber": "3104",
+      "oldSlug": "trolley",
+      "newSlug": "stainless-steel-36-shelf-trolley",
+      "oldEnglishName": "TROLLEY",
+      "newEnglishName": "Stainless steel 36-shelf trolley"
+    },
+    {
+      "mongoId": "696f7770791a731d8e15a017",
+      "idNumber": "3114",
+      "oldSlug": "mesh-belt",
+      "newSlug": "mobile-mesh-belt-conveyor-with-adjustable-tilt-and-cleaning-system",
+      "oldEnglishName": "MESH BELT",
+      "newEnglishName": "Mobile mesh-belt conveyor with adjustable tilt and cleaning system"
+    },
+    {
+      "mongoId": "6978b360208d8297a23fd0be",
+      "idNumber": "3128",
+      "oldSlug": "cabinplant-1",
+      "newSlug": "cabinplant-transport-conveyor-belt-620-x-65-x-90-cm",
+      "oldEnglishName": "CABINPLANT",
+      "newEnglishName": "Cabinplant transport conveyor belt, 620 x 65 x 90 cm"
+    },
+    {
+      "mongoId": "699dbc72e3505097fdee27d9",
+      "idNumber": "3154",
+      "oldSlug": "doleschal",
+      "newSlug": "doleschal-um4-3000-k-smoking-and-cooking-cabinet-4-trolleys",
+      "oldEnglishName": "DOLESCHAL ",
+      "newEnglishName": "Doleschal UM4-3000 K smoking and cooking cabinet, 4 trolleys"
+    },
+    {
+      "mongoId": "699dbf9ae3505097fdee2849",
+      "idNumber": "3156",
+      "oldSlug": "sausage-table-2",
+      "newSlug": "stainless-steel-sausage-table-with-adjustable-height-and-tilt-160-x-110-x-120-cm",
+      "oldEnglishName": "SAUSAGE TABLE",
+      "newEnglishName": "Stainless steel sausage table with adjustable height and tilt, 160 x 110 x 120 cm"
+    },
+    {
+      "mongoId": "69a19d49e3505097fdee4322",
+      "idNumber": "3162",
+      "oldSlug": "stainless-steel-cabinet",
+      "newSlug": "stainless-steel-cabinet-on-wheels-with-four-shelves-198-x-100-x-215-cm",
+      "oldEnglishName": "Stainless Steel Cabinet",
+      "newEnglishName": "Stainless steel cabinet on wheels with four shelves, 198 x 100 x 215 cm"
+    },
+    {
+      "mongoId": "69a975f71ae7ea6c27571d93",
+      "idNumber": "3163",
+      "oldSlug": "stainless-steel-cabinet-1772713463650",
+      "newSlug": "stainless-steel-cabinet-with-shelves-126-x-97-x-160-cm",
+      "oldEnglishName": "Stainless Steel Cabinet",
+      "newEnglishName": "Stainless steel cabinet with shelves, 126 x 97 x 160 cm"
+    },
+    {
+      "mongoId": "69b95783c4410956c1b4597e",
+      "idNumber": "3170",
+      "oldSlug": "stainless-steel-locker-1773754243421",
+      "newSlug": "stainless-steel-locker-100-x-50-x-125-cm",
+      "oldEnglishName": "STAINLESS STEEL LOCKER",
+      "newEnglishName": "Stainless steel locker, 100 x 50 x 125 cm"
+    },
+    {
+      "mongoId": "69b95bd5c4410956c1b45a4e",
+      "idNumber": "3174",
+      "oldSlug": "foodco-1773755349596",
+      "newSlug": "foodco-smoke-generator-20-x-90-x-180-cm",
+      "oldEnglishName": "FOODCO",
+      "newEnglishName": "Foodco smoke generator, 20 x 90 x 180 cm"
+    },
+    {
+      "mongoId": "69b968dec4410956c1b45c6e",
+      "idNumber": "3180",
+      "oldSlug": "wolfking-c-160-uni-1",
+      "newSlug": "wolfking-c-160-uni-meat-grinder-with-spare-auger",
+      "oldEnglishName": "WOLFKING C-160 UNI",
+      "newEnglishName": "Wolfking C-160 UNI meat grinder with spare auger"
+    },
+    {
+      "mongoId": "69b96d5cc4410956c1b45cfa",
+      "idNumber": "3183",
+      "oldSlug": "flour-duster",
+      "newSlug": "bakery-flour-dusting-conveyor-127-cm-belt",
+      "oldEnglishName": "FLOUR DUSTER",
+      "newEnglishName": "Bakery flour-dusting conveyor, 127 cm belt"
+    },
+    {
+      "mongoId": "69b97172c4410956c1b45da3",
+      "idNumber": "3187",
+      "oldSlug": "maren-100f",
+      "newSlug": "maren-100-f-dough-mixer-with-two-bowls",
+      "oldEnglishName": "MAREN 100F",
+      "newEnglishName": "Maren 100 F dough mixer with two bowls"
+    },
+    {
+      "mongoId": "69df73e71a7d7814c5e78dee",
+      "idNumber": "3195",
+      "oldSlug": "sinks",
+      "newSlug": "two-stainless-steel-sinks-for-slaughterhouse-use",
+      "oldEnglishName": "SINKS",
+      "newEnglishName": "Two stainless steel sinks for slaughterhouse use"
+    },
+    {
+      "mongoId": "69df9c111a7d7814c5e7feb5",
+      "idNumber": "3203",
+      "oldSlug": "foodco-1776262161499",
+      "newSlug": "foodco-smoke-generator-140-x-90-x-175-cm",
+      "oldEnglishName": "FOODCO",
+      "newEnglishName": "Foodco smoke generator, 140 x 90 x 175 cm"
+    },
+    {
+      "mongoId": "69df9c841a7d7814c5e7fee7",
+      "idNumber": "3204",
+      "oldSlug": "table-1776262276855",
+      "newSlug": "stainless-steel-work-table-with-shelf-170-x-70-x-90-cm",
+      "oldEnglishName": "TABLE",
+      "newEnglishName": "Stainless steel work table with shelf, 170 x 70 x 90 cm"
+    },
+    {
+      "mongoId": "69df9cf51a7d7814c5e7ff6a",
+      "idNumber": "3205",
+      "oldSlug": "table-1776262389316",
+      "newSlug": "stainless-steel-work-table-120-x-50-x-85-cm",
+      "oldEnglishName": "TABLE",
+      "newEnglishName": "Stainless steel work table, 120 x 50 x 85 cm"
+    },
+    {
+      "mongoId": "69e0bed21a7d7814c5e9bcdf",
+      "idNumber": "3207",
+      "oldSlug": "conveyor-1776336594196",
+      "newSlug": "conveyor-belt-with-buffer-section-360-x-115-x-210-cm",
+      "oldEnglishName": "CONVEYOR",
+      "newEnglishName": "Conveyor belt with buffer section, 360 x 115 x 210 cm"
+    },
+    {
+      "mongoId": "69e0cbd81a7d7814c5e9d115",
+      "idNumber": "3218",
+      "oldSlug": "tank-125-lit",
+      "newSlug": "stainless-steel-tank-125-l",
+      "oldEnglishName": "TANK 125 LIT",
+      "newEnglishName": "Stainless steel tank, 125 L"
+    },
+    {
+      "mongoId": "69e0cc651a7d7814c5e9d360",
+      "idNumber": "3219",
+      "oldSlug": "tank-500-lit",
+      "newSlug": "stainless-steel-storage-tank-500-l",
+      "oldEnglishName": "TANK 500 LIT",
+      "newEnglishName": "Stainless steel storage tank, 500 L"
+    },
+    {
+      "mongoId": "69e0cd1f1a7d7814c5e9ea95",
+      "idNumber": "3220",
+      "oldSlug": "tank-180-lit",
+      "newSlug": "stainless-steel-tank-180-l",
+      "oldEnglishName": "TANK 180 LIT",
+      "newEnglishName": "Stainless steel tank, 180 L"
+    },
+    {
+      "mongoId": "69e0cd831a7d7814c5e9f627",
+      "idNumber": "3221",
+      "oldSlug": "tank-80-lit",
+      "newSlug": "stainless-steel-storage-tank-80-l",
+      "oldEnglishName": "TANK 80 LIT",
+      "newEnglishName": "Stainless steel storage tank, 80 L"
+    },
+    {
+      "mongoId": "6a0c6275d510b6407dfee067",
+      "idNumber": "3229",
+      "oldSlug": "silo-mixer",
+      "newSlug": "liquid-mixing-silo-approximately-300-l",
+      "oldEnglishName": "SILO / MIXER",
+      "newEnglishName": "Liquid mixing silo, approximately 300 L"
+    },
+    {
+      "mongoId": "6a0c64a3d510b6407dfee59e",
+      "idNumber": "3231",
+      "oldSlug": "stainless-steel-table",
+      "newSlug": "stainless-steel-packing-table-150-x-60-x-83-cm",
+      "oldEnglishName": "STAINLESS STEEL TABLE",
+      "newEnglishName": "Stainless steel packing table, 150 x 60 x 83 cm"
+    },
+    {
+      "mongoId": "6a0c650cd510b6407dfee6ed",
+      "idNumber": "3232",
+      "oldSlug": "stainless-steel-table-1779197196023",
+      "newSlug": "stainless-steel-packing-table-with-undershelf-130-x-87-x-90-cm",
+      "oldEnglishName": "STAINLESS STEEL TABLE",
+      "newEnglishName": "Stainless steel packing table with undershelf, 130 x 87 x 90 cm"
+    },
+    {
+      "mongoId": "6a0c6568d510b6407dfee819",
+      "idNumber": "3233",
+      "oldSlug": "stainless-steel-table-1779197288113",
+      "newSlug": "stainless-steel-packing-table-140-x-65-x-85-cm",
+      "oldEnglishName": "STAINLESS STEEL TABLE",
+      "newEnglishName": "Stainless steel packing table, 140 x 65 x 85 cm"
+    },
+    {
+      "mongoId": "6a1ee4f263331c6c8316a42f",
+      "idNumber": "3239",
+      "oldSlug": "conveyor-1780409586774",
+      "newSlug": "conveyor-belt-200-x-85-x-75-cm",
+      "oldEnglishName": "CONVEYOR",
+      "newEnglishName": "Conveyor belt, 200 x 85 x 75 cm"
+    },
+    {
+      "mongoId": "6a27d9042146fc6cef3c6139",
+      "idNumber": "3245",
+      "oldSlug": "conveyorbelt",
+      "newSlug": "large-stainless-steel-intralox-conveyor-100-cm-belt",
+      "oldEnglishName": "CONVEYORBELT",
+      "newEnglishName": "Large stainless steel Intralox conveyor, 100 cm belt"
+    },
+    {
+      "mongoId": "6a27dc4b2146fc6cef3c681e",
+      "idNumber": "3247",
+      "oldSlug": "tempura-dipper",
+      "newSlug": "tempura-dipping-conveyor-600-mm-belt-width",
+      "oldEnglishName": "TEMPURA DIPPER",
+      "newEnglishName": "Tempura dipping conveyor, 600 mm belt width"
+    },
+    {
+      "mongoId": "6a27dec42146fc6cef3c6d11",
+      "idNumber": "3248",
+      "oldSlug": "stainless-steel-table-1780997828627",
+      "newSlug": "stainless-steel-work-table-with-undershelf-286-x-86-x-87-cm",
+      "oldEnglishName": "STAINLESS STEEL TABLE",
+      "newEnglishName": "Stainless steel work table with undershelf, 286 x 86 x 87 cm"
+    },
+    {
+      "mongoId": "6a27f0512146fc6cef3ca6eb",
+      "idNumber": "3254",
+      "oldSlug": "dishwaher-conveyor",
+      "newSlug": "dishwasher-roller-conveyor-51-cm-width",
+      "oldEnglishName": "DISHWAHER CONVEYOR",
+      "newEnglishName": "Dishwasher roller conveyor, 51 cm width"
+    },
+    {
+      "mongoId": "6a27f12a2146fc6cef3ca7ca",
+      "idNumber": "3255",
+      "oldSlug": "stainless-steel-table-1781002538562",
+      "newSlug": "stainless-steel-work-table-with-undershelf-241-x-65-x-91-cm",
+      "oldEnglishName": "STAINLESS STEEL TABLE",
+      "newEnglishName": "Stainless steel work table with undershelf, 241 x 65 x 91 cm"
+    },
+    {
+      "mongoId": "6a2ab1dc2146fc6cef49b0e9",
+      "idNumber": "3257",
+      "oldSlug": "cutting-table-1781182940582",
+      "newSlug": "stainless-steel-cutting-table-with-undershelf-300-x-64-x-88-cm",
+      "oldEnglishName": "CUTTING TABLE",
+      "newEnglishName": "Stainless steel cutting table with undershelf, 300 x 64 x 88 cm"
+    },
+    {
+      "mongoId": "6a2ab2dd2146fc6cef49b4b2",
+      "idNumber": "3259",
+      "oldSlug": "sausage-table-1781183197085",
+      "newSlug": "stainless-steel-sausage-table-on-wheels-300-x-136-x-95-cm",
+      "oldEnglishName": "SAUSAGE TABLE",
+      "newEnglishName": "Stainless steel sausage table on wheels, 300 x 136 x 95 cm"
+    },
+    {
+      "mongoId": "6a2bc7cb2146fc6cef4d5470",
+      "idNumber": "3260",
+      "oldSlug": "sausage-table-1781254091673",
+      "newSlug": "stainless-steel-sausage-table-330-x-100-x-98-cm",
+      "oldEnglishName": "SAUSAGE TABLE",
+      "newEnglishName": "Stainless steel sausage table, 330 x 100 x 98 cm"
+    },
+    {
+      "mongoId": "6a2bc8cc2146fc6cef4d566a",
+      "idNumber": "3261",
+      "oldSlug": "stainless-steel-table-1781254348718",
+      "newSlug": "stainless-steel-work-table-296-x-138-x-78-cm",
+      "oldEnglishName": "STAINLESS STEEL TABLE",
+      "newEnglishName": "Stainless steel work table, 296 x 138 x 78 cm"
+    },
+    {
+      "mongoId": "6a2bcd452146fc6cef4d615b",
+      "idNumber": "3264",
+      "oldSlug": "platform",
+      "newSlug": "stainless-steel-access-platform-with-aluminium-stairs-180-x-70-x-165-cm",
+      "oldEnglishName": "PLATFORM",
+      "newEnglishName": "Stainless steel access platform with aluminium stairs, 180 x 70 x 165 cm"
+    },
+    {
+      "mongoId": "6a2bcedc2146fc6cef4d6675",
+      "idNumber": "3266",
+      "oldSlug": "platform-1",
+      "newSlug": "stainless-steel-access-platform-on-wheels-140-x-80-x-200-cm",
+      "oldEnglishName": "PLATFORM",
+      "newEnglishName": "Stainless steel access platform on wheels, 140 x 80 x 200 cm"
+    },
+    {
+      "mongoId": "6a2bd1c92146fc6cef4d6f37",
+      "idNumber": "3267",
+      "oldSlug": "platform-1781256649001",
+      "newSlug": "stainless-steel-access-platform-with-plastic-steps-200-x-120-x-195-cm",
+      "oldEnglishName": "PLATFORM",
+      "newEnglishName": "Stainless steel access platform with plastic steps, 200 x 120 x 195 cm"
+    },
+    {
+      "mongoId": "6a2bd2752146fc6cef4d70ce",
+      "idNumber": "3268",
+      "oldSlug": "platform-1781256821464",
+      "newSlug": "stainless-steel-access-platform-345-x-110-x-185-cm",
+      "oldEnglishName": "PLATFORM",
+      "newEnglishName": "Stainless steel access platform, 345 x 110 x 185 cm"
+    },
+    {
+      "mongoId": "6a3d06deb9fdf3a677de4dce",
+      "idNumber": "3271",
+      "oldSlug": "platform-1782384350066",
+      "newSlug": "stainless-steel-access-platform-230-x-90-x-240-cm",
+      "oldEnglishName": "PLATFORM",
+      "newEnglishName": "Stainless steel access platform, 230 x 90 x 240 cm"
+    },
+    {
+      "mongoId": "6a3e6a7eb9fdf3a677e1bc14",
+      "idNumber": "3274",
+      "oldSlug": "conveyor-1",
+      "newSlug": "enp-conveyor-belt-with-drum-motor-210-x-80-x-110-cm",
+      "oldEnglishName": "CONVEYOR",
+      "newEnglishName": "ENP conveyor belt with drum motor, 210 x 80 x 110 cm"
+    },
+    {
+      "mongoId": "6a3e6b94b9fdf3a677e1c44c",
+      "idNumber": "3275",
+      "oldSlug": "enp-conveyor",
+      "newSlug": "enp-mobile-conveyor-belt-with-drum-motor-50-cm-belt",
+      "oldEnglishName": "ENP CONVEYOR",
+      "newEnglishName": "ENP mobile conveyor belt with drum motor, 50 cm belt"
+    },
+    {
+      "mongoId": "6a451304b9fdf3a677036d9d",
+      "idNumber": "3278",
+      "oldSlug": "cvp-a-200",
+      "newSlug": "cvp-a-200-vacuum-packaging-machine-2005",
+      "oldEnglishName": "CVP A 200 ",
+      "newEnglishName": "CVP A 200 vacuum packaging machine, 2005"
+    },
+    {
+      "mongoId": "6a902d6a5bc578b33c7987d0",
+      "idNumber": "3283",
+      "oldSlug": "cvp-a-200-3283-1",
+      "newSlug": "cvp-a-200-bulk-vacuum-packaging-machine-160-x-90-x-190-cm",
+      "oldEnglishName": "CVP A-200",
+      "newEnglishName": "CVP A-200 bulk vacuum packaging machine, 160 x 90 x 190 cm"
+    },
+    {
+      "mongoId": "6a902f515bc578b33c7994e2",
+      "idNumber": "3285",
+      "oldSlug": "cvp-a-200-3285-1",
+      "newSlug": "cvp-a-200-bulk-vacuum-packaging-machine-160-x-95-x-200-cm",
+      "oldEnglishName": "CVP A-200",
+      "newEnglishName": "CVP A-200 bulk vacuum packaging machine, 160 x 95 x 200 cm"
+    },
+    {
+      "mongoId": "6ab135e0ed13fcfbc2227e0b",
+      "idNumber": "3298",
+      "oldSlug": "nimo-kg-3298-1",
+      "newSlug": "nimo-kg-meat-bin-lifter-tip-height-222-cm",
+      "oldEnglishName": "NIMO-KG",
+      "newEnglishName": "Nimo-KG meat-bin lifter, tip height 222 cm"
+    },
+    {
+      "mongoId": "6ab139afed13fcfbc2228789",
+      "idNumber": "3301",
+      "oldSlug": "stein-e-14",
+      "newSlug": "stein-e-14-breading-machine-400-mm-belt",
+      "oldEnglishName": "STEIN E-14",
+      "newEnglishName": "Stein E-14 breading machine, 400 mm belt"
+    },
+    {
+      "mongoId": "6ab3ae36ed13fcfbc225952a",
+      "idNumber": "3303",
+      "oldSlug": "multivac-r-240-3303-1",
+      "newSlug": "multivac-r-240-thermoforming-packaging-machine-2005",
+      "oldEnglishName": "MULTIVAC R-240",
+      "newEnglishName": "Multivac R-240 thermoforming packaging machine, 2005"
+    },
+    {
+      "mongoId": "6abcd903ed13fcfbc23800ce",
+      "idNumber": "3309",
+      "oldSlug": "nimo-kg-3309-1",
+      "newSlug": "nimo-kg-200-l-meat-bin-lifter-lift-height-250-cm",
+      "oldEnglishName": "NIMO-KG",
+      "newEnglishName": "Nimo-KG 200 L meat-bin lifter, lift height 250 cm"
+    },
+    {
+      "mongoId": "6abd0bb2ed13fcfbc2383e54",
+      "idNumber": "3311",
+      "oldSlug": "nimo-kg-3311-1",
+      "newSlug": "nimo-kg-mobile-meat-bin-lifter-lift-height-130-cm",
+      "oldEnglishName": "NIMO-KG",
+      "newEnglishName": "Nimo-KG mobile meat-bin lifter, lift height 130 cm"
+    },
+    {
+      "mongoId": "6ac4fa3bd5c3b71f8745fc5c",
+      "idNumber": "3315",
+      "oldSlug": "rotopack-turn",
+      "newSlug": "rotopack-turn-semi-automatic-vacuummap-tray-sealer",
+      "oldEnglishName": "ROTOPACK TURN",
+      "newEnglishName": "Rotopack Turn semi-automatic vacuum/MAP tray sealer"
+    },
+    {
+      "mongoId": "6ac4ff7021b1593ceac7a4b3",
+      "idNumber": "3318",
+      "oldSlug": "meat-bin-lifter",
+      "newSlug": "hydraulic-meat-bin-lifter-tipping-height-120-cm",
+      "oldEnglishName": "MEAT BIN LIFTER",
+      "newEnglishName": "Hydraulic meat-bin lifter, tipping height 120 cm"
+    },
+    {
+      "mongoId": "6accb9dadbcdb16b5ea17d40",
+      "idNumber": "3319",
+      "oldSlug": "abm-f2000-plus",
+      "newSlug": "abm-f2000-plus-hamburger-forming-machine-2024",
+      "oldEnglishName": "ABM F2000 PLUS",
+      "newEnglishName": "ABM F2000 Plus hamburger forming machine, 2024"
+    },
+    {
+      "mongoId": "6accbac0dbcdb16b5ea18364",
+      "idNumber": "3320",
+      "oldSlug": "vemag-robby",
+      "newSlug": "vemag-robby-vacuum-stuffer-with-linking-and-twisting-unit",
+      "oldEnglishName": "VEMAG ROBBY",
+      "newEnglishName": "Vemag Robby vacuum stuffer with linking and twisting unit"
+    },
+    {
+      "mongoId": "6accc1548be5d037016bad1b",
+      "idNumber": "3323",
+      "oldSlug": "vemag-tm-203",
+      "newSlug": "vemag-tm-203-sausage-cutter-2008-1200-cutsmin",
+      "oldEnglishName": "VEMAG TM 203",
+      "newEnglishName": "Vemag TM 203 sausage cutter, 2008, 1,200 cuts/min"
+    },
+    {
+      "mongoId": "66c0765ac61eb059901b382a",
+      "idNumber": "658",
+      "oldSlug": "nimo-kg",
+      "newSlug": "nimo-kg-pneumatic-container-lift",
+      "oldEnglishName": "Nimo-KG",
+      "newEnglishName": "Nimo-KG pneumatic container lift"
+    },
+    {
+      "mongoId": "66c0765ac61eb059901b382c",
+      "idNumber": "689",
+      "oldSlug": "smoke-wagons",
+      "newSlug": "smoking-trolleys-for-bacon",
+      "oldEnglishName": "Smoke wagons",
+      "newEnglishName": "Smoking trolleys for bacon"
+    }
+  ]
+}

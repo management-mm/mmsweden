@@ -352,6 +352,46 @@ const RENAMED_PRODUCT_PATHS: Record<string, string> = {
     '/all-products/thermal-processing-equipment/smokehouses/smoking-trolleys-for-bacon',
 };
 
+/**
+ * Six historical product URLs from the old conveying-handling-equipment
+ * category that currently return 200 with a canonical pointing elsewhere.
+ * Only these exact paths are redirected: do NOT redirect the whole category.
+ * Values are the former canonical category paths; any subsequent product
+ * rename is resolved below so the visitor gets a single direct 301.
+ *
+ * Source: Search Console duplicate report, live URL audit, and the current
+ * 2026-10-29 product export. Do not change product slugs or database fields.
+ */
+const MOVED_CATEGORY_PRODUCT_PATHS: Record<string, string> = {
+  '/all-products/conveying-handling-equipment/bucket-elevators/edmo-lift-tcr-500':
+    '/all-products/food-processing-equipment/bucket-elevators/edmo-lift-tcr-500',
+  '/all-products/conveying-handling-equipment/bucket-elevators/nimo-kg-lift':
+    '/all-products/food-processing-equipment/bucket-elevators/nimo-kg-lift',
+  '/all-products/conveying-handling-equipment/food-grade-containers/wexiodisk-wd12-cd':
+    '/all-products/food-processing-equipment/food-grade-containers/wexiodisk-wd12-cd',
+  '/all-products/conveying-handling-equipment/stainless-steel-work-tables/table-2':
+    '/all-products/food-processing-equipment/stainless-steel-work-tables/table-2',
+  '/all-products/conveying-handling-equipment/bucket-elevators/nimo-kg-container-lift':
+    '/all-products/food-processing-equipment/bucket-elevators/nimo-kg-container-lift',
+  '/all-products/conveying-handling-equipment/conveyor-belts/nn-conveyor-belt':
+    '/all-products/food-processing-equipment/conveyor-belts/nn-conveyor-belt',
+};
+
+function getMovedCategoryProductDestination(path: string): string | null {
+  const localized = path.match(
+    /^\/(en|sv|de|fr|es|ru|uk|pl)(\/all-products\/.+)$/i
+  );
+  const locale = localized ? localized[1].toLowerCase() : 'sv';
+  const unlocalizedPath = (localized ? localized[2] : path).toLowerCase();
+  const categoryDestination = MOVED_CATEGORY_PRODUCT_PATHS[unlocalizedPath];
+  if (!categoryDestination) return null;
+
+  // Reuse the existing rename mapping, avoiding a 301 -> 301 -> 200 chain.
+  const finalPath =
+    RENAMED_PRODUCT_PATHS[categoryDestination] || categoryDestination;
+  return `/${locale}${finalPath}`;
+}
+
 function getRenamedProductDestination(path: string): string | null {
   const localized = path.match(
     /^\/(en|sv|de|fr|es|ru|uk|pl)(\/all-products\/.+)$/i
@@ -402,12 +442,19 @@ function getNestedHtmlLegacyDestination(path: string): string | null {
 
   const localizedPath = `/${locale}${suffix}`;
   // Combine with the 156 existing product-rename redirects in one hop.
-  return getRenamedProductDestination(localizedPath) || localizedPath;
+  return (
+    getMovedCategoryProductDestination(localizedPath) ||
+    getRenamedProductDestination(localizedPath) ||
+    localizedPath
+  );
 }
 
 function getLegacyDestination(path: string): string | null {
   const nestedHtml = getNestedHtmlLegacyDestination(path);
   if (nestedHtml) return nestedHtml;
+
+  const movedProduct = getMovedCategoryProductDestination(path);
+  if (movedProduct) return movedProduct;
 
   const renamed = getRenamedProductDestination(path);
   if (renamed) return renamed;

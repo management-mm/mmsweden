@@ -1,0 +1,294 @@
+{
+  "source": "Google Search Console Duplicate without user-selected canonical, export 2026-10-29",
+  "note": "Historical examples. A 200 response with a self-canonical is not by itself proof of a current Google indexing problem.",
+  "urls": [
+    {
+      "url": "https://www.mmsweden.se/index.html/all-products/packaging-machinery/flow-pack-machines/ulma-alaska",
+      "group": "OLD_HTML",
+      "lastCrawled": "2026-07-07",
+      "note": "Legacy URL path segment /index.html/"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/conveying-handling-equipment/bucket-elevators/edmo-lift-tcr-500",
+      "group": "OLD_CATEGORY_PAIR",
+      "lastCrawled": "2026-05-28",
+      "note": "Same historical slug in two category paths: edmo-lift-tcr-500"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/food-processing-equipment/stainless-steel-work-tables/cutting-table-1781182940582",
+      "group": "OLD_RENAMED_SLUG",
+      "lastCrawled": "2026-08-11",
+      "note": "Previous slug: cutting-table-1781182940582; current product slug: stainless-steel-cutting-table-with-undershelf-300-x-64-x-88-cm"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/food-processing-equipment/stainless-steel-work-tables/packing-tables",
+      "group": "OTHER_GSC_DUPLICATE",
+      "lastCrawled": "2026-08-12",
+      "note": "Current product slug in old Search Console duplicate report"
+    },
+    {
+      "url": "https://www.mmsweden.se/index.html/all-products/food-processing-equipment/stainless-steel-work-tables/table-1",
+      "group": "OLD_HTML",
+      "lastCrawled": "2026-07-04",
+      "note": "Legacy URL path segment /index.html/"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/food-processing-equipment/bucket-elevators/edmo-lift-tcr-500",
+      "group": "OLD_CATEGORY_PAIR",
+      "lastCrawled": "2026-06-27",
+      "note": "Same historical slug in two category paths: edmo-lift-tcr-500"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/food-processing-equipment/conveyor-belts/conveyor-1780409586774",
+      "group": "OLD_RENAMED_SLUG",
+      "lastCrawled": "2026-07-18",
+      "note": "Previous slug: conveyor-1780409586774; current product slug: conveyor-belt-200-x-85-x-75-cm"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/packaging-machinery/weighing-labelling-machines/pack-leader-pl-211d",
+      "group": "OTHER_GSC_DUPLICATE",
+      "lastCrawled": "2026-07-20",
+      "note": "Current product slug in old Search Console duplicate report"
+    },
+    {
+      "url": "https://www.mmsweden.se/index.html/all-products/food-processing-equipment/conveyor-belts/inter-system-conveyor-belt-1",
+      "group": "OLD_HTML",
+      "lastCrawled": "2026-07-03",
+      "note": "Legacy URL path segment /index.html/"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/conveying-handling-equipment/bucket-elevators/nimo-kg-lift",
+      "group": "OLD_CATEGORY_PAIR",
+      "lastCrawled": "2026-05-16",
+      "note": "Same historical slug in two category paths: nimo-kg-lift"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/food-processing-equipment/bucket-elevators/kg-lift-2",
+      "group": "OLD_RENAMED_SLUG",
+      "lastCrawled": "2026-07-12",
+      "note": "Previous slug: kg-lift-2; current product slug: nimo-kg-lift-for-double-buggies-tip-height-43-m"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/refrigeration-equipment/vacuum-pumps/busch-400cc",
+      "group": "OTHER_GSC_DUPLICATE",
+      "lastCrawled": "2026-07-19",
+      "note": "Current product slug in old Search Console duplicate report"
+    },
+    {
+      "url": "https://www.mmsweden.se/engelska.html/all-products/food-processing-equipment/bucket-elevators/svenema-midi-mod-90-004",
+      "group": "OLD_HTML",
+      "lastCrawled": "2026-07-07",
+      "note": "Legacy URL path segment /engelska.html/"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/food-processing-equipment/bucket-elevators/nimo-kg-lift",
+      "group": "OLD_CATEGORY_PAIR",
+      "lastCrawled": "2026-07-10",
+      "note": "Same historical slug in two category paths: nimo-kg-lift"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/food-processing-equipment/conveyor-belts/enp-conveyor",
+      "group": "OLD_RENAMED_SLUG",
+      "lastCrawled": "2026-07-12",
+      "note": "Previous slug: enp-conveyor; current product slug: enp-mobile-conveyor-belt-with-drum-motor-50-cm-belt"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/refrigeration-equipment/vacuum-pumps/busch-160cc",
+      "group": "OTHER_GSC_DUPLICATE",
+      "lastCrawled": "2026-07-18",
+      "note": "Current product slug in old Search Console duplicate report"
+    },
+    {
+      "url": "https://www.mmsweden.se/engelska.html/all-products/thermal-processing-equipment/industrial-fryers",
+      "group": "OLD_HTML",
+      "lastCrawled": "2026-07-04",
+      "note": "Legacy URL path segment /engelska.html/"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/conveying-handling-equipment/food-grade-containers/wexiodisk-wd12-cd",
+      "group": "OLD_CATEGORY_PAIR",
+      "lastCrawled": "2026-05-12",
+      "note": "Same historical slug in two category paths: wexiodisk-wd12-cd"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/food-processing-equipment/conveyor-belts/conveyor-belt-1",
+      "group": "OLD_RENAMED_SLUG",
+      "lastCrawled": "2026-07-10",
+      "note": "Previous slug: conveyor-belt-1; current product slug: conveyor-belt-with-intralox-belt-on-wheels-300-x-55-x-77-cm"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/food-processing-equipment/conveyor-belts/intralox-conveyor",
+      "group": "OTHER_GSC_DUPLICATE",
+      "lastCrawled": "2026-07-18",
+      "note": "Current product slug in old Search Console duplicate report"
+    },
+    {
+      "url": "https://www.mmsweden.se/engelska.html/all-products/food-processing-equipment/food-grade-containers/sterilisation-bucket",
+      "group": "OLD_HTML",
+      "lastCrawled": "2026-06-24",
+      "note": "Legacy URL path segment /engelska.html/"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/food-processing-equipment/food-grade-containers/wexiodisk-wd12-cd",
+      "group": "OLD_CATEGORY_PAIR",
+      "lastCrawled": "2026-07-12",
+      "note": "Same historical slug in two category paths: wexiodisk-wd12-cd"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/fish-processing-machinery/fish-skinning-machines/grasselli-t30-f-2",
+      "group": "OLD_RENAMED_SLUG",
+      "lastCrawled": "2026-07-10",
+      "note": "Previous slug: grasselli-t30-f-2; current product slug: grasselli-t30-f-fish-skinning-machine-30-cm-roller"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/bakery-machinery/dough-mixers/pietro-berto-nv150",
+      "group": "OTHER_GSC_DUPLICATE",
+      "lastCrawled": "2026-07-15",
+      "note": "Current product slug in old Search Console duplicate report"
+    },
+    {
+      "url": "https://www.mmsweden.se/begagnade-maskiner1.html/all-products/refrigeration-equipment/vacuum-pumps",
+      "group": "OLD_HTML",
+      "lastCrawled": "2026-07-05",
+      "note": "Legacy URL path segment /begagnade-maskiner1.html/"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/conveying-handling-equipment/stainless-steel-work-tables/table-2",
+      "group": "OLD_CATEGORY_PAIR",
+      "lastCrawled": "2026-05-12",
+      "note": "Same historical slug in two category paths: table-2"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/thermal-processing-equipment/smokehouses/foodco-1776262161499",
+      "group": "OLD_RENAMED_SLUG",
+      "lastCrawled": "2026-07-10",
+      "note": "Previous slug: foodco-1776262161499; current product slug: foodco-smoke-generator-140-x-90-x-175-cm"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/refrigeration-equipment/vacuum-pumps/rietschle-booster-pump-1",
+      "group": "OTHER_GSC_DUPLICATE",
+      "lastCrawled": "2026-07-14",
+      "note": "Current product slug in old Search Console duplicate report"
+    },
+    {
+      "url": "https://www.mmsweden.se/begagnade-maskiner1.html/all-products/refrigeration-equipment/industrial-compressors/2x-refrigeration-counter",
+      "group": "OLD_HTML",
+      "lastCrawled": "2026-06-27",
+      "note": "Legacy URL path segment /begagnade-maskiner1.html/"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/food-processing-equipment/stainless-steel-work-tables/table-2",
+      "group": "OLD_CATEGORY_PAIR",
+      "lastCrawled": "2026-07-07",
+      "note": "Same historical slug in two category paths: table-2"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/food-processing-equipment/bucket-elevators/nimo-kg-2",
+      "group": "OLD_RENAMED_SLUG",
+      "lastCrawled": "2026-07-10",
+      "note": "Previous slug: nimo-kg-2; current product slug: nimo-kg-mobile-buggy-lift"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/refrigeration-equipment/industrial-compressors/sandp-compact-pbb-pbt",
+      "group": "OTHER_GSC_DUPLICATE",
+      "lastCrawled": "2026-07-13",
+      "note": "Current product slug in old Search Console duplicate report"
+    },
+    {
+      "url": "https://www.mmsweden.se/begagnade-maskiner1.html/all-products/packaging-machinery/gas-mixers",
+      "group": "OLD_HTML",
+      "lastCrawled": "2026-06-24",
+      "note": "Legacy URL path segment /begagnade-maskiner1.html/"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/conveying-handling-equipment/bucket-elevators/nimo-kg-container-lift",
+      "group": "OLD_CATEGORY_PAIR",
+      "lastCrawled": "2026-05-12",
+      "note": "Same historical slug in two category paths: nimo-kg-container-lift"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/meat-processing-machinery/portioning-machines/bankeryd-os-20",
+      "group": "OLD_RENAMED_SLUG",
+      "lastCrawled": "2026-07-09",
+      "note": "Previous slug: bankeryd-os-20; current product slug: bankeryd-os-20-cake-and-cheese-slicer-130-x-65-x-120-cm"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/refrigeration-equipment/vacuum-pumps/busch-ra-0400-b-1",
+      "group": "OTHER_GSC_DUPLICATE",
+      "lastCrawled": "2026-07-13",
+      "note": "Current product slug in old Search Console duplicate report"
+    },
+    {
+      "url": "https://www.mmsweden.se/index.html/all-products/meat-processing-machinery/skinning-machines/varlet-v-580",
+      "group": "OLD_HTML",
+      "lastCrawled": "2026-07-03",
+      "note": "Historical .html segment"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/food-processing-equipment/bucket-elevators/nimo-kg-container-lift",
+      "group": "OLD_CATEGORY_PAIR",
+      "lastCrawled": "2026-07-10",
+      "note": "Same historical slug in two category paths: nimo-kg-container-lift"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/meat-processing-machinery/meat-slicers/hallde-rg-100",
+      "group": "OLD_RENAMED_SLUG",
+      "lastCrawled": "2026-07-08",
+      "note": "Previous slug: hallde-rg-100; current product slug: hallde-rg-100-vegetable-slicer-2016"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/thermal-processing-equipment/boiling-pots-kettles/electrolux-150-50-liters",
+      "group": "OTHER_GSC_DUPLICATE",
+      "lastCrawled": "2026-07-12",
+      "note": "Current product slug in old Search Console duplicate report"
+    },
+    {
+      "url": "https://www.mmsweden.se/index.html/all-products/meat-processing-machinery/meat-cutters/stephan-um12-busch-pump",
+      "group": "OLD_HTML",
+      "lastCrawled": "2026-07-03",
+      "note": "Historical .html segment"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/conveying-handling-equipment/conveyor-belts/nn-conveyor-belt",
+      "group": "OLD_CATEGORY_PAIR",
+      "lastCrawled": "2026-05-15",
+      "note": "Same historical slug in two category paths: nn-conveyor-belt"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/dairy-processing-equipment/storage-tanks/tank-125-lit",
+      "group": "OLD_RENAMED_SLUG",
+      "lastCrawled": "2026-07-08",
+      "note": "Previous slug: tank-125-lit; current product slug: stainless-steel-tank-125-l"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/packaging-machinery/cartoners/kliklok-certiwrap-c-80",
+      "group": "OTHER_GSC_DUPLICATE",
+      "lastCrawled": "2026-07-12",
+      "note": "Current product slug in old Search Console duplicate report"
+    },
+    {
+      "url": "https://www.mmsweden.se/index.html/all-products/thermal-processing-equipment/boiling-pots-kettles/gernal-mbk-sd-p-800",
+      "group": "OLD_HTML",
+      "lastCrawled": "2026-06-30",
+      "note": "Historical .html segment"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/food-processing-equipment/conveyor-belts/nn-conveyor-belt",
+      "group": "OLD_CATEGORY_PAIR",
+      "lastCrawled": "2026-06-11",
+      "note": "Same historical slug in two category paths: nn-conveyor-belt"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/dairy-processing-equipment/storage-tanks/tank-180-lit",
+      "group": "OLD_RENAMED_SLUG",
+      "lastCrawled": "2026-07-07",
+      "note": "Previous slug: tank-180-lit; current product slug: stainless-steel-tank-180-l"
+    },
+    {
+      "url": "https://www.mmsweden.se/en/all-products/refrigeration-equipment/industrial-compressors/gram-twin-k-660-lsg-5n",
+      "group": "OTHER_GSC_DUPLICATE",
+      "lastCrawled": "2026-07-12",
+      "note": "Current product slug in old Search Console duplicate report"
+    }
+  ]
+}

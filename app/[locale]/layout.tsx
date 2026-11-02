@@ -49,6 +49,7 @@ const inter = localFont({
     },
   ],
   display: 'swap',
+  preload: false,
   variable: '--font-inter-loaded',
 });
 

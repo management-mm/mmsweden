@@ -28,7 +28,6 @@
   --color-footer-line: rgba(246, 246, 246, 0.2);
 
   /* ===== FONTS ===== */
-  --font-inter: 'Inter', sans-serif;
   --font-open-sans: 'Open Sans', sans-serif;
 
   /* ===== BREAKPOINTS ===== */
@@ -105,6 +104,11 @@
   --transition-duration-primary: 250ms;
 }
 
+@theme inline {
+  /* Use the same Next.js-managed font for body text and Tailwind font-inter. */
+  --font-inter: var(--font-inter-loaded), sans-serif;
+}
+
 .container {
   width: 100%;
   margin-inline: auto;
@@ -135,42 +139,6 @@
 
 /* ===== BASE (fonts) ===== */
 @layer base {
-  @font-face {
-    font-family: 'Inter';
-    src: url('/fonts/inter/Inter-Regular.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Inter';
-    src: url('/fonts/inter/Inter-Medium.woff2') format('woff2');
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Inter';
-    src: url('/fonts/inter/Inter-SemiBold.woff2') format('woff2');
-    font-weight: 600;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Inter';
-    src: url('/fonts/inter/Inter-Bold.woff2') format('woff2');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Inter';
-    src: url('/fonts/inter/Inter-Black.woff2') format('woff2');
-    font-weight: 900;
-    font-style: normal;
-    font-display: swap;
-  }
-
   @font-face {
     font-family: 'Open Sans';
     src: url('/fonts/opensans/OpenSans-Regular.woff2') format('woff2');

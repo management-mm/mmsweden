@@ -6,6 +6,7 @@ import AboutUs from '@components/home/aboutUs/AboutUs';
 import Hero from '@components/home/hero/Hero';
 import Industries from '@components/home/industries/Industries';
 import LatestArrivals from '@components/home/latestArrivals/LatestArrivals';
+import LatestArrivalsFallback from '@components/home/latestArrivals/LatestArrivalsFallback';
 import ReleaseFinans from '@components/home/releaseFinans/ReleaseFinans';
 import SellToUs from '@components/home/sellToUs/SellToUs';
 
@@ -63,7 +64,7 @@ const HomePage = async ({ params }: Props) => {
       <AboutUs />
       <ReleaseFinans />
       <SellToUs />
-      <Suspense fallback={null}>
+      <Suspense fallback={<LatestArrivalsFallback />}>
         <LatestArrivals locale={locale} />
       </Suspense>
     </>

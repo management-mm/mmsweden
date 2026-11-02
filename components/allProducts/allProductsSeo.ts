@@ -7,6 +7,8 @@ import {
 import { getServerCategoryNavigation } from '@lib/serverCategoryNavigation';
 import type { Metadata } from 'next';
 
+import { resolveLocalizedCategoryIntro } from './resolveLocalizedCategoryIntro';
+
 import type { AppLocale } from '@i18n/config';
 import { createPageMetadata } from '@i18n/seo';
 
@@ -340,7 +342,9 @@ function buildSeoData({
     categoryDescriptionFallback[locale](h1)
   );
 
-  const intro = getLocalizedSeoText(document?.content?.intro, locale, '');
+  // Intro content must be in the requested language. Other-language fallbacks
+  // would render the wrong language inside an otherwise localized page.
+  const intro = resolveLocalizedCategoryIntro(document?.content?.intro, locale);
 
   return {
     title,

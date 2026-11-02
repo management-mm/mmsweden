@@ -49,7 +49,7 @@ const inter = localFont({
     },
   ],
   display: 'swap',
-  variable: '--font-inter',
+  variable: '--font-inter-loaded',
 });
 
 const siteUrl = getSiteUrl();

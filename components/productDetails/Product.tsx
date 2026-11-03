@@ -5,6 +5,7 @@ import Slider from './Slider';
 import Video from './Video';
 
 import Breadcrumb from '@components/common/Breadcrumb';
+import ProductImagePlaceholder from '@components/common/ProductImagePlaceholder';
 
 import { getProductSearchName } from '@utils/buildProductMetadata';
 import { cn } from '@utils/cn';
@@ -28,6 +29,9 @@ const Product = async ({
   subcategorySlug,
 }: Props) => {
   const { photos, video } = product;
+  const validPhotos = (photos ?? []).filter(
+    photo => typeof photo === 'string' && photo.trim().length > 0
+  );
 
   const productName = getProductSearchName(product, locale, slug);
 
@@ -60,16 +64,16 @@ const Product = async ({
         <div className="w-full min-w-0 pb-[22px] lg:flex lg:items-start lg:gap-[30px]">
           {/* PRODUCT GALLERY */}
           <div className="mb-[22px] w-full max-w-full min-w-0 lg:mb-0 lg:w-[754px] lg:shrink-0">
-            {photos && photos.length > 1 ? (
-              <Slider alt={productName} photos={photos} />
+            {validPhotos.length > 1 ? (
+              <Slider alt={productName} photos={validPhotos} />
+            ) : validPhotos.length === 1 ? (
+              <img
+                className="block h-auto w-full max-w-full rounded-[4px] object-contain"
+                src={validPhotos[0]}
+                alt={productName}
+              />
             ) : (
-              photos?.[0] && (
-                <img
-                  className="block h-auto w-full max-w-full rounded-[4px] object-contain"
-                  src={photos[0]}
-                  alt={productName}
-                />
-              )
+              <ProductImagePlaceholder variant="gallery" />
             )}
 
             {/* DESKTOP VIDEO */}

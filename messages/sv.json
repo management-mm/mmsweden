@@ -300,5 +300,10 @@
   "ReleaseFinans": {
     "Title": "En <accent>smidig</accent> <end>affär</end>",
     "Description": "Vi ger företag förutsättningar att utvecklas genom <accent>smidig finansiering</accent>."
+  },
+
+  "NoImage": {
+    "Title": "Bild saknas",
+    "Details": "Kontakta MM Sweden för produktinformation."
   }
 }

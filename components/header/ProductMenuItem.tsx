@@ -6,6 +6,8 @@ import type { IProduct } from '@interfaces/IProduct';
 import clsx from 'clsx';
 import Image from 'next/image';
 
+import ProductImagePlaceholder from '@components/common/ProductImagePlaceholder';
+
 import { useCurrentLocale } from '@hooks/useCurrentLocale';
 
 import getProductName from '@utils/getProductName';
@@ -21,7 +23,9 @@ const ProductMenuItem = ({ product }: IProductMenuItemProps) => {
 
   const productName = name ? getProductName(name, locale) : 'Product';
 
-  const imageSrc = photos?.[0] || '/placeholder-image.png';
+  const imageSrc = photos?.find(
+    photo => typeof photo === 'string' && photo.trim()
+  );
 
   const productDescription =
     description?.[locale] || 'No description available';
@@ -34,18 +38,22 @@ const ProductMenuItem = ({ product }: IProductMenuItemProps) => {
         'border-gray-200 bg-white hover:border-gray-300'
       )}
     >
-      <div className="relative flex h-[88px] w-[88px] shrink-0 items-center justify-center overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
-        <Image
-          src={imageSrc}
-          alt={productName}
-          width={88}
-          height={88}
-          sizes="88px"
-          quality={75}
-          loading="eager"
-          decoding="async"
-          className="h-full w-full object-contain p-2"
-        />
+      <div className="border-secondary bg-secondary relative flex h-[88px] w-[88px] shrink-0 items-center justify-center overflow-hidden rounded-xl border">
+        {imageSrc ? (
+          <Image
+            src={imageSrc}
+            alt={productName}
+            width={88}
+            height={88}
+            sizes="88px"
+            quality={75}
+            loading="eager"
+            decoding="async"
+            className="h-full w-full object-contain p-2"
+          />
+        ) : (
+          <ProductImagePlaceholder variant="thumbnail" />
+        )}
       </div>
 
       <div className="min-w-0 flex-1 md:pr-10">

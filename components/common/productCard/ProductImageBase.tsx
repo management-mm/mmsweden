@@ -1,6 +1,8 @@
 import type { MultiLanguageString } from '@interfaces/IProduct';
 import Image from 'next/image';
 
+import ProductImagePlaceholder from '@components/common/ProductImagePlaceholder';
+
 import { optimizeCloudinaryImage } from '@utils/cloudinary';
 import getProductName from '@utils/getProductName';
 
@@ -21,14 +23,18 @@ export default function ProductImageBase({
 }: Props) {
   const altText = name ? getProductName(name, locale) : '';
 
-  if (!photos.length) {
-    return <div className="h-[218px] w-full rounded-t-[4px] bg-slate-500" />;
+  const firstPhoto = photos?.find(
+    photo => typeof photo === 'string' && photo.trim()
+  );
+
+  if (!firstPhoto) {
+    return <ProductImagePlaceholder variant="card" />;
   }
 
   return (
     <div className="relative h-[218px] w-full rounded-t-[4px]">
       <Image
-        src={optimizeCloudinaryImage(photos[0], 360)}
+        src={optimizeCloudinaryImage(firstPhoto, 360)}
         alt={altText}
         fill
         unoptimized

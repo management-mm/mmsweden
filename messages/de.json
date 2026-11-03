@@ -301,5 +301,10 @@
   "ReleaseFinans": {
     "Title": "Eine <accent>unkomplizierte</accent> <end>Lösung</end>",
     "Description": "Wir schaffen die Voraussetzungen, damit Unternehmen mit <accent>flexibler Finanzierung</accent> wachsen können."
+  },
+
+  "NoImage": {
+    "Title": "Kein Foto verfügbar",
+    "Details": "Kontaktieren Sie MM Sweden für Produktinformationen."
   }
 }

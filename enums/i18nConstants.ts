@@ -338,3 +338,8 @@ export enum ReleaseFinans {
   Description = 'ReleaseFinans.Description',
   Highlight = 'ReleaseFinans.Highlight',
 }
+
+export enum NoImage {
+  Title = 'NoImage.Title',
+  Details = 'NoImage.Details',
+}

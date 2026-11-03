@@ -301,5 +301,10 @@
   "ReleaseFinans": {
     "Title": "A <accent>simple</accent><break></break>business<break></break><end>solution</end>",
     "Description": "We help businesses grow through <accent>flexible financing</accent>."
+  },
+
+  "NoImage": {
+    "Title": "Photo unavailable",
+    "Details": "Contact MM Sweden for product information."
   }
 }

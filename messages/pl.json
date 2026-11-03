@@ -300,5 +300,10 @@
   "ReleaseFinans": {
     "Title": "<accent>Proste</accent> <end>rozwiązanie</end>",
     "Description": "Pomagamy firmom rozwijać się dzięki <accent>elastycznym rozwiązaniom finansowym</accent>."
+  },
+
+  "NoImage": {
+    "Title": "Brak zdjęcia",
+    "Details": "Skontaktuj się z MM Sweden, aby uzyskać informacje o produkcie."
   }
 }

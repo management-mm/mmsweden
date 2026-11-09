@@ -46,7 +46,7 @@ const Footer = () => {
 
         <DecorativeLine intent="footer" className="mb-[22px]" />
         <span className="font-openSans block text-center text-[12px] font-normal text-[#F9F7F0]">
-          &#169; 2024 All rights reserved
+          &#169; {new Date().getFullYear()} All rights reserved
         </span>
       </div>
     </footer>

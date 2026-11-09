@@ -9,7 +9,7 @@ const lineVariants = cva('border-[1.5px] rounded-[12px] w-[calc(100%-28px)]', {
       product: 'border-line mb-[14px] w-full',
       video: 'border-neutral w-full mb-[22px]',
       sellToUs:
-        'border-0 border-b-[1px] border-dashed border-primary w-[calc(100%-38px)]',
+        'border-0 h-[1px] w-[calc(100%-38px)] bg-[repeating-linear-gradient(to_right,currentColor_0px,currentColor_6px,transparent_6px,transparent_12px)] text-primary',
       footer: 'w-full border-footer-line',
       myPriceQuote:
         'border-pagination w-full rounded-none border-[1px] border-[#e5e7eb]',

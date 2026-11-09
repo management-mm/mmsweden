@@ -120,16 +120,18 @@ const Details: FC<IDetailsProps> = ({ product, locale, isLoading }) => {
       <DecorativeLine intent="product" />
 
       <dl className="mb-auto min-w-0 pb-[32px]">
-        <div className="font-openSans mb-[12px] flex min-w-0 gap-[8px] text-[14px]">
-          <dt className="text-desc shrink-0">{t(Product.Dimensions)}:</dt>
-          <dd className="text-title min-w-0 flex-1">
-            {isLoading ? (
-              <Skeleton className="!block w-full max-w-[120px]" />
-            ) : (
-              dimensions
-            )}
-          </dd>
-        </div>
+        {dimensions && (
+          <div className="font-openSans mb-[12px] flex min-w-0 gap-[8px] text-[14px]">
+            <dt className="text-desc shrink-0">{t(Product.Dimensions)}:</dt>
+            <dd className="text-title min-w-0 flex-1">
+              {isLoading ? (
+                <Skeleton className="!block w-full max-w-[120px]" />
+              ) : (
+                dimensions
+              )}
+            </dd>
+          </div>
+        )}
 
         {model?.trim() && (
           <div className="font-openSans mb-[12px] flex min-w-0 gap-[8px] text-[14px]">

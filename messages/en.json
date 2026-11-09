@@ -68,17 +68,17 @@
   },
   "Industry": {
     "MeatTitle": "Meat",
-    "MeatDesc": "Meat Grinders, Mixers, Vacuumfillers, Packing machinery, Separators Etc.",
+    "MeatDesc": "Meat Grinders, Mixers, Vacuumfillers, Packaging machinery, Separators Etc.",
     "FishTitle": "Fish",
-    "FishDesc": "Filleting machines, Seperators, Slicers, Pin-bone removers, Thermoformers Etc.",
+    "FishDesc": "Filleting machines, Separators, Slicers, Pin-bone removers, Thermoformers Etc.",
     "BakeryTitle": "Bakery",
-    "BakeryDesc": "Mixers, Conveyors, Metaldetectors, depositors, Kneeding machines Etc.",
+    "BakeryDesc": "Mixers, Conveyors, Metal detectors, depositors, Kneading machines Etc.",
     "DairyTitle": "Dairy",
-    "DairyDesc": "Homogenisators, Filling machines, Rotary fillers, Tanks, Cooling equipment Mixers, Slicers Etc.",
+    "DairyDesc": "Homogenizers, Filling machines, Rotary fillers, Tanks, Cooling equipment Mixers, Slicers Etc.",
     "VegetablesTitle": "Fruits / Vegetables",
-    "VegetablesDesc": "Slicers, Washing machines, Scales, Packing machines, Metal detectors Etc",
+    "VegetablesDesc": "Slicers, Washing machines, Scales, Packaging machines, Metal detectors Etc",
     "MedicinesTitle": "Medicines",
-    "MedicinesDesc": "Tablet presses, Packing machines, Flowpack, Thermoformers, Robot lines, Pumps, Mixers Etc."
+    "MedicinesDesc": "Tablet presses, Packaging machines, Flowpack, Thermoformers, Robot lines, Pumps, Mixers Etc."
   },
   "Instructions": {
     "Step1Title": "Give us an information",

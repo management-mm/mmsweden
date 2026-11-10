@@ -1,12 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import type { MultiLanguageString } from '@interfaces/IProduct';
 import dynamic from 'next/dynamic';
 
 import ProductImageBase from './ProductImageBase';
 
+import { optimizeCloudinaryImage } from '@utils/cloudinary';
 import getProductName from '@utils/getProductName';
 
 import { AppLocale } from '@i18n/config';
@@ -26,6 +27,39 @@ interface Props {
   priority?: boolean;
 }
 
+type ValidationStatus = 'checking' | 'valid' | 'invalid';
+
+interface ValidationState {
+  key: string;
+  status: ValidationStatus;
+}
+
+// Check whether an image actually loads.
+const loadImage = (src: string): Promise<boolean> =>
+  new Promise(resolve => {
+    const image = new window.Image();
+
+    image.onload = () => resolve(true);
+    image.onerror = () => resolve(false);
+
+    image.src = src;
+  });
+
+// Try optimized image first, then original.
+const checkPhoto = async (photo: string): Promise<boolean> => {
+  const optimized = optimizeCloudinaryImage(photo, 360);
+
+  if (await loadImage(optimized)) {
+    return true;
+  }
+
+  if (optimized !== photo) {
+    return loadImage(photo);
+  }
+
+  return false;
+};
+
 export default function ProductImageHover({
   photos,
   name,
@@ -33,11 +67,94 @@ export default function ProductImageHover({
   priority = false,
 }: Props) {
   const [isHovered, setIsHovered] = useState(false);
+  const [readyPhoto, setReadyPhoto] = useState<string | null>(null);
+  const [validation, setValidation] = useState<ValidationState | null>(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
 
   const altText = name ? getProductName(name, locale) : '';
-  const hasMultiplePhotos = photos.length > 1;
+
+  const validPhotos = (photos ?? [])
+    .filter(
+      (photo): photo is string =>
+        typeof photo === 'string' && photo.trim().length > 0
+    )
+    .map(photo => photo.trim());
+
+  const photosKey = JSON.stringify(validPhotos);
+  const firstPhoto = validPhotos[0];
+
+  const hasMultiplePhotos = validPhotos.length > 1;
   const isLightboxOpen = currentIndex !== -1;
+
+  const isImageReady = Boolean(firstPhoto) && readyPhoto === firstPhoto;
+
+  const validationStatus =
+    validation?.key === photosKey ? validation.status : 'idle';
+
+  const canShowHover =
+    isImageReady && validationStatus === 'valid' && !isLightboxOpen;
+
+  const showHover = isHovered && canShowHover;
+
+  const handleImageReadyChange = useCallback(
+    (isReady: boolean) => {
+      setReadyPhoto(isReady ? (firstPhoto ?? null) : null);
+
+      if (!isReady) {
+        setIsHovered(false);
+      }
+    },
+    [firstPhoto]
+  );
+
+  const handleMouseEnter = () => {
+    if (!isImageReady || isLightboxOpen || validationStatus === 'invalid') {
+      return;
+    }
+
+    setIsHovered(true);
+
+    // Images already checked.
+    if (validationStatus !== 'idle') {
+      return;
+    }
+
+    // Verify all images before enabling the slider.
+    setValidation({
+      key: photosKey,
+      status: 'checking',
+    });
+
+    void Promise.all(validPhotos.map(checkPhoto)).then(results => {
+      const allImagesWork = results.every(Boolean);
+
+      setValidation(previous => {
+        // Ignore stale checks after product changes.
+        if (previous?.key !== photosKey || previous.status !== 'checking') {
+          return previous;
+        }
+
+        return {
+          key: photosKey,
+          status: allImagesWork ? 'valid' : 'invalid',
+        };
+      });
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+  // Catch errors from images inside HoverSwiper too.
+  const handleHoverImageError = () => {
+    setValidation({
+      key: photosKey,
+      status: 'invalid',
+    });
+
+    setIsHovered(false);
+  };
 
   useEffect(() => {
     if (isLightboxOpen) {
@@ -45,10 +162,16 @@ export default function ProductImageHover({
     }
   }, [isLightboxOpen]);
 
-  if (!photos.length || !hasMultiplePhotos) {
+  useEffect(() => {
+    setCurrentIndex(-1);
+    setIsHovered(false);
+  }, [photosKey]);
+
+  // No slider for zero or one photo.
+  if (!hasMultiplePhotos) {
     return (
       <ProductImageBase
-        photos={photos}
+        photos={validPhotos}
         name={name}
         locale={locale}
         priority={priority}
@@ -60,42 +183,50 @@ export default function ProductImageHover({
     <>
       <div
         className="relative h-[218px] w-full overflow-hidden rounded-t-[8px]"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onFocus={() => setIsHovered(true)}
-        onBlur={() => setIsHovered(false)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onFocus={handleMouseEnter}
+        onBlur={handleMouseLeave}
       >
+        {/* BASE IMAGE */}
         <div
           className={[
             'absolute inset-0 transition-opacity duration-300',
-            isHovered ? 'pointer-events-none opacity-0' : 'opacity-100',
+            showHover ? 'pointer-events-none opacity-0' : 'opacity-100',
           ].join(' ')}
         >
           <ProductImageBase
-            photos={photos}
+            key={firstPhoto}
+            photos={validPhotos}
             name={name}
             locale={locale}
             priority={priority}
+            onImageReadyChange={handleImageReadyChange}
           />
         </div>
 
-        <div
-          className={[
-            'absolute inset-0 transition-opacity duration-300',
-            isHovered ? 'opacity-100' : 'pointer-events-none opacity-0',
-          ].join(' ')}
-        >
-          <HoverSwiper
-            photos={photos}
-            alt={altText}
-            onImageClick={setCurrentIndex}
-          />
-        </div>
+        {/* HOVER SLIDER */}
+        {canShowHover && (
+          <div
+            className={[
+              'absolute inset-0 transition-opacity duration-300',
+              showHover ? 'opacity-100' : 'pointer-events-none opacity-0',
+            ].join(' ')}
+            onErrorCapture={handleHoverImageError}
+          >
+            <HoverSwiper
+              photos={validPhotos}
+              alt={altText}
+              onImageClick={setCurrentIndex}
+            />
+          </div>
+        )}
       </div>
 
+      {/* LIGHTBOX */}
       {isLightboxOpen && (
         <LightBox
-          photos={photos}
+          photos={validPhotos}
           currentIndex={currentIndex}
           setCurrentIndex={setCurrentIndex}
         />

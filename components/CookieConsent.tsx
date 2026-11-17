@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { initGoogleAnalytics } from '@lib/analytics';
+import GoogleTagManagerProvider from 'app/providers/GoogleTagManagerProvider';
 import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 
@@ -24,7 +24,6 @@ export default function CookieConsent() {
       const savedConsent = localStorage.getItem(CONSENT_KEY);
 
       if (savedConsent === 'accepted') {
-        initGoogleAnalytics();
         setConsent('accepted');
       } else if (savedConsent === 'rejected') {
         setConsent('rejected');
@@ -41,11 +40,11 @@ export default function CookieConsent() {
   const handleAccept = () => {
     try {
       localStorage.setItem(CONSENT_KEY, 'accepted');
-      initGoogleAnalytics();
-      setConsent('accepted');
     } catch {
-      setConsent('accepted');
+      // Storage unavailable
     }
+
+    setConsent('accepted');
   };
 
   const handleReject = () => {
@@ -57,7 +56,15 @@ export default function CookieConsent() {
     }
   };
 
-  if (!isMounted || consent !== null) {
+  if (!isMounted) {
+    return null;
+  }
+
+  if (consent === 'accepted') {
+    return <GoogleTagManagerProvider />;
+  }
+
+  if (consent === 'rejected') {
     return null;
   }
 

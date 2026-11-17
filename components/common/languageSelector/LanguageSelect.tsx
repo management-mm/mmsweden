@@ -182,6 +182,7 @@ const LanguageSelectContent = () => {
               >
                 <Link
                   href={href}
+                  prefetch={false}
                   hrefLang={optionLocale}
                   aria-current={isSelected ? 'page' : undefined}
                   onClick={() => setIsOpen(false)}

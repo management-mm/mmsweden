@@ -10,7 +10,6 @@ import { notFound } from 'next/navigation';
 import Sprite from '../Sprite';
 import '../globals.css';
 import BaseProviders from '../providers/BaseProviders';
-import GoogleTagManagerProvider from '../providers/GoogleTagManagerProvider';
 import ReactQueryProvider from '../providers/ReactQueryProvider';
 
 import { AiAssistant } from '@components/ai-assistant/AiAssistant';
@@ -146,8 +145,6 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html lang={locale} className={inter.variable} suppressHydrationWarning>
       <body className={cn(inter.className, 'bg-main')}>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <GoogleTagManagerProvider />
-
           <Suspense fallback={null}>
             <Sprite />
           </Suspense>

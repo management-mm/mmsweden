@@ -4,7 +4,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
-import localFont from 'next/font/local';
+import { Inter } from 'next/font/google';
 import { notFound } from 'next/navigation';
 
 import Sprite from '../Sprite';
@@ -19,34 +19,8 @@ import { cn } from '@utils/cn';
 import { type AppLocale, SUPPORTED_LOCALES, isAppLocale } from '@i18n/config';
 import { getSiteUrl } from '@i18n/schema';
 
-const inter = localFont({
-  src: [
-    {
-      path: '../../public/fonts/inter/Inter-Regular.woff2',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../../public/fonts/inter/Inter-Medium.woff2',
-      weight: '500',
-      style: 'normal',
-    },
-    {
-      path: '../../public/fonts/inter/Inter-SemiBold.woff2',
-      weight: '600',
-      style: 'normal',
-    },
-    {
-      path: '../../public/fonts/inter/Inter-Bold.woff2',
-      weight: '700',
-      style: 'normal',
-    },
-    {
-      path: '../../public/fonts/inter/Inter-Black.woff2',
-      weight: '900',
-      style: 'normal',
-    },
-  ],
+const inter = Inter({
+  subsets: ['latin', 'latin-ext', 'cyrillic'],
   display: 'swap',
   preload: false,
   variable: '--font-inter-loaded',
